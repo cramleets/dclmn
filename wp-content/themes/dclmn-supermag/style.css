@@ -1,0 +1,9 @@
+/*
+Theme Name: DCLMN Supermag
+Template: supermag
+Color: #134975
+*/
+
+.site-header.layout--default .main-header.order--social-logo-buttons .site-branding {
+    display: flex;
+}

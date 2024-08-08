@@ -2,8 +2,8 @@
 <html>
 
 <head>
-    <title>sss</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title><?php wp_title() ?></title>
+    <link rel="stylesheet" type="text/css" href="<?php echo get_stylesheet_uri() ?>">
 </head>
 
 <body>

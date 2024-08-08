@@ -1,0 +1,59 @@
+== Change log ==
+
+= 3.0.5 - August 01 2023 =
+* Added: Recommended Classic Widgets plugin
+* Updated: WordPress latest compatibility
+
+= 3.0.4 - Feb 05 2022 =
+* Updated: WordPress latest compatibility
+
+= 3.0.3 - June 25 2021 =
+* Updated   :  Test to recent WordPress version
+* Updated   :  RTL CSS
+
+= 3.0.2 - Jan 05 2020 =
+* Updated :  Regular updates
+
+= 3.0.1 - Sept 21 2020 =
+* Removed :  Default Advertisement Image
+
+= 3.0.0 Sept  10 2020 =
+* Added   : Advanced Demo Import
+* Updated : Getting Started experience
+* Added : Admin notice
+* Fixed : Some Minor Bugs
+
+= 2.0.0 Fed 11 2019 =
+* Updated : as parent theme
+
+= 1.2.2 Jan 08 2018 =
+* Updated : as parent theme
+
+= 1.2.1 May 17 2017 =
+* Updated : Image Size Recommendation
+* Fixed : Some Minor Bugs
+
+= 1.2.0 May 15 2017 =
+* Updated : According to parent theme SuperMag
+
+= 1.0.5 Dec 06 2016 =
+* Updated : Create Parent Theme Compatible
+
+= 1.0.4 - Oct 02 2016 =
+* Updated : Blog Image Size
+
+= 1.0.3 - Sept 30 2016 =
+* Added: Theme Updated Class for Pro
+* Updated : Default Width
+* Fixed: CSS tweaks
+
+= 1.0.2 =
+* Updated : Theme Demo ( http://www.demo.acmethemes.com/dupermag/ ) and Screenshot image
+* Updated : Default Primary color
+* Fixed    : CSS tweaks
+
+= 1.0.1 =
+* Fixed: CSS tweaks
+
+= 1.0.0 =
+* Initial release

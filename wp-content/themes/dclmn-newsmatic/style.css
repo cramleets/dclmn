@@ -1,0 +1,19 @@
+/*
+Theme Name: DCLMN Newsmatic
+Template: newsmatic
+Color: #134975
+*/
+
+.site-header.layout--default .main-header.order--social-logo-buttons .site-branding {
+    display: flex;
+    align-items: center;
+}
+
+.site-branding .site-title a {
+    font-size: 2.5em;
+}
+
+.fas.fa-search,
+.mode_toggle {
+    color: #fff;
+}

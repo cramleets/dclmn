@@ -1,0 +1,84 @@
+<wpml-config>
+    <admin-texts>
+        <key name="theme_mods_supermag">
+            <key name="supermag_theme_options">
+                <key name="supermag-feature-cat"/>
+                <key name="supermag-feature-post-one"/>
+                <key name="supermag-feature-post-two"/>
+                <key name="supermag-feature-side-display-options"/>
+                <key name="supermag-feature-side-title-length"/>
+                <key name="supermag-feature-side-from-category"/>
+                <key name="supermag-feature-add-one"/>
+                <key name="supermag-feature-add-one-link"/>
+                <key name="supermag-feature-add-two"/>
+                <key name="supermag-feature-add-two-link"/>
+                <key name="supermag-enable-feature"/>
+                <key name="supermag-header-logo"/>
+                <key name="supermag-header-id-display-opt"/>
+                <key name="supermag-show-date"/>
+                <key name="supermag-breaking-news-title"/>
+                <key name="supermag-breaking-news-options"/>
+                <key name="supermag-facebook-url"/>
+                <key name="supermag-twitter-url"/>
+                <key name="supermag-youtube-url"/>
+                <key name="supermag-instagram-url"/>
+                <key name="supermag-google-plus-url"/>
+                <key name="supermag-pinterest-url"/>
+                <key name="supermag-enable-social"/>
+                <key name="supermag-header-main-show-banner-ads"/>
+                <key name="supermag-header-main-banner-ads"/>
+                <key name="supermag-header-main-banner-ads-link"/>
+                <key name="supermag-header-logo-ads-display-position"/>
+                <key name="supermag-menu-show-home-icon"/>
+                <key name="supermag-enable-random-post"/>
+                <key name="supermag-enable-sticky-menu"/>
+                <key name="supermag-menu-show-search"/>
+                <key name="supermag-menu-search-type"/>
+                <key name="supermag-enable-sticky-sidebar"/>
+                <key name="supermag-header-date-format"/>
+                <key name="supermag-header-media-position"/>
+                <key name="supermag-header-media-customizer-link"/>
+                <key name="supermag-header-image-link"/>
+                <key name="supermag-header-image-link-new-tab"/>
+                <key name="supermag-footer-copyright"/>
+                <key name="supermag-default-layout"/>
+                <key name="supermag-enable-box-shadow"/>
+                <key name="supermag-sidebar-layout"/>
+                <key name="supermag-front-page-sidebar-layout"/>
+                <key name="supermag-archive-sidebar-layout"/>
+                <key name="supermag-blog-archive-layout"/>
+                <key name="supermag-blog-archive-image-layout"/>
+                <key name="supermag-disable-image-zoom"/>
+                <key name="supermag-blog-archive-more-text"/>
+                <key name="supermag-blog-archive-category-display-options"/>
+                <key name="supermag-single-category-display-options"/>
+                <key name="supermag-primary-color"/>
+                <key name="supermag-cat-hover-color"/>
+                <key name="supermag-custom-css"/>
+                <key name="supermag-show-related"/>
+                <key name="supermag-related-title"/>
+                <key name="supermag-related-post-display-from"/>
+                <key name="supermag-single-post-layout"/>
+                <key name="supermag-single-image-layout"/>
+                <key name="supermag-search-placholder"/>
+                <key name="supermag-show-breadcrumb"/>
+                <key name="supermag-side-show-message"/>
+                <key name="supermag-image-size-message"/>
+                <key name="supermag-side-image-message"/>
+                <key name="supermag-hide-front-page-content"/>
+                <key name="supermag-you-are-here-text"/>
+                <key name="supermag-wc-shop-archive-sidebar-layout"/>
+                <key name="supermag-wc-product-column-number"/>
+                <key name="supermag-wc-shop-archive-total-product"/>
+                <key name="supermag-wc-single-product-sidebar-layout"/>
+                <key name="supermag-reset-options"/>
+            </key>
+        </key>
+    </admin-texts>
+</wpml-config>
+
+
+
+
+
+
