@@ -17,15 +17,22 @@ class DCLMN {
             wp_enqueue_style('dclmn-child', get_stylesheet_directory_uri() . '/style.css', [$parent_style]);
         }, 98);
 
-        add_action('init', function(){
-            add_action( 'newsmatic_botttom_footer_hook', 'newsmatic_bottom_footer_copyright_part', 20 );
+        add_action('init', function () {
+            add_action('newsmatic_botttom_footer_hook', 'newsmatic_bottom_footer_copyright_part', 20);
         });
 
-        add_filter('use_block_editor_for_post_type', '__return_false'); 
+        add_filter('use_block_editor_for_post_type', '__return_false');
 
-        
-        add_action( 'newsmatic_after_header_hook', 'newsmatic_header_ads_banner_part', 10 );
-        add_action( 'newsmatic_main_banner_hook', 'newsmatic_header_ads_banner_part', 999 );
+
+        add_action('newsmatic_after_header_hook', 'newsmatic_header_ads_banner_part', 10);
+        add_action('newsmatic_main_banner_hook', 'newsmatic_header_ads_banner_part_footer', 999);
+
+        add_shortcode('dclmn-subscribe', [$this, 'subscribe']);
+        add_shortcode('dclmn-leadership', [$this, 'leadership']);
+        add_shortcode('dclmn-committeepeople', [$this, 'committeepeople']);
+        add_shortcode('dclmn-elected-officials', [$this, 'elected_officials']);
+        add_shortcode('dclmn-county', [$this, 'county']);
+        add_shortcode('dclmn-local', [$this, 'local']);
     }
 
     function get_committee_people() {
@@ -146,7 +153,16 @@ class DCLMN {
         ksort($wards);
 
         $out = '';
-        $out .= '<table border cellpadding="5" cellspacing="0">';
+        $out .= '<table cellpadding="5" cellspacing="0" class="stripes">';
+        $out .= '<thead>';
+        $out .= '<tr valign="top">';
+        $out .= '<td>Ward</td>';
+        $out .= '<td>PA District</td>';
+        $out .= '<td>Name</td>';
+        $out .= '<td>Polling Place<td>';
+        $out .= '</tr>';
+        $out .= '</thead>';
+        $out .= '<tbody>';
         foreach ($wards as $ward) {
             $district = str_replace('th district', '', strtolower($ward->pa_district->post_title));
 
@@ -161,15 +177,16 @@ class DCLMN {
             $out .= '<td><a href="' . $ward->polling_place->map_url . '" target="_blank">' . $ward->polling_place->post_title . '</a></td>';
             $out .= '</tr>';
         }
+        $out .= '</tbody>';
         $out .= '</table>';
 
         return $out;
     }
 
-    function get_jurisdictions() {
+    function get_jurisdictions($args = []) {
         $jurisdictions = [];
 
-        foreach (get_terms('jurisdiction') as $jurisdiction) {
+        foreach (get_terms('jurisdiction', $args) as $jurisdiction) {
             $args = array(
                 'post_type' => 'elected_official',
                 'posts_per_page' => -1,
@@ -192,21 +209,54 @@ class DCLMN {
         return $jurisdictions;
     }
 
-    function get_elected_officials_table() {
-        $jurisdictions = $this->get_jurisdictions();
+    function get_elected_officials_table($args = []) {
+        $jurisdictions = $this->get_jurisdictions($args);
 
         $out = '';
 
-        foreach($jurisdictions as $jurisdiction) {
-            $out .= '<h3>'. $jurisdiction['term']->name .'</h3>';
-            foreach($jurisdiction['posts'] as $post) {
-                $out .= $post->post_title .'<br>';
-                $out .= $post->first_name .' '. $post->last_name .'<br>';
+        foreach ($jurisdictions as $jurisdiction) {
+            $out .= '<h3>' . $jurisdiction['term']->name . '</h3>';
+            foreach ($jurisdiction['posts'] as $post) {
+                $out .= $post->post_title . '<br>';
+                $out .= $post->first_name . ' ' . $post->last_name . '<br>';
                 $out .= '<br>';
             }
         }
 
 
         return $out;
+    }
+
+    function get_leadership() {
+        $args = [
+            'post_type' => 'committee-position',
+            'posts_per_page' => -1,
+        ];
+
+        return dclmn_get_posts($args);
+    }
+
+    function subscribe() {
+        get_template_part('subscribe-form');
+    }
+
+    function committeepeople() {
+        return $this->get_committee_people_table();
+    }
+
+    function elected_officials() {
+        get_template_part('elected-officials');
+    }
+
+    function county() {
+        get_template_part('county');
+    }
+
+    function local() {
+        get_template_part('local');
+    }
+
+    function leadership() {
+        get_template_part('leadership');
     }
 }

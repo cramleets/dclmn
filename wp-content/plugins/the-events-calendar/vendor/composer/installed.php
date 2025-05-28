@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'the-events-calendar/the-events-calendar',
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
-        'reference' => '96803d72a66d7c9b1c9f8b823391d4807d473a33',
+        'pretty_version' => 'dev-release/T25.batman',
+        'version' => 'dev-release/T25.batman',
+        'reference' => 'e3a4a94500d555fab97420431cc7a29a298ff0a9',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,20 +11,11 @@
     ),
     'versions' => array(
         'the-events-calendar/the-events-calendar' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => '96803d72a66d7c9b1c9f8b823391d4807d473a33',
+            'pretty_version' => 'dev-release/T25.batman',
+            'version' => 'dev-release/T25.batman',
+            'reference' => 'e3a4a94500d555fab97420431cc7a29a298ff0a9',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
-        'woocommerce/action-scheduler' => array(
-            'pretty_version' => '3.8.1',
-            'version' => '3.8.1.0',
-            'reference' => 'e331b534d7de10402d7545a0de50177b874c0779',
-            'type' => 'wordpress-plugin',
-            'install_path' => __DIR__ . '/../woocommerce/action-scheduler',
             'aliases' => array(),
             'dev_requirement' => false,
         ),

@@ -7,9 +7,11 @@ h2.subtitle {font-size: 15px; font-weight: bold; padding: 20px 0 10px 0}
 #order-terms ul {list-style: none;}
 #order-terms ul.children {margin-left: 25px} 
 
-#order-terms #tto_sortable li > .item { padding: 2px 0px; margin: 4px 0px;  border: 1px solid #DDDDDD; cursor: move; -moz-border-radius:6px; background-color: #f9f9f9;}
+#order-terms #tto_sortable li > .item { padding: 2px 0px; margin: 4px 0px;  border: 1px solid #DDDDDD; cursor: move; -moz-border-radius:6px; background-color: #f9f9f9; clear: both}
 #order-terms #tto_sortable li:nth-child(2n+1) > .item {    background-color: #fff !important;}
-#order-terms #tto_sortable li span { display: block; padding: 5px 10px; color:#555; font-size:13px;}
+#order-terms #tto_sortable li span.title { display: inline-block; padding: 5px 10px; color:#555; font-size:13px;}
+#order-terms #tto_sortable li span.actions {float: right; padding: 5px 10px;}
+#order-terms #tto_sortable li span.actions a {text-decoration: none}
 #order-terms #tto_sortable li.placeholder{border: dashed 2px #ccc;height:30px; background-color: #FFF;}
 
 .wp-list-taxonomy {width: 100%}
@@ -34,6 +36,24 @@ box-shadow:         1px 1px 7px rgba(50, 50, 50, 0.17);}
 .p_s_item.s_gp {padding-top: 2px; margin-left: 5px}
 
 .menu_tto {margin-right: 4px; display: inline; vertical-align: middle; margin-top: -1px;}  
+
+#form_data td {vertical-align: top; padding-top: 20px}
+#form_data .pt-list {display:flex; flex-wrap: wrap;}
+#form_data .pt-item {flex-basis: calc(25% - 10px);  flex-grow: 0;  margin: 5px;}
+#form_data .pt-list::after {  content: "";  flex-basis: calc(25% - 10px);  flex-grow: 1;  margin: 5px;}
+@media screen and (max-width: 1350px) {
+  #form_data .pt-item {flex-basis: calc(33% - 10px);}
+  #form_data .pt-list::after { flex-basis: calc(33% - 10px);}
+}
+@media screen and (max-width: 1100px) {
+  #form_data .pt-item {flex-basis: calc(50% - 10px);}
+  #form_data .pt-list::after { flex-basis: calc(50% - 10px);}
+}
+@media screen and (max-width: 782px) {
+  #form_data .pt-item {flex-basis: calc(100% - 10px);}
+  #form_data .pt-list::after { flex-basis: calc(100% - 10px);}
+  #form_data .form-table th {text-align: left !important}
+}
 
 .clear {clear: both}
 

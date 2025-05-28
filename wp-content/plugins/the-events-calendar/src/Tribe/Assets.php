@@ -40,11 +40,12 @@ class Tribe__Events__Assets {
 			$plugin,
 			[
 				[ 'jquery-placeholder', 'vendor/jquery-placeholder/jquery.placeholder.js', [ 'jquery' ] ],
+				// This does not come from TEC anymore, but from Common. It's still here to ensure back-compatibility.
+				[ 'tribe-events-php-date-formatter', 'common/node_modules/php-date-formatter/js/php-date-formatter.js', [] ],
 				[ 'tribe-events-custom-jquery-styles', 'vendor/jquery/smoothness/jquery-ui-1.8.23.custom.css', [] ],
 				[ 'tribe-events-jquery-resize', 'vendor/jquery-resize/jquery.ba-resize.js', [ 'jquery' ] ],
 				[ 'tribe-events-chosen-style', 'vendor/chosen/public/chosen.css', [] ],
 				[ 'tribe-events-chosen-jquery', 'vendor/chosen/public/chosen.jquery.js', [ 'jquery' ] ],
-				[ 'tribe-events-php-date-formatter', 'vendor/php-date-formatter/js/php-date-formatter.js', [] ],
 				[
 					'tribe-events-bootstrap-datepicker-css',
 					'vendor/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css',
@@ -148,18 +149,6 @@ class Tribe__Events__Assets {
 			]
 		);
 
-		// Admin update page CSS
-		tribe_asset(
-			$plugin,
-			'tribe-events-admin-update-page',
-			'admin-update-page.css',
-			[ ],
-			[ 'admin_enqueue_scripts', 'wp_enqueue_scripts' ],
-			[
-				'conditionals' => [ $this, 'should_enqueue_admin_update_page_assets' ],
-			]
-		);
-
 		// Setting page Assets
 		tribe_asset(
 			$plugin,
@@ -222,7 +211,7 @@ class Tribe__Events__Assets {
 			'events-dynamic.js',
 			[
 				'jquery',
-				'tribe-events-php-date-formatter',
+				'tec-common-php-date-formatter',
 			],
 			[ 'wp_enqueue_scripts', 'admin_enqueue_scripts' ],
 			[
@@ -456,9 +445,13 @@ class Tribe__Events__Assets {
 	 *
 	 * @since  6.0.0
 	 *
+	 * @deprecated 6.8.2 The page this function is testing for no longer exists.
+	 *
 	 * @return bool
 	 */
 	public function should_enqueue_admin_update_page_assets() {
+		_deprecated_function( __METHOD__, '6.8.2', 'No alternative' );
+
 		$should_enqueue = isset( $_GET[ 'update-message-the-events-calendar' ] );
 
 		/**

@@ -1,2 +1,2 @@
 <?php
-include dirname(__FILE__) . '../supermag/index.php';
+include dirname(__FILE__) . '/../newsmatic/index.php';

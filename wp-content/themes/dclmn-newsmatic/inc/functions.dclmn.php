@@ -18,6 +18,12 @@ function pobj($obj, $exit_flag = 0, $show_footer = 1) {
         exit;
 }
 
+add_action('wp_head', function(){
+    echo '<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">';
+});
+
 function dclmn_get_posts($args) {
     $posts = [];
     foreach (get_posts($args) as $i => $post) {
@@ -35,23 +41,146 @@ function newsmatic_bottom_footer_copyright_part() {
     <div class="site-info">
         <?php echo wp_kses_post(str_replace('%year%', date('Y'), $bottom_footer_site_info)); ?>
     </div>
-    <?php
+<?php
 }
 
+/**
+ * 
+$blocks = [
+    [
+        'text'=>'Register To Vote',
+        'href'=>'https://www.pavoterservices.pa.gov/Pages/VoterRegistrationApplication.aspx',
+    ],
+    [
+        'text'=>'Get Mail-in Ballot',
+        'href'=>'https://www.pa.gov/en/agencies/vote.html',
+    ],
+    [
+        'text'=>'Find Polling Place',
+        'href'=>'https://www.pavoterservices.pa.gov/Pages/PollingPlaceInfo.aspx',
+    ],
+    [
+        'text'=>'Check Voter Status',
+        'href'=>'https://www.pavoterservices.pa.gov/Pages/VoterRegistrationStatus.aspx',
+    ],
+];
+ */
 
-function newsmatic_header_ads_banner_part() {
-    if (!ND\newsmatic_get_multiselect_tab_option('header_ads_banner_responsive_option')) return;
-    $header_ads_banner_custom_image = ND\newsmatic_get_customizer_option('header_ads_banner_custom_image');
-    $header_ads_banner_custom_url = ND\newsmatic_get_customizer_option('header_ads_banner_custom_url');
-    $header_ads_banner_custom_target = ND\newsmatic_get_customizer_option('header_ads_banner_custom_target');
-    if (!empty($header_ads_banner_custom_image)) :
-    ?>
-        <div class="ads-banner">
-            <a href="<?php echo esc_url($header_ads_banner_custom_url); ?>" target="<?php echo esc_html($header_ads_banner_custom_target); ?>"><img src="<?php echo esc_url(wp_get_attachment_url($header_ads_banner_custom_image)); ?>"></a>
+function newsmatic_top_header_html() {
+    echo '<div class="newsmatic-container">';
+    dclmn_home_boxes();
+    echo '</div>';
+}
 
-
-            <div data-testid="columns" class="V5AUxf"><div id="comp-k6xivv5p" class="comp-k6xivv5p YzqVVZ wixui-column-strip__column"><div id="bgLayers_comp-k6xivv5p" data-hook="bgLayers" data-motion-part="BG_LAYER" class="MW5IWV"><div data-testid="colorUnderlay" class="LWbAav Kv1aVt"></div><div id="bgMedia_comp-k6xivv5p" data-motion-part="BG_MEDIA" class="VgO9Yg"></div></div><div data-mesh-id="comp-k6xivv5pinlineContent" data-testid="inline-content" class=""><div data-mesh-id="comp-k6xivv5pinlineContent-gridContainer" data-testid="mesh-container-content"><div class="comp-k6xivv5u2 Vq4wYb" id="comp-k6xivv5u2" aria-disabled="false"><a data-testid="linkElement" href="https://www.democratslmn.org/copy-of-get-involved" target="_self" class="uUxqWY wixui-button PlZyDq" aria-disabled="false"><span class="wJVzSK wixui-button__label">Get Involved</span></a></div><div id="comp-k6xivv6h" class="HcOXKn SxM0TO QxJLC3 comp-k6xivv6h wixui-rich-text" data-testid="richTextElement"><p class="font_8 wixui-rich-text__text" style="text-align:center; font-size:18px;"><span class="color_11 wixui-rich-text__text">Volunteer, Participate or Donate</span></p></div></div></div></div><div id="comp-k6xivv3k1" class="comp-k6xivv3k1 YzqVVZ wixui-column-strip__column"><div id="bgLayers_comp-k6xivv3k1" data-hook="bgLayers" data-motion-part="BG_LAYER" class="MW5IWV"><div data-testid="colorUnderlay" class="LWbAav Kv1aVt"></div><div id="bgMedia_comp-k6xivv3k1" data-motion-part="BG_MEDIA" class="VgO9Yg"></div></div><div data-mesh-id="comp-k6xivv3k1inlineContent" data-testid="inline-content" class=""><div data-mesh-id="comp-k6xivv3k1inlineContent-gridContainer" data-testid="mesh-container-content"><div class="comp-k6xivv3p4 Vq4wYb" id="comp-k6xivv3p4" aria-disabled="false"><a data-testid="linkElement" href="https://www.democratslmn.org/voting" target="_self" class="uUxqWY wixui-button PlZyDq" aria-disabled="false"><span class="wJVzSK wixui-button__label">Voter Center</span></a></div><div id="comp-k6xivv4f" class="HcOXKn SxM0TO QxJLC3 comp-k6xivv4f wixui-rich-text" data-testid="richTextElement"><p class="font_8 wixui-rich-text__text" style="text-align:center; font-size:18px;"><span class="color_11 wixui-rich-text__text">Registration,&nbsp;Ballots by Mail, Dates</span></p></div></div></div></div><div id="comp-kl2dzd2y" class="comp-kl2dzd2y YzqVVZ wixui-column-strip__column"><div id="bgLayers_comp-kl2dzd2y" data-hook="bgLayers" data-motion-part="BG_LAYER" class="MW5IWV"><div data-testid="colorUnderlay" class="LWbAav Kv1aVt"></div><div id="bgMedia_comp-kl2dzd2y" data-motion-part="BG_MEDIA" class="VgO9Yg"></div></div><div data-mesh-id="comp-kl2dzd2yinlineContent" data-testid="inline-content" class=""><div data-mesh-id="comp-kl2dzd2yinlineContent-gridContainer" data-testid="mesh-container-content"><div class="comp-kl2dzd44 Vq4wYb" id="comp-kl2dzd44" aria-disabled="false"><a data-testid="linkElement" href="https://www.democratslmn.org/events" target="_self" class="uUxqWY wixui-button PlZyDq" aria-disabled="false"><span class="wJVzSK wixui-button__label">Events</span></a></div><div id="comp-kl2dzd4c" class="HcOXKn SxM0TO QxJLC3 comp-kl2dzd4c wixui-rich-text" data-testid="richTextElement"><p class="font_8 wixui-rich-text__text" style="text-align:center; font-size:18px;"><span class="color_11 wixui-rich-text__text">Meetings, Election Dates &amp; More</span></p></div></div></div></div></div>
-        </div><!-- .ads-banner -->
+function dclmn_home_boxes() {
+    // if (is_front_page()) :
+?>
+    <div class="home-boxes">
+        <div>
+            <a href="<?php echo home_url() ?>"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/dclmn-alt-2.png" style="height: 160px;"></a>
+        </div>
+        <div>
+            <h4><a href="/voting/">Voter Center</a></h4>
+            <div class="padding">
+                <ul>
+                    <li><a href="https://www.pavoterservices.pa.gov/Pages/VoterRegistrationApplication.aspx" target="_blank">Register to Vote</a></li>
+                    <li><a href="https://www.pa.gov/en/agencies/vote.html" target="_blank">Get Mail-in Ballot</a></li>
+                    <li><a href="https://www.pavoterservices.pa.gov/Pages/VoterRegistrationStatus.aspx" target="_blank">Check Voter Status</a></li>
+                    <li><a href="https://www.pavoterservices.pa.gov/Pages/VoterRegistrationStatus.aspx" target="_blank">Find Polling Place</a></li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <h4><a href="/get-involved/">Get Involved</a></h4>
+            <div class="padding">
+                <ul>
+                    <li><a href="/volunteer/">Volunteer</a></li>
+                    <li><a href="/participate/">Participate</a></li>
+                    <li><a href="/committee-people/">Committee People</a></li>
+                    <li><a href="https://secure.actblue.com/donate/democratic-committee-of-lower-merion-and-narberth-1" target="_blank">Donate</a></li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <h4><a href="/events/">Events</a></h4>
+            <div class="padding">
+                <ul>
+                    <li><a href="/events/category/meetings/">Meetings</a></li>
+                    <li><a href="/events/category/campaign-dates/">Campaign Dates</a></li>
+                    <li><a href="/events/category/election-dates/">Election Dates</a></li>
+                    <li><a href="/events/">More</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 <?php
-    endif;
+    // endif;
+}
+
+function newsmatic_header_ads_banner_part_footer() {
+    echo '<div class="newsmatic-container">';
+    // newsmatic_header_ads_banner_part();
+    echo '</div>';
+}
+
+/**
+ * Override function.
+ */
+function newsmatic_top_header_social_part() {
+}
+
+function newsmatic_header_site_branding_part() {
+?>
+    <div class="site-branding">
+        <?php
+        newsmatic_header_ads_banner_part();
+        //    the_custom_logo();
+        if (is_front_page() && is_home()) :
+        ?>
+            <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home"><?php bloginfo('name'); ?></a></h1>
+        <?php
+        else :
+        ?>
+            <p class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home"><?php bloginfo('name'); ?></a></p>
+        <?php
+        endif;
+        $newsmatic_description = get_bloginfo('description', 'display');
+        if ($newsmatic_description || is_customize_preview()) :
+        ?>
+            <p class="site-description"><?php echo apply_filters('newsmatic_bloginfo_description', esc_html($newsmatic_description)); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
+                                        ?></p>
+        <?php endif; ?>
+    </div><!-- .site-branding -->
+<?php
+}
+add_action('newsmatic_header__site_branding_section_hook', 'newsmatic_header_site_branding_part', 10);
+
+function newsmatic_header_html() {
+    require get_template_directory() . '/inc/hooks/header-hooks.php'; // top header hooks.
+?>
+    <div class="main-header <?php echo esc_attr('order--' . ND\newsmatic_get_customizer_option('main_header_elements_order')); ?>">
+        <div class="menu-section">
+            <div class="newsmatic-container">
+                <div class="row">
+                    <?php
+                    /**
+                     * hook - newsmatic_header__menu_section_hook
+                     * 
+                     * @hooked - newsmatic_header_menu_part - 10
+                     * @hooked - newsmatic_header_search_part - 20
+                     */
+                    if (has_action('newsmatic_header__menu_section_hook')) do_action('newsmatic_header__menu_section_hook');
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php
+}
+
+add_action('newsmatic_after_header_html', 'newsmatic_header_ads_banner_part', 10);
+
+
+function newsmatic_breadcrumb_html() {
+    
 }
