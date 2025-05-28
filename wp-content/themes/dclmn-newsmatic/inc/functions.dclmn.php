@@ -94,8 +94,8 @@ function dclmn_home_boxes() {
             <h4><a href="/get-involved/">Get Involved</a></h4>
             <div class="padding">
                 <ul>
-                    <li><a href="/volunteer/">Volunteer</a></li>
-                    <li><a href="/participate/">Participate</a></li>
+                    <li><a href="/get-involved/">Volunteer</a></li>
+                    <li><a href="/elected-officials/">Elected Officials</a></li>
                     <li><a href="/committee-people/">Committee People</a></li>
                     <li><a href="https://secure.actblue.com/donate/democratic-committee-of-lower-merion-and-narberth-1" target="_blank">Donate</a></li>
                 </ul>

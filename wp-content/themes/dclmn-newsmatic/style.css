@@ -12,6 +12,7 @@ Color: #134975
 :root {
     --color-root: #031588;
     --color-highlight: #C1F6FF;
+    --color-red: #f00;
 }
 
 .site-branding .site-title a {
@@ -45,7 +46,7 @@ td,
 
 .home-boxes>div {
     display: block;
-    font-size: .75em;
+    font-size: .85em;
     color: #fff;
     text-decoration: none;
     background-color: #fff;
@@ -160,13 +161,85 @@ table.stripes a:hover {
     display: none;
 }
 
+.officials-table {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    flex-wrap: wrap;
+
+}
+
+.officials-table>div {
+    flex: 0 0 31%;
+    text-align: center;
+}
+
+.voter-center-buttons {
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+}
+
+.button.big,
+.voter-center-buttons a {
+    display: inline-block;
+    background-color: var(--color-highlight);
+    border: 5px solid var(--color-highlight);
+    padding: .75em 1.5em;
+    font-size: 1.5em;
+    color: #000;
+    text-decoration: none;
+    flex-basis: 47%;
+    text-align: center;
+    font-weight: bold;
+}
+
+.button.big.donate {
+    background-color: var(--color-red);
+    border: 5px solid var(--color-red);
+    color: #fff;
+    flex-basis: 100%;
+}
+
+.button.big:hover,
+.voter-center-buttons a:hover {
+    background-color: #fff;
+}
+
+.button.big.donate:hover {
+    color: var(--color-red);
+}
+
+.election-dates li {
+    margin-bottom: .5em;
+}
+
+.election-dates .special-date {
+    color: var(--color-root);
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
+body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
+    max-width: 100%;
+    flex: 0 1 100%;
+}
+
+.page.page-id-1044 .secondary-sidebar {
+    display: none;
+}
+
+
+@media (max-width: 850px) {}
+
 @media (max-width: 850px) {
     .home-boxes {
         flex-wrap: wrap;
         gap: .5em;
     }
+
     .home-boxes>div {
-        flex-basis: 48% 
+        flex-basis: 48%
     }
 }
 
@@ -181,6 +254,19 @@ table.stripes a:hover {
     #masthead nav.main-navigation ul.nav-menu li a {
         color: var(--color-root);
     }
+
+    .officials-table>div {
+        flex: 0 0 47%;
+        text-align: center;
+    }
+
+    .voter-center-buttons a {
+        flex-basis: 100%;
+    }
+    
+    .voter-center-buttons br {
+        display: none;
+    }
 }
 
 @media (max-width: 680px) {
@@ -190,15 +276,24 @@ table.stripes a:hover {
     }
 }
 
+@media (max-width: 600px) {
+    .officials-table>div {
+        flex: 0 0 100%;
+        text-align: center;
+    }
+}
+
 @media (max-width: 550px) {
     .home-boxes {
         flex-wrap: wrap;
         gap: 0;
     }
+
     .home-boxes>div {
         flex-basis: 100%;
         margin-bottom: .5em;
     }
+
     .home-boxes>div ul {
         display: none;
     }

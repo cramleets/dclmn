@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'the-events-calendar/the-events-calendar',
-        'pretty_version' => 'dev-release/T25.batman',
-        'version' => 'dev-release/T25.batman',
-        'reference' => 'e3a4a94500d555fab97420431cc7a29a298ff0a9',
+        'pretty_version' => 'dev-release/T25.elongatedman',
+        'version' => 'dev-release/T25.elongatedman',
+        'reference' => '824d699eb3cbfddd77b91899563d26547a62cd41',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'the-events-calendar/the-events-calendar' => array(
-            'pretty_version' => 'dev-release/T25.batman',
-            'version' => 'dev-release/T25.batman',
-            'reference' => 'e3a4a94500d555fab97420431cc7a29a298ff0a9',
+            'pretty_version' => 'dev-release/T25.elongatedman',
+            'version' => 'dev-release/T25.elongatedman',
+            'reference' => '824d699eb3cbfddd77b91899563d26547a62cd41',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

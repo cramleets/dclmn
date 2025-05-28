@@ -13,8 +13,10 @@ class DCLMN {
     function __construct() {
         add_action('wp_enqueue_scripts', function () {
             $parent_style = 'dclmn-parent';
-            wp_enqueue_style($parent_style, get_template_directory_uri() . '/style.css');
-            wp_enqueue_style('dclmn-child', get_stylesheet_directory_uri() . '/style.css', [$parent_style]);
+
+
+            wp_enqueue_style($parent_style, get_template_directory_uri() . '/style.css', [], filemtime(get_template_directory() . '/style.css'));
+            wp_enqueue_style('dclmn-child', get_stylesheet_directory_uri() . '/style.css', [$parent_style], filemtime(get_stylesheet_directory() . '/style.css'));
         }, 98);
 
         add_action('init', function () {
@@ -23,6 +25,11 @@ class DCLMN {
 
         add_filter('use_block_editor_for_post_type', '__return_false');
 
+        add_filter('document_title_parts', function ($title) {
+            if (!$title['title']) $title['title'] = get_bloginfo();
+            else $title['title'] = $title['title'] .' | '. get_bloginfo();
+            return $title;
+        });
 
         add_action('newsmatic_after_header_hook', 'newsmatic_header_ads_banner_part', 10);
         add_action('newsmatic_main_banner_hook', 'newsmatic_header_ads_banner_part_footer', 999);
@@ -33,6 +40,7 @@ class DCLMN {
         add_shortcode('dclmn-elected-officials', [$this, 'elected_officials']);
         add_shortcode('dclmn-county', [$this, 'county']);
         add_shortcode('dclmn-local', [$this, 'local']);
+        add_shortcode('dclmn-map', [$this, 'map']);
     }
 
     function get_committee_people() {
@@ -209,18 +217,73 @@ class DCLMN {
         return $jurisdictions;
     }
 
+
+    public function thumb($src, $args = array()) {
+        /**
+         * Adjust for old calls. 
+         */
+        if (is_array($src)) {
+            $args = $src;
+            $src = $args['src'];
+            unset($args['src']);
+        }
+
+        $defaults = array(
+            'width' => '',
+            'height' => '',
+            'crop' => '',
+            'filters' => '',
+            'align' => '',
+        );
+
+        $args = wp_parse_args($args, $defaults);
+        extract($args);
+
+        //urlencode the src
+        $src = preg_replace('#^' . home_url() . '#', '', $src);
+        $src = urlencode($src);
+
+        $url = home_url('thumb.php');
+        $url .= '?';
+
+        $url .= 'src=' . $src;
+        $url .= '&w=';
+        $url .= (isset($width)) ? $width : '0';
+        $url .= '&h=';
+        $url .= (isset($height)) ? $height : '0';
+
+        if (isset($crop))
+            $url .= '&c=true';
+        if (isset($filter))
+            $url .= '&f=' . $filter;
+        if (isset($align))
+            $url .= '&a=' . $align;
+        if (isset($quality))
+            $url .= '&q=' . $quality;
+        if (isset($q))
+            $url .= '&q=' . $q;
+
+        return $url;
+    }
+
     function get_elected_officials_table($args = []) {
         $jurisdictions = $this->get_jurisdictions($args);
 
         $out = '';
 
         foreach ($jurisdictions as $jurisdiction) {
-            $out .= '<h3>' . $jurisdiction['term']->name . '</h3>';
+            $out .= '<h2>' . $jurisdiction['term']->name . '</h2>';
+            $out .= '<div class="officials-table">';
             foreach ($jurisdiction['posts'] as $post) {
-                $out .= $post->post_title . '<br>';
-                $out .= $post->first_name . ' ' . $post->last_name . '<br>';
-                $out .= '<br>';
+                $out .= '<div>';
+                $default_src = (!empty($post->gender)) ? 'silouhette-' . $post->gender . '.png' : 'silouhette-male.png';
+                $src = (get_the_post_thumbnail_url($post->ID, 'medium')) ?: get_stylesheet_directory_uri() . '/images/' . $default_src;
+                $out .= ($src) ? '<img src="' . $this->thumb($src, ['width' => 250, 'height' => 250]) . '">' : '';
+                $out .= '<strong style="font-size: 1.25em;">' . (($post->title) ? $post->title : $post->post_title) . '</strong><br>';
+                $out .= '<strong>' . $post->first_name . ' ' . $post->last_name . '</strong><br>';
+                $out .= '</div>';
             }
+            $out .= '</div>';
         }
 
 
@@ -231,6 +294,7 @@ class DCLMN {
         $args = [
             'post_type' => 'committee-position',
             'posts_per_page' => -1,
+            'order' => 'ASC'
         ];
 
         return dclmn_get_posts($args);
@@ -258,5 +322,9 @@ class DCLMN {
 
     function leadership() {
         get_template_part('leadership');
+    }
+
+    function map() {
+        get_template_part('map');
     }
 }
