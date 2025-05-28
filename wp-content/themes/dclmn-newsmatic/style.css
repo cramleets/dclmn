@@ -229,6 +229,16 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
     display: none;
 }
 
+.table-wrap .table-wrap-flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.table-wrap .table-wrap-flex > div.table-wrap-item {
+    flex-basis: 1;
+}
+
 
 @media (max-width: 850px) {}
 

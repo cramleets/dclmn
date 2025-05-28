@@ -27,20 +27,42 @@ class DCLMN {
 
         add_filter('document_title_parts', function ($title) {
             if (!$title['title']) $title['title'] = get_bloginfo();
-            else $title['title'] = $title['title'] .' | '. get_bloginfo();
+            else $title['title'] = $title['title'] . ' | ' . get_bloginfo();
             return $title;
         });
 
         add_action('newsmatic_after_header_hook', 'newsmatic_header_ads_banner_part', 10);
         add_action('newsmatic_main_banner_hook', 'newsmatic_header_ads_banner_part_footer', 999);
 
-        add_shortcode('dclmn-subscribe', [$this, 'subscribe']);
-        add_shortcode('dclmn-leadership', [$this, 'leadership']);
-        add_shortcode('dclmn-committeepeople', [$this, 'committeepeople']);
-        add_shortcode('dclmn-elected-officials', [$this, 'elected_officials']);
-        add_shortcode('dclmn-county', [$this, 'county']);
-        add_shortcode('dclmn-local', [$this, 'local']);
-        add_shortcode('dclmn-map', [$this, 'map']);
+
+        $fields = [
+            'subscribe' => 'subscribe-form',
+            'leadership' => 'leadership',
+            'elected-officials' => 'elected-officials',
+            'county' => 'county',
+            'local' => 'local',
+            'map' => 'map',
+
+        ];
+        foreach ($fields as $key => $value) {
+            add_shortcode('dclmn-' . $key, function () use ($value) {
+                get_template_part("partials/{$value}");
+            });
+        }
+
+        add_shortcode('dclmn-committeepeople', function () {
+            return $this->get_committee_people_table();
+        });
+    }
+
+    function get_leadership() {
+        $args = [
+            'post_type' => 'committee-position',
+            'posts_per_page' => -1,
+            'order' => 'ASC'
+        ];
+
+        return dclmn_get_posts($args);
     }
 
     function get_committee_people() {
@@ -271,6 +293,7 @@ class DCLMN {
 
         $out = '';
 
+        $out .= '<div class="officials-table-wrap">';
         foreach ($jurisdictions as $jurisdiction) {
             $out .= '<h2>' . $jurisdiction['term']->name . '</h2>';
             $out .= '<div class="officials-table">';
@@ -285,46 +308,8 @@ class DCLMN {
             }
             $out .= '</div>';
         }
-
+        $out .= '</div>';
 
         return $out;
-    }
-
-    function get_leadership() {
-        $args = [
-            'post_type' => 'committee-position',
-            'posts_per_page' => -1,
-            'order' => 'ASC'
-        ];
-
-        return dclmn_get_posts($args);
-    }
-
-    function subscribe() {
-        get_template_part('subscribe-form');
-    }
-
-    function committeepeople() {
-        return $this->get_committee_people_table();
-    }
-
-    function elected_officials() {
-        get_template_part('elected-officials');
-    }
-
-    function county() {
-        get_template_part('county');
-    }
-
-    function local() {
-        get_template_part('local');
-    }
-
-    function leadership() {
-        get_template_part('leadership');
-    }
-
-    function map() {
-        get_template_part('map');
     }
 }
