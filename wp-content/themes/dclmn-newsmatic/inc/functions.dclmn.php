@@ -18,7 +18,7 @@ function pobj($obj, $exit_flag = 0, $show_footer = 1) {
         exit;
 }
 
-add_action('wp_head', function(){
+add_action('wp_head', function () {
     echo '<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">';
@@ -116,5 +116,68 @@ add_action('newsmatic_after_header_html', 'newsmatic_header_ads_banner_part', 10
 
 
 function newsmatic_breadcrumb_html() {
-    
+}
+
+
+function import_cps() {
+    $rows = array_map('str_getcsv', file('/Users/mps/Desktop/Committee.csv'));
+    //echo '<pre>'; print_r($rows);exit;
+
+    $header = array_shift($rows);
+    $file = array();
+    foreach ($rows as $row) {
+        //print_r($header);exit;
+        $file[] = array_combine($header, $row);
+    }
+
+    // $headers = array_shift($file);
+
+    // echo '<pre>'. print_r($file,1); exit;
+
+    $counters = [];
+
+    foreach ($file as $i => $line) {
+        //$line = array_combine($headers, $line);
+        //print_r($line);
+        // exit;
+
+        $ward_title = array_values($line)[0];
+        if (!isset($counters[$ward_title])) $counters[$ward_title] = 0;
+        $counters[$ward_title]++;
+        $post_title = $ward_title . ' #' . $counters[$ward_title];
+        $args = [
+            'post_type' => 'committee_person',
+            'post_title' => $post_title,
+            'post_status' => 'publish',
+        ];
+
+
+        if ($existing_committee_person = get_page_by_path(sanitize_title($post_title), OBJECT, 'committee_person')) {
+            $args['ID'] = $existing_committee_person->ID;
+            //pobj($existing_committee_person, 1);
+            //if ('publish' == $existing_committee_person->post_status) continue;
+        }
+
+        //print_r($args); exit;
+
+        $post_id = wp_insert_post($args);
+
+        $name = explode(' ', $line['Name']);
+
+        update_post_meta($post_id, 'public_email', $line['email']);
+        update_post_meta($post_id, 'first_name', $name[0]);
+
+        if (!empty($name[1])) {
+            update_post_meta($post_id, 'last_name', $name[1]);
+        }
+
+        if ($ward = get_page_by_path(sanitize_title($ward_title), OBJECT, 'ward')) {
+            update_post_meta($post_id, 'ward', $ward->ID);
+        }
+
+        //wp_set_post_terms( int $post_id, string|array $terms = ”, string $taxonomy = ‘post_tag’, bool $append = false ): array|false|WP_Error
+        //wp_set_post_terms($post_id, [16], 'jurisdiction');
+    }
+
+    die('done');
 }
