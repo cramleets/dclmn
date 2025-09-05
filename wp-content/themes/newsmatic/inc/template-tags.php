@@ -149,6 +149,7 @@ if ( ! function_exists( 'newsmatic_post_thumbnail' ) ) :
 		?>
 			<div class="post-thumbnail">
 				<?php the_post_thumbnail(); ?>
+				<span class="thumb-caption"><?php echo wp_get_attachment_caption( get_post_thumbnail_id() ); ?></span>
 			</div><!-- .post-thumbnail -->
 		<?php else : ?>
 

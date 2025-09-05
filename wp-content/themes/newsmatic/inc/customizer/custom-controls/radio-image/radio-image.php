@@ -26,7 +26,7 @@ class Newsmatic_WP_Radio_Image_Control extends WP_Customize_Control {
     public function enqueue() {
         wp_enqueue_style(  'newsmatic-radio-image', get_template_directory_uri() . '/inc/customizer/custom-controls/radio-image/radio-image.css', array(), NEWSMATIC_VERSION, 'all' );
         wp_enqueue_script( 'jquery-ui-button' );
-        wp_enqueue_script( 'newsmatic-radio-image', get_template_directory_uri() . '/inc/customizer/custom-controls/radio-image/radio-image.js', array( 'jquery' ), NEWSMATIC_VERSION, true );
+        wp_enqueue_script( 'newsmatic-radio-image', get_template_directory_uri() . '/inc/customizer/custom-controls/radio-image/radio-image.js', array( 'jquery', 'customize-controls' ), NEWSMATIC_VERSION, true );
     }
     /**
      * Add custom JSON parameters to use in the JS template.

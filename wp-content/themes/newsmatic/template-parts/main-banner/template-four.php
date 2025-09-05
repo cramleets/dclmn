@@ -70,7 +70,7 @@ $slider_args = $args['slider_args'];
                         <figure class="post-thumb">
                             <?php if( has_post_thumbnail($popular_post_id) ): ?>
                                 <a href="<?php echo esc_url(get_the_permalink($popular_post_id)); ?>">
-                                    <img src="<?php echo esc_url( get_the_post_thumbnail_url($popular_post_id, ND\newsmatic_get_customizer_option( 'banner_slider_block_posts_image_size' ) ) ); ?>"/>
+                                    <img src="<?php echo esc_url( get_the_post_thumbnail_url($popular_post_id, ND\newsmatic_get_customizer_option( 'banner_slider_block_posts_image_size' ) ) ); ?>" alt="<?php the_title_attribute([ 'post' => $popular_post_id ]); ?>"/>
                                 </a>
                             <?php endif; ?>
                         </figure>

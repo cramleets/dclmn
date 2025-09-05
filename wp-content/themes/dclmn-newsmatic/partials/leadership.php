@@ -23,7 +23,7 @@ $leadership = $dclmn->get_leadership();
           ?>
         </td>
         <td><?php echo $l->post_title ?></td>
-        <td><a href="tel:<?php echo $l->phone ?>"><?php echo $l->phone ?></a></td>
+        <td><?php echo $dclmn->get_phone_link($l->phone); ?></td>
       </tr>
     <?php endforeach; ?>
   </tbody>

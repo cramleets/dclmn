@@ -1060,7 +1060,7 @@ class Breadcrumb_Trail {
 
         foreach ( $post_types as $type ) {
 
-            if ( $slug === $type->has_archive || ( true === $type->has_archive && $slug === $type->rewrite['slug'] ) )
+            if ( $slug === $type->has_archive || ( true === $type->has_archive && is_array($type->rewrite) && $slug === $type->rewrite['slug'] ) )
                 $return[] = $type;
         }
 

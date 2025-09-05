@@ -45,6 +45,7 @@ function newsmatic_bottom_footer_copyright_part() {
 }
 
 function newsmatic_top_header_html() {
+    get_template_part('partials/mobile-header');
     echo '<div class="newsmatic-container">';
     get_template_part('partials/home-boxes');
     echo '</div>';
@@ -181,3 +182,7 @@ function import_cps() {
 
     die('done');
 }
+
+
+function newsmatic_header_sidebar_toggle_part() {}
+function newsmatic_header_search_part() {}

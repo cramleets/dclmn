@@ -96,10 +96,14 @@
 			padding-right: 0;
 		}
 
-		.banner-layout--three .main-banner-block-posts,
-		.banner-layout--four .main-banner-block-posts.banner-trailing-posts {
+		.banner-layout--three .main-banner-block-posts {
 			padding-left: 0;
 			height: initial;
+		}
+
+		.banner-layout--four .main-banner-block-posts.banner-trailing-posts {
+			padding-left: 0;
+			height: 450px;
 		}
 
 		.banner-layout--three .main-banner-block-posts article:first-child,
@@ -514,6 +518,11 @@
 			flex-direction: column;
 			flex-wrap: nowrap;
 		}
+
+		.banner-layout--four .main-banner-block-posts.banner-trailing-posts {
+			height: 750px;
+		}
+
 
 		.banner-layout--three .main-banner-block-posts article:first-child {
 			flex: 50%;

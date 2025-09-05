@@ -36,7 +36,7 @@ if( class_exists( 'WP_Customize_Control' ) ) :
          */
         public function enqueue() {
             wp_enqueue_style( 'newsmatic-customizer-redirect-control', get_template_directory_uri() . '/inc/customizer/custom-controls/redirect-control/redirect-control.css', array(), NEWSMATIC_VERSION, 'all' );
-            wp_enqueue_script( 'newsmatic-customizer-redirect-control', get_template_directory_uri() . '/inc/customizer/custom-controls/redirect-control/redirect-control.js', array('jquery'), NEWSMATIC_VERSION, true );
+            wp_enqueue_script( 'newsmatic-customizer-redirect-control', get_template_directory_uri() . '/inc/customizer/custom-controls/redirect-control/redirect-control.js', array('jquery', 'customize-controls'), NEWSMATIC_VERSION, true );
         }
 
         /**

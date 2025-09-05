@@ -84,7 +84,7 @@ $slider_args = $args['slider_args'];
                             <figure class="post-thumb">
                                 <?php if( has_post_thumbnail($trailing_post_id) ): ?> 
                                     <a href="<?php echo esc_url(get_the_permalink($trailing_post_id)); ?>">
-                                        <img src="<?php echo esc_url( get_the_post_thumbnail_url($trailing_post_id, ND\newsmatic_get_customizer_option( 'main_banner_five_trailing_posts_image_size' ) ) ); ?>"/>
+                                        <img src="<?php echo esc_url( get_the_post_thumbnail_url($trailing_post_id, ND\newsmatic_get_customizer_option( 'main_banner_five_trailing_posts_image_size' ) ) ); ?>" alt="<?php the_title_attribute([ 'post' => $trailing_post_id ]); ?>"/>
                                     </a>
                                 <?php endif; ?>
                                 <div class="post-element-wrap">

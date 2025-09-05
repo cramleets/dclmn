@@ -40,11 +40,13 @@ if( !class_exists( 'Newsmatic_Theme_Info' ) ) :
          * 
          */
         function __construct() {
-            $this->theme_name = esc_html__( 'Newsmatic', 'newsmatic' );
+            add_action( 'init', function(){
+                $this->demofile = include get_template_directory() . '/inc/admin/assets/demos.php';
+                $this->theme_name = esc_html__( 'Newsmatic', 'newsmatic' );
+                $this->restriction_message = esc_html__( "You dont have permission to perform this action", "newsmatic" );
+            });
             $this->version = wp_get_theme()->get( 'Version' );
-            $this->demofile = include get_template_directory() . '/inc/admin/assets/demos.php';
             $this->newsmatic_disable_admin_notices = get_theme_mod( 'newsmatic_disable_admin_notices', false );
-            $this->restriction_message = esc_html__( "You dont have permission to perform this action", "newsmatic" );
             //Add the theme page
             add_action( 'admin_menu', array( $this, 'add_theme_info_menu' ) );
             if( ! $this->newsmatic_disable_admin_notices ) :

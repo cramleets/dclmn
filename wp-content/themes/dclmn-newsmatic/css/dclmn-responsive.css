@@ -1,0 +1,139 @@
+@media (max-width: 869px) {
+    .main-header .newsmatic-container {
+        max-width: 96%;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .home-boxes {
+        flex-wrap: wrap;
+        gap: .5em;
+    }
+
+    .home-boxes>div {
+        flex-basis: 48%
+    }
+}
+
+
+@media (max-width: 785px) {
+    .main-navigation .menu li a {
+        padding: 15px 12px;
+    }
+}
+
+/* .site-branding-section {
+    display: none;
+} */
+
+@media (max-width: 769px) {
+
+    #masthead nav.main-navigation ul.menu li a,
+    #masthead nav.main-navigation ul.nav-menu li a {
+        color: var(--color-root);
+    }
+
+    .officials-table>div {
+        flex: 0 0 47%;
+        text-align: center;
+    }
+
+    .button-group a {
+        flex-basis: 100%;
+    }
+
+    .button-group br {
+        display: none;
+    }
+
+    /*  */
+    #masthead .newsmatic-container {
+        padding-left: .5em;
+        padding-right: .5em;
+    }
+
+    .menu-menu-1-container {
+        position: fixed;
+        height: 100%;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        height: 0;
+        padding-top: 70px;
+        display: none;
+        background-color: #fff;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+    }
+
+    .main-navigation.toggled .menu-menu-1-container {
+        display: block;
+    }
+
+    /* #header-menu {
+        position: fixed;
+        height: 100%;
+        top: 0;
+        padding-top: 70px;
+    } */
+
+    /* #site-navigation {
+        height: 1em;
+    } */
+
+    /* #site-navigation .menu-toggle {
+        display: none;
+    } */
+
+}
+
+@media (max-width: 680px) {
+    #masthead img {
+        min-width: 240px !important;
+        height: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .officials-table>div {
+        flex: 0 0 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 550px) {
+    .home-boxes {
+        flex-wrap: wrap;
+        gap: 0;
+    }
+
+    .home-boxes>div {
+        flex-basis: 100%;
+        margin-bottom: .5em;
+    }
+
+    .home-boxes>div ul {
+        display: none;
+    }
+
+    .button.big {
+        width: 100%;
+        text-align: left;
+        margin-bottom: .25em;
+    }
+
+    .main-header {
+        padding-left: .5em;
+        padding-right: .5em;
+    }
+
+    #site-navigation {
+        display: none;
+    }
+
+    /* #masthead img {
+        width: 100%;
+        height: auto !important;
+    } */
+}

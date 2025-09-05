@@ -2121,6 +2121,38 @@ line-height: 2;
 
 
 
+.accordion-section-title button.accordion-trigger {
+    padding: 15px 30px 15px 15px;
+  }
+
+
+
+#customize-controls .control-section>h3.accordion-section-title {
+    padding: 0;
+  }
+
+
+  #customize-controls .current-panel .control-section>h3.accordion-section-title:has(button.accordion-trigger), .accordion-section-title:has(button.accordion-trigger) {
+    padding: 0;
+  }
+
+  #customize-controls #accordion-section-newsmatic_about_section .accordion-section-title button:hover {
+    background: transparent;
+    color: #fff;
+  }
+
+  #customize-controls #accordion-section-newsmatic_about_section h3.accordion-section-title:after{
+    color: #fff;
+  }
+
+  .components-dropdown .dashicons-edit {
+    padding: 2px;
+    font-size: 13px;
+  }
+
+
+
+
 /*
 ========================================================
 31.0 Loader Css

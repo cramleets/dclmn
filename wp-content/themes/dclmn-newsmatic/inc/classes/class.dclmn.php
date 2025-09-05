@@ -14,9 +14,11 @@ class DCLMN {
         add_action('wp_enqueue_scripts', function () {
             $parent_style = 'dclmn-parent';
 
-
             wp_enqueue_style($parent_style, get_template_directory_uri() . '/style.css', [], filemtime(get_template_directory() . '/style.css'));
-            wp_enqueue_style('dclmn-child', get_stylesheet_directory_uri() . '/style.css', [$parent_style], filemtime(get_stylesheet_directory() . '/style.css'));
+            wp_enqueue_style('dclmn-child', get_stylesheet_directory_uri() . '/css/dclmn-main.css', [$parent_style], filemtime(get_stylesheet_directory() . '/css/dclmn-main.css'));
+            wp_enqueue_style('dclmn-responsive', get_stylesheet_directory_uri() . '/css/dclmn-responsive.css', ['dclmn-child'], filemtime(get_stylesheet_directory() . '/css/dclmn-responsive.css'));
+
+            wp_enqueue_script('dclmn', get_stylesheet_directory_uri() . '/js/dclmn.js', ['jquery'], filemtime(get_stylesheet_directory() . '/js/dclmn.js'));
         }, 98);
 
         add_action('init', function () {
@@ -34,7 +36,7 @@ class DCLMN {
         add_action('newsmatic_after_header_hook', 'newsmatic_header_ads_banner_part', 10);
         add_action('newsmatic_main_banner_hook', 'newsmatic_header_ads_banner_part_footer', 999);
 
-
+        //include theme partials with shortcodes
         $fields = [
             'subscribe' => 'subscribe-form',
             'leadership' => 'leadership',
@@ -42,7 +44,10 @@ class DCLMN {
             'county' => 'county',
             'local' => 'local',
             'map' => 'map',
-
+            'quotes' => 'quotes',
+            'buttons-voting-center' => 'buttons-voting-center',
+            'buttons-committee-people' => 'buttons-committee-people',
+            'buttons-elected-officials' => 'buttons-elected-officials',
         ];
         foreach ($fields as $key => $value) {
             add_shortcode('dclmn-' . $key, function () use ($value) {
@@ -173,6 +178,18 @@ class DCLMN {
         $this->builds['pa_districts'] = $pa_districts;
     }
 
+    function format_phone($str) {
+        $num = preg_replace('/\D/', '', $str);
+        return '' . substr($num, 0, 3) . '-' . substr($num, 3, 3) . '-' . substr($num, 6);
+    }
+
+    function get_phone_link($str) {
+        if (!empty($str)) {
+            $phone = $this->format_phone($str);
+            return '<a href="tel:' . $phone . '">' . $phone . '</a>';
+        }
+    }
+
     function get_committee_people_table() {
         $this->build_committee();
 
@@ -180,7 +197,28 @@ class DCLMN {
         foreach ($this->builds['wards'] as $ward) {
             $wards[$ward->post_title] = $ward;
         }
-        ksort($wards);
+        // uksort($wards, function ($a, $b) {
+        //     [$a1, $a2] = explode('-', $a);
+        //     [$b1, $b2] = explode('-', $b);
+        //     return [$a1, $a2] <=> [$b1, $b2];
+        // });
+
+        uksort($wards, function ($a, $b) {
+            [$a1, $a2] = explode('-', $a);
+            [$b1, $b2] = explode('-', $b);
+
+            // Prioritize 'N' keys first
+            if ($a1 === 'N' && $b1 !== 'N') return -1;
+            if ($a1 !== 'N' && $b1 === 'N') return 1;
+
+            // Both are 'N' — compare second part numerically
+            if ($a1 === 'N' && $b1 === 'N') {
+                return (int)$a2 <=> (int)$b2;
+            }
+
+            // Otherwise, compare both numerically
+            return [(int)$a1, (int)$a2] <=> [(int)$b1, (int)$b2];
+        });
 
         $out = '';
         $out .= '<table cellpadding="5" cellspacing="0" class="stripes">';

@@ -23,6 +23,95 @@ $demos_array = array(
             'free' => 'Free'
         )
     ),
+    'newsmatic-ten' => array(
+        'name' => 'News Ai',
+        'type' => 'free',
+        'external_url' => 'https://preview.blazethemes.com/import-files/newsmatic/newsmatic-ten.zip',
+        'image' => 'https://blazethemes.com/wp-content/uploads/2022/12/newsmatic-ten-600x657-min.jpg',
+        'preview_url' => 'https://preview.blazethemes.com/newsmatic-ten/',
+        'menu_array' => array(),
+        'home_slug' => 'nekit-home',
+        'blog_slug' => '',
+        'plugins' => array(
+            'elementor' => array(
+                'name' => 'Elementor',
+                'source' => 'wordpress',
+                'file_path' => 'elementor/elementor.php'
+            ),
+            'news-kit-elementor-addons' => array(
+                'name' => 'News Kit Elementor Addons',
+                'source' => 'wordpress',
+                'file_path' => 'news-kit-elementor-addons/news-kit-elementor-addons.php'
+            )
+        ),
+        'pagebuilder' => array(
+            'elementor' => 'Elementor'
+        ),
+        'tags' => array(
+            'free' => 'Free',
+            'new' => 'New',
+            'elementor' => 'Elementor'
+        )
+    ),
+    'newsmatic-two' => array(
+        'name' => 'Tech & Gadgets',
+        'type' => 'free',
+        'external_url' => 'https://preview.blazethemes.com/import-files/newsmatic/newsmatic-two.zip',
+        'image' => 'https://blazethemes.com/wp-content/uploads/2022/12/Newsmatic-WordPress-theme-Tech-Demo.jpg',
+        'preview_url' => 'https://preview.blazethemes.com/newsmatic-two/',
+        'menu_array' => array(
+            'menu-2' => 'Header Menu'
+        ),
+        'home_slug' => 'nekit-home',
+        'blog_slug' => '',
+        'plugins' => array(
+            'elementor' => array(
+                'name' => 'Elementor',
+                'source' => 'wordpress',
+                'file_path' => 'elementor/elementor.php'
+            ),
+            'news-kit-elementor-addons' => array(
+                'name' => 'News Kit Elementor Addons',
+                'source' => 'wordpress',
+                'file_path' => 'news-kit-elementor-addons/news-kit-elementor-addons.php'
+            )
+        ),
+        'tags' => array(
+            'free' => 'Free',
+            'elementor' => 'Elementor',
+            'new' => 'New'
+        )
+    ),
+    'newsmatic-seven' => array(
+        'name' => 'Pet Care',
+        'type' => 'free',
+        'external_url' => 'https://preview.blazethemes.com/import-files/newsmatic/newsmatic-seven.zip',
+        'image' => 'https://blazethemes.com/wp-content/uploads/2022/12/Newsmatic-WordPress-theme-Petcare-Demo.jpg',
+        'preview_url' => 'https://preview.blazethemes.com/newsmatic-seven/',
+        'menu_array' => array(
+            'menu-2' => 'Header Menu',
+            'menu-3' => 'Bottom Menu'
+        ),
+        'home_slug' => 'nekit-home',
+        'blog_slug' => '',
+        'plugins' => array(
+            'elementor' => array(
+                'name' => 'Elementor',
+                'source' => 'wordpress',
+                'file_path' => 'elementor/elementor.php'
+            ),
+            'news-kit-elementor-addons' => array(
+                'name' => 'News Kit Elementor Addons',
+                'source' => 'wordpress',
+                'file_path' => 'news-kit-elementor-addons/news-kit-elementor-addons.php'
+            )
+        ),
+        'tags' => array(
+            'free' => 'Free',
+            'elementor' => 'Elementor',
+            'new' => 'New'
+        )
+    ),
     'newsmatic-elementor-one' => array(
         'name' => 'Elementor One',
         'type' => 'free',
@@ -133,38 +222,6 @@ $demos_array = array(
             'free' => 'Free'
         )
     ),
-    'newsmatic-ten' => array(
-        'name' => 'Demo Ten',
-        'type' => 'free',
-        'external_url' => 'https://preview.blazethemes.com/import-files/newsmatic/newsmatic-ten.zip',
-        'image' => 'https://blazethemes.com/wp-content/uploads/2023/09/newsmatic-free-ten-1.jpg',
-        'preview_url' => 'https://preview.blazethemes.com/newsmatic-ten/',
-        'menu_array' => array(
-            'menu-2' => 'Header Menu'
-        ),
-        'home_slug' => '',
-        'blog_slug' => '',
-        'plugins' => array(),
-        'tags' => array(
-            'free' => 'Free'
-        )
-    ),
-    'newsmatic-two' => array(
-        'name' => 'Tech',
-        'type' => 'free',
-        'external_url' => 'https://preview.blazethemes.com/import-files/newsmatic/newsmatic-two.zip',
-        'image' => 'https://blazethemes.com/wp-content/uploads/2023/01/tech.jpg',
-        'preview_url' => 'https://preview.blazethemes.com/newsmatic-two/',
-        'menu_array' => array(
-            'menu-2' => 'Header Menu'
-        ),
-        'home_slug' => '',
-        'blog_slug' => '',
-        'plugins' => array(),
-        'tags' => array(
-            'free' => 'Free'
-        )
-    ),
     'newsmatic-three' => array(
         'name' => 'Food Blog',
         'type' => 'free',
@@ -217,23 +274,6 @@ $demos_array = array(
             'free' => 'Free'
         )
     ),
-    'newsmatic-seven' => array(
-        'name' => 'Pet',
-        'type' => 'free',
-        'external_url' => 'https://preview.blazethemes.com/import-files/newsmatic/newsmatic-seven.zip',
-        'image' => 'https://blazethemes.com/wp-content/uploads/2023/04/Newsmatic-Pet-Care.jpg',
-        'preview_url' => 'https://preview.blazethemes.com/newsmatic-seven/',
-        'menu_array' => array(
-            'menu-2' => 'Header Menu',
-            'menu-3' => 'Bottom Menu'
-        ),
-        'home_slug' => '',
-        'blog_slug' => '',
-        'plugins' => array(),
-        'tags' => array(
-            'free' => 'Free'
-        )
-    ),
     'newsmatic-eight' => array(
         'name' => 'Game News',
         'type' => 'free',
@@ -265,6 +305,37 @@ $demos_array = array(
         'plugins' => array(),
         'tags' => array(
             'free' => 'Free'
+        )
+    ),
+    'newsmatic-pro-eleven' => array(
+        'name' => 'SEO Blog',
+        'type' => 'pro',
+        'buy_url'=> 'https://blazethemes.com/theme/newsmatic-pro/',
+        'external_url' => 'https://preview.blazethemes.com/import-files/newsmatic/newsmatic-pro-eleven.zip',
+        'image' => 'https://blazethemes.com/wp-content/uploads/2023/01/newsmatic-pro-eleven.jpg',
+        'preview_url' => 'https://preview.blazethemes.com/newsmatic-pro-eleven/',
+        'menu_array' => array(),
+        'home_slug' => 'nekit-home',
+        'blog_slug' => '',
+        'plugins' => array(
+            'elementor' => array(
+                'name' => 'Elementor',
+                'source' => 'wordpress',
+                'file_path' => 'elementor/elementor.php'
+            ),
+            'news-kit-elementor-addons' => array(
+                'name' => 'News Kit Elementor Addons',
+                'source' => 'wordpress',
+                'file_path' => 'news-kit-elementor-addons/news-kit-elementor-addons.php'
+            )
+        ),
+        'pagebuilder' => array(
+            'elementor' => 'Elementor'
+        ),
+        'tags' => array(
+            'pro' => 'Pro',
+            'new' => 'New',
+            'elementor' => 'Elementor'
         )
     ),
     'newsmatic-pro-one' => array(
@@ -649,27 +720,34 @@ $demos_array = array(
         )
     ),
     'newsmatic-pro-eleven' => array(
-        'name' => 'LifeStyle News',
+        'name' => 'SEO Blog',
         'type' => 'pro',
         'buy_url'=> 'https://blazethemes.com/theme/newsmatic-pro/',
         'external_url' => 'https://preview.blazethemes.com/import-files/newsmatic/newsmatic-pro-eleven.zip',
-        'image' => 'https://blazethemes.com/wp-content/uploads/2023/01/pro-eleven.jpg',
+        'image' => 'https://blazethemes.com/wp-content/uploads/2023/01/newsmatic-pro-eleven.jpg',
         'preview_url' => 'https://preview.blazethemes.com/newsmatic-pro-eleven/',
-        'menu_array' => array(
-            'menu-2' => 'Header Menu',
-            'menu-3' => 'Footer Menu'
-        ),
-        'home_slug' => '',
+        'menu_array' => array(),
+        'home_slug' => 'nekit-home',
         'blog_slug' => '',
         'plugins' => array(
-            'contact-form-7' => array(
-                'name' => 'Contact Form 7',
+            'elementor' => array(
+                'name' => 'Elementor',
                 'source' => 'wordpress',
-                'file_path' => 'contact-form-7/contact-form-7.php'
+                'file_path' => 'elementor/elementor.php'
+            ),
+            'news-kit-elementor-addons' => array(
+                'name' => 'News Kit Elementor Addons',
+                'source' => 'wordpress',
+                'file_path' => 'news-kit-elementor-addons/news-kit-elementor-addons.php'
             )
         ),
+        'pagebuilder' => array(
+            'elementor' => 'Elementor'
+        ),
         'tags' => array(
-            'pro' => 'Pro'
+            'pro' => 'Pro',
+            'new' => 'New',
+            'elementor' => 'Elementor'
         )
     ),
     'newsmatic-pro-thirteen' => array(
