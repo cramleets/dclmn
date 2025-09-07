@@ -339,9 +339,12 @@ class DCLMN {
                 $out .= '<div>';
                 $default_src = (!empty($post->gender)) ? 'silouhette-' . $post->gender . '.png' : 'silouhette-male.png';
                 $src = (get_the_post_thumbnail_url($post->ID, 'medium')) ?: get_stylesheet_directory_uri() . '/images/' . $default_src;
+                $url = $post->website_government;
+                $out .= ($url) ? '<a href="' . $url . '" target="_blank">' : '';
                 $out .= ($src) ? '<img src="' . $this->thumb($src, ['width' => 250, 'height' => 250]) . '">' : '';
                 $out .= '<strong style="font-size: 1.25em;">' . (($post->title) ? $post->title : $post->post_title) . '</strong><br>';
                 $out .= '<strong>' . $post->first_name . ' ' . $post->last_name . '</strong><br>';
+                $out .= ($url) ? '</a>' : '';
                 $out .= '</div>';
             }
             $out .= '</div>';

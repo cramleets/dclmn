@@ -12,6 +12,17 @@ jQuery(document).ready(function ($) {
   //init
   setActiveLink();
 
+  $('.dclmn-mobile-header-open').on('click', function(e){
+    e.stopPropagation();
+    $('#site-navigation').toggleClass('toggled').show();
+    $('body').addClass('menu-open');
+  });
+
+  $('.dclmn-mobile-header-close').on('click', function(){
+    $('#site-navigation').removeClass('toggled').hide();
+    $('body').removeClass('menu-open');
+  });
+
   //listen
   $(window).on('hashchange', setActiveLink);
 

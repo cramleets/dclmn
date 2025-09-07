@@ -1,4 +1,8 @@
 @media (max-width: 869px) {
+    body.menu-open #site-navigation {
+        display: none;
+    }
+
     .main-header .newsmatic-container {
         max-width: 96%;
         padding: 0;
@@ -36,6 +40,7 @@
     .officials-table>div {
         flex: 0 0 47%;
         text-align: center;
+        font-size: 1em;
     }
 
     .button-group a {
@@ -59,7 +64,7 @@
         bottom: 0;
         left: 0;
         height: 0;
-        padding-top: 70px;
+        padding-top: 50px;
         display: none;
         background-color: #fff;
         width: 100%;
@@ -69,6 +74,8 @@
 
     .main-navigation.toggled .menu-menu-1-container {
         display: block;
+        border-top: .75em solid var(--color-root);
+        padding-top: 1em;
     }
 
     /* #header-menu {
@@ -108,10 +115,27 @@
         gap: 0;
     }
 
-    .home-boxes>div {
-        flex-basis: 100%;
+    .home-boxes>div:not(first-of-type) {
         margin-bottom: .5em;
+        flex-basis: 33%;
     }
+
+    .home-boxes>div:first-of-type {
+        flex-basis: 100%;
+        font-size: 1em;
+    }
+
+    .home-boxes>div:not(first-of-type) h4 a {
+        font-size: 1.25em;
+        padding: .5em;
+    }
+
+    .home-boxes>div:not(first-of-type) h4 a:hover,
+    .home-boxes>div:not(first-of-type) h4 a:active {
+        background-color: var(--color-highlight);
+        color: var(--color-root);
+    }
+
 
     .home-boxes>div ul {
         display: none;
@@ -132,8 +156,47 @@
         display: none;
     }
 
+    .dclmn-mobile-header-open {
+        display: inline-block;
+        position: absolute;
+        right: 0.5em;
+    }
+
     /* #masthead img {
         width: 100%;
         height: auto !important;
     } */
+
+    #main-banner-section {
+        padding-top: 0;
+    }
+
+    header.site-header {
+        padding-bottom: 0;
+    }
+
+    body.menu-open .home-boxes {
+        display: none;
+    }
+
+
+    body.menu-open .main-navigation.toggled .menu-menu-1-container {
+        padding-top: 0;
+    }
+
+
+    .dclmn-mobile-header {
+        padding: .5em;
+        margin-top: 4px;
+    }
+
+    #masthead img {
+        min-width: unset !important;
+        max-height: none !important;
+        height: 152px !important;
+
+    }
+    .officials-table-wrap h2  {
+        text-align: center;
+    }
 }

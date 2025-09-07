@@ -1,4 +1,6 @@
- <div class="home-boxes">
+<div class="dclmn-mobile-header-open" aria-expanded="false"><span>menu =</span></div>
+
+<div class="home-boxes">
    <div>
      <a href="<?php echo home_url() ?>"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/dclmn-alt-2.png" style="height: 160px;"></a>
    </div>
