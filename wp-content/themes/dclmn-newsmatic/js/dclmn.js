@@ -3,6 +3,7 @@ jQuery(document).ready(function ($) {
 
   function setActiveLink() {
     var hash = window.location.hash.replace(/#/g, '');
+    console.log(hash);
     $('.button-group-voting-center a').removeClass('current');
     if (hash) {
       $('.button-group-voting-center a.' + hash).addClass('current');

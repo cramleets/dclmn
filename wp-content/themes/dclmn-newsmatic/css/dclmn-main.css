@@ -9,6 +9,7 @@
     --color-red: #f00;
     --color-white: #fff;
     --color-black: #000;
+    --theme-block-top-border-height: 0;
 }
 
 .site-branding .site-title a {
@@ -165,10 +166,31 @@ table.stripes a:hover {
 
 }
 
+.officials-table:has(> div:nth-child(5)) {
+    justify-content: left;
+}
+
 .officials-table>div {
     flex: 0 0 31%;
     text-align: center;
     font-size: .9em;
+}
+
+.officials-table-wrap h2 {
+    color: var(--color-root);
+    font-size: 1.75em;
+    border-bottom: 1px solid var(--color-root);
+}
+
+.officials-table-wrap:not(:first-of-type) h2 {
+    margin-top: 2em;
+}
+
+.officials-table-wrap.narberth-borough .officials-table>div,
+.officials-table-wrap.county-row-officers .officials-table>div,
+.officials-table-wrap.lower-merion-township .officials-table>div,
+.officials-table-wrap.lower-merion-school-board .officials-table>div {
+    flex: 0 0 18%;
 }
 
 .officials-table>div img {
@@ -193,23 +215,25 @@ table.stripes a:hover {
 }
 
 .button.big,
-.button-group a {
+.button-group a,
+.wp-block-search__button, .widget.widget_search .search-submit {
     display: inline-block;
-    background-color: var(--color-highlight);
-    border: 5px solid var(--color-highlight);
+    background-color: var(--color-root);
+    border: 2px solid var(--color-root);
     padding: .75em 1.5em;
     font-size: 1.5em;
-    color: #000;
+    color: var(--color-white);
     text-decoration: none;
     flex-basis: 47%;
     text-align: center;
     font-weight: bold;
     border-radius: .25em;
+    box-shadow: -1px 1px 2px 2px rgba(0, 0, 0, 0.3);
 }
 
 .button.big.donate {
     background-color: var(--color-red);
-    border: 5px solid var(--color-red);
+    border: 2px solid var(--color-red);
     color: #fff;
     flex-basis: 100%;
 }
@@ -218,20 +242,29 @@ table.stripes a:hover {
     flex-basis: 47%;
 }
 
+.button-group a.current,
+.button.big:active,
+.button-group a:active,
+.button-group a.current:active,
 .button.big:hover,
-.button-group a:hover {
-    /* background-color: #fff; */
+.button-group a:hover,
+.button-group a.current:hover {
     box-shadow: 0 0 1px rgba(0, 0, 0, .75);
+    background-color: var(--color-highlight);
+    border-color: var(--color-root);
+    color: var(--color-root);
+    box-shadow: -1px 1px 4px 2px rgba(0, 0, 0, 0.25);
 }
 
 .button.big.donate:hover {
-    color: var(--color-white);
+    color: var(--color-red);
+    background-color: var(--white-red);
+    border: 2px solid var(--color-red);
 }
 
-.button-group a.current {
-    background-color: var(--color-red);
-    border-color: var(--color-red);
-    color: var(--color-white);
+.wp-block-search__button, .widget.widget_search .search-submit {
+    font-size: .75em;
+    padding: .25em .25em;
 }
 
 .button-group.button-group-elected-officials a {
@@ -308,11 +341,20 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
     z-index: 9999;
 }
 
-
-
 .dclmn-mobile-header-open span:hover,
 .dclmn-mobile-header-close span {
     border-color: var(--color-highlight);
     background-color: var(--color-highlight);
     color: var(--color-root);
+}
+
+.subscribe-note {
+    font-size: .75em;
+    font-style: italic;
+    margin: 0 1.5em;
+}
+
+.footer-widget .widget.widget_nav_menu ul li:before,
+.footer-widget .widget.widget_nav_menu ol li:before {
+    color: var(--color-highlight)
 }

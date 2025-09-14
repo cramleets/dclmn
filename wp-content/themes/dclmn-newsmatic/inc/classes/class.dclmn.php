@@ -48,7 +48,10 @@ class DCLMN {
             'buttons-voting-center' => 'buttons-voting-center',
             'buttons-committee-people' => 'buttons-committee-people',
             'buttons-elected-officials' => 'buttons-elected-officials',
+            'buttons-home-page' => 'buttons-home-page',
+            'committee-person-questions' => 'committee-person-questions',
         ];
+
         foreach ($fields as $key => $value) {
             add_shortcode('dclmn-' . $key, function () use ($value) {
                 get_template_part("partials/{$value}");
@@ -57,6 +60,17 @@ class DCLMN {
 
         add_shortcode('dclmn-committeepeople', function () {
             return $this->get_committee_people_table();
+        });
+
+        add_filter('tec_events_calendar_embeds_post_type_args', function ($args) {
+            // Tell WP to build caps off "tribe_event" instead of "post"
+            $args['capability_type'] = ['tribe_event', 'tribe_events']; // singular, plural
+            // $args['map_meta_cap']    = true;
+
+            // If the plugin set any explicit caps, wipe them so the mapping applies
+            unset($args['capabilities']);
+
+            return $args;
         });
     }
 
@@ -221,7 +235,7 @@ class DCLMN {
         });
 
         $out = '';
-        $out .= '<table cellpadding="5" cellspacing="0" class="stripes">';
+        $out .= '<table cellpadding="5" cellspacing="0" class="stripes committee-people">';
         $out .= '<thead>';
         $out .= '<tr valign="top">';
         $out .= '<td>Ward</td>';
@@ -235,14 +249,14 @@ class DCLMN {
             $district = str_replace('th district', '', strtolower($ward->pa_district->post_title));
 
             $out .= '<tr valign="top">';
-            $out .= '<td>' . $ward->post_title . '</td>';
-            $out .= '<td><a href="' . $ward->pa_district->website . '" target="_blank">' . $district . '</a></td>';
-            $out .= '<td>';
+            $out .= '<td data-label="Ward"" class="ward">' . $ward->post_title . '</td>';
+            $out .= '<td data-label="District"><a href="' . $ward->pa_district->website . '" target="_blank">' . $district . '</a></td>';
+            $out .= '<td data-label="Committee People">';
             foreach ($ward->committe_people as $person) {
                 $out .= '<a href="mailto:' . $person->public_email . '" target="_blank">' . $person->first_name . ' ' . $person->last_name . '</a><br>';
             }
             $out .= '</td>';
-            $out .= '<td><a href="' . $ward->polling_place->map_url . '" target="_blank">' . $ward->polling_place->post_title . '</a></td>';
+            $out .= '<td data-label="Polling Place"><a href="' . $ward->polling_place->map_url . '" target="_blank">' . $ward->polling_place->post_title . '</a></td>';
             $out .= '</tr>';
         }
         $out .= '</tbody>';
@@ -331,7 +345,7 @@ class DCLMN {
 
         $out = '';
 
-        $out .= '<div class="officials-table-wrap">';
+        $out .= '<div class="officials-table-wrap ' . sanitize_title($args['search']) . '">';
         foreach ($jurisdictions as $jurisdiction) {
             $out .= '<h2>' . $jurisdiction['term']->name . '</h2>';
             $out .= '<div class="officials-table">';

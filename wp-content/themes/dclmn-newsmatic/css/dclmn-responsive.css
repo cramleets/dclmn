@@ -1,3 +1,23 @@
+@media (max-width: 1300px) {
+
+    .officials-table-wrap.narberth-borough .officials-table>div,
+    .officials-table-wrap.county-row-officers .officials-table>div,
+    .officials-table-wrap.lower-merion-township .officials-table>div,
+    .officials-table-wrap.lower-merion-school-board .officials-table>div {
+        flex: 0 0 23%;
+    }
+}
+
+@media (max-width: 1100px) {
+
+    .officials-table-wrap.narberth-borough .officials-table>div,
+    .officials-table-wrap.county-row-officers .officials-table>div,
+    .officials-table-wrap.lower-merion-township .officials-table>div,
+    .officials-table-wrap.lower-merion-school-board .officials-table>div {
+        flex: 0 0 30%;
+    }
+}
+
 @media (max-width: 869px) {
     body.menu-open #site-navigation {
         display: none;
@@ -32,9 +52,14 @@
 
 @media (max-width: 769px) {
 
+    nav.main-navigation ul.menu,
+    nav.main-navigation ul.nav-menu {
+        background-color: var(--color-root);
+    }
+
     #masthead nav.main-navigation ul.menu li a,
     #masthead nav.main-navigation ul.nav-menu li a {
-        color: var(--color-root);
+        color: var(--color-highlight);
     }
 
     .officials-table>div {
@@ -76,6 +101,17 @@
         display: block;
         border-top: .75em solid var(--color-root);
         padding-top: 1em;
+    }
+
+    .officials-table-wrap.narberth-borough .officials-table>div,
+    .officials-table-wrap.county-row-officers .officials-table>div,
+    .officials-table-wrap.lower-merion-township .officials-table>div,
+    .officials-table-wrap.lower-merion-school-board .officials-table>div {
+        flex: 0 0 48%;
+    }
+
+    #sb_instagram #sbi_images .sbi_item:nth-child(n+6) {
+        display: none;
     }
 
     /* #header-menu {
@@ -141,10 +177,12 @@
         display: none;
     }
 
+    .button-group .button.big.donate,
     .button.big {
         width: 100%;
         text-align: left;
         margin-bottom: .25em;
+        flex-basis: 100%;
     }
 
     .main-header {
@@ -179,11 +217,9 @@
         display: none;
     }
 
-
     body.menu-open .main-navigation.toggled .menu-menu-1-container {
         padding-top: 0;
     }
-
 
     .dclmn-mobile-header {
         padding: .5em;
@@ -196,7 +232,103 @@
         height: 152px !important;
 
     }
-    .officials-table-wrap h2  {
+
+    .officials-table-wrap h2 {
         text-align: center;
+    }
+
+    .officials-table-wrap.narberth-borough .officials-table>div,
+    .officials-table-wrap.county-row-officers .officials-table>div,
+    .officials-table-wrap.lower-merion-township .officials-table>div,
+    .officials-table-wrap.lower-merion-school-board .officials-table>div {
+        flex: 0 0 100%;
+    }
+
+    /* Data table adjustments */
+    .stripes thead {
+        position: absolute;
+        left: -9999px;
+        top: -9999px;
+    }
+
+    .stripes tr {
+        border-top: 2px solid var(--color-root);
+    }
+
+    .stripes,
+    .stripes tbody,
+    .stripes tr,
+    .stripes td {
+        display: block;
+        width: 100%;
+    }
+
+    .stripes tr {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .stripes td {
+        display: block;
+    }
+
+    .stripes td.ward,
+    .stripes td.position {
+        font-size: 1.25em;
+        font-weight: bold;
+    }
+
+    .stripes td.position {
+        font-size: 1em;
+    }
+
+    /* display the  */
+    .stripes td[data-label]::before {
+        display: inline-block;
+        content: attr(data-label);
+        font-weight: 800;
+        font-size: .75em;
+        margin-right: .5em;
+    }
+
+    .stripes td[data-label="Committee People"] {
+        line-height: 1.75;
+        margin-bottom: .25em;
+    }
+
+    .stripes td[data-label="Polling Place"]::before,
+    .stripes td[data-label="Committee People"]::before {
+        display: block;
+    }
+
+    /* reorder the columns */
+    .stripes.committee-people td:nth-child(3) {
+        order: 4;
+    }
+
+    .stripes.committee-people td:nth-child(4) {
+        order: 3;
+    }
+
+    table.stripes tbody tr:hover {
+        background-color: var(--color-white);
+    }
+    
+    table.stripes tbody tr:nth-child(even):hover {
+        background-color: #efefef;
+    }
+}
+
+/* 550px */
+
+
+@media (max-width: 380px) {
+    .home-boxes>div:not(first-of-type) h4 a {
+        font-size: 1em;
+    }
+
+    #masthead img {
+        width: 180px;
+        height: auto !important;
     }
 }

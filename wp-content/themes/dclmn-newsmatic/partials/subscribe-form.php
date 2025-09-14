@@ -1,3 +1,5 @@
+
+<p class="subscribe-intro">Find out about the latest ways you can help locally and nationally.</p>
 <div id="mc_embed_shell">
       <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
   <style type="text/css">
@@ -18,3 +20,5 @@
 </form>
 </div>
 <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[6]='MMERGE6';ftypes[6]='text';fnames[7]='MMERGE7';ftypes[7]='phone';fnames[13]='MMERGE13';ftypes[13]='radio';fnames[5]='BIRTHDAY';ftypes[5]='birthday';fnames[8]='MMERGE8';ftypes[8]='phone';fnames[9]='MMERGE9';ftypes[9]='text';fnames[10]='MMERGE10';ftypes[10]='number';fnames[11]='MMERGE11';ftypes[11]='date';fnames[12]='MMERGE12';ftypes[12]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script></div>
+
+<p class="subscribe-note">We will not share text messaging originator opt-in data and consent with third parties, except: (1) with vendors, consultants, and other service providers requiring this information to perform tasks for us (without using it for their benefit); (2) when disclosure is mandated by law, regulations, or to comply with legal authorities; and (3) if the user provides consent for us to share this information.</p>
