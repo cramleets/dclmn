@@ -177,13 +177,13 @@
         display: none;
     }
 
-    .button-group .button.big.donate,
+    /* .button-group .button.big.donate,
     .button.big {
         width: 100%;
         text-align: left;
         margin-bottom: .25em;
         flex-basis: 100%;
-    }
+    } */
 
     .main-header {
         padding-left: .5em;

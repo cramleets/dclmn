@@ -211,42 +211,46 @@ table.stripes a:hover {
     display: flex;
     gap: 1em;
     flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.button-group-large {
     justify-content: space-between;
 }
 
 .button.big,
 .button-group a,
-.wp-block-search__button, .widget.widget_search .search-submit {
+.wp-block-search__button,
+.widget.widget_search .search-submit {
     display: inline-block;
     background-color: var(--color-root);
     border: 2px solid var(--color-root);
-    padding: .75em 1.5em;
-    font-size: 1.5em;
+    padding: .5em 1em;
+    font-size: 1.25em;
     color: var(--color-white);
     text-decoration: none;
-    flex-basis: 47%;
+    flex-basis: auto;
     text-align: center;
     font-weight: bold;
     border-radius: .25em;
     box-shadow: -1px 1px 2px 2px rgba(0, 0, 0, 0.3);
 }
 
-.button.big.donate {
-    background-color: var(--color-red);
-    border: 2px solid var(--color-red);
-    color: #fff;
-    flex-basis: 100%;
-}
-
-.button-group .button.big.donate {
+.button-group-large a {
+    padding: .75em 1.5em;
+    font-size: 1.5em;
     flex-basis: 47%;
 }
 
+.button.donate {
+    background-color: var(--color-red);
+    border: 2px solid var(--color-red);
+    color: #fff;
+}
+
 .button-group a.current,
-.button.big:active,
 .button-group a:active,
 .button-group a.current:active,
-.button.big:hover,
 .button-group a:hover,
 .button-group a.current:hover {
     box-shadow: 0 0 1px rgba(0, 0, 0, .75);
@@ -256,7 +260,7 @@ table.stripes a:hover {
     box-shadow: -1px 1px 4px 2px rgba(0, 0, 0, 0.25);
 }
 
-.button.big.donate:hover {
+.button.donate:hover {
     color: var(--color-red);
     background-color: var(--white-red);
     border: 2px solid var(--color-red);

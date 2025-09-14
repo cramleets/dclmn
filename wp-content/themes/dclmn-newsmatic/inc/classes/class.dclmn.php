@@ -36,25 +36,16 @@ class DCLMN {
         add_action('newsmatic_after_header_hook', 'newsmatic_header_ads_banner_part', 10);
         add_action('newsmatic_main_banner_hook', 'newsmatic_header_ads_banner_part_footer', 999);
 
-        //include theme partials with shortcodes
-        $fields = [
-            'subscribe' => 'subscribe-form',
-            'leadership' => 'leadership',
-            'elected-officials' => 'elected-officials',
-            'county' => 'county',
-            'local' => 'local',
-            'map' => 'map',
-            'quotes' => 'quotes',
-            'buttons-voting-center' => 'buttons-voting-center',
-            'buttons-committee-people' => 'buttons-committee-people',
-            'buttons-elected-officials' => 'buttons-elected-officials',
-            'buttons-home-page' => 'buttons-home-page',
-            'committee-person-questions' => 'committee-person-questions',
-        ];
-
-        foreach ($fields as $key => $value) {
-            add_shortcode('dclmn-' . $key, function () use ($value) {
-                get_template_part("partials/{$value}");
+        $path = trailingslashit(get_stylesheet_directory()) . 'partials';
+        foreach (new DirectoryIterator($path) as $fileInfo) {
+            if ($fileInfo->isDot()) continue;
+            $key = $fileInfo->getBasename('.' . $fileInfo->getExtension());
+            add_shortcode('dclmn-' . $key, function () use ($key) {
+                ob_start();
+                get_template_part("partials/{$key}");
+                $out = ob_get_clean();
+                ob_end_flush();
+                return $out;
             });
         }
 
