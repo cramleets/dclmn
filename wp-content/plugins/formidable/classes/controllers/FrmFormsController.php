@@ -68,7 +68,7 @@ class FrmFormsController {
 		$data_message .= ' <img src="' . esc_url( $images_url ) . '/survey-logic.png" srcset="' . esc_url( $images_url ) . 'survey-logic@2x.png 2x" alt="' . esc_attr__( 'Conditional Logic options', 'formidable' ) . '"/>';
 		echo '<a href="javascript:void(0)" class="frm_noallow frm_show_upgrade frm_add_logic_link frm-collapsed frm-flex-justify" data-upgrade="' . esc_attr__( 'Conditional Logic options', 'formidable' ) . '" data-message="' . esc_attr( $data_message ) . '" data-medium="builder" data-content="logic">';
 		esc_html_e( 'Conditional Logic', 'formidable' );
-		FrmAppHelper::icon_by_class( 'frmfont frm_arrowdown6_icon', array( 'aria-hidden' => 'true' ) );
+		FrmAppHelper::icon_by_class( 'frmfont frm_arrowdown8_icon', array( 'aria-hidden' => 'true' ) );
 		echo '</a>';
 	}
 
@@ -552,6 +552,10 @@ class FrmFormsController {
 			echo '<div class="container entry-content">';
 			the_content();
 			echo '</div>';
+
+			// Prevent extra unexpected forms in the footer.
+			// For some reason this happens in the Twenty Twenty Five theme.
+			add_filter( 'frm_filter_final_form', '__return_empty_string' );
 
 			self::get_template( 'footer' );
 		}
@@ -3221,9 +3225,7 @@ class FrmFormsController {
 		if ( ! FrmAppHelper::is_admin() && $location !== 'header' && ! empty( $frm_vars['forms_loaded'] ) ) {
 			// load formidable js
 			wp_enqueue_script( 'formidable' );
-		}
 
-		if ( ! FrmAppHelper::is_admin() ) {
 			FrmHoneypot::maybe_print_honeypot_js();
 		}
 	}

@@ -3,9 +3,9 @@ Plugin Name: Formidable Forms - Contact Form, Survey & Quiz Form Builder for Wor
 Contributors: formidableforms, sswells, srwells
 Tags: forms, form builder, survey, payment form, custom form, contact form, form maker, form creator, paypal, stripe, stripe form, quote form, contact button, form manager, free, survey form, email subscription, donation form, user registration form, wordpress registration, feedback form, contact form plugin, wordpress form plugin, lead form, registration form, contact form builder
 Requires at least: 5.2
-Tested up to: 6.8.1
+Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 6.21.1
+Stable tag: 6.24.1
 
 The most advanced WordPress forms plugin. Go beyond contact forms with our drag and drop form builder for surveys, quizzes, and more.
 
@@ -61,7 +61,7 @@ Formidable transcends typical contact form plugin functionality by offering opti
 
 == Seamless Payments and Credit Card Processing ==
 
-Introducing sophisticated payment forms, donation forms, and other credit card forms is fast with integrations with leading payment services like PayPal, Stripe, and Authorize.net. A custom WooCommerce form with custom fields is straightforward, ensuring your eCommerce solutions are as versatile as they are powerful.
+Introducing sophisticated payment forms, donation forms, and other credit card forms is fast with integrations with leading payment services like PayPal, Stripe, Square, and Authorize.net. A custom WooCommerce form with custom fields is straightforward, ensuring your eCommerce solutions are as versatile as they are powerful.
 
 == Data-Driven Web Applications Made Easy ==
 
@@ -265,7 +265,7 @@ To get access to more features, integrations, and support, [upgrade to Formidabl
 
 = Can I create a payment form? =
 
-Yes! We make it easy to accept payments using Stripe, PayPal, and Authorize.net.
+Yes! We make it easy to accept payments using Stripe, Square, PayPal, and Authorize.net.
 
 Our Stripe integration helps you quickly accept credit card payments online. Our PayPal forms allow you to accept PayPal payments, subscriptions, and donations online.
 
@@ -318,7 +318,7 @@ Additionally, our Payment fields will help you create a credit card form, donati
 * Dropdown Items
 * Product Quantity
 * Total
-* Credit Card (Stripe or Authorize.net)
+* Credit Card (Stripe, Square, or Authorize.net)
 
 = Can I import and export submissions? =
 
@@ -372,54 +372,50 @@ Using our Zapier integration, you can easily connect your website with over 5,00
 See all [Formidable Zapier Integrations](https://zapier.com/apps/formidable/integrations).
 
 == Changelog ==
-= 6.21.1 =
-* New: A new setting, Check denylist data to validate for spam, has been added to Global spam settings. This new spam check was causing too many false positives, so it is now disabled by default.
-* New: When a denylist check is enabled, spam keywords that are detected are now stored in a transient and displayed in Global spam settings, under Custom allowed words. This makes it easier to detect and add exceptions when spam is detected.
-* New: Denylist checks will no longer check radio buttons, checkboxes, dropdowns, signature, password, and CAPTCHA fields to help avoid issues with false positive matches. Fields with options will still validate "Other" input values.
-* New: All spam checks are now disabled when importing forms.
-* Fix: The way the honeypot field ID is determined has been updated to avoid conflicts with other forms.
-* Fix: User defined product fields would fail validation.
+= 6.24.1 =
+* Fix: Importing entries with a CSV file stopped working with v6.24.
 
-= 6.21 =
-* New: Honeypot field settings have been moved from form settings to global settings. The new settings can now be found in the Captcha/Spam section. The honeypot implementation has also been updated to make the honeypot more difficult to tell apart from other fields, and the strict option has been removed to help prevent issues with false positives for iOS users.
-* New: A new setting to validate form entries for spam against the stopforumspam API have been added to form settings. When this is enabled, IPs and email addresses will be validated against a spam database.
-* New: Field data is now compared to a comprehensive denylist during field validation. This significantly helps to block form data that looks like spam. New settings for Custom allowed words and Custom disallowed words have also been added.
-* New: The option to compare submitted form entry data to WordPress spam comments has been added to global settings.
-* New: Option values are now validated by default. If this causes issues with custom logic, this can be reverted using add_filter( 'frm_option_is_valid', '__return_true' );.
-* New: Stripe payment fields will now apply border radius styles to match styling better.
-* New: Stripe payment field label styling has been updated to better reflect label padding style settings.
-* New: Stripe payment fields will now use the input weight style setting to look more consistent with other fields.
-* New: Stripe payment fields now support the font family style setting.
-* New: A new layout setting has been added to Stripe settings that adds support for the accordion layout.
-* Fix: Paragraph fields would not properly display placeholders on the builder page.
-* Fix: A fatal error that could happen on form submit when unexpected data was sent when checking for spam has been fixed.
-* Fix: A Cannot set properties of null JavaScript error when duplicating a field has been fixed.
-* Fix: Sorting entries by a number field value would sort as strings instead of numbers.
-* Fix: Stripe payment fields would incorrectly use the wrong style settings in some cases.
-* The small device message can now be dismissed, allowing people to still edit forms while using a phone.
+= 6.24 =
+* New: Field settings have been redesigned.
+* Fix: A section ID would not properly get set when dragging a field into a field group within a section or repeater. This could cause issues with fields unexpectedly appearing outside of a repeater.
+* Fix: Conditional logic field IDs would not properly update after importing an XML.
+* Fix: Line breaks used in Quiz Outcome actions would not properly import.
+* Fix: In some cases, a field group would not be draggable after a field was added beside another field.
+* Fix: In some cases, field shape settings would not work if another setting was blank or matched the default.
+* Fix: JS errors would occur in some cases after deleting a field group or section.
+* Fix: The line height style setting is no longer applied to the label in the visual styler preview.
 
-= 6.20 =
-* Security: Shortcodes in emails would process more than once.
-* New: Over 30 free form templates are now available automatically for all users that would previously require a code sent through email.
-* New: Admin pages have been modified to work better on smaller screen sizes.
-* New: The GDPR field agreement text now supports links.
-* Fix: Additional checks have been added to ensure that a GDPR field is always required.
-* Fix: A Passing null to parameter deprecated message when viewing GDPR field settings has been fixed.
-* Fix: A conflict with WPML would cause querying issues resulting in empty results when checking for form actions. This would cause the fallback confirmation action to appear even when there were valid confirmation actions in a form.
-* Additional validation has been checked when outputting CSS variables when generating a stylesheet to help make sure the generated CSS is valid.
-* Some additional validation has been added to help prevent issues where invalid serialized data would cause partial serialized strings to appear in setting values.
-* The preview page for the contact form that gets installed automatically on every site is now automatically blocked from anyone without access to view the forms list. In addition, the preview page will no longer display a form when an incorrect key is used. This is to help prevent spam that targets the default form. A new frm_block_preview filter has been added which can be used to unblock the default form, and to block additional forms.
+= 6.23 =
+* New: The GDPR agreement text can now be translated using the WPML or Polylang add-ons.
+* New: GDPR agreement text will no longer strip a few additional HTML tag types including b, br, div, em, i, p, span, and strong.
+* New: Message spacing on the front end has been updated to improve consistency. Margins for paragraph tags in messages have been reduced, and single line success messages will no longer have paragraph tags automatically added. A new frm_wpautop_success_message filter has been added to modify this behavior.
+* New: URL fields will now automatically add https:// instead of http:// to the beginning of the URL if it is missing.
+* New: One time Stripe payments will now include a Statement Descriptor matching the active Site name by default. A new frm_stripe_statement_descriptor filter has been added to modify the value sent to Stripe.
+* New: Generated table data row labels will now include scope="row" to help with accessibility.
+* Fix: Option validation would fail in rare cases when a field that does not support options incorrectly has option data defined.
+* Fix: In some cases, calculation settings using < and > characters would only partially save.
+* Fix: The auto width setting for dropdowns would not properly appear enabled.
+* Fix: The deactivation pop-up has been updated to help prevent issues where the confirmation buttons were not visible because of an overflow issue.
+* Fix: Denylist terms using forward slashes would not match spam data as expected.
+* Fix: Square buyer tokens are now re-used when nothing has changed to prevent an "An unexpected error occurred verifying buyer" error from Square.
+* Fix: Captcha validation would fail when trying to submit a Square payment.
+* Fix: Stripe payment fields would not appear correctly when using a version of Pro older than 6.21.
+* Fix: Previous attempts to delete a field would re-trigger when deleting a field group, causing unexpected JS errors and issues with deleting a field unintentionally.
+* The deprecated filter frm_email_value has been removed.
 
-= 6.19 =
-* New: A new Enable GDPR related features and enhancements setting has been added to Global Settings. When enabled, a new GDPR field is available in the form builder. The GDPR field is a special required checkbox field that must be checked in order for the form to be submitted.
-* New: Sorting preferences are now remembered on the Forms and Entries list admin pages. Forms are now also automatically sorted with the newest forms at the top.
-* New: A quick link to the views tab is now available on the form list admin page.
-* New: A new setting to disable cookies has been added to Global Settings in the GDPR section.
-* New: The enter key will now quickly jump between inputs when setting options for Radio Button, Checkbox, and Dropdown fields.
-* Fix: The accordions on the visual styler page looked incorrect when using WordPress v6.7.2.
-* Fix: After updating an entry, empty user ID values would convert to 0, causing issues when trying to filter a view with an empty user ID.
-* Fix: Turnstile captcha fields would not properly reset on an error when submitting with AJAX.
-* Fix: A Javascript error would occur when triggering a change event on a hidden field with custom code.
+= 6.22.3 =
+* Fix: Additional cached data issues have been fixed, including fatal errors and issues with data incorrectly appearing as empty.
+
+= 6.22.2 =
+* Fix: A fatal error on some websites would occur because of an issue with incorrect cached data types.
+
+= 6.22.1 =
+* New: Stripe, Square, PayPal, and Authorize.Net settings have now been moved to a new Payments section in Global Settings.
+* Fix: The honeypot would appear incorrectly when editing in-place.
+* Fix: Field IDs would not properly update when importing a Timeline view.
+* Fix: Database queries would not use cached query data when the query resulted in no results.
+* Fix: Name fields would not work correctly when using the minimize=1 option.
+* Form previews are now automatically restricted to privileged users for the contact-us key to help prevent spam.
 
 [See changelog for all versions](https://raw.githubusercontent.com/Strategy11/formidable-forms/master/changelog.txt)
 

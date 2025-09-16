@@ -926,6 +926,11 @@ class FrmXMLHelper {
 
 			$post['post_content'] = self::switch_form_ids( $post['post_content'], $imported['forms'] );
 
+			// Fix issue with line breaks appearing in descriptions as "rn".
+			if ( $post['post_type'] === $form_action_type ) {
+				$post['post_content'] = str_replace( '\\\\r\\\\n', '\\r\\n', $post['post_content'] );
+			}
+
 			$old_id = $post['post_id'];
 			self::populate_post( $post, $item, $imported );
 
@@ -1211,6 +1216,16 @@ class FrmXMLHelper {
 						foreach ( $m['value']['calendar_options'] as $calendar_option_group_key => $calendar_option ) {
 							if ( isset( $frm_duplicate_ids[ $calendar_option['value'] ] ) ) {
 								$m['value']['calendar_options'][ $calendar_option_group_key ]['value'] = $frm_duplicate_ids[ $calendar_option['value'] ];
+							}
+						}
+					}
+
+					if ( ! empty( $m['value']['timeline_options'] ) ) {
+						foreach ( $m['value']['timeline_options'] as $timeline_option_group_key => $timeline_group_option ) {
+							foreach ( $timeline_group_option as $timeline_option_key => $timeline_option ) {
+								if ( isset( $frm_duplicate_ids[ $timeline_option ] ) ) {
+									$m['value']['timeline_options'][ $timeline_option_group_key ][ $timeline_option_key ] = $frm_duplicate_ids[ $timeline_option ];
+								}
 							}
 						}
 					}
@@ -1697,7 +1712,7 @@ class FrmXMLHelper {
 		FrmAppHelper::unserialize_or_decode( $str );
 		if ( is_array( $str ) ) {
 			$str = json_encode( $str );
-		} elseif ( seems_utf8( $str ) === false ) {
+		} elseif ( FrmAppHelper::is_valid_utf8( $str ) === false ) {
 			$str = FrmAppHelper::maybe_utf8_encode( $str );
 		}
 

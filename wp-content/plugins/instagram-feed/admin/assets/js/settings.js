@@ -13,6 +13,7 @@ var settings_data = {
     dialogBoxPopupScreen: sbi_settings.dialogBoxPopupScreen,
     selectSourceScreen: sbi_settings.selectSourceScreen,
     clickSocialScreen: sbi_settings.clickSocialScreen,
+    wpconsentScreen: sbi_settings.wpconsentScreen,
     clickSocialBtnStatus: 'normal',
     enableClickSocialSetup: sbi_settings.clickSocialScreen.enableSetupStep,
     clickSocialActive: sbi_settings.clickSocialActive,
@@ -93,7 +94,7 @@ var settings_data = {
         sourcePopupScreen: 'redirect_1',
         sourcePopupType: 'creation',
         instanceSourceActive: null,
-        clickSocialIntegrationModal : false,
+        clickSocialIntegrationModal: false,
     },
     //Add New Source
     newSourceData: sbi_settings.newSourceData ? sbi_settings.newSourceData : null,
@@ -118,7 +119,9 @@ var settings_data = {
     fullScreenLoader: false,
     appLoaded: false,
     previewLoaded: false,
-    loadingBar: true
+    loadingBar: true,
+    wpconsentBtnStatus: 'normal',
+    disableWPConsentBtn: false,
 };
 
 // The tab component
@@ -257,7 +260,7 @@ var sbiSettings = new Vue({
                             }
                         }
                     }
-                    return;
+
                 });
         },
         deactivateLicense: function () {
@@ -278,7 +281,7 @@ var sbiSettings = new Vue({
                         this.loading = false;
                         this.pressedBtnName = null;
                     }
-                    return;
+
                 });
         },
 
@@ -310,7 +313,7 @@ var sbiSettings = new Vue({
                     if (data.success === true) {
                         window.location.href = data.data.url
                     }
-                    return;
+
                 });
         },
 
@@ -384,7 +387,7 @@ var sbiSettings = new Vue({
                             this.notificationElement.shown = "hidden";
                         }.bind(this), 3000);
                     }
-                    return;
+
                 });
         },
 
@@ -430,7 +433,7 @@ var sbiSettings = new Vue({
                             this.notificationElement.shown = "hidden";
                         }.bind(this), 3000);
                     }
-                    return;
+
                 });
         },
         testConnection: function () {
@@ -456,7 +459,7 @@ var sbiSettings = new Vue({
                             this.testConnectionStatus = null;
                         }.bind(this), 3000);
                     }
-                    return;
+
                 });
         },
         recheckLicense: function (licenseKey, itemName, optionName = null) {
@@ -495,7 +498,7 @@ var sbiSettings = new Vue({
                             this.recheckLicenseStatus = null;
                         }.bind(this), 3000);
                     }
-                    return;
+
                 });
         },
         recheckLicenseIcon: function () {
@@ -888,7 +891,7 @@ var sbiSettings = new Vue({
          * Delete Source Ajax
          *
          * @since 4.0
-        */
+         */
         deleteSource: function (sourceToDelete) {
             var self = this;
             let data = new FormData();
@@ -925,7 +928,7 @@ var sbiSettings = new Vue({
          * Activate View
          *
          * @since 4.0
-        */
+         */
         activateView: function (viewName, sourcePopupType = 'creation', ajaxAction = false) {
             var self = this;
             self.viewsActive[viewName] = (self.viewsActive[viewName] == false) ? true : false;
@@ -980,7 +983,10 @@ var sbiSettings = new Vue({
          * @return boolean
          */
         hasOwnNestedProperty: function (obj, propertyPath) {
-            if (!propertyPath) { return false; } var properties = propertyPath.split('.');
+            if (!propertyPath) {
+                return false;
+            }
+            var properties = propertyPath.split('.');
             for (var i = 0; i < properties.length; i++) {
                 var prop = properties[i];
                 if (!obj || !obj.hasOwnProperty(prop)) {
@@ -1029,7 +1035,7 @@ var sbiSettings = new Vue({
          * Open Dialog Box
          *
          * @since 4.0
-        */
+         */
         openDialogBox: function (type, args = []) {
             var self = this,
                 heading = self.dialogBoxPopupScreen[type].heading,
@@ -1171,7 +1177,7 @@ var sbiSettings = new Vue({
          * Cancel Personal Account
          *
          * @since 6.0.8
-        */
+         */
         cancelPersonalAccountUpdate: function () {
         },
 
@@ -1189,6 +1195,49 @@ var sbiSettings = new Vue({
             sbiSettings.$forceUpdate();
         },
 
+        handleWPConsentAction: function() {
+            let self = this;
+            self.wpconsentBtnStatus = 'loading';
+            self.disableWPConsentBtn = true;
+            
+            let action = self.model.wpconsentScreen.isPluginInstalled ? 'sbi_activate_addon' : 'sbi_install_addon';
+            let plugin = self.model.wpconsentScreen.isPluginInstalled ? 
+                        'wpconsent-cookies-banner-privacy-suite/wpconsent.php' : 
+                        'https://downloads.wordpress.org/plugin/wpconsent-cookies-banner-privacy-suite.latest-stable.zip';
+            
+            let data = new FormData();
+            data.append('action', action);
+            data.append('nonce', self.nonce);
+            data.append('plugin', plugin);
+            data.append('type', 'plugin');
+            
+            fetch(self.ajaxHandler, {
+                method: "POST",
+                credentials: 'same-origin',
+                body: data
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success === true) {
+                    self.wpconsentBtnStatus = 'success';
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 1000);
+                } else {
+                    self.wpconsentBtnStatus = 'normal';
+                    self.disableWPConsentBtn = false;
+                }
+            });
+        },
+
+        wpconsentInstallBtnIcon: function() {
+            if (this.wpconsentBtnStatus === 'loading') {
+                return this.loaderSVG;
+            } else if (this.wpconsentBtnStatus === 'success') {
+                return this.checkmarCircleSVG;
+            }
+            return this.clickSocialScreen.installSVG;
+        }
     }
 });
 

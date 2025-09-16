@@ -20,13 +20,13 @@ $default_classes = [
 	'tribe-block',
 	'tribe-block__venue',
 	'tribe-clearfix',
-	'tribe-block__venue--has-map' => $show_map,
+	'tribe-block__venue--has-map' => $show_map && ! post_password_required( isset( $venue_id ) ? $venue_id : tribe_get_venue_id() ),
 ];
 
 // Add the custom classes from the block attributes.
 $classes = isset( $attributes['className'] ) ? array_merge( $default_classes, [ $attributes['className'] ] ) : $default_classes;
 ?>
-<div <?php tribe_classes( $classes ); ?>>
+<div <?php tec_classes( $classes ); ?>>
 	<?php do_action( 'tribe_events_single_event_meta_secondary_section_start' ); ?>
 
 	<?php $this->template( 'blocks/parts/venue' ); ?>

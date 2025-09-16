@@ -367,6 +367,7 @@ DEFAULT_HTML;
 			'readonly_required' => false,
 			'unique'            => false,
 			'read_only'         => false,
+			'range_field'       => false,
 			'description'       => true,
 			'options'           => true,
 			'label_position'    => true,
@@ -499,6 +500,7 @@ DEFAULT_HTML;
 		$should_hide_bulk_edit = apply_filters( 'frm_should_hide_bulk_edit', $display_format === '1', $display_format, $args );
 
 		include FrmAppHelper::plugin_path() . '/classes/views/frm-fields/back-end/field-options.php';
+		FrmFieldsHelper::render_ai_generate_options_button( $args, $should_hide_bulk_edit );
 	}
 
 	/**
@@ -570,17 +572,28 @@ DEFAULT_HTML;
 	}
 
 	/**
-	 * @since 4.04
+	 * Check if a field type includes field options. This should generally match the result of should_continue_to_field_options, but
+	 * this function was added because should_continue_to_field_options uses a protected scope.
+	 *
+	 * @since 6.23
+	 *
+	 * @return bool
 	 */
-	protected function get_bulk_edit_string() {
-		return __( 'Bulk Edit Options', 'formidable' );
+	public function field_type_has_options_settings() {
+		return $this->should_continue_to_field_options(
+			array(
+				'field' => array(
+					'type' => is_object( $this->field ) ? $this->field->type : $this->field['type'],
+				),
+			)
+		);
 	}
 
 	/**
 	 * @since 4.04
 	 */
-	protected function get_add_option_string() {
-		return __( 'Add Option', 'formidable' );
+	protected function get_bulk_edit_string() {
+		return __( 'Bulk Edit Options', 'formidable' );
 	}
 
 	/**
@@ -639,7 +652,7 @@ DEFAULT_HTML;
 				esc_html__( '%s Options', 'formidable' ),
 				esc_html( $all_field_types[ $args['display']['type'] ]['name'] )
 			);
-			FrmAppHelper::icon_by_class( 'frmfont frm_arrowdown6_icon', array( 'aria-hidden' => 'true' ) );
+			FrmAppHelper::icon_by_class( 'frmfont frm_arrowdown8_icon', array( 'aria-hidden' => 'true' ) );
 			?>
 		</h3>
 		<?php
@@ -1068,7 +1081,11 @@ DEFAULT_HTML;
 			return;
 		}
 
-		$hidden = $this->maybe_include_hidden_values( $args );
+		if ( isset( $shortcode_atts['opt'] ) ) {
+			$hidden = $this->include_hidden_values_for_single_opt( $args, $shortcode_atts['opt'] );
+		} else {
+			$hidden = $this->maybe_include_hidden_values( $args );
+		}
 
 		$field      = $this->field;
 		$html_id    = $args['html_id'];
@@ -1163,6 +1180,41 @@ DEFAULT_HTML;
 		$is_read_only = FrmField::is_read_only( $this->field ) && ! FrmAppHelper::is_admin();
 		if ( $is_read_only && $this->show_readonly_hidden() ) {
 			$hidden = $this->show_hidden_values( $args );
+		}
+
+		return $hidden;
+	}
+
+	/**
+	 * When opt=2 for example is used in the [input] shortcode, only print a single hidden input.
+	 *
+	 * @since 6.22
+	 *
+	 * @param array      $args
+	 * @param int|string $opt
+	 * @return string
+	 */
+	private function include_hidden_values_for_single_opt( $args, $opt ) {
+		$hidden         = '';
+		$selected_value = isset( $args['field_value'] ) ? $args['field_value'] : $this->field['value'];
+
+		if ( ! is_array( $selected_value ) ) {
+			return $hidden;
+		}
+
+		$options = array_values( $this->field['options'] );
+		if ( ! isset( $options[ $opt ] ) ) {
+			return $hidden;
+		}
+
+		$option = $options[ $opt ];
+		if ( is_array( $option ) ) {
+			$option = $option['value'];
+		}
+
+		if ( in_array( $option, $selected_value, true ) ) {
+			$args['field_value'] = array( $option );
+			$hidden              = $this->maybe_include_hidden_values( $args );
 		}
 
 		return $hidden;
@@ -1776,5 +1828,14 @@ DEFAULT_HTML;
 	protected function get_select_atributes( $values ) {
 		_deprecated_function( __METHOD__, '6.11.2', 'FrmFieldType::get_select_attributes' );
 		return $this->get_select_attributes( $values );
+	}
+
+	/**
+	 * @since 4.04
+	 * @deprecated 6.24
+	 */
+	protected function get_add_option_string() {
+		_deprecated_function( __METHOD__, '6.24' );
+		return __( 'Add Option', 'formidable' );
 	}
 }

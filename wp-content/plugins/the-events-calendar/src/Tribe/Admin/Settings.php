@@ -163,7 +163,7 @@ class Settings {
 	 * @return string
 	 */
 	public function get_menu_icon() {
-		$icon = 'data:image/svg+xml;base64,' . base64_encode( '<svg xmlns="http://www.w3.org/2000/svg" fill="#9ba2a6" viewBox="0 0 13.24 15.4"><defs><style>.cls-1{fill-rule:evenodd;}</style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M12.89,6.1,11.54,2.2l0-.06A1.85,1.85,0,0,0,9.14,1.06l-.73.26L8,.29v0A.45.45,0,0,0,7.47,0a.43.43,0,0,0-.25.23A.45.45,0,0,0,7.2.6l.37,1L2.75,3.39l-.36-1,0-.05a.44.44,0,0,0-.56-.22.44.44,0,0,0-.26.57l.36,1L1.17,4A1.86,1.86,0,0,0,.11,6.33L3.19,15a.66.66,0,0,0,.61.4.59.59,0,0,0,.23,0L7.4,14.13l0,0,.1,0a5,5,0,0,0,2-2.47c.11-.24.21-.49.31-.77l.27-.72.07-.19a4.3,4.3,0,0,0,2-.39,3.13,3.13,0,0,1-1.72,2.3.43.43,0,0,0-.25.23.45.45,0,0,0,0,.34.42.42,0,0,0,.23.26.45.45,0,0,0,.34,0C13.13,11.87,13.72,8.64,12.89,6.1Zm-.56,1.81a.79.79,0,0,1-.25.58A2.85,2.85,0,0,1,10,9c-.39,0-.51.22-.68.67L9,10.52c-.1.26-.19.49-.29.71a4.32,4.32,0,0,1-1.59,2L3.94,14.44,1.7,8.12l9.74-3.46.63,1.82a5.11,5.11,0,0,1,.26,1.35V7.9Z"/></g></g></svg>' );
+		$icon = 'data:image/svg+xml;base64,' . base64_encode( '<svg xmlns="http://www.w3.org/2000/svg" fill="#9ba2a6" viewBox="0 0 13.24 15.4" aria-hidden="true"><defs><style>.cls-1{fill-rule:evenodd;}</style></defs><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M12.89,6.1,11.54,2.2l0-.06A1.85,1.85,0,0,0,9.14,1.06l-.73.26L8,.29v0A.45.45,0,0,0,7.47,0a.43.43,0,0,0-.25.23A.45.45,0,0,0,7.2.6l.37,1L2.75,3.39l-.36-1,0-.05a.44.44,0,0,0-.56-.22.44.44,0,0,0-.26.57l.36,1L1.17,4A1.86,1.86,0,0,0,.11,6.33L3.19,15a.66.66,0,0,0,.61.4.59.59,0,0,0,.23,0L7.4,14.13l0,0,.1,0a5,5,0,0,0,2-2.47c.11-.24.21-.49.31-.77l.27-.72.07-.19a4.3,4.3,0,0,0,2-.39,3.13,3.13,0,0,1-1.72,2.3.43.43,0,0,0-.25.23.45.45,0,0,0,0,.34.42.42,0,0,0,.23.26.45.45,0,0,0,.34,0C13.13,11.87,13.72,8.64,12.89,6.1Zm-.56,1.81a.79.79,0,0,1-.25.58A2.85,2.85,0,0,1,10,9c-.39,0-.51.22-.68.67L9,10.52c-.1.26-.19.49-.29.71a4.32,4.32,0,0,1-1.59,2L3.94,14.44,1.7,8.12l9.74-3.46.63,1.82a5.11,5.11,0,0,1,.26,1.35V7.9Z"/></g></g></svg>' );
 
 		/**
 		 * Filter the menu icon for The Events Calendar in the WordPress admin.
@@ -661,28 +661,34 @@ class Settings {
 			'map'     => _x( 'Map', 'Label for the Map View checkbox.', 'the-events-calendar' ),
 		];
 
-		$tooltip_label = _x( 'PRO', 'The label for the premium view indicator.', 'the-events-calendar' );
-		$tooltip_title = _x(
-			'Get Events Calendar Pro to use this View.',
-			'The title (hover text) for the premium view indicator.',
-			'the-events-calendar'
-		);
-
 		// Loop through the term array above and create teaser checkboxes.
 		ob_start();
 
-		foreach( $views as $name => $label ) { ?>
-			<label title="Summary" class="tec-disabled">
-				<input type="checkbox" name="tribeEnableViews[]" value="<?php echo esc_attr( $name ) ?>" disabled>
-				<?php echo esc_attr( $label ) ?>
+		foreach ( $views as $name => $label ) {
+
+			$tooltip_title = sprintf(
+				/* translators: %1$s: The name of the view. Translated above. */
+				_x(
+					'Get Events Calendar Pro to use the %1$s View.',
+					'The title (hover text) for the premium view indicator.',
+					'the-events-calendar'
+				),
+				$label
+			);
+			?>
+			<span class="tec-settings-teaser-pill-wrapper">
+				<label class="tec-disabled">
+				<input type="checkbox" name="tribeEnableViews[]" value="<?php echo esc_attr( $name ); ?>" disabled>
+					<?php echo esc_attr( $label ); ?>
+				</label>
 				<a
 					href="https://evnt.is/1bb-"
 					class="tec-settings-teaser-pill"
 					title="<?php echo esc_attr( $tooltip_title ); ?>"
-				><?php echo esc_html( $tooltip_label ); ?>
-				</a>
-			</label>
-		<?php }
+				><span class="tribe-common-a11y-visual-hide"><?php echo esc_html( $tooltip_title ); ?></span></a>
+			</span>
+			<?php
+		}
 
 		$ecp_string = ob_get_clean();
 
