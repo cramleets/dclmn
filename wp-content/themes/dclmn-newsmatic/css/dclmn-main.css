@@ -9,7 +9,21 @@
     --color-red: #f00;
     --color-white: #fff;
     --color-black: #000;
+    --color-gray: #ccc;
+    --color-light-gray: #efefef;
+    --color-dark-gray: #999;
     --theme-block-top-border-height: 0;
+    --transition: all 0.23s ease-in-out 0s;
+
+    /* The Events Calendar variables */
+    --tec-color-background: var(--color-white);
+    --tec-color-accent-primary: var(--color-root);
+    --tec-color-button-primary: var(--color-root);
+    /* --tec-color-text-primary: var(--color-root); */
+    --tec-border-radius-default: 1em;
+    --tec-spacer-13: 2em;
+    /* --tec-grid-gutter-page: 0; */
+
 }
 
 .site-branding .site-title a {
@@ -75,6 +89,7 @@ td,
     padding: .25em .5em;
     display: block;
     text-decoration: none;
+    transition: var(--transition);
 }
 
 .home-boxes h4 a:hover {
@@ -100,6 +115,7 @@ td,
     padding: .25em 1em;
     background-color: #fff;
     font-weight: bold;
+    transition: var(--transition);
 }
 
 .home-boxes ul li a:hover {
@@ -218,7 +234,8 @@ table.stripes a:hover {
     justify-content: space-between;
 }
 
-.button.big,
+body #mc_embed_signup .button,
+.frm_style_formidable-style.with_frm_style .frm_submit button,
 .button-group a,
 .wp-block-search__button,
 .widget.widget_search .search-submit {
@@ -234,8 +251,11 @@ table.stripes a:hover {
     font-weight: bold;
     border-radius: .25em;
     box-shadow: -1px 1px 2px 2px rgba(0, 0, 0, 0.3);
+    line-height: 1em;
+    transition: var(--transition);
 }
 
+.button.big,
 .button-group-large a {
     padding: .75em 1.5em;
     font-size: 1.5em;
@@ -248,6 +268,10 @@ table.stripes a:hover {
     color: #fff;
 }
 
+body #mc_embed_signup .button:hover,
+body #mc_embed_signup .button:active,
+.frm_style_formidable-style.with_frm_style .frm_submit button:hover,
+.frm_style_formidable-style.with_frm_style .frm_submit button:active,
 .button-group a.current,
 .button-group a:active,
 .button-group a.current:active,
@@ -266,14 +290,31 @@ table.stripes a:hover {
     border: 2px solid var(--color-red);
 }
 
-.wp-block-search__button, .widget.widget_search .search-submit {
+.wp-block-search__button,
+.widget.widget_search .search-submit {
     font-size: .75em;
     padding: .25em .25em;
+}
+
+.frm_style_formidable-style.with_frm_style .frm_submit button {
+    font-size: .75em;
+    text-transform: uppercase;
+}
+
+body #mc_embed_signup .button {
+    margin: 0;
+    padding: 0 1em;
 }
 
 .button-group.button-group-elected-officials a {
     flex-basis: 100%;
     text-align: left;
+}
+
+.button-group.button-group-leadership {
+    font-size: .75em;
+    float: right;
+    margin-top: 1em;
 }
 
 .election-dates li {
@@ -361,4 +402,71 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
 .footer-widget .widget.widget_nav_menu ul li:before,
 .footer-widget .widget.widget_nav_menu ol li:before {
     color: var(--color-highlight)
+}
+
+/* .officials-collection {
+    display: flex;
+    align-items: baseline;
+    gap: 2em;
+}
+
+.officials-table>div {
+    flex: 0 0 calc((100% - (var(--count) - 1) * 2em) / var(--count));
+    box-sizing: border-box;
+    text-align: center;
+} */
+
+.rotating-quotes a {
+    color: var(--color-black);
+    text-decoration: none;
+}
+
+.rotating-quotes a:hover {
+    color: var(--color-root);
+}
+
+.quotes-page {
+    display: flex;
+    gap: 2em;
+}
+
+.quotes-page>div {
+    flex-basis: 64%;
+}
+
+.quotes-page>div:nth-child(2) {
+    flex-basis: 33%;
+}
+
+.quotes-page .wp-block-pullquote {
+    padding: 1em 0;
+    border-top: 2px solid var(--color-root);
+    margin-bottom: 3em;
+}
+
+.quotes-page .wp-block-pullquote:first-of-type {
+    border-top-width: 0;
+}
+
+.suggest-a-quote {
+    background-color: var(--color-light-gray);
+    padding: 1em 1em 0 1em;
+    border: 1px solid var(--color-dark-gray);
+}
+
+.suggest-a-quote h2 {
+    margin: 0 0 .5em 0;
+}
+
+.suggest-a-quote .with_frm_style .frm_form_fields > fieldset {
+    padding: 0;
+}
+
+.tribe-common h1 {
+    font-weight: 800;
+    font-size: 2em !important;
+}
+
+.tribe-common--breakpoint-medium.tribe-events .tribe-events-l-container {
+    padding: 2em 2em;
 }

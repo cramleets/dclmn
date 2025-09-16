@@ -18,13 +18,15 @@ class Rotating_Quotes_Widget extends WP_Widget {
     if (count($posts)) {
       $post = $posts[0];
 
-      $out .= '<section class="widget">';
+      $out .= '<section class="widget rotating-quotes">';
+      $out .= '<a href="'. home_url('quotes/') .'">';
       $out .= '<figure class="wp-block-pullquote">';
       $out .= '<blockquote>';
       $out .= '<p>“' . $post->post_content . '”</p>';
       $out .= '<cite>―&nbsp;<strong>' . $post->source . '</strong></cite>';
       $out .= '</blockquote>';
       $out .= '</figure>';
+      $out .= '</a>';
       $out .= '</section>';
     }
 

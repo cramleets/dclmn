@@ -4,6 +4,11 @@ global $dclmn;
 
 $leadership = $dclmn->get_leadership();
 ?>
+<?php if (current_user_can('edit_others_posts')): ?>
+  <div class="button-group button-group-leadership">
+    <a href="<?php echo admin_url('admin-ajax.php?action=export_leadership') ?>" class="button" target="_blank">Export</a>
+  </div>
+<?php endif; ?>
 <table cellpadding="5" cellspacing="0" class="stripes leadership">
   <thead>
     <tr>
@@ -28,3 +33,11 @@ $leadership = $dclmn->get_leadership();
     <?php endforeach; ?>
   </tbody>
 </table>
+<script>
+  jQuery('.button-group.button-group-leadership').insertBefore('.entry-header h1');
+</script>
+<style>
+  .entry-header h1 {
+    clear: none;
+  }
+</style>

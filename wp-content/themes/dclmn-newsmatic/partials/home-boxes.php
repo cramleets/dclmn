@@ -24,7 +24,7 @@
      <h4><a href="/get-involved/">Get Involved</a></h4>
      <div class="padding">
        <ul>
-         <li><a href="<?php echo home_url('get-involved/') ?>">Volunteer</a></li>
+         <li><a href="<?php echo home_url('events/category/volunteer/') ?>">Volunteer</a></li>
          <li><a href="<?php echo home_url('elected-officials/') ?>">Elected Officials</a></li>
          <li><a href="<?php echo home_url('committee-people/') ?>">Committee People</a></li>
          <li><a href="<?php echo home_url('get-involved/') ?>">Donate</a></li>
@@ -35,9 +35,9 @@
      <h4><a href="/events/">Events</a></h4>
      <div class="padding">
        <ul>
-         <li><a href="<?php echo home_url('events/category/meetings/') ?>">Meetings</a></li>
-         <li><a href="<?php echo home_url('events/category/campaign-dates/') ?>//">Campaign Dates</a></li>
-         <li><a href="<?php echo home_url('events/category/election-dates/') ?>//">Election Dates</a></li>
+         <li><a href="<?php echo home_url('events/category/meetings/list/') ?>">Meetings</a></li>
+         <li><a href="<?php echo home_url('events/category/campaign-dates/list/') ?>">Campaign Dates</a></li>
+         <li><a href="<?php echo home_url('events/category/election-dates/list/') ?>">Election Dates</a></li>
          <li><a href="<?php echo home_url('events/') ?>">More</a></li>
        </ul>
      </div>

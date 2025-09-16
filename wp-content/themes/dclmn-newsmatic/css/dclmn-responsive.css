@@ -110,8 +110,12 @@
         flex: 0 0 48%;
     }
 
-    #sb_instagram #sbi_images .sbi_item:nth-child(n+6) {
+    #sb_instagram #sbi_images .sbi_item:nth-child(n+7) {
         display: none;
+    }
+
+    .quotes-page {
+        display: block;
     }
 
     /* #header-menu {
@@ -313,9 +317,15 @@
     table.stripes tbody tr:hover {
         background-color: var(--color-white);
     }
-    
+
     table.stripes tbody tr:nth-child(even):hover {
         background-color: #efefef;
+    }
+
+    .button-group a,
+    .wp-block-search__button,
+    .widget.widget_search .search-submit {
+        font-size: 1em;
     }
 }
 

@@ -25,6 +25,10 @@ class DCLMN {
             add_action('newsmatic_botttom_footer_hook', 'newsmatic_bottom_footer_copyright_part', 20);
         });
 
+        add_action('wp_head', function () {
+            get_template_part('partials/google-analytics');
+        });
+
         add_filter('use_block_editor_for_post_type', '__return_false');
 
         add_filter('document_title_parts', function ($title) {
@@ -63,6 +67,15 @@ class DCLMN {
 
             return $args;
         });
+
+        add_action('wp_ajax_export_cps', [$this, 'wp_ajax_export_cps']);
+        add_action('wp_ajax_export_leadership', [$this, 'wp_ajax_export_leadership']);
+
+        add_filter('tec_events_views_v2_view_header_title', function($title, $obj) {
+            if (empty($title)) $title = 'Events';
+            else $title = 'Events &raquo; '. $title;
+            return $title;
+        }, 10, 2);
     }
 
     function get_leadership() {
@@ -195,18 +208,13 @@ class DCLMN {
         }
     }
 
-    function get_committee_people_table() {
+    function get_committee_people_table($csv = false) {
         $this->build_committee();
 
         $wards = [];
         foreach ($this->builds['wards'] as $ward) {
             $wards[$ward->post_title] = $ward;
         }
-        // uksort($wards, function ($a, $b) {
-        //     [$a1, $a2] = explode('-', $a);
-        //     [$b1, $b2] = explode('-', $b);
-        //     return [$a1, $a2] <=> [$b1, $b2];
-        // });
 
         uksort($wards, function ($a, $b) {
             [$a1, $a2] = explode('-', $a);
@@ -226,33 +234,77 @@ class DCLMN {
         });
 
         $out = '';
-        $out .= '<table cellpadding="5" cellspacing="0" class="stripes committee-people">';
-        $out .= '<thead>';
-        $out .= '<tr valign="top">';
-        $out .= '<td>Ward</td>';
-        $out .= '<td>PA District</td>';
-        $out .= '<td>Name</td>';
-        $out .= '<td>Polling Place<td>';
-        $out .= '</tr>';
-        $out .= '</thead>';
-        $out .= '<tbody>';
-        foreach ($wards as $ward) {
-            $district = str_replace('th district', '', strtolower($ward->pa_district->post_title));
+        if ($csv) {
+            $fp = fopen('php://temp', 'r+');
 
-            $out .= '<tr valign="top">';
-            $out .= '<td data-label="Ward"" class="ward">' . $ward->post_title . '</td>';
-            $out .= '<td data-label="District"><a href="' . $ward->pa_district->website . '" target="_blank">' . $district . '</a></td>';
-            $out .= '<td data-label="Committee People">';
-            foreach ($ward->committe_people as $person) {
-                $out .= '<a href="mailto:' . $person->public_email . '" target="_blank">' . $person->first_name . ' ' . $person->last_name . '</a><br>';
+            fputcsv($fp, [
+                "Ward",
+                "PA District",
+                "Ward",
+                "First Name",
+                "Last Name",
+                "Email",
+                "Polling Place",
+                "Polling Place Map"
+            ]);
+
+            foreach ($wards as $ward) {
+                foreach ($ward->committe_people as $person) {
+                    $district = str_replace('th district', '', strtolower($ward->pa_district->post_title));
+
+                    fputcsv($fp, [
+                        $ward->post_title,
+                        $district,
+                        $ward->post_title,
+                        $person->first_name,
+                        $person->last_name,
+                        $person->public_email,
+                        $ward->polling_place->post_title,
+                        $ward->polling_place->map_url
+                    ]);
+                }
             }
-            $out .= '</td>';
-            $out .= '<td data-label="Polling Place"><a href="' . $ward->polling_place->map_url . '" target="_blank">' . $ward->polling_place->post_title . '</a></td>';
-            $out .= '</tr>';
-        }
-        $out .= '</tbody>';
-        $out .= '</table>';
 
+            rewind($fp);
+            $out = stream_get_contents($fp);
+            fclose($fp);
+        } else {
+            $out .= '<table cellpadding="5" cellspacing="0" class="stripes committee-people">';
+            $out .= '<thead>';
+            $out .= '<tr valign="top">';
+            $out .= '<td>Ward</td>';
+            $out .= '<td>PA District</td>';
+            $out .= '<td>Name</td>';
+            $out .= '<td>Polling Place<td>';
+            $out .= '</tr>';
+            $out .= '</thead>';
+            $out .= '<tbody>';
+            foreach ($wards as $ward) {
+                $district = str_replace('th district', '', strtolower($ward->pa_district->post_title));
+
+                $out .= '<tr valign="top">';
+                $out .= '<td data-label="Ward"" class="ward">' . $ward->post_title . '</td>';
+                $out .= '<td data-label="District">' . $district . '</td>';
+                $out .= '<td data-label="Committee People">';
+                foreach ($ward->committe_people as $person) {
+                    if ('vacant' == strtolower($person->first_name)) {
+                        $out .= $person->first_name;
+                        $out .= ' - <a href="'. home_url('committee-person-description/') .'">Inquire</a>';
+                    } else {
+                        $out .= ($person->public_email) ? '<a href="mailto:' . $person->public_email . '" target="_blank">' : '';
+                        $out .= $person->first_name;
+                        $out .= ($person->last_name) ? ' ' . $person->last_name : '';
+                        $out .= ($person->public_email) ? '</a>' : '';
+                    }
+                    $out .= '<br>';
+                }
+                $out .= '</td>';
+                $out .= '<td data-label="Polling Place"><a href="' . $ward->polling_place->map_url . '" target="_blank">' . $ward->polling_place->post_title . '</a></td>';
+                $out .= '</tr>';
+            }
+            $out .= '</tbody>';
+            $out .= '</table>';
+        }
         return $out;
     }
 
@@ -339,7 +391,7 @@ class DCLMN {
         $out .= '<div class="officials-table-wrap ' . sanitize_title($args['search']) . '">';
         foreach ($jurisdictions as $jurisdiction) {
             $out .= '<h2>' . $jurisdiction['term']->name . '</h2>';
-            $out .= '<div class="officials-table">';
+            $out .= '<div class="officials-table" style="--count: ' . count($jurisdiction['posts']) . ';">';
             foreach ($jurisdiction['posts'] as $post) {
                 $out .= '<div>';
                 $default_src = (!empty($post->gender)) ? 'silouhette-' . $post->gender . '.png' : 'silouhette-male.png';
@@ -357,5 +409,78 @@ class DCLMN {
         $out .= '</div>';
 
         return $out;
+    }
+
+    public function downloadFile($content, $filename, $args = []) {
+        $filename = ($filename) ?: ($args['filename']) ?: 'export.txt';
+
+        //https://stackoverflow.com/questions/2021624/string-sanitizer-for-filename
+        // Remove anything which isn't a word, whitespace, number
+        // or any of the following caracters -_~,;[]().
+        $filename = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $filename);
+
+        // Remove any runs of periods (thanks falstro!)
+        $filename = mb_ereg_replace("([\.]{2,})", '', $filename);
+
+        $headers = array(
+            'Content-Disposition: attachment; filename="' . $filename,
+            'Content-Type: text/plain; charset=UTF-8',
+            'Content-Type: application/force-download',
+            'Content-Type: application/octet-stream',
+            'Content-Type: application/download',
+            'Content-Transfer-Encoding: binary',
+            'Content-Length: ' . strlen($content),
+        );
+        foreach ($headers as $header) {
+            header($header);
+        }
+        if (ini_get('zlib.output_compression')) {
+            ini_set('zlib.output_compression', 'Off');
+        }
+
+        die($content);
+    }
+
+    function wp_ajax_export_cps() {
+        if (!current_user_can('edit_others_posts')) {
+            wp_die('Nope.');
+        }
+        $out = $this->get_committee_people_table(true);
+        $this->downloadFile($out, 'dclmn-committee-people.csv');
+    }
+
+    function wp_ajax_export_leadership() {
+        if (!current_user_can('edit_others_posts')) {
+            wp_die('Nope.');
+        }
+
+
+        $fp = fopen('php://temp', 'r+');
+
+        fputcsv($fp, [
+            "Office",
+            "First Name",
+            "Last Name",
+            "Email",
+            "Phone",
+        ]);
+        $leadership = $this->get_leadership();
+
+
+        foreach ($leadership as $l) {
+            fputcsv($fp, [
+                $l->post_title,
+                $l->first_name,
+                $l->last_name,
+                $l->email,
+                $l->phone,
+            ]);
+        }
+
+        rewind($fp);
+        $out = stream_get_contents($fp);
+        fclose($fp);
+
+        $this->downloadFile($out, 'dclmn-leadership.csv');
     }
 }
