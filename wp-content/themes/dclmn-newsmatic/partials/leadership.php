@@ -3,9 +3,12 @@
 global $dclmn;
 
 $leadership = $dclmn->get_leadership();
+$leadersip_emails = array_unique(array_filter(wp_list_pluck($leadership, 'email')));
+asort($leadersip_emails);
 ?>
 <?php if (current_user_can('edit_others_posts')): ?>
   <div class="button-group button-group-leadership">
+    <a href="mailto:<?php echo implode(',', $leadersip_emails) ?>" class="button" target="_blank">Email</a>
     <a href="<?php echo admin_url('admin-ajax.php?action=export_leadership') ?>" class="button" target="_blank">Export</a>
   </div>
 <?php endif; ?>

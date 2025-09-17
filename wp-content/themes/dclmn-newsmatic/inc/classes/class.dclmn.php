@@ -53,10 +53,6 @@ class DCLMN {
             });
         }
 
-        add_shortcode('dclmn-committeepeople', function () {
-            return $this->get_committee_people_table();
-        });
-
         add_filter('tec_events_calendar_embeds_post_type_args', function ($args) {
             // Tell WP to build caps off "tribe_event" instead of "post"
             $args['capability_type'] = ['tribe_event', 'tribe_events']; // singular, plural
@@ -71,9 +67,9 @@ class DCLMN {
         add_action('wp_ajax_export_cps', [$this, 'wp_ajax_export_cps']);
         add_action('wp_ajax_export_leadership', [$this, 'wp_ajax_export_leadership']);
 
-        add_filter('tec_events_views_v2_view_header_title', function($title, $obj) {
+        add_filter('tec_events_views_v2_view_header_title', function ($title, $obj) {
             if (empty($title)) $title = 'Events';
-            else $title = 'Events &raquo; '. $title;
+            else $title = 'Events &raquo; ' . $title;
             return $title;
         }, 10, 2);
     }
@@ -159,6 +155,8 @@ class DCLMN {
     }
 
     function build_committee() {
+        if (!empty($this->builds)) return;
+
         $wards = $polling_places = $pa_districts = $polling_places = $elected_officials = $committee_people = [];
 
         foreach ($this->get_elected_officials() as $post) {
@@ -208,7 +206,7 @@ class DCLMN {
         }
     }
 
-    function get_committee_people_table($csv = false) {
+    function get_committee_people_table($array = false) {
         $this->build_committee();
 
         $wards = [];
@@ -234,10 +232,10 @@ class DCLMN {
         });
 
         $out = '';
-        if ($csv) {
-            $fp = fopen('php://temp', 'r+');
+        if ($array) {
+            $cps = [];
 
-            fputcsv($fp, [
+            $headers = [
                 "Ward",
                 "PA District",
                 "Ward",
@@ -246,13 +244,15 @@ class DCLMN {
                 "Email",
                 "Polling Place",
                 "Polling Place Map"
-            ]);
+            ];
+
+            $cps[] = $headers;
 
             foreach ($wards as $ward) {
                 foreach ($ward->committe_people as $person) {
                     $district = str_replace('th district', '', strtolower($ward->pa_district->post_title));
 
-                    fputcsv($fp, [
+                    $cps[] = [
                         $ward->post_title,
                         $district,
                         $ward->post_title,
@@ -261,13 +261,11 @@ class DCLMN {
                         $person->public_email,
                         $ward->polling_place->post_title,
                         $ward->polling_place->map_url
-                    ]);
+                    ];
                 }
             }
 
-            rewind($fp);
-            $out = stream_get_contents($fp);
-            fclose($fp);
+            return $cps;
         } else {
             $out .= '<table cellpadding="5" cellspacing="0" class="stripes committee-people">';
             $out .= '<thead>';
@@ -289,7 +287,7 @@ class DCLMN {
                 foreach ($ward->committe_people as $person) {
                     if ('vacant' == strtolower($person->first_name)) {
                         $out .= $person->first_name;
-                        $out .= ' - <a href="'. home_url('committee-person-description/') .'">Inquire</a>';
+                        $out .= ' - <a href="' . home_url('committee-person-description/') . '">Inquire</a>';
                     } else {
                         $out .= ($person->public_email) ? '<a href="mailto:' . $person->public_email . '" target="_blank">' : '';
                         $out .= $person->first_name;
@@ -442,45 +440,46 @@ class DCLMN {
     }
 
     function wp_ajax_export_cps() {
+        require_once trailingslashit(get_stylesheet_directory()) . 'inc/classes/SimpleXLSXGen.php';
+
         if (!current_user_can('edit_others_posts')) {
             wp_die('Nope.');
         }
-        $out = $this->get_committee_people_table(true);
-        $this->downloadFile($out, 'dclmn-committee-people.csv');
+        $cps = $this->get_committee_people_table(true);
+
+        Shuchkin\SimpleXLSXGen::fromArray($cps)->saveAs('/tmp/test.xlsx');
+        $this->downloadFile(file_get_contents('/tmp/test.xlsx'), 'dclmn-committee-people.xlsx');
     }
 
     function wp_ajax_export_leadership() {
+        require_once trailingslashit(get_stylesheet_directory()) . 'inc/classes/SimpleXLSXGen.php';
+
         if (!current_user_can('edit_others_posts')) {
             wp_die('Nope.');
         }
 
-
-        $fp = fopen('php://temp', 'r+');
-
-        fputcsv($fp, [
+        $headers = [
             "Office",
             "First Name",
             "Last Name",
             "Email",
             "Phone",
-        ]);
-        $leadership = $this->get_leadership();
+        ];
 
+        $leadership = [];
+        $leadership[] = $headers;
 
-        foreach ($leadership as $l) {
-            fputcsv($fp, [
-                $l->post_title,
-                $l->first_name,
-                $l->last_name,
-                $l->email,
-                $l->phone,
-            ]);
+        foreach ($this->get_leadership() as $l) {
+            $leadership[] = [
+                'title' => $l->post_title,
+                'first_name' => $l->first_name,
+                'last_name' => $l->last_name,
+                'email' => $l->email,
+                'phone' => $l->phone,
+            ];
         }
 
-        rewind($fp);
-        $out = stream_get_contents($fp);
-        fclose($fp);
-
-        $this->downloadFile($out, 'dclmn-leadership.csv');
+        Shuchkin\SimpleXLSXGen::fromArray($leadership)->saveAs('/tmp/test.xlsx');
+        $this->downloadFile(file_get_contents('/tmp/test.xlsx'), 'dclmn-leadership.xlsx');
     }
 }

@@ -116,6 +116,22 @@
 
     .quotes-page {
         display: block;
+        font-size: .75em;
+        margin-top: 1em;
+    }
+
+    .quotes-page-quotes {
+        margin-bottom: 2em;
+    }
+    
+    .quotes-page .wp-block-pullquote {
+        border-top-width: 0;
+        border-bottom: 2px solid var(--color-root);
+        text-align: left;
+    }
+    
+    .quotes-page .wp-block-pullquote:nth-child(even) {
+        background-color: var(--color-light-gray);
     }
 
     /* #header-menu {
@@ -150,6 +166,10 @@
 }
 
 @media (max-width: 550px) {
+    .page .primary-content .post-inner-wrapper {
+        padding: 0 .5em;
+    }
+
     .home-boxes {
         flex-wrap: wrap;
         gap: 0;

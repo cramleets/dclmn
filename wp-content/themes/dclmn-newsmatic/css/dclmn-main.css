@@ -21,7 +21,8 @@
     --tec-color-button-primary: var(--color-root);
     /* --tec-color-text-primary: var(--color-root); */
     --tec-border-radius-default: 1em;
-    --tec-spacer-13: 2em;
+    --tec-spacer-13: 2em; /* desktop top padding */
+    --tec-spacer-11: .75em; /* mobile top padding */
     /* --tec-grid-gutter-page: 0; */
 
 }

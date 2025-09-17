@@ -22,7 +22,7 @@ if (count($posts)) {
 
 ?>
 <div class="quotes-page">
-  <div>
+  <div class="quotes-page-quotes">
     <?php echo $out; ?>
   </div>
   <div class="suggest-a-quote">
