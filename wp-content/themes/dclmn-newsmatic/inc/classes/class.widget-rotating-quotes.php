@@ -22,6 +22,7 @@ class Rotating_Quotes_Widget extends WP_Widget {
       $out .= '<a href="'. home_url('quotes/') .'">';
       $out .= '<figure class="wp-block-pullquote">';
       $out .= '<blockquote>';
+      $out .= '<h3>Quotation</h3>';
       $out .= '<p>“' . $post->post_content . '”</p>';
       $out .= '<cite>―&nbsp;<strong>' . $post->source . '</strong></cite>';
       $out .= '</blockquote>';

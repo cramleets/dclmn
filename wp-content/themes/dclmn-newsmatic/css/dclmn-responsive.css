@@ -123,13 +123,13 @@
     .quotes-page-quotes {
         margin-bottom: 2em;
     }
-    
+
     .quotes-page .wp-block-pullquote {
         border-top-width: 0;
         border-bottom: 2px solid var(--color-root);
         text-align: left;
     }
-    
+
     .quotes-page .wp-block-pullquote:nth-child(even) {
         background-color: var(--color-light-gray);
     }
@@ -346,6 +346,14 @@
     .wp-block-search__button,
     .widget.widget_search .search-submit {
         font-size: 1em;
+    }
+
+    .banner-layout--four .main-banner-block-posts.banner-trailing-posts {
+        display: none;
+    }
+
+    .quotes-page .wp-block-pullquote {
+        font-size: 1.5em;
     }
 }
 

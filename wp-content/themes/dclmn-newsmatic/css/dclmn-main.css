@@ -12,7 +12,7 @@
     --color-gray: #ccc;
     --color-light-gray: #efefef;
     --color-dark-gray: #999;
-    --theme-block-top-border-height: 0;
+    --theme-block-top-border-height: 1px;
     --transition: all 0.23s ease-in-out 0s;
 
     /* The Events Calendar variables */
@@ -258,15 +258,22 @@ body #mc_embed_signup .button,
 
 .button.big,
 .button-group-large a {
-    padding: .75em 1.5em;
+    padding: 1em .5em .5em .5em;
     font-size: 1.5em;
     flex-basis: 47%;
+    text-align: left;
 }
 
 .button.donate {
     background-color: var(--color-red);
     border: 2px solid var(--color-red);
     color: #fff;
+}
+
+.footer-widget .button-group a {
+    background-color: var(--color-highlight);
+    border-color: var(--color-highlight);
+    color: var(--color-root);
 }
 
 body #mc_embed_signup .button:hover,
@@ -289,6 +296,12 @@ body #mc_embed_signup .button:active,
     color: var(--color-red);
     background-color: var(--white-red);
     border: 2px solid var(--color-red);
+}
+
+.footer-widget .button-group a:hover {
+    background-color: var(--color-white);
+    border-color: var(--color-highlight);
+    color: var(--color-root) !important;
 }
 
 .wp-block-search__button,
@@ -417,13 +430,34 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
     text-align: center;
 } */
 
+.rotating-quotes {
+    background-color: var(--color-root);
+    padding: 0 1em;
+}
+
 .rotating-quotes a {
-    color: var(--color-black);
+    color: var(--color-white);
     text-decoration: none;
 }
 
 .rotating-quotes a:hover {
-    color: var(--color-root);
+    color: var(--color-highlight);
+}
+
+.widget.rotating-quotes h3 {
+    margin: 0 0 .5em 0;
+    text-transform: uppercase;
+    font-size: .75em;
+}
+
+.widget.rotating-quotes blockquote {
+    padding: .25em .5em;
+    text-align: left;
+    border-color: var(--color-highlight);
+}
+
+.rotating-quotes a:hover blockquote {
+    border-color: var(--color-white);
 }
 
 .quotes-page {
@@ -440,13 +474,23 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
 }
 
 .quotes-page .wp-block-pullquote {
+    font-size: 1em;
     padding: 1em 0;
     border-top: 2px solid var(--color-root);
     margin-bottom: 3em;
+    text-align: left;
 }
+
+/* .quotes-page .wp-block-pullquote::first-letter {
+    font-weight: 800;
+} */
 
 .quotes-page .wp-block-pullquote:first-of-type {
     border-top-width: 0;
+}
+
+.quotes-page .wp-block-pullquote:nth-child(even) {
+    background-color: var(--color-light-gray);
 }
 
 .suggest-a-quote {
@@ -470,4 +514,50 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
 
 .tribe-common--breakpoint-medium.tribe-events .tribe-events-l-container {
     padding: 2em 2em;
+}
+
+#main-banner-section {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+#main-banner-section a {
+    color: var(--color-white) !important;
+}
+
+#main-banner-section article:hover a {
+    color: var(--color-highlight) !important;
+}
+
+.page .primary-content .post-inner-wrapper {
+    padding-top: 0;
+}
+
+.dclmn-events {
+    border: 1px solid var(--color-black);
+    border-width: 0 0 1px 0;
+    margin: 1em 0;
+    padding: .5em 1em;
+}
+
+.dclmn-events h2 {
+    margin: 0;
+}
+
+.dclmn-events a {
+    text-decoration: none;
+    color: var(--color-black);
+}
+
+.dclmn-events a:hover {
+    color: var(--color-red);
+}
+
+.dclmn-event .event-title {
+    font-size: 1.15em;
+    color: var(--color-root);
+}
+
+.dclmn-event a:hover .event-title {
+    color: var(--color-red);
 }

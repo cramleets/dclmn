@@ -44,7 +44,15 @@ class DCLMN {
         foreach (new DirectoryIterator($path) as $fileInfo) {
             if ($fileInfo->isDot()) continue;
             $key = $fileInfo->getBasename('.' . $fileInfo->getExtension());
-            add_shortcode('dclmn-' . $key, function () use ($key) {
+            add_shortcode('dclmn-' . $key, function ($atts, $content = null, $tag = '') use ($key) {
+                global $my_shortcode_context;
+
+                $my_shortcode_context = [
+                    'tag'     => $tag,
+                    'atts'    => $atts,     // ← raw, unfiltered
+                    'content' => $content,
+                ];
+
                 ob_start();
                 get_template_part("partials/{$key}");
                 $out = ob_get_clean();
@@ -72,6 +80,22 @@ class DCLMN {
             else $title = 'Events &raquo; ' . $title;
             return $title;
         }, 10, 2);
+
+        add_filter('newsmatic_query_args_filter', function ($args) {
+        });
+
+        add_filter('tribe_widget_events-list_args_to_context', function ($args) {
+            $args['tax_query'] = array(
+                array(
+                    'taxonomy' => 'tribe_events_cat',
+                    'terms' => 'meeting',
+                    'field' => 'slug',
+                    'operator' => 'IN'
+                )
+            );
+
+            return $args;
+        });
     }
 
     function get_leadership() {

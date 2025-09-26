@@ -25,8 +25,10 @@ if (count($posts)) {
   <div class="quotes-page-quotes">
     <?php echo $out; ?>
   </div>
-  <div class="suggest-a-quote">
-    <h2>Suggest a Quote</h2>
-    <?php echo do_shortcode('[formidable id=3]') ?>
+  <div>
+    <div class="suggest-a-quote">
+      <h2>Suggest a Quote</h2>
+      <?php echo do_shortcode('[formidable id=3]') ?>
+    </div>
   </div>
 </div>

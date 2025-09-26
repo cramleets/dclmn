@@ -2,7 +2,7 @@
 
 <div class="home-boxes">
    <div>
-     <a href="<?php echo home_url() ?>"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/dclmn-alt-2.png" style="height: 160px;"></a>
+     <a href="<?php echo home_url() ?>"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/dclmn-alt-3.png" style="height: 160px;"></a>
    </div>
    <div>
      <h4><a href="/voting/">Voter Center</a></h4>

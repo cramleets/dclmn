@@ -1,6 +1,7 @@
 <?php
 
 use Newsmatic\CustomizerDefault as ND;
+use Tribe__Date_Utils as Dates;
 
 function pobj($obj, $exit_flag = 0, $show_footer = 1) {
     echo "<pre>\n";
@@ -33,6 +34,100 @@ function dclmn_get_posts($args) {
         $posts[] = $post;
     }
     return $posts;
+}
+
+function dclmn_get_events($args = []) {
+    $defaults = [
+        'post_type'      => 'tribe_events',
+        'posts_per_page' => 5,
+        'orderby'        => 'event_date',
+        'order'          => 'ASC',
+        'tax_query'      => [],
+    ];
+
+    $args = wp_parse_args($args, $defaults);
+
+    if (!empty($args['category'])) {
+        $args['tax_query'][] = [
+            'taxonomy' => 'tribe_events_cat',
+            'field'    => 'slug',
+            'terms'    => (array) $args['category'],
+        ];
+
+        unset($args['category']);
+    }
+
+    $events = tribe_get_events($args);
+    foreach ($events as $i => $event) {
+        $events[$i] = tribe_get_event($event->ID);
+    }
+
+    return $events;
+}
+
+function dclmn_homepage_events($args = []) {
+    $events = dclmn_get_events($args);
+
+    $url = home_url('events/');
+
+    if ($args['category']) {
+        $url .= 'category/'. $args['category'] .'/list/';
+    }
+
+    $out = '';
+
+    $out .= '<div class="dclmn-events">';
+
+
+    if ($args['header']) {
+        $out .=  '<h2><a href="'. $url .'">' . $args['header'] . '</a></h2>';
+    }
+
+    foreach ($events as $event) {
+        $display_date = empty($is_past) && ! empty($request_date)
+            ? max($event->dates->start_display, $request_date)
+            : $event->dates->start_display;
+
+        $event_week_day  = $display_date->format_i18n('l');
+        $event_day_num   = $display_date->format_i18n('j');
+        $event_month   = $display_date->format_i18n('F');
+        $event_date_attr = $display_date->format(Dates::DBDATEFORMAT);
+
+        if ($event->multiday) {
+            // The date returned back contains HTML and is already escaped.
+            $event_time = $event->schedule_details->value();
+        } elseif ($event->all_day) {
+            $event_time = esc_html_x('All day', 'All day label for event', 'the-events-calendar');
+        } else {
+            // The date returned back contains HTML and is already escaped.
+            $event_time = $event->short_schedule_details->value();
+        }
+
+        $out .= '<p class="dclmn-event">';
+
+        $out .= '<a
+		href="' . esc_url($event->permalink) . '"
+		title="' . esc_attr($event->title) . '"
+		rel="bookmark"
+		class="tribe-events-widget-events-list__event-title-link tribe-common-anchor-thin">';
+
+        //$out .= tribe_event_featured_image($event->ID, 'full', false);
+        $out .= '<span class="event-title"><strong>' . $event->title . '</strong></span>';
+        $out .= '<br>';
+        $out .= '<span class="event-week-day">' . $event_week_day . ', </span> ';
+        $out .= '<span class="event-month">' . $event_month . '</span> ';
+        $out .= '<span class="event-date">' . $event_day_num . '</span> ';
+        $out .= '  ';
+        $out .= '<span class="event-time">' . $event_time . '</span>';
+        $out .= '</a>';
+        $out .= '</p>';
+    }
+
+    $out .=  '<p><a href="'. $url .'">View More &raquo;</a></p>';
+
+    $out .= '</div>';
+
+    return $out;
 }
 
 function newsmatic_bottom_footer_copyright_part() {
@@ -184,5 +279,7 @@ function import_cps() {
 }
 
 
-function newsmatic_header_sidebar_toggle_part() {}
-function newsmatic_header_search_part() {}
+function newsmatic_header_sidebar_toggle_part() {
+}
+function newsmatic_header_search_part() {
+}
