@@ -355,6 +355,10 @@
     .quotes-page .wp-block-pullquote {
         font-size: 1.5em;
     }
+
+    .dclmn-events {
+        padding: .5em .5em;
+    }
 }
 
 /* 550px */

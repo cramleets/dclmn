@@ -71,7 +71,7 @@ function dclmn_homepage_events($args = []) {
     $url = home_url('events/');
 
     if ($args['category']) {
-        $url .= 'category/'. $args['category'] .'/list/';
+        $url .= 'category/' . $args['category'] . '/list/';
     }
 
     $out = '';
@@ -80,7 +80,7 @@ function dclmn_homepage_events($args = []) {
 
 
     if ($args['header']) {
-        $out .=  '<h2><a href="'. $url .'">' . $args['header'] . '</a></h2>';
+        $out .=  '<h2><a href="' . $url . '">' . $args['header'] . '</a></h2>';
     }
 
     foreach ($events as $event) {
@@ -123,7 +123,7 @@ function dclmn_homepage_events($args = []) {
         $out .= '</p>';
     }
 
-    $out .=  '<p><a href="'. $url .'">View More &raquo;</a></p>';
+    $out .=  '<p><a href="' . $url . '">View More &raquo;</a></p>';
 
     $out .= '</div>';
 
@@ -153,11 +153,18 @@ function newsmatic_header_ads_banner_part_footer() {
     echo '</div>';
 }
 
+function newsmatic_before_inner_content() {
+    global $post;
+    if (is_object($post) && strstr($post->post_name, '-officials')) {
+        echo '<nav class="elected-officials-nav"><h3>Elected Officials</h3>'. do_shortcode('[dclmn-buttons-elected-officials]') .'</nav>';
+    }
+}
+
 /**
  * Override function.
  */
-function newsmatic_top_header_social_part() {
-}
+// function newsmatic_top_header_social_part() {
+// }
 
 function newsmatic_header_site_branding_part() {
 ?>
@@ -276,6 +283,49 @@ function import_cps() {
     }
 
     die('done');
+}
+
+function dclmn_get_nested_menu($menu_name) {
+    // Get menu items by name
+    $menu_items = wp_get_nav_menu_items($menu_name);
+    if (!$menu_items) {
+        return [];
+    }
+
+    // Recursive function to build the tree
+    $build_tree = function ($parent_id = 0) use (&$build_tree, $menu_items) {
+        $branch = [];
+        foreach ($menu_items as $item) {
+            if ((int) $item->menu_item_parent === $parent_id) {
+                $children = $build_tree($item->ID);
+                if ($children) {
+                    $item->children = $children;
+                }
+                $branch[] = $item;
+            }
+        }
+        return $branch;
+    };
+
+    return $build_tree();
+}
+
+function dclmn_header_menu($menu_name) {
+    $menu = dclmn_get_nested_menu($menu_name);
+    $out = '';
+    $out .= '<div class="dclmn-header-menu">' .PHP_EOL;
+    $out .= '<h4><a href="' . $menu[0]->url . '">' . (($menu[0]->title) ?: $menu[0]->post_title) . '</a></h4>' .PHP_EOL;
+    $out .= '<div class="padding">' .PHP_EOL;
+    $out .= '<ul>' .PHP_EOL;
+    foreach ($menu[0]->children as $menu_item) {
+        //$out .= '<li><a href="' . $menu_item->url . '">' . ($menu_item->title) ?: $menu_item->post_title . '</a></li>' .PHP_EOL;
+        $out .= '<li><a href="' . $menu_item->url . '">' . (($menu_item->title) ?: $menu_item->post_title) . '</a></li>' .PHP_EOL;
+    }
+    $out .= '</ul>' .PHP_EOL;
+    $out .= '</div>' .PHP_EOL;
+    $out .= '</div>' .PHP_EOL;
+
+    return $out;
 }
 
 

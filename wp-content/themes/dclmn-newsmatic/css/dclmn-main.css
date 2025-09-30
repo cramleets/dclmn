@@ -451,7 +451,7 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
 }
 
 .widget.rotating-quotes blockquote {
-    padding: .25em .5em;
+    padding: .5em .5em;
     text-align: left;
     border-color: var(--color-highlight);
 }
@@ -560,4 +560,25 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
 
 .dclmn-event a:hover .event-title {
     color: var(--color-red);
+}
+
+.elected-officials-nav {
+    margin: 1em;
+}
+
+.elected-officials-nav h3 {
+    margin: 0;
+}
+
+.committee-position-info {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.error404 #theme-content .button-404 {
+    background-color: var(--color-root);
+}
+
+.footer-inner a {
+    text-decoration: none;
 }

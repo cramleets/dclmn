@@ -11,6 +11,11 @@ class DCLMN {
     var $builds = [];
 
     function __construct() {
+        if (strpos($_SERVER['HTTP_HOST'], 'dclmn.us') === false) {
+            wp_redirect('https://dclmn.us' . $_SERVER['REQUEST_URI'], 301);
+            exit;
+        }
+
         add_action('wp_enqueue_scripts', function () {
             $parent_style = 'dclmn-parent';
 
@@ -23,6 +28,10 @@ class DCLMN {
 
         add_action('init', function () {
             add_action('newsmatic_botttom_footer_hook', 'newsmatic_bottom_footer_copyright_part', 20);
+        });
+
+        add_action('init', function () {
+            add_action('newsmatic_before_inner_content', 'newsmatic_before_inner_content', 20);
         });
 
         add_action('wp_head', function () {
@@ -96,6 +105,20 @@ class DCLMN {
 
             return $args;
         });
+
+        add_filter(
+            'wp_mail_from',
+            function ($old) {
+                return 'web@dclmn.com';
+            }
+        );
+
+        add_filter(
+            'wp_mail_from_name',
+            function ($old) {
+                return html_entity_decode(get_bloginfo());
+            }
+        );
     }
 
     function get_leadership() {

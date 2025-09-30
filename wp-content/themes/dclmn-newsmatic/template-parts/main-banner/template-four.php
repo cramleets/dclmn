@@ -20,6 +20,26 @@ function  newsmatic_query_args_filter($args) {
             'compare' => 'EXISTS'
         )
     );
+
+    // Exclude a specific event category (example: "tech-events")
+    $args['tax_query'] = array(
+
+        'relation' => 'OR',
+        // Condition 1: posts without the excluded term(s)
+        array(
+            'taxonomy' => 'tribe_events_cat',
+            'field'    => 'slug',
+            'terms'    => array('featured'), // category to exclude
+            'operator' => 'IN',
+        ),
+        // Condition 2: posts that have no term in this taxonomy
+        array(
+            'taxonomy' => 'tribe_events_cat',
+            'operator' => 'NOT EXISTS',
+        ),
+    );
+
+
     return $args;
 }
 
