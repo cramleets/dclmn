@@ -8,81 +8,81 @@
  */
 
 use Newsmatic\CustomizerDefault as ND;
+use Tribe__Date_Utils as Dates;
 
 $slider_args = $args['slider_args'];
-
-function  newsmatic_query_args_filter($args) {
-    $args['posts_per_page'] = 4;
-    $args['post_type'] = ['post', 'tribe_event', 'tribe_events'];
-    $args['meta_query'] = array(
-        array(
-            'key'     => '_thumbnail_id',
-            'compare' => 'EXISTS'
-        )
-    );
-
-    // Exclude a specific event category (example: "tech-events")
-    $args['tax_query'] = array(
-
-        'relation' => 'OR',
-        // Condition 1: posts without the excluded term(s)
-        array(
-            'taxonomy' => 'tribe_events_cat',
-            'field'    => 'slug',
-            'terms'    => array('featured'), // category to exclude
-            'operator' => 'IN',
-        ),
-        // Condition 2: posts that have no term in this taxonomy
-        array(
-            'taxonomy' => 'tribe_events_cat',
-            'operator' => 'NOT EXISTS',
-        ),
-    );
-
-
-    return $args;
-}
-
-add_filter('newsmatic_query_args_filter', 'newsmatic_query_args_filter');
+$args = ['category' => 'featured'];
+$posts2 = get_recent_posts_and_events($args);
+$first_reads = array_slice($posts2['posts'], 0, 2) + $posts2['events'];
+$second_reads = array_slice($posts2['events'], 0, 4);
 ?>
 <div class="main-banner-wrap">
     <div class="main-banner-slider" data-auto="true" data-arrows="true">
         <?php
-        $slider_args = apply_filters('newsmatic_query_args_filter', $slider_args);
-        $slider_query = new WP_Query($slider_args);
-        if ($slider_query->have_posts()) :
-            while ($slider_query->have_posts()) : $slider_query->the_post();
+        if (!empty($first_reads)) :
+            foreach ($first_reads as $post) :
+                $is_event = strstr($post->post_type, 'tribe_event');
+                if ($is_event) {
+                    $event_thumbs = $post->thumbnail->fetch_data();
+                    $event_thumb = $event_thumbs['medium_large'];
+
+                    $post_thumb = $event_thumb->url;
+
+                    $display_date = empty($is_past) && ! empty($request_date)
+                        ? max($post->dates->start_display, $request_date)
+                        : $post->dates->start_display;
+
+                    $event_week_day  = $display_date->format_i18n('l');
+                    $event_day_num   = $display_date->format_i18n('j');
+                    $event_month   = $display_date->format_i18n('F');
+                    $event_date_attr = $display_date->format(Dates::DBDATEFORMAT);
+
+                    if ($post->multiday) {
+                        // The date returned back contains HTML and is already escaped.
+                        $event_time = $post->schedule_details->value();
+                    } elseif ($post->all_day) {
+                        $event_time = esc_html_x('All day', 'All day label for event', 'the-events-calendar');
+                    } else {
+                        // The date returned back contains HTML and is already escaped.
+                        $event_time = $post->short_schedule_details->value();
+                    }
+                } else {
+                    $post_thumb = get_the_post_thumbnail_url($post->ID);
+                }
+
+                $attr_title = esc_attr(strip_tags($post->title));
+                $post->title = ($post->title) ?: $post->post_title;
+                //$post_thumb = str_replace('local.', '', $post_thumb);
+
+                $excerpt = get_the_excerpt($post->ID);
+
         ?>
-                <article class="slide-item <?php if (!has_post_thumbnail()) {
-                                                echo esc_attr('no-feat-img');
-                                            } ?>">
+                <article class="slide-item <?php if (empty($post_thumb)) echo esc_attr('no-feat-img') ?>">
                     <figure class="post-thumb">
-                        <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
-                            <?php
-                            if (has_post_thumbnail()) {
-                                the_post_thumbnail(esc_html(ND\newsmatic_get_customizer_option('banner_slider_image_size')), array(
-                                    'title' => the_title_attribute(array(
-                                        'echo'  => false
-                                    ))
-                                ));
-                            }
-                            ?>
-                        </a>
+                        <a href="<?php echo get_permalink($post->ID); ?>" title="<?php echo $attr_title; ?>"><img src="<?php echo $post_thumb ?>"></a>
                     </figure>
                     <div class="post-element">
-                        <div class="post-meta">
-                            <?php newsmatic_get_post_categories(get_the_ID(), 2); ?>
-                            <?php newsmatic_posted_on(); ?>
-                        </div>
-                        <h2 class="post-title"><a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
-                        <?php add_filter('excerpt_length', 'newsmatic_banner_excerpt_length', 999); ?>
-                        <div class="post-excerpt"><?php the_excerpt(); ?></div>
-                        <?php remove_filter('excerpt_length', 'newsmatic_banner_excerpt_length', 999); ?>
+                        <h2 class="post-title">
+                            <div class="post-element">
+                                <?php
+                                if ($is_event) {
+                                    $out = '';
+                                    $out .= '<span class="event-week-day">' . $event_week_day . ', </span> ';
+                                    $out .= '<span class="event-month">' . $event_month . '</span> ';
+                                    $out .= '<span class="event-date">' . $event_day_num . '</span> ';
+                                    $out .= '  ';
+                                    $out .= '<span class="event-time">' . strip_tags($event_time) . '</span>';
+                                    echo '<span class="event-date-info">' . $out . '</span>';
+                                }
+                                ?>
+                                <a href="<?php echo get_permalink($post->ID); ?>" title="<?php echo $attr_title; ?>"><?php echo $post->title ?></a>
+                            </div>
+                        </h2>
+                        <div class="post-excerpt"><?php echo $excerpt; ?></div>
                     </div>
                 </article>
         <?php
-            endwhile;
-            wp_reset_postdata();
+            endforeach;
         endif;
         ?>
     </div>
@@ -90,43 +90,62 @@ add_filter('newsmatic_query_args_filter', 'newsmatic_query_args_filter');
 
 <div class="main-banner-block-posts banner-trailing-posts">
     <?php
-    $main_banner_block_posts_categories = json_decode(ND\newsmatic_get_customizer_option('main_banner_block_posts_categories'));
-    $main_banner_block_posts_order_by = ND\newsmatic_get_customizer_option('main_banner_block_posts_order_by');
-    $blockPostsOrderArray = explode('-', $main_banner_block_posts_order_by);
-    $block_posts_args = array(
-        'numberposts' => 4,
-        'order' => esc_html($blockPostsOrderArray[1]),
-        'orderby' => esc_html($blockPostsOrderArray[0]),
-        'category_name' => newsmatic_get_categories_for_args($main_banner_block_posts_categories)
-    );
-    $block_posts_args = apply_filters('newsmatic_query_args_filter', $block_posts_args);
-    $block_posts = get_posts($block_posts_args);
-    if ($block_posts) :
-        foreach ($block_posts as $popular_post) :
-            $popular_post_id  = $popular_post->ID;
+    if (!empty($second_reads)) :
+        foreach ($second_reads as $post) :
+            $event_thumbs = $post->thumbnail->fetch_data();
+            $event_thumb = $event_thumbs['medium_large'];
+
+            $post_thumb = $event_thumb->url;
+            $post_thumb = str_replace('local.', '', $post_thumb);
+
+            $post->title = ($post->title) ?: $post->post_title;
+            $attr_title = esc_attr(strip_tags($post->title));
+
+            $excerpt = get_the_excerpt($post->ID);
+
+
+            $display_date = empty($is_past) && ! empty($request_date)
+                ? max($post->dates->start_display, $request_date)
+                : $post->dates->start_display;
+
+            $event_week_day  = $display_date->format_i18n('D');
+            $event_day_num   = $display_date->format_i18n('j');
+            $event_month   = $display_date->format_i18n('M');
+            $event_date_attr = $display_date->format(Dates::DBDATEFORMAT);
+
+            if ($post->multiday) {
+                // The date returned back contains HTML and is already escaped.
+                $event_time = $post->schedule_details->value();
+            } elseif ($post->all_day) {
+                $event_time = esc_html_x('All day', 'All day label for event', 'the-events-calendar');
+            } else {
+                // The date returned back contains HTML and is already escaped.
+                $event_time = $post->short_schedule_details->value();
+            }
+
     ?>
-            <article class="post-item<?php if (!has_post_thumbnail($popular_post_id)) {
-                                            echo esc_attr(' no-feat-img');
-                                        } ?>">
+            <article class="post-item <?php if (empty($post_thumb)) echo esc_attr('no-feat-img') ?>">
                 <figure class="post-thumb">
-                    <?php if (has_post_thumbnail($popular_post_id)): ?>
-                        <a href="<?php echo esc_url(get_the_permalink($popular_post_id)); ?>">
-                            <img src="<?php echo esc_url(get_the_post_thumbnail_url($popular_post_id, ND\newsmatic_get_customizer_option('banner_slider_block_posts_image_size'))); ?>" alt="<?php the_title_attribute(['post' => $popular_post_id]); ?>" />
-                        </a>
-                    <?php endif; ?>
+                    <a href="<?php echo get_permalink($post->ID); ?>" title="<?php echo $attr_title; ?>"><img src="<?php echo $post_thumb ?>"></a>
                 </figure>
-                <div class="post-element">
-                    <div class="post-meta">
-                        <?php newsmatic_get_post_categories($popular_post_id, 2); ?>
+                <h2 class="post-title">
+                    <div class="post-element">
+                        <?php
+                        $out = '';
+                        $out .= '<span class="event-week-day">' . $event_week_day . ', </span> ';
+                        $out .= '<span class="event-month">' . $event_month . '</span> ';
+                        $out .= '<span class="event-date">' . $event_day_num . '</span>, ';
+                        $out .= '  ';
+                        $out .= '<span class="event-time">' . $event_time . '</span>';
+                        echo '<span class="event-date-info">' . $out . '</span>';
+                        ?>
+                        <a href="<?php echo get_permalink($post->ID); ?>" title="<?php echo $attr_title; ?>"><?php echo $post->title ?></a>
                     </div>
-                    <h2 class="post-title"><a href="<?php the_permalink($popular_post_id); ?>"><?php echo wp_kses_post(get_the_title($popular_post_id)); ?></a></h2>
-                </div>
+                </h2>
+
             </article>
     <?php
         endforeach;
     endif;
     ?>
 </div>
-<?php
-
-remove_filter('newsmatic_query_args_filter', 'newsmatic_query_args_filter');

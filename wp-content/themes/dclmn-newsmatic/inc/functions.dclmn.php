@@ -156,7 +156,7 @@ function newsmatic_header_ads_banner_part_footer() {
 function newsmatic_before_inner_content() {
     global $post;
     if (is_object($post) && strstr($post->post_name, '-officials')) {
-        echo '<nav class="elected-officials-nav"><h3>Elected Officials</h3>'. do_shortcode('[dclmn-buttons-elected-officials]') .'</nav>';
+        echo '<nav class="elected-officials-nav"><h3>Elected Officials</h3>' . do_shortcode('[dclmn-buttons-elected-officials]') . '</nav>';
     }
 }
 
@@ -313,17 +313,17 @@ function dclmn_get_nested_menu($menu_name) {
 function dclmn_header_menu($menu_name) {
     $menu = dclmn_get_nested_menu($menu_name);
     $out = '';
-    $out .= '<div class="dclmn-header-menu">' .PHP_EOL;
-    $out .= '<h4><a href="' . $menu[0]->url . '">' . (($menu[0]->title) ?: $menu[0]->post_title) . '</a></h4>' .PHP_EOL;
-    $out .= '<div class="padding">' .PHP_EOL;
-    $out .= '<ul>' .PHP_EOL;
+    $out .= '<div class="dclmn-header-menu">' . PHP_EOL;
+    $out .= '<h4><a href="' . $menu[0]->url . '">' . (($menu[0]->title) ?: $menu[0]->post_title) . '</a></h4>' . PHP_EOL;
+    $out .= '<div class="padding">' . PHP_EOL;
+    $out .= '<ul>' . PHP_EOL;
     foreach ($menu[0]->children as $menu_item) {
         //$out .= '<li><a href="' . $menu_item->url . '">' . ($menu_item->title) ?: $menu_item->post_title . '</a></li>' .PHP_EOL;
-        $out .= '<li><a href="' . $menu_item->url . '">' . (($menu_item->title) ?: $menu_item->post_title) . '</a></li>' .PHP_EOL;
+        $out .= '<li><a href="' . $menu_item->url . '">' . (($menu_item->title) ?: $menu_item->post_title) . '</a></li>' . PHP_EOL;
     }
-    $out .= '</ul>' .PHP_EOL;
-    $out .= '</div>' .PHP_EOL;
-    $out .= '</div>' .PHP_EOL;
+    $out .= '</ul>' . PHP_EOL;
+    $out .= '</div>' . PHP_EOL;
+    $out .= '</div>' . PHP_EOL;
 
     return $out;
 }
@@ -332,4 +332,75 @@ function dclmn_header_menu($menu_name) {
 function newsmatic_header_sidebar_toggle_part() {
 }
 function newsmatic_header_search_part() {
+}
+
+
+function get_recent_posts_and_events() {
+    // Get posts
+    $posts = get_posts([
+        'post_type'      => 'post',
+        'posts_per_page' => 10,
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+        'meta_query'     => [
+            [
+                'key'     => '_thumbnail_id',
+                'compare' => 'EXISTS'
+            ]
+        ]
+    ]);
+
+    // Get upcoming events
+    $events = get_posts([
+        'post_type'      => ['tribe_event', 'tribe_events'],
+        'posts_per_page' => 10,
+        'meta_query'     => [
+            [
+                'key'     => '_EventStartDate',
+                'value'   => current_time('Y-m-d H:i:s'),
+                'compare' => '>=',
+                'type'    => 'DATETIME'
+            ],
+            [
+                'key'     => '_thumbnail_id',
+                'compare' => 'EXISTS'
+            ]
+        ],
+        'orderby'        => 'meta_value',
+        'order'          => 'ASC',
+        'meta_key'       => '_EventStartDate',
+        'tax_query' => array(
+
+            'relation' => 'OR',
+            // Condition 1: posts without the excluded term(s)
+            array(
+                'taxonomy' => 'tribe_events_cat',
+                'field'    => 'slug',
+                'terms'    => array('featured'), // category to exclude
+                'operator' => 'IN',
+            ),
+            // Condition 2: posts that have no term in this taxonomy
+            array(
+                'taxonomy' => 'tribe_events_cat',
+                'operator' => 'NOT EXISTS',
+            ),
+        )
+    ]);
+
+    // Nested assoc array
+    $data = [
+        'posts'  => [],
+        'events' => []
+    ];
+
+    // Fill
+    foreach ($posts as $p) {
+        $data['posts'][] = $p;
+    }
+
+    foreach ($events as $e) {
+        $data['events'][] = tribe_get_event($e->ID);
+    }
+
+    return $data;
 }

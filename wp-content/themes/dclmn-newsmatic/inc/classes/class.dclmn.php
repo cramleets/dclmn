@@ -119,6 +119,17 @@ class DCLMN {
                 return html_entity_decode(get_bloginfo());
             }
         );
+
+        add_filter('body_class', function ($classes) {
+            global $post;
+            $post_name = 'default';
+            if (is_front_page()) $post_name = 'home';
+            elseif (is_404()) $post_name = '404';
+            elseif ($post->post_name) $post_name = $post->post_name;
+            $post_name = apply_filters('napco_page_name', $post_name);
+            $classes[] = $post_name;
+            return $classes;
+        });
     }
 
     function get_leadership() {
@@ -528,5 +539,144 @@ class DCLMN {
 
         Shuchkin\SimpleXLSXGen::fromArray($leadership)->saveAs('/tmp/test.xlsx');
         $this->downloadFile(file_get_contents('/tmp/test.xlsx'), 'dclmn-leadership.xlsx');
+    }
+
+
+    function get_recent_posts_and_events2() {
+        // Get posts
+        $posts = get_posts([
+            'post_type'      => 'post',
+            'posts_per_page' => 10,
+            'orderby'        => 'date',
+            'order'          => 'DESC',
+            'meta_query'     => [
+                [
+                    'key'     => '_thumbnail_id',
+                    'compare' => 'EXISTS'
+                ]
+            ]
+        ]);
+
+        // Get upcoming events
+        $events = get_posts([
+            'post_type'      => 'post',
+            'posts_per_page' => 10,
+            'meta_query'     => [
+                [
+                    'key'     => '_EventStartDate',
+                    'value'   => current_time('Y-m-d H:i:s'),
+                    'compare' => '>=',
+                    'type'    => 'DATETIME'
+                ],
+                [
+                    'key'     => '_thumbnail_id',
+                    'compare' => 'EXISTS'
+                ]
+            ],
+            'tax_query' => [
+                'relation' => 'OR',
+                [
+                    'taxonomy' => 'tribe_events_cat',
+                    'field'    => 'slug',
+                    'terms'    => ['featured'],
+                    'operator' => 'IN',
+                ],
+                [
+                    'taxonomy' => 'tribe_events_cat',
+                    'operator' => 'NOT EXISTS',
+                ],
+            ],
+            'orderby'   => 'meta_value',
+            'order'     => 'ASC',
+            'meta_key'  => '_EventStartDate'
+        ]);
+
+        // Nested assoc array
+        $data = [
+            'posts'  => [],
+            'events' => []
+        ];
+
+        foreach ($posts as $p) {
+            $data['posts'][] = $p;
+        }
+
+        foreach ($events as $e) {
+            // use tribe_get_event() if you want the enriched object
+            // $data['events'][] = function_exists('tribe_get_event') ? tribe_get_event($e) : $e;
+        }
+
+        return $data;
+    }
+
+
+
+    function get_recent_posts_and_events() {
+        global $wpdb;
+
+        // ---- Get last 10 posts with thumbnails ----
+        $posts_sql = $wpdb->prepare("
+        SELECT p.ID, p.post_title, p.post_type, p.post_date AS sort_date
+        FROM {$wpdb->posts} p
+        WHERE p.post_type = %s
+          AND p.post_status = 'publish'
+          AND EXISTS (
+            SELECT 1 FROM {$wpdb->postmeta} pm
+            WHERE pm.post_id = p.ID AND pm.meta_key = '_thumbnail_id'
+          )
+        ORDER BY p.post_date DESC
+        LIMIT 10
+    ", 'post');
+
+        $posts = $wpdb->get_results($posts_sql);
+
+        // ---- Get next 10 events with thumbnails and tax filter ----
+        $events_sql = "
+        SELECT p.ID, p.post_title, p.post_type, pm.meta_value AS sort_date
+        FROM {$wpdb->posts} p
+        INNER JOIN {$wpdb->postmeta} pm
+          ON p.ID = pm.post_id AND pm.meta_key = '_EventStartDate'
+        LEFT JOIN {$wpdb->term_relationships} tr
+          ON p.ID = tr.object_id
+        LEFT JOIN {$wpdb->term_taxonomy} tt
+          ON tr.term_taxonomy_id = tt.term_taxonomy_id
+        LEFT JOIN {$wpdb->terms} t
+          ON tt.term_id = t.term_id
+        WHERE p.post_type IN ('tribe_event','tribe_events')
+          AND p.post_status = 'publish'
+          AND EXISTS (
+            SELECT 1 FROM {$wpdb->postmeta} pm2
+            WHERE pm2.post_id = p.ID AND pm2.meta_key = '_thumbnail_id'
+          )
+          AND STR_TO_DATE(pm.meta_value, '%%Y-%%m-%%d %%H:%%i:%%s') >= NOW()
+          AND (
+                (tt.taxonomy = 'tribe_events_cat' AND t.slug = 'featured')
+             OR (tt.taxonomy IS NULL) -- covers NOT EXISTS
+          )
+        ORDER BY pm.meta_value ASC
+        LIMIT 10
+    ";
+
+        $events = $wpdb->get_results($events_sql);
+
+        // ---- Build return array ----
+        $data = [
+            'posts'  => [],
+            'events' => []
+        ];
+
+        foreach ($posts as $p) {
+            $data['posts'][] = $p;
+        }
+
+        foreach ($events as $e) {
+            if (function_exists('tribe_get_event')) {
+                $data['events'][] = tribe_get_event($e->ID); // enriched event object
+            } else {
+                $data['events'][] = $e; // fallback
+            }
+        }
+
+        return $data;
     }
 }

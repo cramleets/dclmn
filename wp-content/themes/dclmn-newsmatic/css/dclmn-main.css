@@ -21,10 +21,30 @@
     --tec-color-button-primary: var(--color-root);
     /* --tec-color-text-primary: var(--color-root); */
     --tec-border-radius-default: 1em;
-    --tec-spacer-13: 2em; /* desktop top padding */
-    --tec-spacer-11: .75em; /* mobile top padding */
+    --tec-spacer-13: 2em;
+    /* desktop top padding */
+    --tec-spacer-11: .75em;
+    /* mobile top padding */
     /* --tec-grid-gutter-page: 0; */
 
+}
+
+#theme-content .primary-content,
+.post-inner,
+.single #comments,
+.newsmatic-breadcrumb-wrap,
+.secondary-sidebar .widget,
+.secondary-left-sidebar .widget,
+.newsmatic-section .primary-content>div,
+.full-width-section .row>div,
+.bottom-full-width-section .row>div,
+.ticker-news-wrap,
+.single-related-posts-section,
+.archive.author .newsmatic-container.newsmatic-author-section .row,
+.sidebar-toggle .widget {
+    /* box-shadow: var(--horizontal-shadow-offset) var(--vertical-shadow-offset) var(--blur-radius) var(--spread-radus) var(--shadow-color); */
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
 }
 
 .site-branding .site-title a {
@@ -503,7 +523,7 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
     margin: 0 0 .5em 0;
 }
 
-.suggest-a-quote .with_frm_style .frm_form_fields > fieldset {
+.suggest-a-quote .with_frm_style .frm_form_fields>fieldset {
     padding: 0;
 }
 
@@ -521,8 +541,9 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
     padding-bottom: 0;
 }
 
-#main-banner-section a {
+#main-banner-section {
     color: var(--color-white) !important;
+    text-shadow: 1px 1px 1px #000;;
 }
 
 #main-banner-section article:hover a {
@@ -581,4 +602,60 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
 
 .footer-inner a {
     text-decoration: none;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    align-items: center;
+}
+
+.social-icons svg {
+    width: 2.5em;
+}
+
+.social-icons .facebook svg {
+    fill: #0866FF;
+}
+
+.social-icons .instagram svg {
+    fill: #FF0069;
+}
+
+.social-icons .youtube svg {
+    fill: #FF0000;
+}
+
+.social-icons .email svg {
+    stroke: var(--color-root);
+}
+
+
+.social-icons a:hover svg {
+  -webkit-filter: drop-shadow( 1px 2px 1px rgba(0, 0, 0, .25));
+  filter: drop-shadow( 1px 2px 1px rgba(0, 0, 0, .25));
+}
+
+#secondary section.widget_block:nth-of-type(2) {
+    padding: 1.5em 0 0 0;
+    margin: 0;
+}
+
+#secondary section.widget_block:nth-of-type(2) p {
+    display: none;
+}
+
+.event-date-info {
+    font-size: .75em;
+    display: block;
+    margin-bottom: 0;
+}
+
+#main-banner-section .newsmatic-container a {
+    color: var(--color-white) !important;
+}
+
+body.home #block-21 {
+    display: none;
 }

@@ -359,6 +359,11 @@
     .dclmn-events {
         padding: .5em .5em;
     }
+
+    .banner-layout--four .main-banner-wrap .slick-list article,
+    .banner-layout--four .main-banner-wrap .slick-list .post-thumb {
+        height: 300px;
+    }
 }
 
 /* 550px */
