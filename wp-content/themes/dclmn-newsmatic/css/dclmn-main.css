@@ -659,3 +659,8 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
 body.home #block-21 {
     display: none;
 }
+
+#masthead img.hamburger {
+    height: auto !important;
+    width: 13px;
+}

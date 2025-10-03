@@ -1,4 +1,4 @@
-<div class="dclmn-mobile-header-open" aria-expanded="false"><span>menu =</span></div>
+<div class="dclmn-mobile-header-open" aria-expanded="false"><span>menu <img src="<?php echo get_stylesheet_directory_uri() ?>/images/hamburger.png" class="hamburger"></span></div>
 
 <div class="home-boxes">
   <div>
