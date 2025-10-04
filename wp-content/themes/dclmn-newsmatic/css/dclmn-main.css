@@ -543,7 +543,7 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
 
 #main-banner-section {
     color: var(--color-white) !important;
-    text-shadow: 1px 1px 1px #000;;
+    text-shadow: 2px 2px 1px rgba(0, 0, 0, .75);
 }
 
 #main-banner-section article:hover a {
@@ -633,8 +633,8 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
 
 
 .social-icons a:hover svg {
-  -webkit-filter: drop-shadow( 1px 2px 1px rgba(0, 0, 0, .25));
-  filter: drop-shadow( 1px 2px 1px rgba(0, 0, 0, .25));
+    -webkit-filter: drop-shadow(1px 2px 1px rgba(0, 0, 0, .25));
+    filter: drop-shadow(1px 2px 1px rgba(0, 0, 0, .25));
 }
 
 #secondary section.widget_block:nth-of-type(2) {
@@ -650,10 +650,20 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
     font-size: .75em;
     display: block;
     margin-bottom: 0;
+    line-height: 1.25;
 }
 
 #main-banner-section .newsmatic-container a {
     color: var(--color-white) !important;
+}
+
+#main-banner-section .newsmatic-container article .event-date-info {
+    color: var(--color-white);
+    transition: var(--transition);
+}
+
+#main-banner-section .newsmatic-container article:hover .event-date-info {
+    color: var(--color-highlight);
 }
 
 body.home #block-21 {
@@ -663,4 +673,9 @@ body.home #block-21 {
 #masthead img.hamburger {
     height: auto !important;
     width: 13px;
+}
+
+.main-navigation ul.menu ul li a:after,
+.main-navigation ul.nav-menu ul li a:after {
+    color: var(---menu-color-submenu) !important;
 }
