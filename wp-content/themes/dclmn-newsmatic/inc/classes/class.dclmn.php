@@ -130,6 +130,14 @@ class DCLMN {
             $classes[] = $post_name;
             return $classes;
         });
+
+        add_filter('tribe_event_featured_image', function($featured_image, $post_id, $size) {
+            if ($url = tribe_get_event_website_url($post_id)) {
+                $featured_image = '<a href="'. tribe_get_event_website_url($post_id) .'" target="_blank">'. $featured_image .'</a>';
+            }
+
+            return $featured_image;
+        }, 10, 3);
     }
 
     function get_leadership() {
