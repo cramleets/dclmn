@@ -70,8 +70,7 @@ $second_reads = array_slice($posts2['events'], 0, 4);
                                     $out .= '<span class="event-week-day">' . $event_week_day . ', </span> ';
                                     $out .= '<span class="event-month">' . $event_month . '</span> ';
                                     $out .= '<span class="event-date">' . $event_day_num . '</span> ';
-                                    $out .= '  ';
-                                    $out .= '<span class="event-time">' . strip_tags($event_time) . '</span>';
+                                    $out .= '<span class="event-time"> ' . strip_tags($event_time) . '</span>';
                                     echo '<span class="event-date-info">' . $out . '</span>';
                                 }
                                 ?>
