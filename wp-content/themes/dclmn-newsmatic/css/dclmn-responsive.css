@@ -364,9 +364,28 @@
     .banner-layout--four .main-banner-wrap .slick-list .post-thumb {
         height: 300px;
     }
+
+    .banner-layout--four .main-banner-wrap .slick-list article .event-time,
+    .banner-layout--four .main-banner-wrap .slick-list .post-thumb .event-time {
+        display: none;
+    }
+
+    .banner-layout--four .main-banner-wrap .slick-list article .post-element a {
+        font-size: ;
+    }
+
+    
 }
 
 /* 550px */
+
+
+@media (max-width: 396px) {
+    .banner-layout--four .main-banner-wrap .slick-list article,
+    .banner-layout--four .main-banner-wrap .slick-list .post-thumb {
+        height: 250px;
+    }
+}
 
 
 @media (max-width: 380px) {
