@@ -59,6 +59,11 @@ td,
     font-family: "Mulish", sans-serif;
 }
 
+.main-navigation .menu li a,
+.main-navigation .nav.menu li a {
+    padding: 15px 26px;
+}
+
 #page {
     border-top: .75em solid var(--color-root);
 }
@@ -401,6 +406,23 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
     display: none;
 }
 
+.dclmn-mobile-header-open svg {
+    width: 16px;
+    height: 16px;
+    fill: #fff;
+    vertical-align: middle;
+}
+
+.dclmn-mobile-header-open svg path {
+    stroke: var(--color-white);
+    stroke-width: 2.4;
+    stroke-linecap: round;
+}
+
+.dclmn-mobile-header-open:hover svg path {
+    stroke: var(--color-root);
+}
+
 .dclmn-mobile-header-open span,
 .dclmn-mobile-header-close span {
     float: right;
@@ -413,16 +435,17 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
     font-size: 1.25em;
     cursor: pointer;
     /* width: 1.75em; */
-    width: 82px;
+    width: 94px;
     height: 1.75em;
     text-align: center;
     line-height: 1.1em;
     z-index: 9999;
+    box-shadow: -1px 1px 2px 2px rgba(0, 0, 0, 0.3);
 }
 
 .dclmn-mobile-header-open span:hover,
 .dclmn-mobile-header-close span {
-    border-color: var(--color-highlight);
+    border-color: var(--color-root);
     background-color: var(--color-highlight);
     color: var(--color-root);
 }
@@ -678,4 +701,12 @@ body.home #block-21 {
 .main-navigation ul.menu ul li a:after,
 .main-navigation ul.nav-menu ul li a:after {
     color: var(---menu-color-submenu) !important;
+}
+
+.footer-widget .widget_nav_menu ul li a {
+    transition: var(--transition);
+}
+
+.footer-widget .widget_nav_menu ul li a:hover {
+    color: var(--color-highlight);
 }

@@ -6,6 +6,11 @@
     .officials-table-wrap.lower-merion-school-board .officials-table>div {
         flex: 0 0 23%;
     }
+
+    .main-navigation .menu li a,
+    .main-navigation .nav.menu li a {
+        padding: 15px 20px;
+    }
 }
 
 @media (max-width: 1100px) {
@@ -15,6 +20,21 @@
     .officials-table-wrap.lower-merion-township .officials-table>div,
     .officials-table-wrap.lower-merion-school-board .officials-table>div {
         flex: 0 0 30%;
+    }
+
+    .main-navigation .menu li a,
+    .main-navigation .nav.menu li a {
+        padding: 15px 10px;
+        transition-duration: 0s;
+    }
+}
+
+@media (max-width: 1000px) {
+
+    .main-navigation .menu li a,
+    .main-navigation .nav.menu li a {
+        padding: 15px 10px;
+        font-size: 14px;
     }
 }
 
@@ -39,10 +59,19 @@
     }
 }
 
+@media (max-width: 795px) {
+
+    .main-navigation .menu li a,
+    .main-navigation .nav.menu li a {
+        padding: 15px 0px;
+    }
+}
+
 
 @media (max-width: 785px) {
     .main-navigation .menu li a {
         padding: 15px 12px;
+        font-size: 12px;
     }
 }
 
@@ -172,12 +201,12 @@
 
     .home-boxes {
         flex-wrap: wrap;
-        gap: 0;
+        gap: .25em;
     }
 
     .home-boxes>div:not(first-of-type) {
         margin-bottom: .5em;
-        flex-basis: 33%;
+        flex-basis: 32%;
     }
 
     .home-boxes>div:first-of-type {
@@ -186,12 +215,15 @@
     }
 
     .home-boxes>div:not(first-of-type) h4 a {
+        border: 1px solid var(--color-root);
         font-size: 1.25em;
         padding: .5em;
+        box-shadow: -1px 1px 2px 2px rgba(0, 0, 0, 0.3);
     }
 
     .home-boxes>div:not(first-of-type) h4 a:hover,
     .home-boxes>div:not(first-of-type) h4 a:active {
+        border-color: var(--color-root);
         background-color: var(--color-highlight);
         color: var(--color-root);
     }
@@ -373,14 +405,19 @@
     .banner-layout--four .main-banner-wrap .slick-list article .post-element a {
         font-size: ;
     }
-
     
+    .entry-content ul,
+    .entry-content ol {
+        padding-left: 1.25em;
+    }
+
 }
 
 /* 550px */
 
 
 @media (max-width: 396px) {
+
     .banner-layout--four .main-banner-wrap .slick-list article,
     .banner-layout--four .main-banner-wrap .slick-list .post-thumb {
         height: 250px;
