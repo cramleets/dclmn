@@ -31,4 +31,6 @@ jQuery(document).ready(function ($) {
     $('.button-group-voting-center a').removeClass('current');
     $(this).addClass('current');
   });
+
+  $('.menu-main-menu-container').addClass('menu-menu-1-container');
 });
