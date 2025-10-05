@@ -40,8 +40,7 @@ function dclmn_get_events($args = []) {
     $defaults = [
         'post_type'      => 'tribe_events',
         'posts_per_page' => 5,
-        'orderby'        => 'event_date',
-        'order'          => 'ASC',
+        'eventDisplay'   => 'upcoming',
         'tax_query'      => [],
     ];
 
