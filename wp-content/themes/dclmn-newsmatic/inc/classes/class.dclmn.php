@@ -131,13 +131,24 @@ class DCLMN {
             return $classes;
         });
 
-        add_filter('tribe_event_featured_image', function($featured_image, $post_id, $size) {
+        add_filter('tribe_event_featured_image', function ($featured_image, $post_id, $size) {
             if ($url = tribe_get_event_website_url($post_id)) {
-                $featured_image = '<a href="'. tribe_get_event_website_url($post_id) .'" target="_blank">'. $featured_image .'</a>';
+                $featured_image = '<a href="' . tribe_get_event_website_url($post_id) . '" target="_blank">' . $featured_image . '</a>';
             }
 
             return $featured_image;
         }, 10, 3);
+
+        add_action('admin_menu', function () {
+            add_submenu_page(
+                'tools.php',
+                'DCLMN Tools',
+                'DCLMN Tools',
+                'update_core',
+                'dclmn-tools',
+                [$this, 'dclmn_tools']
+            );
+        });
     }
 
     function get_leadership() {
@@ -308,6 +319,8 @@ class DCLMN {
                 "First Name",
                 "Last Name",
                 "Email",
+                "Phone",
+                "Phone is Public",
                 "Polling Place",
                 "Polling Place Map"
             ];
@@ -325,6 +338,8 @@ class DCLMN {
                         $person->first_name,
                         $person->last_name,
                         $person->public_email,
+                        $person->phone,
+                        ($person->phone_display_on_site) ? 1 : '',
                         $ward->polling_place->post_title,
                         $ward->polling_place->map_url
                     ];
@@ -359,6 +374,10 @@ class DCLMN {
                         $out .= $person->first_name;
                         $out .= ($person->last_name) ? ' ' . $person->last_name : '';
                         $out .= ($person->public_email) ? '</a>' : '';
+
+                        if (current_user_can('edit_others_posts') || (!empty($person->phone) && $person->phone_display_on_site)) {
+                            $out .= '<br><small><a href="tel:' . $person->phone . '">' . $person->phone . '</a></small>';
+                        }
                     }
                     $out .= '<br>';
                 }
@@ -686,5 +705,9 @@ class DCLMN {
         }
 
         return $data;
+    }
+
+    function dclmn_tools() {
+        require get_stylesheet_directory() .'/dclmn-tools.php';
     }
 }
