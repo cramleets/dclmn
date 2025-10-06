@@ -42,7 +42,7 @@ class DCLMN {
 
         add_filter('document_title_parts', function ($title) {
             if (!$title['title']) $title['title'] = get_bloginfo();
-            else $title['title'] = $title['title'] . ' | ' . get_bloginfo();
+            //else $title['title'] = $title['title'] . ' | ' . get_bloginfo();
             return $title;
         });
 
