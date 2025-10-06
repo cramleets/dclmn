@@ -1,8 +1,8 @@
 <style>
   .embed-container {
     position: relative;
-    padding-bottom: 80%;
-    height: 0;
+    /* padding-bottom: 80%; */
+    height: 60vh;
     max-width: 100%;
   }
 
@@ -23,12 +23,15 @@
     margin-bottom: -15px;
   }
 </style>
+
+<p><a href="https://www.pavoterservices.pa.gov/Pages/PollingPlaceInfo.aspx" target="_blank" style="text-decoration: none; font-weight: bold;">You can also visit the official Commonwealth of PA page.</a></p>
 <div class="embed-container">
   <small>
+  <div class="button-group">
     <a
       href="//pennmaps.maps.arcgis.com/apps/Embed/index.html?webmap=aef3c44d3d5f4984b6664521bf5082d3&extent=-75.3716,39.9791,-75.1692,40.0732&home=true&zoom=true&scale=true&search=true&searchextent=true&disable_scroll=false&theme=light"
-      style="color:#0000FF;text-align:left"
-      target="_blank">View larger map</a>
+      target="_blank" class="button">View larger map</a>
+      </div>
   </small>
   <br>
   <iframe
@@ -39,5 +42,6 @@
     marginheight="0"
     marginwidth="0"
     title="DCLMN Voting Districts"
+    style="max-height: 60vh;"
     src="//pennmaps.maps.arcgis.com/apps/Embed/index.html?webmap=aef3c44d3d5f4984b6664521bf5082d3&extent=-75.3716,39.9791,-75.1692,40.0732&home=true&zoom=true&previewImage=false&scale=true&search=true&searchextent=true&disable_scroll=false&theme=light"></iframe>
 </div>
