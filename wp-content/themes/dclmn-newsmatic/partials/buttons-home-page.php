@@ -1,8 +1,8 @@
 <div class="button-group button-group-large">
-	<a href="<?php echo home_url('get-involved/') ?>" class="button">Get Involved</a>
-	<a href="<?php echo home_url('events/category/volunteer/') ?>" class="button ">Volunteer</a>
-	<a href="<?php echo home_url('get-involved/') ?>" class="button">Participate</a>
-	<a href="https://secure.actblue.com/donate/democratic-committee-of-lower-merion-and-narberth-1" class="button donate" target="_blank">Donate</a>
+	<a href="<?php echo home_url('get-involved/') ?>">Get Involved</a>
+	<a href="<?php echo home_url('events/category/volunteer/') ?>">Volunteer</a>
+	<a href="<?php echo home_url('get-involved/') ?>">Participate</a>
+	<a href="https://secure.actblue.com/donate/democratic-committee-of-lower-merion-and-narberth-1" class="donate" target="_blank">Donate</a>
 </div>
 <?php
 

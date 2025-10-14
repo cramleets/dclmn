@@ -192,6 +192,10 @@
         flex: 0 0 100%;
         text-align: center;
     }
+
+    .dclmn-events .dclmn-event .event-time {
+        display: block;
+    }
 }
 
 @media (max-width: 550px) {
@@ -328,7 +332,7 @@
         display: block;
     }
 
-    .stripes td.ward,
+    .stripes td.precinct,
     .stripes td.position {
         font-size: 1.25em;
         font-weight: bold;
@@ -410,7 +414,6 @@
     .entry-content ol {
         padding-left: 1.25em;
     }
-
 }
 
 /* 550px */

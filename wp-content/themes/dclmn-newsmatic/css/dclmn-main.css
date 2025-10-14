@@ -29,6 +29,14 @@
 
 }
 
+a {
+    color: var(--color-root);
+}
+
+a:visited {
+    color: var(--color-root);
+}
+
 #theme-content .primary-content,
 .post-inner,
 .single #comments,
@@ -66,6 +74,7 @@ td,
 
 #page {
     border-top: .75em solid var(--color-root);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.4);
 }
 
 .fas.fa-search,
@@ -106,6 +115,7 @@ td,
 
 .newsmatic_main_body #masthead.site-header.layout--default .menu-section {
     background-color: var(--color-root);
+    box-shadow: 1px 2px 5px rgba(0,0,0,.4);
 }
 
 .home-boxes h4 a {
@@ -260,7 +270,7 @@ table.stripes a:hover {
     justify-content: space-between;
 }
 
-.button,
+.entry-content .button,
 body #mc_embed_signup .button,
 .frm_style_formidable-style.with_frm_style .frm_submit button,
 .button-group a,
@@ -283,7 +293,7 @@ body #mc_embed_signup .button,
     transition: var(--transition);
 }
 
-.button:visited {
+.entry-content .button:visited {
     color: var(--color-white);
 }
 
@@ -295,7 +305,7 @@ body #mc_embed_signup .button,
     text-align: left;
 }
 
-.button.donate {
+.button-group a.donate {
     background-color: var(--color-red);
     border: 2px solid var(--color-red);
     color: #fff;
@@ -307,7 +317,11 @@ body #mc_embed_signup .button,
     color: var(--color-root);
 }
 
-.button:hover,
+.entry-content a {
+    text-decoration: none;
+}
+
+.entry-content .button:hover,
 body #mc_embed_signup .button:hover,
 body #mc_embed_signup .button:active,
 .frm_style_formidable-style.with_frm_style .frm_submit button:hover,
@@ -324,7 +338,7 @@ body #mc_embed_signup .button:active,
     box-shadow: -1px 1px 4px 2px rgba(0, 0, 0, 0.25);
 }
 
-.button.donate:hover {
+.button-group a.donate:hover {
     color: var(--color-red);
     background-color: var(--white-red);
     border: 2px solid var(--color-red);
@@ -494,6 +508,10 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
     color: var(--color-highlight);
 }
 
+.rotating-quotes .wp-block-pullquote {
+    box-shadow: 10px 4px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
 .widget.rotating-quotes h3 {
     margin: 0 0 .5em 0;
     text-transform: uppercase;
@@ -589,6 +607,7 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
     border-width: 0 0 1px 0;
     margin: 1em 0;
     padding: .5em 1em;
+    clear: both;
 }
 
 .dclmn-events h2 {
@@ -602,6 +621,21 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
 
 .dclmn-events a:hover {
     color: var(--color-red);
+}
+
+.dclmn-event,
+.dclmn-events p {
+    clear: both;
+}
+
+.dclmn-events p:last-of-type {
+    font-weight: bold;
+    font-size: 1.25em;
+    padding-top: .25em;
+}
+
+.dclmn-events p:last-of-type a {
+    color: var(--color-root);
 }
 
 .dclmn-event .event-title {
@@ -714,20 +748,100 @@ body.home #block-21 {
     transition: var(--transition);
 }
 
+.footer-widget h2.widget-title {
+    line-height: 1;
+    margin-bottom: .5em;
+}
+
 .footer-widget .widget_nav_menu ul li a:hover {
     color: var(--color-highlight);
 }
 
 .video-container {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 */
-  height: 0;
+    position: relative;
+    padding-bottom: 56.25%;
+    /* 16:9 */
+    height: 0;
 }
 
 .video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.site-footer .site-info {
+    color: #fff;
+    font-size: .75em;
+}
+
+.site-footer .widget.widget_nav_menu ul.menu li.menu-item:first-of-type {
+    padding-top: 0;
+}
+
+.date-box {
+    border: 1px solid var(--color-black);
+    display: block;
+    float: left;
+    width: 80px;
+    text-align: center;
+    background-color: var(--color-light-gray);
+    margin-right: .5em;
+    font-size: .85em;
+    margin-bottom: .5em;
+}
+
+.date-box > span {
+    display: block;
+    text-transform: uppercase;
+}
+
+.date-box > span.date-box-dow {
+    background-color: var(--color-root);
+    color: var(--color-white);
+    font-weight: bold;
+    padding: .25em;
+    text-transform: uppercase;
+    font-size: 1em;
+}
+
+.date-box > span.date-box-date {
+    font-weight: 800;
+    background-color: var(--color-white);
+    color: var(--color-black);
+    padding: .25em;
+    font-size: 1.25em;
+}
+
+.date-box > span.date-box-time {
+    background-color: var(--color-light-gray);
+    color: var(--color-black);
+    border-top: 1px solid var(--color-gray);
+}
+
+.drop-boxes {
+    display: flex;
+    gap: 5em;
+}
+
+.drop-boxes span {
+    display: inline-block;
+    width: 100px;
+}
+
+.drop-boxes .drop-box {
+    padding-bottom: 0;
+    margin-bottom: 1.5em;
+}
+
+.drop-boxes h3 {
+    margin: 0;
+    padding: 0;
+}
+
+.drop-boxes p {
+    margin: .25em 0 0 0;
+    padding: 0;
 }

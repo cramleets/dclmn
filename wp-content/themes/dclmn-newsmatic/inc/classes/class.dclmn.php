@@ -4,18 +4,14 @@
 class DCLMN {
 
     var $committee_people = [];
-    var $wards = [];
+    var $precincts = [];
     var $polling_places = [];
     var $pa_districts = [];
     var $elected_officials = [];
     var $builds = [];
+    var $drop_boxes = [];
 
     function __construct() {
-        if (strpos($_SERVER['HTTP_HOST'], 'dclmn.us') === false) {
-            wp_redirect('https://dclmn.us' . $_SERVER['REQUEST_URI'], 301);
-            exit;
-        }
-
         add_action('wp_enqueue_scripts', function () {
             $parent_style = 'dclmn-parent';
 
@@ -125,7 +121,7 @@ class DCLMN {
             $post_name = 'default';
             if (is_front_page()) $post_name = 'home';
             elseif (is_404()) $post_name = '404';
-            elseif ($post->post_name) $post_name = $post->post_name;
+            elseif (is_object($post) && $post->post_name) $post_name = $post->post_name;
             $post_name = apply_filters('napco_page_name', $post_name);
             $classes[] = $post_name;
             return $classes;
@@ -148,6 +144,18 @@ class DCLMN {
                 'dclmn-tools',
                 [$this, 'dclmn_tools']
             );
+        });
+
+        add_filter('tribe_ical_feed_posts_per_page', function () {
+            return 300;
+        });
+
+        //fix glitcn on the events calendar
+        add_filter('tribe_get_events_title', function ($title) {
+            if (is_singular('tribe_events')) {
+                return get_the_title();
+            }
+            return $title;
         });
     }
 
@@ -173,17 +181,17 @@ class DCLMN {
         return $this->committee_people;
     }
 
-    function get_wards() {
-        if (!count($this->wards)) {
+    function get_precincts() {
+        if (!count($this->precincts)) {
             $args = [
-                'post_type' => 'ward',
+                'post_type' => 'precinct',
                 'posts_per_page' => -1,
             ];
 
-            $this->wards = dclmn_get_posts($args);
+            $this->precincts = dclmn_get_posts($args);
         }
 
-        return $this->wards;
+        return $this->precincts;
     }
 
     function get_polling_places() {
@@ -225,16 +233,23 @@ class DCLMN {
         return $this->elected_officials;
     }
 
-    function build_committee_people() {
-        $committee_people = $this->get_committee_people();
-        $wards = $this->get_wards();
-        $polling_places = $this->get_polling_places();
+    function get_drop_boxes() {
+        if (!count($this->drop_boxes)) {
+            $args = [
+                'post_type' => 'dropbox',
+                'posts_per_page' => -1,
+            ];
+
+            $this->drop_boxes = dclmn_get_posts($args);
+        }
+
+        return $this->drop_boxes;
     }
 
     function build_committee() {
         if (!empty($this->builds)) return;
 
-        $wards = $polling_places = $pa_districts = $polling_places = $elected_officials = $committee_people = [];
+        $precincts = $polling_places = $pa_districts = $elected_officials = $committee_people = [];
 
         foreach ($this->get_elected_officials() as $post) {
             $elected_officials[$post->ID] = $post;
@@ -245,26 +260,26 @@ class DCLMN {
         }
 
         foreach ($this->get_pa_districts() as $post) {
-            $post->representative = $elected_officials[$post->representative];
+            if (!empty($post->representative)) {
+                $post->representative = $elected_officials[$post->representative];
+            }
             $pa_districts[$post->ID] = $post;
         }
 
-        foreach ($this->get_wards() as $post) {
+        foreach ($this->get_precincts() as $post) {
             $post->committe_people = [];
-            $post->pa_district = $pa_districts[$post->pa_district];
-            $post->polling_place = $polling_places[$post->polling_place];
-            $wards[$post->ID] = $post;
+            $post->pa_district = $pa_districts[$post->pa_district_id];
+            $post->polling_place = $polling_places[$post->polling_place_id];
+            $precincts[$post->ID] = $post;
         }
 
         foreach ($this->get_committee_people() as $post) {
-            $post->ward = $wards[$post->ward];
+            $post->precinct = $precincts[$post->precinct];
             $committee_people[$post->ID] = $post;
-
-
-            $wards[$post->ward->ID]->committe_people[] = $post;
+            $precincts[$post->precinct->ID]->committe_people[] = $post;
         }
 
-        $this->builds['wards'] = $wards;
+        $this->builds['precincts'] = $precincts;
         $this->builds['committee_people'] = $committee_people;
         $this->builds['elected_officials'] = $elected_officials;
         $this->builds['polling_places'] = $polling_places;
@@ -286,26 +301,21 @@ class DCLMN {
     function get_committee_people_table($array = false) {
         $this->build_committee();
 
-        $wards = [];
-        foreach ($this->builds['wards'] as $ward) {
-            $wards[$ward->post_title] = $ward;
+        $precincts = [];
+        foreach ($this->builds['precincts'] as $precinct) {
+            $precincts[$precinct->post_title] = $precinct;
         }
 
-        uksort($wards, function ($a, $b) {
-            [$a1, $a2] = explode('-', $a);
-            [$b1, $b2] = explode('-', $b);
+        uksort($precincts, function ($a, $b) use ($precincts) {
+            $an = stripos($a, 'Narberth') !== false;
+            $bn = stripos($b, 'Narberth') !== false;
 
-            // Prioritize 'N' keys first
-            if ($a1 === 'N' && $b1 !== 'N') return -1;
-            if ($a1 !== 'N' && $b1 === 'N') return 1;
+            // Float Narberth entries to the top
+            if ($an && !$bn) return -1;
+            if (!$an && $bn) return 1;
 
-            // Both are 'N' — compare second part numerically
-            if ($a1 === 'N' && $b1 === 'N') {
-                return (int)$a2 <=> (int)$b2;
-            }
-
-            // Otherwise, compare both numerically
-            return [(int)$a1, (int)$a2] <=> [(int)$b1, (int)$b2];
+            // Otherwise, keep the original order
+            return 0;
         });
 
         $out = '';
@@ -313,9 +323,9 @@ class DCLMN {
             $cps = [];
 
             $headers = [
-                "Ward",
+                "Precinct",
                 "PA District",
-                "Ward",
+                "Region",
                 "First Name",
                 "Last Name",
                 "Email",
@@ -327,21 +337,20 @@ class DCLMN {
 
             $cps[] = $headers;
 
-            foreach ($wards as $ward) {
-                foreach ($ward->committe_people as $person) {
-                    $district = str_replace('th district', '', strtolower($ward->pa_district->post_title));
+            foreach ($precincts as $precinct) {
+                foreach ($precinct->committe_people as $person) {
+                    $district = str_replace('th district', '', strtolower($precinct->pa_district->district));
 
                     $cps[] = [
-                        $ward->post_title,
+                        $precinct->post_title,
                         $district,
-                        $ward->post_title,
+                        $precinct->region,
                         $person->first_name,
                         $person->last_name,
                         $person->public_email,
                         $person->phone,
                         ($person->phone_display_on_site) ? 1 : '',
-                        $ward->polling_place->post_title,
-                        $ward->polling_place->map_url
+                        $precinct->polling_place->post_title,
                     ];
                 }
             }
@@ -351,21 +360,25 @@ class DCLMN {
             $out .= '<table cellpadding="5" cellspacing="0" class="stripes committee-people">';
             $out .= '<thead>';
             $out .= '<tr valign="top">';
-            $out .= '<td>Ward</td>';
-            $out .= '<td>PA District</td>';
+            $out .= '<td>Precinct</td>';
+            $out .= '<td>District</td>';
             $out .= '<td>Name</td>';
             $out .= '<td>Polling Place<td>';
             $out .= '</tr>';
             $out .= '</thead>';
             $out .= '<tbody>';
-            foreach ($wards as $ward) {
-                $district = str_replace('th district', '', strtolower($ward->pa_district->post_title));
+            foreach ($precincts as $precinct) {
+                $district = str_replace('th district', '', strtolower($precinct->pa_district->post_title));
+
+                $title = $precinct->post_title;
+                $title = str_replace('Narberth ', 'N-', $title);
+                $title = str_replace('Lower Merion ', '', $title);
 
                 $out .= '<tr valign="top">';
-                $out .= '<td data-label="Ward"" class="ward">' . $ward->post_title . '</td>';
-                $out .= '<td data-label="District">' . $district . '</td>';
+                $out .= '<td data-label="Precinct"" class="precinct">' . $title . '</td>';
+                $out .= '<td data-label="District">' . $precinct->pa_district->district . '</td>';
                 $out .= '<td data-label="Committee People">';
-                foreach ($ward->committe_people as $person) {
+                foreach ($precinct->committe_people as $person) {
                     if ('vacant' == strtolower($person->first_name)) {
                         $out .= $person->first_name;
                         $out .= ' - <a href="' . home_url('committee-person-description/') . '">Inquire</a>';
@@ -376,13 +389,15 @@ class DCLMN {
                         $out .= ($person->public_email) ? '</a>' : '';
 
                         if (current_user_can('edit_others_posts') || (!empty($person->phone) && $person->phone_display_on_site)) {
-                            $out .= '<br><small><a href="tel:' . $person->phone . '">' . $person->phone . '</a></small>';
+                            $out .= (empty($person->phone)) ? '' : '<br><small><a href="tel:' . $person->phone . '">' . $person->phone . '</a></small>';
                         }
                     }
                     $out .= '<br>';
                 }
                 $out .= '</td>';
-                $out .= '<td data-label="Polling Place"><a href="' . $ward->polling_place->map_url . '" target="_blank">' . $ward->polling_place->post_title . '</a></td>';
+
+                $site_name = (!empty($precinct->polling_place->custom_label)) ? $precinct->polling_place->custom_label : $precinct->polling_place->site_name;
+                $out .= '<td data-label="Polling Place"><a href="' . $this->map_url($precinct->polling_place) . '" target="_blank">' . $site_name . '</a></td>';
                 $out .= '</tr>';
             }
             $out .= '</tbody>';
@@ -708,6 +723,10 @@ class DCLMN {
     }
 
     function dclmn_tools() {
-        require get_stylesheet_directory() .'/dclmn-tools.php';
+        require get_stylesheet_directory() . '/dclmn-tools.php';
+    }
+
+    function map_url($post) {
+        return (!empty($post->map_url)) ? $post->map_url : sprintf('https://www.google.com/maps/search/?api=1&query=%s,%s', $post->latitude, $post->longitude);
     }
 }

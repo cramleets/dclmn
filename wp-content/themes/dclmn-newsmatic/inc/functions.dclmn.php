@@ -88,8 +88,12 @@ function dclmn_homepage_events($args = []) {
             : $event->dates->start_display;
 
         $event_week_day  = $display_date->format_i18n('l');
+        $event_week_day_short  = $display_date->format_i18n('D');
+        $event_week_day_shorter = substr($event_week_day_short, 0, 2);
+
         $event_day_num   = $display_date->format_i18n('j');
         $event_month   = $display_date->format_i18n('F');
+        $event_month_short   = $display_date->format_i18n('M');
         $event_date_attr = $display_date->format(Dates::DBDATEFORMAT);
 
         if ($event->multiday) {
@@ -97,12 +101,20 @@ function dclmn_homepage_events($args = []) {
             $event_time = $event->schedule_details->value();
         } elseif ($event->all_day) {
             $event_time = esc_html_x('All day', 'All day label for event', 'the-events-calendar');
+            $event_time_short = 'All Day';
         } else {
             // The date returned back contains HTML and is already escaped.
             $event_time = $event->short_schedule_details->value();
+            $event_time_short = $event->dates->start->format_i18n( 'ga' );
+;
         }
-
         $out .= '<p class="dclmn-event">';
+
+        $out .= '<span class="date-box">';
+        $out .= '<span class="date-box-dow">'. $event_month_short .'</span>';
+        $out .= '<span class="date-box-date">'. $event_day_num .'</span>';
+        $out .= '<span class="date-box-time">'. $event_time_short .'</span>';
+        $out .= '</span>';
 
         $out .= '<a
 		href="' . esc_url($event->permalink) . '"
@@ -218,70 +230,6 @@ add_action('newsmatic_after_header_html', 'newsmatic_header_ads_banner_part', 10
 
 
 function newsmatic_breadcrumb_html() {
-}
-
-
-function import_cps() {
-    $rows = array_map('str_getcsv', file('/Users/mps/Desktop/Committee.csv'));
-    //echo '<pre>'; print_r($rows);exit;
-
-    $header = array_shift($rows);
-    $file = array();
-    foreach ($rows as $row) {
-        //print_r($header);exit;
-        $file[] = array_combine($header, $row);
-    }
-
-    // $headers = array_shift($file);
-
-    // echo '<pre>'. print_r($file,1); exit;
-
-    $counters = [];
-
-    foreach ($file as $i => $line) {
-        //$line = array_combine($headers, $line);
-        //print_r($line);
-        // exit;
-
-        $ward_title = array_values($line)[0];
-        if (!isset($counters[$ward_title])) $counters[$ward_title] = 0;
-        $counters[$ward_title]++;
-        $post_title = $ward_title . ' #' . $counters[$ward_title];
-        $args = [
-            'post_type' => 'committee_person',
-            'post_title' => $post_title,
-            'post_status' => 'publish',
-        ];
-
-
-        if ($existing_committee_person = get_page_by_path(sanitize_title($post_title), OBJECT, 'committee_person')) {
-            $args['ID'] = $existing_committee_person->ID;
-            //pobj($existing_committee_person, 1);
-            //if ('publish' == $existing_committee_person->post_status) continue;
-        }
-
-        //print_r($args); exit;
-
-        $post_id = wp_insert_post($args);
-
-        $name = explode(' ', $line['Name']);
-
-        update_post_meta($post_id, 'public_email', $line['email']);
-        update_post_meta($post_id, 'first_name', $name[0]);
-
-        if (!empty($name[1])) {
-            update_post_meta($post_id, 'last_name', $name[1]);
-        }
-
-        if ($ward = get_page_by_path(sanitize_title($ward_title), OBJECT, 'ward')) {
-            update_post_meta($post_id, 'ward', $ward->ID);
-        }
-
-        //wp_set_post_terms( int $post_id, string|array $terms = ”, string $taxonomy = ‘post_tag’, bool $append = false ): array|false|WP_Error
-        //wp_set_post_terms($post_id, [16], 'jurisdiction');
-    }
-
-    die('done');
 }
 
 function dclmn_get_nested_menu($menu_name) {
