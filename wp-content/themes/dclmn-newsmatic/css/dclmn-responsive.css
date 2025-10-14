@@ -29,6 +29,15 @@
     }
 }
 
+
+@media (max-width: 1200px) {
+    .drop-boxes span {
+        display: block;
+        line-height: 1;
+        margin-top: .75em;
+    }
+}
+
 @media (max-width: 1000px) {
 
     .main-navigation .menu li a,
@@ -161,6 +170,15 @@
 
     .quotes-page .wp-block-pullquote:nth-child(even) {
         background-color: var(--color-light-gray);
+    }
+    .drop-boxes {
+        display: block;
+    }
+
+    .drop-boxes span {
+        display: inline-block;
+        line-height: initial;
+        margin-top: 0;
     }
 
     /* #header-menu {
@@ -409,7 +427,7 @@
     .banner-layout--four .main-banner-wrap .slick-list article .post-element a {
         font-size: ;
     }
-    
+
     .entry-content ul,
     .entry-content ol {
         padding-left: 1.25em;
