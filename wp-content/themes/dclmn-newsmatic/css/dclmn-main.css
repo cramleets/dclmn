@@ -610,6 +610,12 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
     clear: both;
 }
 
+.dclmn-events .dclmn-event {
+    display: flex;
+    align-items: flex-start;
+    gap: .75em;
+}
+
 .dclmn-events h2 {
     margin: 0;
 }
@@ -641,6 +647,46 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
 .dclmn-event .event-title {
     font-size: 1.15em;
     color: var(--color-root);
+}
+
+.date-box {
+    border: 1px solid var(--color-black);
+    display: block;
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
+    text-align: center;
+    background-color: var(--color-light-gray);
+    font-size: .85em;
+    margin-bottom: .5em;
+}
+
+.date-box > span {
+    display: block;
+    text-transform: uppercase;
+}
+
+.date-box > span.date-box-dow {
+    background-color: var(--color-root);
+    color: var(--color-white);
+    font-weight: bold;
+    padding: .25em;
+    text-transform: uppercase;
+    font-size: 1em;
+}
+
+.date-box > span.date-box-date {
+    font-weight: 800;
+    background-color: var(--color-white);
+    color: var(--color-black);
+    padding: .25em;
+    font-size: 1.25em;
+}
+
+.date-box > span.date-box-time {
+    background-color: var(--color-light-gray);
+    color: var(--color-black);
+    border-top: 1px solid var(--color-gray);
 }
 
 .dclmn-event a:hover .event-title {
@@ -779,46 +825,6 @@ body.home #block-21 {
 
 .site-footer .widget.widget_nav_menu ul.menu li.menu-item:first-of-type {
     padding-top: 0;
-}
-
-.date-box {
-    border: 1px solid var(--color-black);
-    display: block;
-    float: left;
-    width: 80px;
-    text-align: center;
-    background-color: var(--color-light-gray);
-    margin-right: .5em;
-    font-size: .85em;
-    margin-bottom: .5em;
-}
-
-.date-box > span {
-    display: block;
-    text-transform: uppercase;
-}
-
-.date-box > span.date-box-dow {
-    background-color: var(--color-root);
-    color: var(--color-white);
-    font-weight: bold;
-    padding: .25em;
-    text-transform: uppercase;
-    font-size: 1em;
-}
-
-.date-box > span.date-box-date {
-    font-weight: 800;
-    background-color: var(--color-white);
-    color: var(--color-black);
-    padding: .25em;
-    font-size: 1.25em;
-}
-
-.date-box > span.date-box-time {
-    background-color: var(--color-light-gray);
-    color: var(--color-black);
-    border-top: 1px solid var(--color-gray);
 }
 
 .drop-boxes {
