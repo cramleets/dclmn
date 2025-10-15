@@ -34,7 +34,7 @@ $single_post_meta_order = ND\newsmatic_get_customizer_option( 'single_post_meta_
 																				break;
 																	case 'comments': newsmatic_comments_number();
 																				break;
-																	case 'read-time': echo '<span class="read-time">' .newsmatic_post_read_time( get_the_content() ). ' ' .esc_html__( 'mins', 'newsmatic' ). '</span>';
+																	case 'read-time': echo '<span class="read-time">' .newsmatic_post_read_time( get_the_content() ). '</span>';
 																				break;
 																	default: '';
 																}

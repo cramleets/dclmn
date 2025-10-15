@@ -400,7 +400,10 @@ if( !class_exists( 'Newsmatic_Theme_Info' ) ) :
          */
         function newsmatic_importer_plugin_action() {
             check_ajax_referer( 'newsmatic-theme-info-nonce', '_wpnonce' );
-            if ( ! current_user_can("install_plugins") ) wp_die( $this->restriction_message );
+            if( ! current_user_can( 'install_plugins' ) || ! current_user_can( 'activate_plugins' ) ) :
+                echo wp_send_json_error( 'You dont have permission to perform this action', 403 );
+                die();
+            endif;
 
             $_plugin_action = isset( $_REQUEST['plugin_action'] ) ? sanitize_text_field( $_REQUEST['plugin_action'] ) : '';
             $file_path = 'blaze-demo-importer/blaze-demo-importer.php';

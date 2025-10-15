@@ -22,6 +22,7 @@ function newsmatic_customize_register( $wp_customize ) {
     require get_template_directory() . '/inc/customizer/custom-controls/radio-image/radio-image.php'; // radio image control
 	require get_template_directory() . '/inc/customizer/custom-controls/redirect-control/redirect-control.php'; // redirect control
     require get_template_directory() . '/inc/customizer/base.php'; // base class
+    require get_template_directory() . '/inc/customizer/custom-controls/upsell/upsell.php'; // upsell class
     // icon text control
     class Newsmatic_WP_Icon_Text_Control extends Newsmatic_WP_Base_Control {
         // control type

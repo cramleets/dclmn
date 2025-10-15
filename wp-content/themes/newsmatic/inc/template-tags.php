@@ -192,22 +192,16 @@ if( ! function_exists( 'newsmatic_post_read_time' ) ) :
      * Function contains post categories options with label and value
      * @return float
      */
-    function newsmatic_post_read_time( $string ) {
+    function newsmatic_post_read_time( $string = '' ) {
     	$read_time = 0;
         if( empty( $string ) ) {
-            return 0;
+            return 0 . esc_html__( ' min', 'newsmatic' );
         } else {
-            $read_time = apply_filters( 'newsmatic_content_read_time', round( str_word_count( wp_strip_all_tags( $string ) ) / 100 ), 2 );
-            if($read_time == 0 ) {
-				$wordCount = newsmatic_custom_word_count_russian($string);
-				$read_time = apply_filters( 'newsmatic_content_read_time', round( $wordCount / 100 ), 2 );
-				if( $read_time == 0  ) {
-					return 1;
-				} else {
-					return $read_time;
-				}
-            }else {
-            	return $read_time;
+            $read_time = apply_filters( 'newsmatic_content_read_time', ceil( str_word_count( wp_strip_all_tags( $string ) ) / 200 ), 2 );
+            if( $read_time == 0 ) {
+            	return 1 . esc_html__( ' min', 'newsmatic' );
+            } else {
+            	return $read_time . esc_html__( ' mins', 'newsmatic' );
             }
         }
     }

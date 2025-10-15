@@ -706,6 +706,22 @@ if( !function_exists( 'newsmatic_customizer_global_panel' ) ) :
             ))
         );
 
+        // Website style pre sale
+        $wp_customize->add_setting( 'website_styles_section_pre_sales', [
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+        $wp_customize->add_control( 
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'website_styles_section_pre_sales', array(
+                'label'	      => esc_html__( 'Need More Website Styles Options ?', 'newsmatic' ),
+                'section'     => 'newsmatic_website_styles_section',
+                'features'  =>  [
+                    esc_html__( 'Enable Website Frame', 'newsmatic' ),
+                    esc_html__( 'Frame Width & Color', 'newsmatic' ),
+                    esc_html__( 'Border Width & Box Shadow', 'newsmatic' ),
+                ]
+            ))
+        );
+
         // section- website layout section
         $wp_customize->add_section( 'newsmatic_website_layout_section', array(
             'title' => esc_html__( 'Website Layout', 'newsmatic' ),
@@ -792,6 +808,22 @@ if( !function_exists( 'newsmatic_customizer_global_panel' ) ) :
             )
         ));
 
+        // Animation section pre sale
+        $wp_customize->add_setting( 'animation_hover_effects_section_pre_sales', [
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+        $wp_customize->add_control( 
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'animation_hover_effects_section_pre_sales', array(
+                'label'	      => esc_html__( 'Need More animation Options ?', 'newsmatic' ),
+                'section'     => 'newsmatic_animation_section',
+                'features'  =>  [
+                    esc_html__( 'Enable Site Wow animation', 'newsmatic' ),
+                    esc_html__( '5 post title hover effects', 'newsmatic' ),
+                    esc_html__( '5 image hover effects', 'newsmatic' ),
+                ]
+            ))
+        );
+
         // section- social icons section
         $wp_customize->add_section( 'newsmatic_social_icons_section', array(
             'title' => esc_html__( 'Social Icons', 'newsmatic' ),
@@ -877,6 +909,21 @@ if( !function_exists( 'newsmatic_customizer_global_panel' ) ) :
                 'section'     => 'newsmatic_buttons_section',
                 'settings'    => 'global_button_text',
                 'icons' => array( "fas fa-ban", "fas fa-angle-right", "fas fa-arrow-alt-circle-right", "far fa-arrow-alt-circle-right", "fas fa-angle-double-right", "fas fa-long-arrow-alt-right", "fas fa-arrow-right", "fas fa-arrow-circle-right", "fas fa-chevron-circle-right", "fas fa-caret-right", "fas fa-hand-point-right", "fas fa-caret-square-right", "far fa-caret-square-right" )
+            ))
+        );
+
+        $wp_customize->add_setting( 'global_button_section_pre_sales', [
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+        $wp_customize->add_control( 
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'global_button_section_pre_sales', array(
+                'label'	      => esc_html__( 'Need More Global Button Options ?', 'newsmatic' ),
+                'section'     => 'newsmatic_buttons_section',
+                'features'  =>  [
+                    esc_html__( 'Font Size', 'newsmatic' ),
+                    esc_html__( 'Border', 'newsmatic' ),
+                    esc_html__( 'Padding', 'newsmatic' )
+                ]
             ))
         );
         
@@ -1102,6 +1149,22 @@ if( !function_exists( 'newsmatic_customizer_global_panel' ) ) :
             )
         ));
 
+        // site breadcrumb pre sale
+        $wp_customize->add_setting( 'site_breadcrumb_section_pre_sales', [
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+        $wp_customize->add_control( 
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'site_breadcrumb_section_pre_sales', array(
+                'label'	      => esc_html__( 'Need More breadcrumb Options ?', 'newsmatic' ),
+                'section'     => 'newsmatic_breadcrumb_options_section',
+                'features'  =>  [
+                    esc_html__( 'Text Color', 'newsmatic' ),
+                    esc_html__( 'Link Color', 'newsmatic' ),
+                    esc_html__( 'Background', 'newsmatic' )
+                ]
+            ))
+        );
+
         // section- scroll to top options
         $wp_customize->add_section( 'newsmatic_stt_options_section', array(
             'title' => esc_html__( 'Scroll To Top', 'newsmatic' ),
@@ -1183,6 +1246,22 @@ if( !function_exists( 'newsmatic_customizer_global_panel' ) ) :
                         'label' => esc_html__('Right', 'newsmatic' )
                     )
                 )
+            ))
+        );
+
+        // scroll to top pre sale
+        $wp_customize->add_setting( 'stt_section_pre_sales', [
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+        $wp_customize->add_control( 
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'stt_section_pre_sales', array(
+                'label'	      => esc_html__( 'Need More scroll to top Options ?', 'newsmatic' ),
+                'section'     => 'newsmatic_stt_options_section',
+                'features'  =>  [
+                    esc_html__( 'Font Size', 'newsmatic' ),
+                    esc_html__( 'Border Hover', 'newsmatic' ),
+                    esc_html__( 'Padding', 'newsmatic' )
+                ]
             ))
         );
 
@@ -1340,6 +1419,22 @@ if( !function_exists( 'newsmatic_customizer_site_identity_panel' ) ) :
                 'settings'   => 'site_description_color',
                 'priority'    => 70,
                 'tab'   => 'design'
+            ))
+        );
+
+        // site title & tagline pre sale
+        $wp_customize->add_setting( 'site_title_and_tagline_section_pre_sales', [
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+        $wp_customize->add_control( 
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'site_title_and_tagline_section_pre_sales', array(
+                'label' =>  esc_html__( 'Need More Site Title Options ?', 'newsmatic' ),
+                'section'   =>  'newsmatic_site_title_section',
+                'features'  =>  [
+                    esc_html__( 'More than 1500+ google fonts', 'newsmatic' )
+                ],
+                'tab'   =>  'design',
+                'priority'    => 100,
             ))
         );
 
@@ -1587,6 +1682,27 @@ if( !function_exists( 'newsmatic_customizer_top_header_panel' ) ) :
             ))
         );
 
+        // top header pre sale
+        $wp_customize->add_setting( 'top_header_section_pre_sales', [
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+        $wp_customize->add_control( 
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'top_header_section_pre_sales', array(
+                'label'	      => esc_html__( 'Need More Preloader Options ?', 'newsmatic' ),
+                'section'     => 'newsmatic_top_header_section',
+                'features'  =>  [
+                    esc_html__( 'Ticker Number of posts to display', 'newsmatic' ),
+                    esc_html__( 'Ticker Offset', 'newsmatic' ),
+                    esc_html__( 'Ticker auto slide', 'newsmatic' ),
+                    esc_html__( 'Ticker slide horizontal direction', 'newsmatic' ),
+                    esc_html__( 'Show Social Icons', 'newsmatic' ),
+                    esc_html__( 'Border Bottom', 'newsmatic' ),
+                    esc_html__( 'Date / Time Color', 'newsmatic' ),
+                    esc_html__( 'Menu & Social Icon Color', 'newsmatic' )
+                ]
+            ))
+        );
+
         // Top header background colors group control
         $wp_customize->add_setting( 'top_header_background_color_group', array(
             'default'   => ND\newsmatic_get_customizer_default( 'top_header_background_color_group' ),
@@ -1692,6 +1808,21 @@ if( !function_exists( 'newsmatic_customizer_header_panel' ) ) :
                 '_blank' => esc_html__( 'Open in new tab', 'newsmatic' )
             )
         ));
+
+        // Ads Banner pre sale
+        $wp_customize->add_setting( 'ads_banner_section_pre_sales', [
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+        $wp_customize->add_control( 
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'ads_banner_section_pre_sales', array(
+                'label'	      => esc_html__( 'Need More Ads Banner Options ?', 'newsmatic' ),
+                'section'     => 'newsmatic_header_ads_banner_section',
+                'features'  =>  [
+                    esc_html__( 'Shortcode', 'newsmatic' ),
+                    esc_html__( 'Ads Banner Sidebar', 'newsmatic' )
+                ]
+            ))
+        );
 
         // Header content section
         $wp_customize->add_section( 'newsmatic_main_header_section', array(
@@ -2032,6 +2163,22 @@ if( !function_exists( 'newsmatic_customizer_header_panel' ) ) :
             'type'  => 'url'
         ));
 
+        // Newsletter pre sale
+        $wp_customize->add_setting( 'newsletter_section_pre_sales', [
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+        $wp_customize->add_control( 
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'newsletter_section_pre_sales', array(
+                'label'	      => esc_html__( 'Need More Newsletter Options ?', 'newsmatic' ),
+                'section'     => 'newsmatic_header_newsletter_section',
+                'features'  =>  [
+                    esc_html__( 'Button Content Display As', 'newsmatic' ),
+                    esc_html__( 'Open in New / Same Tab', 'newsmatic' ),
+                    esc_html__( 'Label Color', 'newsmatic' )
+                ]
+            ))
+        );
+
         // Header random news section
         $wp_customize->add_section( 'newsmatic_header_random_news_section', array(
             'title' => esc_html__( 'Random News', 'newsmatic' ),
@@ -2090,6 +2237,21 @@ if( !function_exists( 'newsmatic_customizer_header_panel' ) ) :
                 'section'     => 'newsmatic_header_random_news_section',
                 'settings'    => 'header_random_news_filter',
                 'choices' => newsmatic_get_random_news_filter_choices_array()
+            ))
+        );
+
+        // Random News pre sale
+        $wp_customize->add_setting( 'random_news_section_pre_sales', [
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+        $wp_customize->add_control( 
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'random_news_section_pre_sales', array(
+                'label'	      => esc_html__( 'Need More Random News Options ?', 'newsmatic' ),
+                'section'     => 'newsmatic_header_random_news_section',
+                'features'  =>  [
+                    esc_html__( 'Open in New / Same Tab', 'newsmatic' ),
+                    esc_html__( 'Label Color', 'newsmatic' )
+                ]
             ))
         );
 
@@ -2311,6 +2473,25 @@ if( !function_exists( 'newsmatic_customizer_header_panel' ) ) :
                 'section'     => 'newsmatic_header_live_search_section'
             ))
         );
+
+        // live search pre sale
+        $wp_customize->add_setting( 'live_search_section_pre_sales', [
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+        $wp_customize->add_control( 
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'live_search_section_pre_sales', array(
+                'label'	      => esc_html__( 'Need More Live Search Options ?', 'newsmatic' ),
+                'section'     => 'newsmatic_header_live_search_section',
+                'features'  =>  [
+                    esc_html__( 'Show Post Thumbnail, Title & Date', 'newsmatic' ),
+                    esc_html__( 'Number Of Posts to Display', 'newsmatic' ),
+                    esc_html__( 'Show View all Button', 'newsmatic' ),
+                    esc_html__( 'Button Label', 'newsmatic' ),
+                    esc_html__( 'Open in New / Same Tab', 'newsmatic' ),
+                    esc_html__( 'More than 1500+ google fonts', 'newsmatic' )
+                ]
+            ))
+        );
     }
     add_action( 'customize_register', 'newsmatic_customizer_header_panel', 10 );
 endif;
@@ -2485,6 +2666,25 @@ if( !function_exists( 'newsmatic_customizer_ticker_news_panel' ) ) :
             'label'     => esc_html__( 'Image Size', 'newsmatic' ),
             'choices'   => newsmatic_get_image_sizes_option_array()
         ));
+
+        // Ticker News pre sale
+        $wp_customize->add_setting( 'ticker_news_section_pre_sales', [
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+        $wp_customize->add_control( 
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'ticker_news_section_pre_sales', array(
+                'label'	      => esc_html__( 'Need More Ticker News Options ?', 'newsmatic' ),
+                'section'   => 'newsmatic_ticker_news_section',
+                'features'  =>  [
+                    esc_html__( 'Order By', 'newsmatic' ),
+                    esc_html__( 'Show Post thumbnail Image', 'newsmatic' ),
+                    esc_html__( 'Number of Posts to Display', 'newsmatic' ),
+                    esc_html__( 'Offset', 'newsmatic' ),
+                    esc_html__( 'Marquee Settings', 'newsmatic' )
+                ],
+                'priority'  => 90,
+            ))
+        );
 
         // ticker news image setting heading
         $wp_customize->add_setting( 'ticker_news_image_setting_header', array(
@@ -2856,6 +3056,31 @@ if( !function_exists( 'newsmatic_customizer_main_banner_panel' ) ) :
                         return false;
                     }
                 )
+            ))
+        );
+
+        // main banner pre sale
+        $wp_customize->add_setting( 'main_banner_section_pre_sales', [
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+        $wp_customize->add_control( 
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'main_banner_section_pre_sales', array(
+                'label'	      => esc_html__( 'Need More Main Banner Options ?', 'newsmatic' ),
+                'section'     => 'newsmatic_main_banner_section',
+                'features'  =>  [
+                    esc_html__( '5 Banner Layouts', 'newsmatic' ),
+                    esc_html__( 'Number of Posts to Display', 'newsmatic' ),
+                    esc_html__( 'Offset', 'newsmatic' ),
+                    esc_html__( 'Excerpt Length', 'newsmatic' ),
+                    esc_html__( 'Slider auto slide, arrows, dots & speed', 'newsmatic' ),
+                    esc_html__( 'Slider show post category, date & excerpt', 'newsmatic' ),
+                    esc_html__( 'Content Type', 'newsmatic' ),
+                    esc_html__( 'Block Posts Categories', 'newsmatic' ),
+                    esc_html__( 'Tab Re-order', 'newsmatic' ),
+                    esc_html__( 'Content Background', 'newsmatic' ),
+                    esc_html__( 'And Many More', 'newsmatic' )
+                ],
+                'priority'  => 200,
             ))
         );
 
@@ -3286,6 +3511,22 @@ if( !function_exists( 'newsmatic_customizer_front_sections_panel' ) ) :
             ))
         );
 
+        // Full width pre sale
+        $wp_customize->add_setting( 'full_width_section_pre_sales', [
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+        $wp_customize->add_control( 
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'full_width_section_pre_sales', array(
+                'label'	      => esc_html__( 'Need More Full Width Options ?', 'newsmatic' ),
+                'section'     => 'newsmatic_full_width_section',
+                'features'  =>  [
+                    esc_html__( 'Unlimited sections', 'newsmatic' ),
+                    esc_html__( 'Content & Section Background', 'newsmatic' ),
+                    esc_html__( 'Video Playlist', 'newsmatic' ),
+                ]
+            ))
+        );
+
         // Left content -right sidebar section
         $wp_customize->add_section( 'newsmatic_leftc_rights_section', array(
             'title' => esc_html__( 'Left Content  - Right Sidebar', 'newsmatic' ),
@@ -3328,6 +3569,22 @@ if( !function_exists( 'newsmatic_customizer_front_sections_panel' ) ) :
                 'section'     => 'newsmatic_leftc_rights_section',
                 'priority'  => 10,
                 'settings'    => 'leftc_rights_blocks'
+            ))
+        );
+
+        // Left Content - Right sidebar pre sale
+        $wp_customize->add_setting( 'leftc_rights_section_pre_sales', [
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+        $wp_customize->add_control( 
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'leftc_rights_section_pre_sales', array(
+                'label'	      => esc_html__( 'Need More Left Content Options ?', 'newsmatic' ),
+                'section'     => 'newsmatic_leftc_rights_section',
+                'features'  =>  [
+                    esc_html__( 'Unlimited sections', 'newsmatic' ),
+                    esc_html__( 'Content & Section Background', 'newsmatic' ),
+                    esc_html__( 'Video Playlist', 'newsmatic' ),
+                ]
             ))
         );
 
@@ -3378,6 +3635,22 @@ if( !function_exists( 'newsmatic_customizer_front_sections_panel' ) ) :
             ))
         );
 
+        // Left sidebar - Right content pre sale
+        $wp_customize->add_setting( 'lefts_rightc_section_pre_sales', [
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+        $wp_customize->add_control( 
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'lefts_rightc_section_pre_sales', array(
+                'label'	      => esc_html__( 'Need More Right Content Options ?', 'newsmatic' ),
+                'section'     => 'newsmatic_lefts_rightc_section',
+                'features'  =>  [
+                    esc_html__( 'Unlimited sections', 'newsmatic' ),
+                    esc_html__( 'Content & Section Background', 'newsmatic' ),
+                    esc_html__( 'Video Playlist', 'newsmatic' ),
+                ]
+            ))
+        );
+
         // Bottom Full Width content section
         $wp_customize->add_section( 'newsmatic_bottom_full_width_section', array(
             'title' => esc_html__( 'Bottom Full Width', 'newsmatic' ),
@@ -3398,6 +3671,22 @@ if( !function_exists( 'newsmatic_customizer_front_sections_panel' ) ) :
                 'section'     => 'newsmatic_bottom_full_width_section',
                 'priority'  => 10,
                 'settings'    => 'bottom_full_width_blocks'
+            ))
+        );
+
+        // bottom full width pre sale
+        $wp_customize->add_setting( 'bottom_full_width_section_pre_sales', [
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+        $wp_customize->add_control( 
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'bottom_full_width_section_pre_sales', array(
+                'label'	      => esc_html__( 'Need More Bottom Full Width Options ?', 'newsmatic' ),
+                'section'     => 'newsmatic_bottom_full_width_section',
+                'features'  =>  [
+                    esc_html__( 'Unlimited sections', 'newsmatic' ),
+                    esc_html__( 'Content & Section Background', 'newsmatic' ),
+                    esc_html__( 'Video Playlist', 'newsmatic' ),
+                ]
             ))
         );
 
@@ -3594,6 +3883,26 @@ if( !function_exists( 'newsmatic_customizer_blog_post_archive_panel' ) ) :
             ))
         );
 
+        // Archive pre sale
+        $wp_customize->add_setting( 'archive_section_pre_sales', [
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+        $wp_customize->add_control( 
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'archive_section_pre_sales', array(
+                'label'	      => esc_html__( 'Need More Archive Options ?', 'newsmatic' ),
+                'section'     => 'newsmatic_blog_archive_section',
+                'features'  =>  [
+                    esc_html__( '5 Layouts', 'newsmatic' ),
+                    esc_html__( 'Excerpt Length', 'newsmatic' ),
+                    esc_html__( 'Pagination Type', 'newsmatic' ),
+                    esc_html__( 'Elements Re-order', 'newsmatic' ),
+                    esc_html__( 'Meta Re-order', 'newsmatic' ),
+                    esc_html__( 'Content Background', 'newsmatic' ),
+                    esc_html__( 'More than 1500+ google fonts', 'newsmatic' )
+                ]
+            ))
+        );
+
         //  single post section
         $wp_customize->add_section( 'newsmatic_single_post_section', array(
             'title' => esc_html__( 'Single Post', 'newsmatic' ),
@@ -3671,6 +3980,23 @@ if( !function_exists( 'newsmatic_customizer_page_panel' ) ) :
             'label' => esc_html__( '404 Image', 'newsmatic' ),
             'description' => esc_html__( 'Upload image that shows you are on 404 error page', 'newsmatic' )
         )));
+
+        // 404 page pre sale
+        $wp_customize->add_setting( '404_section_pre_sales', [
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+        $wp_customize->add_control( 
+            new Newsmatic_WP_Upsell_Control( $wp_customize, '404_section_pre_sales', array(
+                'label'	      => esc_html__( 'Need More 404 Options ?', 'newsmatic' ),
+                'section' => 'newsmatic_404_section',
+                'features'  =>  [
+                    esc_html__( '404 page & content title', 'newsmatic' ),
+                    esc_html__( 'Button label & Url', 'newsmatic' ),
+                    esc_html__( 'Content Background', 'newsmatic' ),
+                    esc_html__( 'Search page settings', 'newsmatic' ),
+                ]
+            ))
+        );
     }
     add_action( 'customize_register', 'newsmatic_customizer_page_panel', 10 );
 endif;

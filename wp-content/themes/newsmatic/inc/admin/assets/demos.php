@@ -368,7 +368,7 @@ $demos_array = array(
         )
     ),
     'newsmatic-elementor-pro-one' => array(
-        'name' => 'Elementor One',
+        'name' => 'Elementor Pro One',
         'type' => 'pro',
         'buy_url'=> 'https://blazethemes.com/theme/newsmatic-pro/',
         'external_url' => 'https://preview.blazethemes.com/import-files/newsmatic/newsmatic-elementor-pro-one.zip',

@@ -8,207 +8,121 @@ if( !function_exists( 'newsmatic_customizer_up_panel' ) ) :
      * 
      */
     function newsmatic_customizer_up_panel( $wp_customize ) {
-        // upgrade info box
-        $wp_customize->add_setting( 'social_icons_upgrade_info', array(
+        $wp_customize->add_setting( 'social_icons_upgrade_info', [
             'sanitize_callback' => 'sanitize_text_field'
-        ));
+        ]);
         $wp_customize->add_control( 
-            new Newsmatic_WP_Info_Box_Control( $wp_customize, 'social_icons_upgrade_info', array(
-                'label'	      => esc_html__( 'More Features', 'newsmatic' ),
-                'description' => esc_html__( 'Unlimited social icons items with unlimited choices', 'newsmatic' ),
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'social_icons_upgrade_info', array(
+                'label'	      => esc_html__( 'Need More Social Icons Options ?', 'newsmatic' ),
                 'section'     => NEWSMATIC_PREFIX . 'social_icons_section',
-                'priority'  => 200,
-                'settings'    => 'social_icons_upgrade_info',
-                'choices' => array(
-                    array(
-                        'label' => esc_html__( 'View Premium', 'newsmatic' ),
-                        'url'   => esc_url( '//blazethemes.com/theme/newsmatic-pro/' )
-                    )
-                )
+                'features'  =>  [
+                    esc_html__( 'Unlimited social icons items with unlimited choices', 'newsmatic' )
+                ]
             ))
         );
 
-        // upgrade info box
-        $wp_customize->add_setting( 'preloader_upgrade_info', array(
+        // Preloader pre sale
+        $wp_customize->add_setting( 'preloader_upgrade_info', [
             'sanitize_callback' => 'sanitize_text_field'
-        ));
+        ]);
         $wp_customize->add_control( 
-            new Newsmatic_WP_Info_Box_Control( $wp_customize, 'preloader_upgrade_info', array(
-                'label'	      => esc_html__( '20 + Preloader', 'newsmatic' ),
-                'description' => esc_html__( 'Dedicated technical support.', 'newsmatic' ),
-                'section'     => NEWSMATIC_PREFIX . 'preloader_section',
-                'settings'    => 'preloader_upgrade_info',
-                'choices' => array(
-                    array(
-                        'label' => esc_html__( 'View Premium', 'newsmatic' ),
-                        'url'   => esc_url( '//blazethemes.com/theme/newsmatic-pro/' )
-                    )
-                )
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'preloader_upgrade_info', array(
+                'label'	      => esc_html__( 'Need More Preloader Options ?', 'newsmatic' ),
+                'section'     => 'newsmatic_preloader_section',
+                'features'  =>  [
+                    esc_html__( '20+ Preloader', 'newsmatic' )
+                ]
             ))
         );
 
-        // upgrade info box
-        $wp_customize->add_setting( 'bottom_footer_upgrade_info', array(
+        // single post pre sale
+        $wp_customize->add_setting( 'single_post_section_pre_sales', [
             'sanitize_callback' => 'sanitize_text_field'
-        ));
+        ]);
         $wp_customize->add_control( 
-            new Newsmatic_WP_Info_Box_Control( $wp_customize, 'bottom_footer_upgrade_info', array(
-                'label'	      => esc_html__( 'More Features', 'newsmatic' ),
-                'description' => esc_html__( 'Copyright editor, Text color, link color and background color, gradient colors.', 'newsmatic' ),
-                'section'     => NEWSMATIC_PREFIX . 'bottom_footer_section',
-                'settings'    => 'bottom_footer_upgrade_info',
-                'priority'  => 100,
-                'tab'  => 'design',
-                'choices' => array(
-                    array(
-                        'label' => esc_html__( 'View Premium', 'newsmatic' ),
-                        'url'   => esc_url( '//blazethemes.com/theme/newsmatic-pro/' )
-                    )
-                )
-            ))
-        );
-
-        // upgrade info box
-        $wp_customize->add_setting( 'single_post_upgrade_info', array(
-            'sanitize_callback' => 'sanitize_text_field'
-        ));
-        $wp_customize->add_control( 
-            new Newsmatic_WP_Info_Box_Control( $wp_customize, 'single_post_upgrade_info', array(
-                'label'	      => esc_html__( 'More Features', 'newsmatic' ),
-                'description' => esc_html__( 'Showor hide post title, meta, categories, author, elements reorder, typography and content background, ', 'newsmatic' ),
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'single_post_section_pre_sales', array(
+                'label'	      => esc_html__( 'Need More Single Post Options ?', 'newsmatic' ),
                 'section'     => NEWSMATIC_PREFIX . 'single_post_section',
-                'settings'    => 'single_post_upgrade_info',
-                'priority'  => 100,
-                'choices' => array(
-                    array(
-                        'label' => esc_html__( 'View Premium', 'newsmatic' ),
-                        'url'   => esc_url( '//blazethemes.com/theme/newsmatic-pro/' )
-                    )
-                )
+                'features'  =>  [
+                    esc_html__( 'Breadcrumb Position', 'newsmatic' ),
+                    esc_html__( 'Elements Re-order', 'newsmatic' ),
+                    esc_html__( 'Meta Re-order', 'newsmatic' ),
+                    esc_html__( 'Related News 2 Layouts', 'newsmatic' ),
+                    esc_html__( 'Related News Filter By', 'newsmatic' ),
+                    esc_html__( 'Related News Number of Posts', 'newsmatic' ),
+                    esc_html__( 'Related News show image', 'newsmatic' ),
+                    esc_html__( 'Related News show in popup box', 'newsmatic' ),
+                    esc_html__( 'content Background', 'newsmatic' ),
+                    esc_html__( 'Post Title, Meta & Content Typography ', 'newsmatic' ),
+                    esc_html__( 'More than 1500+ google fonts', 'newsmatic' )
+                ]
             ))
         );
 
-        // upgrade info box
-        $wp_customize->add_setting( 'top_header_upgrade_info', array(
+        // Preloader pre sale
+        $wp_customize->add_setting( 'main_header_section_pre_sales', [
             'sanitize_callback' => 'sanitize_text_field'
-        ));
+        ]);
         $wp_customize->add_control( 
-            new Newsmatic_WP_Info_Box_Control( $wp_customize, 'top_header_upgrade_info', array(
-                'label'	      => esc_html__( 'More Features', 'newsmatic' ),
-                'description' => esc_html__( 'Date time color, menu color social icons color and hover colors.', 'newsmatic' ),
-                'section'     => NEWSMATIC_PREFIX . 'top_header_section',
-                'settings'    => 'top_header_upgrade_info',
-                'priority'  => 100,
-                'tab'   => 'design',
-                'choices' => array(
-                    array(
-                        'label' => esc_html__( 'View Premium', 'newsmatic' ),
-                        'url'   => esc_url( '//blazethemes.com/theme/newsmatic-pro/' )
-                    )
-                )
-            ))
-        );
-
-        // upgrade info box
-        $wp_customize->add_setting( 'theme_header_upgrade_info', array(
-            'sanitize_callback' => 'sanitize_text_field'
-        ));
-        $wp_customize->add_control( 
-            new Newsmatic_WP_Info_Box_Control( $wp_customize, 'theme_header_upgrade_info', array(
-                'label'	      => esc_html__( 'More Features', 'newsmatic' ),
-                'description' => esc_html__( '2 layouts.', 'newsmatic' ),
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'main_header_', array(
+                'label'	      => esc_html__( 'Need More Main Header Options ?', 'newsmatic' ),
                 'section'     => NEWSMATIC_PREFIX . 'main_header_section',
-                'settings'    => 'theme_header_upgrade_info',
-                'priority'  => 100,
-                'choices' => array(
-                    array(
-                        'label' => esc_html__( 'View Premium', 'newsmatic' ),
-                        'url'   => esc_url( '//blazethemes.com/theme/newsmatic-pro/' )
-                    )
-                )
+                'features'  =>  [
+                    esc_html__( '2 Layouts', 'newsmatic' ),
+                    esc_html__( 'Width Layout', 'newsmatic' ),
+                    esc_html__( 'Sidebar Background', 'newsmatic' )
+                ]
             ))
         );
 
-        // upgrade info box
-        $wp_customize->add_setting( 'theme_header_design_upgrade_info', array(
+        // menu options pre sale
+        $wp_customize->add_setting( 'menu_options_section_pre_sales', [
             'sanitize_callback' => 'sanitize_text_field'
-        ));
+        ]);
         $wp_customize->add_control( 
-            new Newsmatic_WP_Info_Box_Control( $wp_customize, 'theme_header_design_upgrade_info', array(
-                'label'	      => esc_html__( 'More Features', 'newsmatic' ),
-                'description' => esc_html__( 'Toggle bar color and search icon color.', 'newsmatic' ),
-                'section'     => NEWSMATIC_PREFIX . 'main_header_section',
-                'settings'    => 'theme_header_design_upgrade_info',
-                'priority'  => 100,
-                'tab'  => 'design',
-                'choices' => array(
-                    array(
-                        'label' => esc_html__( 'View Premium', 'newsmatic' ),
-                        'url'   => esc_url( '//blazethemes.com/theme/newsmatic-pro/' )
-                    )
-                )
-            ))
-        );
-
-        // upgrade info box
-        $wp_customize->add_setting( 'header_menu_upgrade_info', array(
-            'sanitize_callback' => 'sanitize_text_field'
-        ));
-        $wp_customize->add_control( 
-            new Newsmatic_WP_Info_Box_Control( $wp_customize, 'header_menu_upgrade_info', array(
-                'label'	      => esc_html__( 'More Features', 'newsmatic' ),
-                'description' => esc_html__( 'Menu color, active menu color, hover color, sub menu color, background color, border color and typography.', 'newsmatic' ),
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'menu_options_section_pre_sales', array(
+                'label'	      => esc_html__( 'Need More Menu Options ?', 'newsmatic' ),
                 'section'     => NEWSMATIC_PREFIX . 'header_menu_option_section',
-                'settings'    => 'header_menu_upgrade_info',
-                'priority'  => 100,
-                'choices' => array(
-                    array(
-                        'label' => esc_html__( 'View Premium', 'newsmatic' ),
-                        'url'   => esc_url( '//blazethemes.com/theme/newsmatic-pro/' )
-                    )
-                )
+                'features'  =>  [
+                    esc_html__( 'Active Menu Color & Background', 'newsmatic' ),
+                    esc_html__( 'Sub Menu Color & Background', 'newsmatic' ),
+                    esc_html__( 'Mobile Menu Toggle Color', 'newsmatic' ),
+                    esc_html__( 'Border Bottom', 'newsmatic' ),
+                    esc_html__( 'Main & Sub Menu Typography', 'newsmatic' )
+                ]
             ))
         );
 
-        // upgrade info box
-        $wp_customize->add_setting( 'footer_upgrade_info', array(
+        // theme footer pre sale
+        $wp_customize->add_setting( 'footer_upgrade_info', [
             'sanitize_callback' => 'sanitize_text_field'
-        ));
+        ]);
         $wp_customize->add_control( 
-            new Newsmatic_WP_Info_Box_Control( $wp_customize, 'footer_upgrade_info', array(
-                'label'	      => esc_html__( 'More Features', 'newsmatic' ),
-                'description' => esc_html__( 'Text color and background color, image, gradient colors.', 'newsmatic' ),
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'footer_upgrade_info', array(
+                'label'	      => esc_html__( 'Need More Theme Footer Options ?', 'newsmatic' ),
                 'section'     => NEWSMATIC_PREFIX . 'footer_section',
-                'settings'    => 'footer_upgrade_info',
-                'priority'  => 100,
-                'tab'  => 'design',
-                'choices' => array(
-                    array(
-                        'label' => esc_html__( 'View Premium', 'newsmatic' ),
-                        'url'   => esc_url( '//blazethemes.com/theme/newsmatic-pro/' )
-                    )
-                )
+                'features'  =>  [
+                    esc_html__( 'Text Color', 'newsmatic' ),
+                    esc_html__( 'Background color', 'newsmatic' ),
+                    esc_html__( 'More than 1500+ google fonts', 'newsmatic' )
+                ]
             ))
         );
 
-        // upgrade info box
-        $wp_customize->add_setting( 'bottom_footer_upgrade_info', array(
+        // bottom theme footer pre sale
+        $wp_customize->add_setting( 'bottom_footer_upgrade_info', [
             'sanitize_callback' => 'sanitize_text_field'
-        ));
+        ]);
         $wp_customize->add_control( 
-            new Newsmatic_WP_Info_Box_Control( $wp_customize, 'bottom_footer_upgrade_info', array(
-                'label'	      => esc_html__( 'More Features', 'newsmatic' ),
-                'description' => esc_html__( 'Copyright editor, Text color, link color and background color, gradient colors.', 'newsmatic' ),
+            new Newsmatic_WP_Upsell_Control( $wp_customize, 'bottom_footer_upgrade_info', array(
+                'label'	      => esc_html__( 'Need More Bottom Theme Footer Options ?', 'newsmatic' ),
                 'section'     => NEWSMATIC_PREFIX . 'bottom_footer_section',
-                'settings'    => 'bottom_footer_upgrade_info',
-                'priority'  => 100,
-                'tab'  => 'design',
-                'choices' => array(
-                    array(
-                        'label' => esc_html__( 'View Premium', 'newsmatic' ),
-                        'url'   => esc_url( '//blazethemes.com/theme/newsmatic-pro/' )
-                    )
-                )
+                'features'  =>  [
+                    esc_html__( 'Show Bottom Social Icons', 'newsmatic' ),
+                    esc_html__( 'WYSIWYG Editor', 'newsmatic' ),
+                    esc_html__( 'Text & Link Color', 'newsmatic' ),
+                    esc_html__( 'Background Color', 'newsmatic' ),
+                ]
             ))
         );
     }
