@@ -24,10 +24,8 @@ class DCLMN {
 
         add_action('init', function () {
             add_action('newsmatic_botttom_footer_hook', 'newsmatic_bottom_footer_copyright_part', 20);
-        });
-
-        add_action('init', function () {
             add_action('newsmatic_before_inner_content', 'newsmatic_before_inner_content', 20);
+            add_post_type_support('page', 'excerpt');
         });
 
         add_action('wp_head', function () {
@@ -157,6 +155,13 @@ class DCLMN {
             }
             return $title;
         });
+
+        add_filter('og_array', function ($og) {
+            if ($og['og']['image'] == get_site_icon_url()) {
+                $og['og']['image'] = get_stylesheet_directory_uri() . '/images/social-share.png';
+            }
+            return $og;
+        }, 1);
     }
 
     function get_leadership() {
