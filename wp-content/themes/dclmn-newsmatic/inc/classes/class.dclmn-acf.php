@@ -127,6 +127,7 @@ class DCLMN_ACF {
       ['key' => 'field_weekend_hours', 'label' => 'Weekend Hours', 'name' => 'weekend_hours', 'type' => 'text'],
       ['key' => 'field_election_day_hours', 'label' => 'Election Day Hours', 'name' => 'election_day_hours', 'type' => 'text'],
       ['key' => 'field_location_name', 'label' => 'Location Name', 'name' => 'location_name', 'type' => 'text'],
+      ['key' => 'field_notes', 'label' => 'Notes', 'name' => 'notes', 'type' => 'text'],
     ];
 
     acf_add_local_field_group([
