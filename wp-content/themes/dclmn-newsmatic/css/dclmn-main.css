@@ -29,6 +29,11 @@
 
 }
 
+hr {
+	padding: 0;
+	margin: 1em 0;
+}
+
 a {
     color: var(--color-root);
 }
@@ -543,7 +548,7 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
 
 .quotes-page .wp-block-pullquote {
     font-size: 1em;
-    padding: 1em 0;
+    padding: 1em .25em;
     border-top: 2px solid var(--color-root);
     margin-bottom: 3em;
     text-align: left;
@@ -559,6 +564,10 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
 
 .quotes-page .wp-block-pullquote:nth-child(even) {
     background-color: var(--color-light-gray);
+}
+
+.quotes-page .wp-block-pullquote:nth-child(even) blockquote {
+    border-color: var(--color-gray);
 }
 
 .suggest-a-quote {
@@ -850,4 +859,8 @@ body.home #block-21 {
 .drop-boxes p {
     margin: .25em 0 0 0;
     padding: 0;
+}
+
+.office-hours {
+	margin-bottom: 1.8em;
 }
