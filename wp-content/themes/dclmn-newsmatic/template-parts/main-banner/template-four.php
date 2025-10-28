@@ -24,7 +24,7 @@ $second_reads = array_slice($posts2['events'], 0, 4);
                 $is_event = strstr($post->post_type, 'tribe_event');
                 if ($is_event) {
                     $event_thumbs = $post->thumbnail->fetch_data();
-                    $event_thumb = $event_thumbs['medium_large'];
+                    $event_thumb = $event_thumbs['full'];
 
                     $post_thumb = $event_thumb->url;
 
@@ -92,7 +92,7 @@ $second_reads = array_slice($posts2['events'], 0, 4);
     if (!empty($second_reads)) :
         foreach ($second_reads as $post) :
             $event_thumbs = $post->thumbnail->fetch_data();
-            $event_thumb = $event_thumbs['medium_large'];
+            $event_thumb = $event_thumbs['full'];
 
             $post_thumb = $event_thumb->url;
             $post_thumb = str_replace('local.', '', $post_thumb);

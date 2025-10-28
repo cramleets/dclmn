@@ -29,9 +29,40 @@
 
 }
 
+.flex {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -webkit-box;
+    display: -moz-box;
+    display: flex;
+    gap: 1em;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-around;
+    -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: flex-start;
+    -webkit-align-items: flex-start;
+    -moz-box-align: flex-start;
+    -ms-flex-align: flex-start;
+    align-items: flex-start;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+ul.flex,
+ul.flex li {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
 hr {
-	padding: 0;
-	margin: 1em 0;
+    padding: 0;
+    margin: 1em 0;
 }
 
 a {
@@ -79,7 +110,7 @@ td,
 
 #page {
     border-top: .75em solid var(--color-root);
-    box-shadow: 1px 2px 5px rgba(0,0,0,.4);
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, .4);
 }
 
 .fas.fa-search,
@@ -120,7 +151,7 @@ td,
 
 .newsmatic_main_body #masthead.site-header.layout--default .menu-section {
     background-color: var(--color-root);
-    box-shadow: 1px 2px 5px rgba(0,0,0,.4);
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, .4);
 }
 
 .home-boxes h4 a {
@@ -290,7 +321,7 @@ body #mc_embed_signup .button,
     color: var(--color-white);
     text-decoration: none;
     flex-basis: auto;
-    text-align: center;
+    text-align: left;
     font-weight: bold;
     border-radius: .25em;
     box-shadow: -1px 1px 2px 2px rgba(0, 0, 0, 0.3);
@@ -634,9 +665,9 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
     color: var(--color-black);
 }
 
-.dclmn-events a:hover {
+/* .dclmn-events a:hover {
     color: var(--color-red);
-}
+} */
 
 .dclmn-event,
 .dclmn-events p {
@@ -670,12 +701,12 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
     margin-bottom: .5em;
 }
 
-.date-box > span {
+.date-box>span {
     display: block;
     text-transform: uppercase;
 }
 
-.date-box > span.date-box-dow {
+.date-box>span.date-box-dow {
     background-color: var(--color-root);
     color: var(--color-white);
     font-weight: bold;
@@ -684,7 +715,7 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
     font-size: 1em;
 }
 
-.date-box > span.date-box-date {
+.date-box>span.date-box-date {
     font-weight: 800;
     background-color: var(--color-white);
     color: var(--color-black);
@@ -692,15 +723,15 @@ body.page.page-id-1044.right-sidebar #theme-content .row .primary-content {
     font-size: 1.25em;
 }
 
-.date-box > span.date-box-time {
+.date-box>span.date-box-time {
     background-color: var(--color-light-gray);
     color: var(--color-black);
     border-top: 1px solid var(--color-gray);
 }
 
-.dclmn-event a:hover .event-title {
+/* .dclmn-event a:hover .event-title {
     color: var(--color-red);
-}
+} */
 
 .elected-officials-nav {
     margin: 1em;
@@ -862,5 +893,63 @@ body.home #block-21 {
 }
 
 .office-hours {
-	margin-bottom: 1.8em;
+    margin-bottom: 1.8em;
+}
+
+.elections h2.election-group-header {
+    border-bottom: 1px solid var(--color-black);
+    margin: 0;
+}
+
+.election:not(:last-of-type) {
+    padding: 1em;
+    border-bottom: 1px solid var(--color-light-gray);
+}
+
+/* .election:nth-child(even) {
+    background-color: var(--color-light-gray);
+} */
+
+.election h3 {
+    margin: 1em 0 0 0;
+}
+
+.election ul.flex {
+    --cols: 4;
+    --gap: 1em;
+    gap: var(--gap);
+    padding: 0;
+}
+
+.election.ward-commissioner ul.flex {
+    --cols: 3;
+}
+
+.election.narberth-council ul.flex,
+.election.lower-merion-school-board ul.flex {
+    gap: 0;
+}
+
+.election.narberth-council ul.flex li,
+.election.lower-merion-school-board ul.flex li {
+    flex-basis: 25%;
+}
+
+.election p a {
+    font-weight: bold;
+}
+
+.election ul li {
+    text-align: center;
+    font-size: 1.25em;
+    font-weight: bold;
+    /* max-width: 176px; */
+}
+
+.newsletters-archive div {
+    margin-bottom: .75em;
+}
+
+.entry-content a:hover {
+    background-color: var(--color-highlight);
 }

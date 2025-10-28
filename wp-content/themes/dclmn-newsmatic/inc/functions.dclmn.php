@@ -42,6 +42,7 @@ function dclmn_get_events($args = []) {
         'posts_per_page' => 5,
         'eventDisplay'   => 'upcoming',
         'tax_query'      => [],
+        'ends_after' => 'now',
     ];
 
     $args = wp_parse_args($args, $defaults);
@@ -105,15 +106,14 @@ function dclmn_homepage_events($args = []) {
         } else {
             // The date returned back contains HTML and is already escaped.
             $event_time = $event->short_schedule_details->value();
-            $event_time_short = $event->dates->start->format_i18n( 'ga' );
-;
+            $event_time_short = $event->dates->start->format_i18n('ga');;
         }
         $out .= '<p class="dclmn-event">';
 
         $out .= '<span class="date-box">';
-        $out .= '<span class="date-box-dow">'. $event_month_short .'</span>';
-        $out .= '<span class="date-box-date">'. $event_day_num .'</span>';
-        $out .= '<span class="date-box-time">'. $event_time_short .'</span>';
+        $out .= '<span class="date-box-dow">' . $event_month_short . '</span>';
+        $out .= '<span class="date-box-date">' . $event_day_num . '</span>';
+        $out .= '<span class="date-box-time">' . $event_time_short . '</span>';
         $out .= '</span>';
 
         $out .= '<a
@@ -298,24 +298,9 @@ function get_recent_posts_and_events() {
     ]);
 
     // Get upcoming events
-    $events = get_posts([
-        'post_type'      => ['tribe_event', 'tribe_events'],
+    $events = dclmn_get_events([
         'posts_per_page' => 10,
-        'meta_query'     => [
-            [
-                'key'     => '_EventStartDate',
-                'value'   => current_time('Y-m-d H:i:s'),
-                'compare' => '>=',
-                'type'    => 'DATETIME'
-            ],
-            [
-                'key'     => '_thumbnail_id',
-                'compare' => 'EXISTS'
-            ]
-        ],
-        'orderby'        => 'meta_value',
-        'order'          => 'ASC',
-        'meta_key'       => '_EventStartDate',
+        // 'ends_after' => 'now',
         'tax_query' => array(
 
             'relation' => 'OR',
@@ -350,4 +335,73 @@ function get_recent_posts_and_events() {
     }
 
     return $data;
+}
+
+function dclmn_thumb($src, $args = array()) {
+    $defaults = array(
+        'width' => '',
+        'height' => '',
+        'crop' => '',
+        'filters' => '',
+        'align' => '',
+    );
+
+    $args = wp_parse_args($args, $defaults);
+    extract($args);
+
+    //urlencode the src
+    $src = preg_replace('#^' . home_url() . '#', '', $src);
+    $src = urlencode($src);
+
+    $url = home_url('/thumb.php');
+    $url .= '?';
+
+    $url .= 'src=' . $src;
+    if (!empty($width))
+        $url .= '&w=' . $width;
+    if (!empty($height))
+        $url .= '&h=' . $height;
+    if (!empty($crop))
+        $url .= '&c=true';
+    if (!empty($filter))
+        $url .= '&f=' . $filter;
+    if (!empty($align))
+        $url .= '&a=' . $align;
+    if (!empty($quality))
+        $url .= '&q=' . $quality;
+    if (!empty($q))
+        $url .= '&q=' . $q;
+
+    $url = apply_filters('napco_thumb_src', $url, $args);
+
+    return $url;
+}
+
+function dclmn_get_newsletters_from_mailchimp() {
+
+    $url = 'https://us10.campaign-archive.com/feed?u=1bf7e9527f52daea724dcdd02&id=03993f91af';
+
+    $transient_name = 'newsletter_feed';
+    if (!$items = get_transient($transient_name)) {
+        ini_set('memory_limit', -1);
+        $feed = fetch_feed($url);
+        $rss_items = $feed->get_items(0, 10);
+        $items = [];
+        if (! empty($rss_items)) {
+            foreach ($rss_items as $rss_item) {
+                $items[] = [
+                    'title' => $rss_item->get_title(),
+                    'date' => $rss_item->get_date('F j, Y'),
+                    'permalink' => $rss_item->get_permalink(),
+                ];
+            }
+        }
+
+        $items = base64_encode(serialize($items));
+        set_transient($transient_name, $items, 60 * 60);
+    }
+
+    $items = unserialize(base64_decode($items));
+
+    return $items;
 }

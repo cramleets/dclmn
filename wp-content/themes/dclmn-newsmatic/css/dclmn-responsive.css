@@ -171,6 +171,7 @@
     .quotes-page .wp-block-pullquote:nth-child(even) {
         background-color: var(--color-light-gray);
     }
+
     .drop-boxes {
         display: block;
     }
@@ -432,6 +433,14 @@
     .entry-content ol {
         padding-left: 1.25em;
     }
+
+    .election ul.flex {
+        display: block;
+    }
+
+    .election ul li {
+        margin-bottom: 1.25em;
+    }
 }
 
 /* 550px */
@@ -442,6 +451,15 @@
     .banner-layout--four .main-banner-wrap .slick-list article,
     .banner-layout--four .main-banner-wrap .slick-list .post-thumb {
         height: 250px;
+    }
+
+    .entry-content .button,
+    body #mc_embed_signup .button,
+    .frm_style_formidable-style.with_frm_style .frm_submit button,
+    .button-group a,
+    .wp-block-search__button,
+    .widget.widget_search .search-submit {
+        font-size: 1em;
     }
 }
 
