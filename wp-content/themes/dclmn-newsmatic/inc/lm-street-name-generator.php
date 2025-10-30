@@ -9,6 +9,7 @@ $prefixes = [
 ];
 
 $suffixes = [
+  'berth',
   'lyn',
   ' Mawr',
   ' Ford',
@@ -20,3 +21,4 @@ $addendums = [
   'Way',
   'Avenue',
 ];
+

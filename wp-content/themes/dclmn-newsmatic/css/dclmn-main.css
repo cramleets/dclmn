@@ -196,6 +196,13 @@ td,
 }
 
 
+
+.main-navigation .sub-menu li.current-menu-item > a {
+    color: var(--color-black);
+}
+
+.main-navigation .sub-menu li.current-menu-item > a:hover,
+.main-navigation ul.nav-menu ul li.current_page_item a
 .main-navigation ul.nav-menu ul li.current_page_item a,
 .main-navigation ul.nav-menu ul li a:hover {
     color: var(--color-root);
@@ -919,6 +926,12 @@ body.home #block-21 {
     --gap: 1em;
     gap: var(--gap);
     padding: 0;
+}
+
+.election img {
+	border-radius: 50%;
+	display: block;
+	margin: 0 auto .25em;
 }
 
 .election.ward-commissioner ul.flex {

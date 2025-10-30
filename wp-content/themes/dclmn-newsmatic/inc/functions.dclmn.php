@@ -398,10 +398,139 @@ function dclmn_get_newsletters_from_mailchimp() {
         }
 
         $items = base64_encode(serialize($items));
-        set_transient($transient_name, $items, 60 * 60);
+        set_transient($transient_name, $items, 60 * 60 * 24);
     }
 
     $items = unserialize(base64_decode($items));
 
     return $items;
+}
+
+/**
+ * Retrieve elections data hierarchy.
+ *
+ * @return array
+ */
+function dclmn_get_elections_data() {
+    $taxonomy = 'election';
+    $parents = get_terms([
+        'taxonomy'   => $taxonomy,
+        'parent'     => 0,
+        'hide_empty' => false,
+        'orderby'    => 'name',
+        'order'      => 'ASC'
+    ]);
+
+    foreach ($parents as &$parent) {
+        $children = get_terms([
+            'taxonomy'   => $taxonomy,
+            'parent'     => $parent->term_id,
+            'hide_empty' => false,
+            'orderby'    => 'name',
+            'order'      => 'ASC'
+        ]);
+
+        foreach ($children as &$child) {
+            $posts = dclmn_get_posts([
+                'post_type'   => 'candidate',
+                'numberposts' => -1,
+                'tax_query'   => [[
+                    'taxonomy' => $taxonomy,
+                    'field'    => 'term_id',
+                    'terms'    => $child->term_id,
+                ]],
+            ]);
+
+            // Sort posts by last name
+            usort($posts, function ($a, $b) {
+                $lastA = get_post_meta($a->ID, 'last_name', true) ?: $a->post_title;
+                $lastB = get_post_meta($b->ID, 'last_name', true) ?: $b->post_title;
+                return strcasecmp($lastA, $lastB);
+            });
+
+            $child->candidates = $posts;
+        }
+
+        $parent->children = $children;
+    }
+
+    return $parents;
+}
+
+/**
+ * Render elections output.
+ *
+ * @param array $parents
+ * @return string
+ */
+function dclmn_render_elections_output($parents) {
+    $out = '<div class="entry-content elections">';
+
+    foreach ($parents as $parent) {
+        $out .= '<div class="election-group ' . esc_attr($parent->slug) . '" id="' . esc_attr($parent->slug) . '">';
+        $out .= '<h2 class="election-group-header">' . esc_html($parent->name) . '</h2>';
+
+        foreach ($parent->children as $child) {
+            $num_candidates = count($child->candidates);
+            if (!$num_candidates) continue;
+            $out .= '<div class="election ' . esc_attr($child->slug) . '" id="' . esc_attr($child->slug) . '">';
+            $out .= '<h3 class="election-header">' . esc_html($child->name) . '</h3>';
+
+            if ($num_candidates > 1) {
+                $out .= ($text = get_field('text', $child)) ? $text : '<br>';
+            } else {
+                $out .= '<br>';
+            }
+
+            $out .= '<ul class="flex">';
+            foreach ($child->candidates as $post) {
+                $link = get_post_meta($post->ID, 'website_campaign', true);
+                $out .= '<li>';
+                if (!empty($link)) {
+                    $out .= '<a href="' . esc_url($link) . '" target="_blank" rel="noopener">';
+                }
+
+                if (has_post_thumbnail($post)) {
+                    $src = dclmn_thumb(get_the_post_thumbnail_url($post, 'medium'), ['width' => 200, 'height' => 200]);
+                    $out .= '<img style="width:200px;" src="' . esc_url($src) . '" alt="' . esc_attr(get_the_title($post)) . '" />';
+                }
+
+                $out .= empty($post->title) ? '' : $post->title .' ';
+                $out .= esc_html(trim("{$post->first_name} {$post->last_name}"));
+                if (!empty($link)) $out .= '</a>';
+                $out .= '</li>';
+            }
+            $out .= '</ul>';
+
+            if ($num_candidates === 1) {
+                $out .= ($text = get_field('text', $child)) ? $text : '<br>';
+            }
+
+            $out .= '</div>';
+        }
+
+        $out .= '</div>';
+    }
+
+    $out .= '</div>';
+    return $out;
+}
+
+/**
+ * Render elections navigation.
+ *
+ * @param array $parents
+ * @return string
+ */
+function dclmn_render_elections_nav($parents) {
+    $nav = '<ul class="election-nav">';
+    foreach ($parents as $parent) {
+        $nav .= '<li><a href="#' . esc_attr($parent->slug) . '">' . esc_html($parent->name) . '</a><ul>';
+        foreach ($parent->children as $child) {
+            // $nav .= '<li><a href="#' . esc_attr($child->slug) . '">' . esc_html($child->name) . '</a></li>';
+        }
+        $nav .= '</ul></li>';
+    }
+    $nav .= '</ul>';
+    return $nav;
 }
