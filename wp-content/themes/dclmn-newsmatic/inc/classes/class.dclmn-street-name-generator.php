@@ -42,6 +42,11 @@ class DCLMN_LM_Street_Name_Generator {
       $suffix = $this->rando($this->get_suffixes());
     }
 
+    //maybe lowercase the suffix for more randomization
+    if ((bool) rand(0, 1)) {
+      $suffix = trim(strtolower($suffix));
+    }
+
     $name = $prefix . $suffix . ' ' . $addendum;
     
     $this->log($name);
