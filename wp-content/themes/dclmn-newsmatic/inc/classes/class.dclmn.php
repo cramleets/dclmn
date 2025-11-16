@@ -46,7 +46,25 @@ class DCLMN {
         add_action('newsmatic_main_banner_hook', 'newsmatic_header_ads_banner_part_footer', 999);
 
         $path = trailingslashit(get_stylesheet_directory()) . 'partials';
-       
+        foreach (new DirectoryIterator($path) as $fileInfo) {
+            if ($fileInfo->isDot()) continue;
+            $key = $fileInfo->getBasename('.' . $fileInfo->getExtension());
+            add_shortcode('dclmn-' . $key, function ($atts, $content = null, $tag = '') use ($key) {
+                global $my_shortcode_context;
+
+                $my_shortcode_context = [
+                    'tag'     => $tag,
+                    'atts'    => $atts,     // ← raw, unfiltered
+                    'content' => $content,
+                ];
+
+                ob_start();
+                get_template_part("partials/{$key}");
+                $out = ob_get_clean();
+                ob_end_flush();
+                return $out;
+            });
+        }
 
         add_filter('tec_events_calendar_embeds_post_type_args', function ($args) {
             // Tell WP to build caps off "tribe_event" instead of "post"
