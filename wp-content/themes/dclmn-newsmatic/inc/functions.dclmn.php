@@ -113,7 +113,7 @@ function dclmn_homepage_events($args = []) {
         $out .= '<span class="date-box">';
         $out .= '<span class="date-box-dow">' . $event_month_short . '</span>';
         $out .= '<span class="date-box-date">' . $event_day_num . '</span>';
-        $out .= '<span class="date-box-time">' . $event_time_short . '</span>';
+        if (!empty($event_time_short)) $out .= '<span class="date-box-time">' . $event_time_short . '</span>';
         $out .= '</span>';
 
         $out .= '<a
