@@ -15,6 +15,8 @@ $args = ['category' => 'featured'];
 $posts2 = get_recent_posts_and_events($args);
 $first_reads = array_slice($posts2['posts'], 0, 2) + $posts2['events'];
 $second_reads = array_slice($posts2['events'], 0, 4);
+
+if (!$first_reads && !$second_reads) return;
 ?>
 <div class="main-banner-wrap">
     <div class="main-banner-slider" data-auto="true" data-arrows="true">
@@ -24,9 +26,9 @@ $second_reads = array_slice($posts2['events'], 0, 4);
                 $is_event = strstr($post->post_type, 'tribe_event');
                 if ($is_event) {
                     $event_thumbs = $post->thumbnail->fetch_data();
-                    $event_thumb = $event_thumbs['full'];
+                    $event_thumb = $event_thumbs['full'] ?? false;
 
-                    $post_thumb = $event_thumb->url;
+                    $post_thumb = $event_thumb->url ?? false;
 
                     $display_date = empty($is_past) && ! empty($request_date)
                         ? max($post->dates->start_display, $request_date)
@@ -92,9 +94,9 @@ $second_reads = array_slice($posts2['events'], 0, 4);
     if (!empty($second_reads)) :
         foreach ($second_reads as $post) :
             $event_thumbs = $post->thumbnail->fetch_data();
-            $event_thumb = $event_thumbs['full'];
+            $event_thumb = $event_thumbs['full'] ?? false;
 
-            $post_thumb = $event_thumb->url;
+            $post_thumb = $event_thumb->url ?? false;
             $post_thumb = str_replace('local.', '', $post_thumb);
 
             $post->title = ($post->title) ?: $post->post_title;

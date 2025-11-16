@@ -966,3 +966,13 @@ body.home #block-21 {
 .entry-content a:hover {
     background-color: var(--color-highlight);
 }
+
+.street-name-generator {
+    text-align: center;
+}
+
+.street-name-generator h2 {
+    font-size: 3em;
+    margin: 0 0 .5em 0;
+    font-weight: bold;
+}

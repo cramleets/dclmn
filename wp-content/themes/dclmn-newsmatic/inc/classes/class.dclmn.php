@@ -12,6 +12,8 @@ class DCLMN {
     var $drop_boxes = [];
 
     function __construct() {
+        DCLMN_Populator::theme_init();
+        
         add_action('wp_enqueue_scripts', function () {
             $parent_style = 'dclmn-parent';
 
@@ -44,25 +46,7 @@ class DCLMN {
         add_action('newsmatic_main_banner_hook', 'newsmatic_header_ads_banner_part_footer', 999);
 
         $path = trailingslashit(get_stylesheet_directory()) . 'partials';
-        foreach (new DirectoryIterator($path) as $fileInfo) {
-            if ($fileInfo->isDot()) continue;
-            $key = $fileInfo->getBasename('.' . $fileInfo->getExtension());
-            add_shortcode('dclmn-' . $key, function ($atts, $content = null, $tag = '') use ($key) {
-                global $my_shortcode_context;
-
-                $my_shortcode_context = [
-                    'tag'     => $tag,
-                    'atts'    => $atts,     // ← raw, unfiltered
-                    'content' => $content,
-                ];
-
-                ob_start();
-                get_template_part("partials/{$key}");
-                $out = ob_get_clean();
-                ob_end_flush();
-                return $out;
-            });
-        }
+       
 
         add_filter('tec_events_calendar_embeds_post_type_args', function ($args) {
             // Tell WP to build caps off "tribe_event" instead of "post"
@@ -77,6 +61,8 @@ class DCLMN {
 
         add_action('wp_ajax_export_cps', [$this, 'wp_ajax_export_cps']);
         add_action('wp_ajax_export_leadership', [$this, 'wp_ajax_export_leadership']);
+        add_action('wp_ajax_get_street_name', [$this, 'wp_ajax_get_street_name']);
+        add_action('wp_ajax_nopriv_get_street_name', [$this, 'wp_ajax_get_street_name']);
 
         add_filter('tec_events_views_v2_view_header_title', function ($title, $obj) {
             if (empty($title)) $title = 'Events';
@@ -733,5 +719,11 @@ class DCLMN {
 
     function map_url($post) {
         return (!empty($post->map_url)) ? $post->map_url : sprintf('https://www.google.com/maps/search/?api=1&query=%s,%s', $post->latitude, $post->longitude);
+    }
+
+    function wp_ajax_get_street_name() {
+        require_once get_stylesheet_directory() . '/inc/classes/class.dclmn-street-name-generator.php';
+        $name = (new DCLMN_LM_Street_Name_Generator())->build_street_name();
+        die($name);
     }
 }

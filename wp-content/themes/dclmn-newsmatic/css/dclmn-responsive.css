@@ -441,6 +441,10 @@
     .election ul li {
         margin-bottom: 1.25em;
     }
+
+    .street-name-generator h2 {
+        font-size: 2em;
+    }
 }
 
 /* 550px */

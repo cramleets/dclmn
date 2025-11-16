@@ -1,25 +1,65 @@
 <?php
 class DCLMN_Populator {
 
+  var $results = [
+    'districts' => [],
+    'polling_locations' => [],
+    'precincts' => [],
+    'dropboxes' => [],
+    'menus' => [],
+  ];
+  var $status = '';
+
   function __construct() {
   }
 
+  static function theme_init() {
+    add_rewrite_rule(
+      '^dclmn-data-populator/?$',
+      'index.php?dclmn-data-populator=1',
+    );
+
+    add_filter('query_vars', function ($vars) {
+      $vars[] = 'dclmn-data-populator';
+      return $vars;
+    });
+
+    add_filter('template_include', function ($template) {
+      if (get_query_var('dclmn-data-populator')) {
+        $populator = new DCLMN_Populator();
+        $result = $populator->run();
+        echo '<h1>Populator Status: '. $populator->status .'</h1>';
+        pobj($populator->results, 1, 0);
+      }
+      return $template;
+    });
+
+    add_action('wp_dashboard_setup', function () {
+      wp_add_dashboard_widget('napco_schedules', 'DCLMN Data Populator', function () {
+        echo '<a href="'. home_url('dclmn-data-populator/') .'" target="_blank" class="button-primary" style="font-size: 1.5em; font-weight: bold;">Run The Populator</a>';
+      });
+    });
+  }
+
   function run() {
+    $this->status = 'started';
     $this->populate_pa_districts();
     $this->populate_polling_places();
     $this->populate_precincts();
     $this->populate_dropboxes();
     $this->assign_cps();
-    die('<hr>DONE?');
+    $this->status = 'complete';
   }
 
   function get_dropboxes() {
     $url = 'https://services1.arcgis.com/kOChldNuKsox8qZD/arcgis/rest/services/Montgomery_County_Ballot_Dropbox_Locations/FeatureServer/0/query?f=json&where=(Municipality%20IN%20(%27Lower%20Merion%27))&outFields=*';
+    $this->results['dropboxes']['url'] = $url;
     if (!$dropboxes = get_transient('dropboxes')) {
       $file = file_get_contents($url);
       $file = json_decode($file);
       $dropboxes = wp_list_pluck($file->features, 'attributes');
       set_transient('dropboxes', $dropboxes, 60 * 60 * 24);
+      $this->results['dropboxes']['fresh_transient'] = true;
     }
 
     $dropboxes = array_map(function ($x) {
@@ -33,11 +73,13 @@ class DCLMN_Populator {
 
   function get_pa_districts() {
     $url = 'https://services1.arcgis.com/kOChldNuKsox8qZD/arcgis/rest/services/Montgomery_County_PA_House_Districts_2022/FeatureServer/3/query?outFields=*&where=1%3D1&f=geojson';
+    $this->results['districts']['url'] = $url;
     if (!$pa_districts = get_transient('pa_districts')) {
       $file = file_get_contents($url);
       $file = json_decode($file);
       $pa_districts = wp_list_pluck($file->features, 'properties');
       set_transient('pa_districts', $pa_districts, 60 * 60 * 24);
+      $this->results['districts']['fresh_transient'] = true;
     }
 
     $pa_districts = array_map(function ($x) {
@@ -50,11 +92,13 @@ class DCLMN_Populator {
 
   function get_precincts() {
     $url = 'https://gis.montcopa.org/arcgis/rest/services/Voters/Montgomery_County_Voting_Districts/FeatureServer/1/query?f=json&where=(Municipality%20IN%20(%27Lower%20Merion%27%2C%20%27Narberth%27))&outFields=*';
+    $this->results['precincts']['url'] = $url;
     if (!$precincts = get_transient('precincts')) {
       $file = file_get_contents($url);
       $file = json_decode($file);
       $precincts = wp_list_pluck($file->features, 'attributes');
       set_transient('precincts', $precincts, 60 * 60 * 24);
+      $this->results['precincts']['fresh_transient'] = true;
     }
 
     $precincts = array_map(function ($x) {
@@ -69,12 +113,13 @@ class DCLMN_Populator {
 
   function get_polling_locations() {
     $url = 'https://gis.montcopa.org/arcgis/rest/services/Voters/Montgomery_County_Voting_Locations/FeatureServer/7/query?outFields=*&where=1%3D1&f=geojson';
-
+    $this->results['polling_locations']['url'] = $url;
     if (!$polling_locations = get_transient('polling_locations')) {
       $file = file_get_contents($url);
       $file = json_decode($file);
       $polling_locations = wp_list_pluck($file->features, 'properties');
       set_transient('polling_locations', $polling_locations, 60 * 60 * 24);
+      $this->results['polling_locations']['fresh_transient'] = true;
     }
 
     $polling_locations = array_map(function ($x) {
@@ -207,8 +252,10 @@ class DCLMN_Populator {
     }
 
     // Set the relationship on the precinct post
-    update_post_meta($post_id, 'polling_place_id', $this->get_polling_location_id($precinct_number));
-    update_post_meta($post_id, 'pa_district_id', $this->get_pa_district_id($data['pa_house_2022']));
+    //update_post_meta($post_id, 'polling_place_id', $this->get_polling_location_id($precinct_number));
+    //update_post_meta($post_id, 'pa_district_id', $this->get_pa_district_id($data['pa_house_2022']));
+    update_field('polling_place_id', $this->get_polling_location_id($precinct_number), $post_id);
+    update_field('pa_district_id', $this->get_pa_district_id($data['pa_house_2022']), $post_id);
 
     return $post_id;
   }
@@ -391,7 +438,7 @@ class DCLMN_Populator {
       ]);
     }
 
-    echo '<div style="padding:10px;background:#efe;border:1px solid #9c9;">Menu order updated for ' . count($posts) . ' posts.</div>';
+    $this->results['menus'][] = 'Menu order updated for ' . count($posts) . ' '. $post_type .' posts.';
   }
 
   function populate_polling_places() {
