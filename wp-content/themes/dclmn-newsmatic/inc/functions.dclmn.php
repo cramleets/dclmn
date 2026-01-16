@@ -36,6 +36,27 @@ function dclmn_get_posts($args) {
     return $posts;
 }
 
+function dclmn_auth($permission) {
+    $return = false;
+    if (current_user_can('edit_others_posts')) {
+        $return = true;
+    }
+
+    elseif ('cp' == $permission && dclmn_user_is_cp()) {
+        $return = true;
+    }
+
+    return $return;
+}
+
+function dclmn_get_post($post_id) {
+    $post = get_post($post_id);
+    foreach (get_post_meta($post->ID) as $k => $v) {
+        $post->$k = $v[0];
+    }
+    return $post;
+}
+
 function dclmn_get_events($args = []) {
     $defaults = [
         'post_type'      => 'tribe_events',
@@ -413,6 +434,7 @@ function dclmn_get_newsletters_from_mailchimp() {
  */
 function dclmn_get_elections_data() {
     $taxonomy = 'election';
+
     $parents = get_terms([
         'taxonomy'   => $taxonomy,
         'parent'     => 0,
@@ -421,7 +443,8 @@ function dclmn_get_elections_data() {
         'order'      => 'ASC'
     ]);
 
-    foreach ($parents as &$parent) {
+    foreach ($parents as $p_key => &$parent) {
+
         $children = get_terms([
             'taxonomy'   => $taxonomy,
             'parent'     => $parent->term_id,
@@ -430,7 +453,8 @@ function dclmn_get_elections_data() {
             'order'      => 'ASC'
         ]);
 
-        foreach ($children as &$child) {
+        foreach ($children as $c_key => &$child) {
+
             $posts = dclmn_get_posts([
                 'post_type'   => 'candidate',
                 'numberposts' => -1,
@@ -441,7 +465,11 @@ function dclmn_get_elections_data() {
                 ]],
             ]);
 
-            // Sort posts by last name
+            if (empty($posts)) {
+                unset($children[$c_key]);
+                continue;
+            }
+
             usort($posts, function ($a, $b) {
                 $lastA = get_post_meta($a->ID, 'last_name', true) ?: $a->post_title;
                 $lastB = get_post_meta($b->ID, 'last_name', true) ?: $b->post_title;
@@ -451,10 +479,17 @@ function dclmn_get_elections_data() {
             $child->candidates = $posts;
         }
 
+        $children = array_values($children);
+
+        if (empty($children)) {
+            unset($parents[$p_key]);
+            continue;
+        }
+
         $parent->children = $children;
     }
 
-    return $parents;
+    return array_values($parents);
 }
 
 /**
@@ -467,6 +502,18 @@ function dclmn_render_elections_output($parents) {
     $out = '<div class="entry-content elections">';
 
     foreach ($parents as $parent) {
+        $total_children = 0;
+        $total_candidates = 0;
+
+        foreach ($parent->children as $child) {
+            $total_children++;
+            foreach ($child->candidates as $post) {
+                $total_candidates++;
+            }
+        }
+        if (!$total_children) continue;
+        if (!$total_candidates) continue;
+
         $out .= '<div class="election-group ' . esc_attr($parent->slug) . '" id="' . esc_attr($parent->slug) . '">';
         $out .= '<h2 class="election-group-header">' . esc_html($parent->name) . '</h2>';
 
@@ -495,7 +542,7 @@ function dclmn_render_elections_output($parents) {
                     $out .= '<img style="width:200px;" src="' . esc_url($src) . '" alt="' . esc_attr(get_the_title($post)) . '" />';
                 }
 
-                $out .= empty($post->title) ? '' : $post->title .' ';
+                $out .= empty($post->title) ? '' : $post->title . ' ';
                 $out .= esc_html(trim("{$post->first_name} {$post->last_name}"));
                 if (!empty($link)) $out .= '</a>';
                 $out .= '</li>';
@@ -533,4 +580,33 @@ function dclmn_render_elections_nav($parents) {
     }
     $nav .= '</ul>';
     return $nav;
+}
+
+function dclmn_user_is_cp() {
+    global $dclmn_cps;
+    return isset($_COOKIE[$dclmn_cps->cookie_name]);
+}
+
+function dclmn_nonce_create($action_prefix, $salt = '', $validity_duration = 900) {
+    $tick = ceil(time() / $validity_duration); // Custom tick interval
+
+    $salt_hash = $salt ? base64_encode(serialize($salt)) : ''; // Hash the salt if provided
+    $action = $action_prefix . $salt_hash . '|' . $tick; // Combine action prefix, salt hash, and tick
+    $nonce = wp_hash($action); // Generate a secure hash as the nonce
+
+    return [
+        'nonce' => $nonce,
+        'salt_hash' => $salt_hash, // Include the hashed salt for use in verification
+    ];
+}
+
+function dclmn_nonce_verify($action_prefix, $nonce, $salt = '', $validity_duration = 900) {
+    $tick = ceil(time() / $validity_duration); // Custom tick interval
+
+    $salt_hash = $salt ? base64_encode(serialize($salt)) : ''; // Hash the salt if provided
+    $action = $action_prefix . $salt_hash . '|' . $tick; // Recreate the action string
+    $expected_nonce = wp_hash($action); // Generate the expected nonce
+
+    // Securely compare the provided nonce with the expected nonce
+    return hash_equals($expected_nonce, $nonce);
 }
