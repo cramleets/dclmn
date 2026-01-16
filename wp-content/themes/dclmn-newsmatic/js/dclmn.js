@@ -41,4 +41,34 @@ jQuery(document).ready(function ($) {
       $('#street-name-generator-content').html(data);
     });
   });
+
+  $('#cp-login-form').on('submit', function (e) {
+    e.preventDefault();
+
+    $el = $('#cp-email');
+    $result = $('#cp-login-result');
+    email = $el.val();
+    $el.removeClass('error');
+    $result.removeClass('error').hide();
+    if (!email || !/^(?!.*\.\.)[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      $el.addClass('error');
+    } else {
+      $result.html('<img src="/wp-includes/images/spinner.gif">').fadeIn();
+
+      $.post(sbiajaxurl, { action: 'cp_login', email: email }, function (data) {
+        try {
+          var json = jQuery.parseJSON(data);
+        } catch (err) {
+          $result.addClass('error').html(err.message);
+          return;
+        }
+
+        if ('success' != json.status) {
+          $result.addClass('error').html('<span class="result">' + json.message + '</span>');
+        } else {
+          $result.html('<span class="result">' + json.message + '</span>');
+        }
+      });
+    }
+  });
 })

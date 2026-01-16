@@ -3,7 +3,7 @@
   <a class="button" href="<?php echo home_url('committee-person-description/') ?>">Committee Person Description</a>
   <a href="<?php echo home_url('map/') ?>" class="button">Map</a>
 </div>
-<?php if (current_user_can('edit_others_posts')): ?>
+<?php if (dclmn_auth('cp')): ?>
   <?php
   global $dclmn;
   $cp_emails = [];
