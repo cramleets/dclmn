@@ -13,7 +13,7 @@ class DCLMN {
 
     function __construct() {
         DCLMN_Populator::theme_init();
-        
+
         add_action('wp_enqueue_scripts', function () {
             $parent_style = 'dclmn-parent';
 
@@ -79,6 +79,7 @@ class DCLMN {
 
         add_action('wp_ajax_export_cps', [$this, 'wp_ajax_export_cps']);
         add_action('wp_ajax_export_leadership', [$this, 'wp_ajax_export_leadership']);
+        add_action('wp_ajax_export_contacts', [$this, 'wp_ajax_export_contacts']);
         add_action('wp_ajax_get_street_name', [$this, 'wp_ajax_get_street_name']);
         add_action('wp_ajax_nopriv_get_street_name', [$this, 'wp_ajax_get_street_name']);
 
@@ -166,6 +167,23 @@ class DCLMN {
             }
             return $og;
         }, 1);
+
+        add_filter('wp_sitemaps_add_provider', function ($provider, $name) {
+            if ($name === 'users')
+                return NULL;
+            return $provider;
+        }, 10, 2);
+
+        add_filter('epc_exempt_uri_contains', function ($cache_exempt) {
+            $cache_exempt[] = 'cp';
+            return $cache_exempt;
+        });
+
+        add_filter('edit_post_link', function () {
+            return '';
+        });
+
+        $this->add_candidates_to_menu('main-menu');
     }
 
     function get_leadership() {
@@ -229,12 +247,20 @@ class DCLMN {
         return $this->pa_districts;
     }
 
-    function get_elected_officials() {
-        if (!count($this->elected_officials)) {
+    function get_elected_officials($jurisdiction_term_id = false) {
+        if (!count($this->elected_officials) || $jurisdiction_term_id) {
             $args = [
                 'post_type' => 'elected_official',
                 'posts_per_page' => -1,
             ];
+
+            if (!empty($jurisdiction_term_id)) {
+                $args['tax_query'] = [[
+                    'taxonomy' => 'jurisdiction',
+                    'field' => 'term_id',
+                    'terms' => $jurisdiction_term_id
+                ]];
+            }
 
             $this->elected_officials = dclmn_get_posts($args);
         }
@@ -592,6 +618,117 @@ class DCLMN {
         $this->downloadFile(file_get_contents('/tmp/test.xlsx'), 'dclmn-leadership.xlsx');
     }
 
+    function wp_ajax_export_contacts() {
+        require_once trailingslashit(get_stylesheet_directory()) . 'inc/classes/SimpleXLSXGen.php';
+
+        if (!current_user_can('edit_others_posts')) {
+            wp_die('Nope.');
+        }
+
+        $contacts = [];
+
+        $contacts[] = [
+            'Contact Type',
+            'Contact Subtype',
+            'First Name',
+            'Last Name',
+            'Email',
+            'Phone',
+            'Title',
+            'Notes',
+        ];
+
+        if (!empty($_POST['contacts']['dclmn']['cps'])) {
+            $cps = $this->get_committee_people_table(1);
+            array_shift($cps);
+            foreach ($cps as $cp) {
+                $contacts[] = [
+                    'contact_type' => 'DCLMN',
+                    'contact_subtype' => 'Committee Person',
+                    'first_name' => $cp[3],
+                    'last_name' => $cp[4],
+                    'email' => $cp[5],
+                    'phone' => $cp[6],
+                    'title' => $cp[0],
+                    'notes' => '',
+                ];
+            }
+        }
+
+        if (!empty($_POST['contacts']['dclmn']['leadership'])) {
+            $leadership = $this->get_leadership();
+            foreach ($leadership as $position) {
+                $contacts[] = [
+                    'contact_type' => 'DCLMN',
+                    'contact_subtype' => 'Leadership',
+                    'first_name' => $position->first_name,
+                    'last_name' => $position->last_name,
+                    'email' => $position->email,
+                    'phone' => $position->phone,
+                    'title' => $position->post_title,
+                    'notes' => '',
+                ];
+            }
+        }
+
+        if (!empty($_POST['contacts']['elected_officials'])) {
+            foreach ($_POST['contacts']['elected_officials'] as $contact_type) {
+                $term = get_term($contact_type, 'jurisdiction');
+                foreach ($this->get_elected_officials($term->term_id) as $contact) {
+                    $contacts[] = [
+                        'contact_type' => 'Elected Official',
+                        'contact_subtype' => $term->name,
+                        'first_name' => $contact->first_name,
+                        'last_name' => $contact->last_name,
+                        'email' => $contact->email,
+                        'phone' => $contact->phone,
+                        'title' => $contact->title,
+                        'notes' => '',
+                    ];
+                }
+            }
+        }
+
+        if (!empty($_POST['contacts']['contacts'])) {
+            foreach ($_POST['contacts']['contacts'] as $contact_type) {
+                $term = get_term($contact_type, 'contact_type');
+                foreach ($this->get_contacts($term->term_id) as $contact) {
+                    $contacts[] = [
+                        'contact_type' => 'Contact',
+                        'contact_subtype' => $term->name,
+                        'first_name' => $contact->first_name,
+                        'last_name' => $contact->last_name,
+                        'email' => $contact->email,
+                        'phone' => $contact->phone,
+                        'title' => $contact->title,
+                        'notes' => preg_replace('/[\n\r]/', ' ', $contact->notes),
+                    ];
+                }
+            }
+        }
+
+        Shuchkin\SimpleXLSXGen::fromArray($contacts)->saveAs('/tmp/test.xlsx');
+        $this->downloadFile(file_get_contents('/tmp/test.xlsx'), 'dclmn-contacts.xlsx');
+    }
+
+    function get_contacts($contact_type_term_id = false) {
+        $args = [
+            'post_type'      => 'contact',
+            'posts_per_page' => -1,
+            'orderby'        => 'title',
+            'order'          => 'ASC',
+        ];
+
+        if (!empty($contact_type_term_id)) {
+            $args['tax_query'] = [[
+                'taxonomy' => 'contact_type',
+                'field' => 'term_id',
+                'terms' => $contact_type_term_id
+            ]];
+        }
+
+        return dclmn_get_posts($args);
+    }
 
     function get_recent_posts_and_events2() {
         // Get posts
@@ -743,5 +880,38 @@ class DCLMN {
         require_once get_stylesheet_directory() . '/inc/classes/class.dclmn-street-name-generator.php';
         $name = (new DCLMN_LM_Street_Name_Generator())->build_street_name();
         die($name);
+    }
+
+    function add_candidates_to_menu($menu_slug, $targeted_menu_item_title = 'Candidates') {
+        add_filter('wp_nav_menu_objects', function ($menu_objects, $args) use ($menu_slug, $targeted_menu_item_title) {
+            if ($menu_slug == $args->menu->slug) {
+                $highest_menu_order = 0;
+                $parent_menu_item = false;
+                
+                foreach ($menu_objects as $i => $item) {
+                    if (strtolower($targeted_menu_item_title) == strtolower($item->title)) {
+                        $parent_menu_item = $item;
+                        break;
+                    }
+                }
+
+                $elections = dclmn_get_elections_data();
+                if (count($elections)) {
+                    $menu_objects[$i]->classes[] = 'menu-item-has-children';
+                    $i = 0;
+                    foreach ($elections as $post) {
+                        $post->url = home_url('candidates/#' . $post->slug);
+                        $post->menu_item_parent = $parent_menu_item->ID;
+                        $post->menu_order = $i;
+                        $post->title = $post->name;
+
+                        $menu_objects[] = $post;
+                        $i++;
+                    }
+                }
+            }
+
+            return $menu_objects;
+        }, 10, 2);
     }
 }
