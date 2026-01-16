@@ -197,13 +197,12 @@ td,
 
 
 
-.main-navigation .sub-menu li.current-menu-item > a {
+.main-navigation .sub-menu li.current-menu-item>a {
     color: var(--color-black);
 }
 
-.main-navigation .sub-menu li.current-menu-item > a:hover,
-.main-navigation ul.nav-menu ul li.current_page_item a
-.main-navigation ul.nav-menu ul li.current_page_item a,
+.main-navigation .sub-menu li.current-menu-item>a:hover,
+.main-navigation ul.nav-menu ul li.current_page_item a .main-navigation ul.nav-menu ul li.current_page_item a,
 .main-navigation ul.nav-menu ul li a:hover {
     color: var(--color-root);
 }
@@ -291,6 +290,12 @@ table.stripes a:hover {
 .officials-table>div img {
     display: block;
     margin: 0 auto;
+}
+
+.officials-table-wrap.lower-merion-township img,
+.officials-table-wrap.narberth-borough img,
+.officials-table-wrap.lower-merion-school-board img {
+    border-radius: 50%;
 }
 
 .officials-table>div a {
@@ -929,9 +934,9 @@ body.home #block-21 {
 }
 
 .election img {
-	border-radius: 50%;
-	display: block;
-	margin: 0 auto .25em;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto .25em;
 }
 
 .election.ward-commissioner ul.flex {
@@ -975,4 +980,87 @@ body.home #block-21 {
     font-size: 3em;
     margin: 0 0 .5em 0;
     font-weight: bold;
+}
+
+.election-dates {
+    background-color: #efefef;
+    padding: .5em;
+    margin: 1em .25em;
+    border: 1px #ccc solid;
+}
+
+.election-dates h2 {
+    margin-bottom: .5em;
+}
+
+.election-dates ul,
+.election-dates ul li {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.election-dates ul span.month,
+.election-dates ul span.dom {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.election-dates ul li {
+    line-height: 1.25;
+    margin-bottom: 1em;
+}
+
+.election-dates ul li a,
+.election-dates ul li a:hover {
+    color: #000;
+    background-color: transparent;
+}
+
+input.error {
+    background-color: #fcc;
+    color: #f00;
+    border-color: #f00;
+}
+
+#cp-login-trigger {
+    font-size: .95em;
+    line-height: 1;
+}
+
+#cp-login-result {
+    font-size: 1.25em;
+    margin-top: .5em;
+    display: none;
+}
+
+.session-login-error,
+#cp-login-result .result {
+    background-color: #cfc;
+    border: 2px #090 solid;
+    color: #090;
+    padding: .25em;
+    font-weight: bold;
+    display: block;
+}
+
+.session-login-error,
+#cp-login-result.error .result {
+    background-color: #fcc;
+    border-color: #f00;
+    color: #f00;
+}
+
+.session-login-error {
+    display: inline;
+}
+
+.drop-box-hours {
+    margin-bottom: 1em;
+    font-weight: 600;
+}
+
+#cp-email {
+    width: 80%;
+    max-width: 500px;
 }
