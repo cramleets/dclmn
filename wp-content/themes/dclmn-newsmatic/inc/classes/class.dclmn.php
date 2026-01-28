@@ -82,6 +82,8 @@ class DCLMN {
         add_action('wp_ajax_export_contacts', [$this, 'wp_ajax_export_contacts']);
         add_action('wp_ajax_get_street_name', [$this, 'wp_ajax_get_street_name']);
         add_action('wp_ajax_nopriv_get_street_name', [$this, 'wp_ajax_get_street_name']);
+        add_action('wp_ajax_export_cps_full', [$this, 'wp_ajax_export_cps_full']);
+        add_action('wp_ajax_nopriv_export_cps_full', [$this, 'wp_ajax_export_cps_full']);
 
         add_filter('tec_events_views_v2_view_header_title', function ($title, $obj) {
             if (empty($title)) $title = 'Events';
@@ -124,7 +126,12 @@ class DCLMN {
             $post_name = 'default';
             if (is_front_page()) $post_name = 'home';
             elseif (is_404()) $post_name = '404';
-            elseif (is_object($post) && $post->post_name) $post_name = $post->post_name;
+            elseif (is_object($post) && $post->post_name) {
+                $post_name = $post->post_name;
+                if ('cp' == get_post_field('post_name', $post->post_parent) && 'cp' != $post->post_name) {
+                    $classes[] = 'hidden-sidebar';
+                }
+            }
             $post_name = apply_filters('napco_page_name', $post_name);
             $classes[] = $post_name;
             return $classes;
@@ -302,9 +309,16 @@ class DCLMN {
         }
 
         foreach ($this->get_precincts() as $post) {
+            $region = '';
+            $terms = get_the_terms($post->ID, 'dclmn_region');
+            if (! is_wp_error($terms) && ! empty($terms)) {
+                $region = $terms[0]->name;
+            }
+
             $post->committe_people = [];
             $post->pa_district = $pa_districts[$post->pa_district_id];
             $post->polling_place = $polling_places[$post->polling_place_id];
+            $post->region = $region;
             $precincts[$post->ID] = $post;
         }
 
@@ -354,43 +368,86 @@ class DCLMN {
         });
 
         $out = '';
-        if ($array) {
-            $cps = [];
+        if ('raw' === $array) {
+            return $precincts;
+        } elseif ($array) {
+            $dclmn_users = [];
 
-            $headers = [
-                "Precinct",
-                "PA District",
-                "Region",
-                "First Name",
-                "Last Name",
-                "Email",
-                "Phone",
-                "Phone is Public",
-                "Polling Place",
-                "Polling Place Map"
-            ];
+            if ('full' == $array) {
+                $headers = [
+                    "Precinct",
+                    "PA District",
+                    "Region",
+                    "First Name",
+                    "Last Name",
+                    "Email",
+                    "Phone",
+                    "Street Address 1",
+                    "Street Address 2",
+                    "Street Address 3",
+                    "City",
+                    "State",
+                    "Zip",
+                    "Phone is Public",
+                    "Polling Place",
+                    "Polling Place Map"
+                ];
+            } else {
+                $headers = [
+                    "Precinct",
+                    "PA District",
+                    "Region",
+                    "First Name",
+                    "Last Name",
+                    "Email",
+                    "Phone",
+                    "Phone is Public",
+                    "Polling Place",
+                    "Polling Place Map"
+                ];
+            }
 
-            $cps[] = $headers;
+            $dclmn_users[] = $headers;
 
             foreach ($precincts as $precinct) {
                 foreach ($precinct->committe_people as $person) {
                     $district = str_replace('th district', '', strtolower($precinct->pa_district->district));
 
-                    $cps[] = [
-                        $precinct->post_title,
-                        $district,
-                        $precinct->region,
-                        $person->first_name,
-                        $person->last_name,
-                        $person->public_email,
-                        $person->phone,
-                        ($person->phone_display_on_site) ? 1 : '',
-                        $precinct->polling_place->post_title,
-                    ];
+                    if ('full' == $array) {
+                        $dclmn_users[] = [
+                            $precinct->post_title,
+                            $district,
+                            $precinct->region,
+                            $person->first_name,
+                            $person->last_name,
+                            $person->public_email,
+                            $person->phone,
+                            $person->street_address_1,
+                            $person->street_address_2,
+                            $person->street_address_3,
+                            $person->city,
+                            $person->state,
+                            $person->zip,
+                            ($person->phone_display_on_site) ? 1 : '',
+                            $precinct->polling_place->post_title,
+                        ];
+                    } else {
+                        $dclmn_users[] = [
+                            $precinct->post_title,
+                            $district,
+                            $precinct->region,
+                            $person->first_name,
+                            $person->last_name,
+                            $person->public_email,
+                            $person->phone,
+                            ($person->phone_display_on_site) ? 1 : '',
+                            $precinct->polling_place->post_title,
+                        ];
+                    }
                 }
             }
 
-            return $cps;
+            return $dclmn_users;
         } else {
             $out .= '<table cellpadding="5" cellspacing="0" class="stripes committee-people">';
             $out .= '<thead>';
@@ -580,9 +637,21 @@ class DCLMN {
         if (!current_user_can('edit_others_posts')) {
             wp_die('Nope.');
         }
-        $cps = $this->get_committee_people_table(true);
+        $dclmn_users = $this->get_committee_people_table(true);
 
-        Shuchkin\SimpleXLSXGen::fromArray($cps)->saveAs('/tmp/test.xlsx');
+        Shuchkin\SimpleXLSXGen::fromArray($dclmn_users)->saveAs('/tmp/test.xlsx');
+        $this->downloadFile(file_get_contents('/tmp/test.xlsx'), 'dclmn-committee-people.xlsx');
+    }
+
+    function wp_ajax_export_cps_full() {
+        require_once trailingslashit(get_stylesheet_directory()) . 'inc/classes/SimpleXLSXGen.php';
+
+        if (!dclmn_auth('exec')) {
+            wp_die('Nope.');
+        }
+        $dclmn_users = $this->get_committee_people_table(true);
+
+        Shuchkin\SimpleXLSXGen::fromArray($dclmn_users)->saveAs('/tmp/test.xlsx');
         $this->downloadFile(file_get_contents('/tmp/test.xlsx'), 'dclmn-committee-people.xlsx');
     }
 
@@ -639,17 +708,17 @@ class DCLMN {
         ];
 
         if (!empty($_POST['contacts']['dclmn']['cps'])) {
-            $cps = $this->get_committee_people_table(1);
-            array_shift($cps);
-            foreach ($cps as $cp) {
+            $dclmn_users = $this->get_committee_people_table(1);
+            array_shift($dclmn_users);
+            foreach ($dclmn_users as $dclmn_user) {
                 $contacts[] = [
                     'contact_type' => 'DCLMN',
                     'contact_subtype' => 'Committee Person',
-                    'first_name' => $cp[3],
-                    'last_name' => $cp[4],
-                    'email' => $cp[5],
-                    'phone' => $cp[6],
-                    'title' => $cp[0],
+                    'first_name' => $dclmn_user[3],
+                    'last_name' => $dclmn_user[4],
+                    'email' => $dclmn_user[5],
+                    'phone' => $dclmn_user[6],
+                    'title' => $dclmn_user[0],
                     'notes' => '',
                 ];
             }
@@ -887,7 +956,7 @@ class DCLMN {
             if ($menu_slug == $args->menu->slug) {
                 $highest_menu_order = 0;
                 $parent_menu_item = false;
-                
+
                 foreach ($menu_objects as $i => $item) {
                     if (strtolower($targeted_menu_item_title) == strtolower($item->title)) {
                         $parent_menu_item = $item;

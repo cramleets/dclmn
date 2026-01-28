@@ -6,15 +6,15 @@
 <?php if (dclmn_auth('cp')): ?>
   <?php
   global $dclmn;
-  $cp_emails = [];
-  $cps = $dclmn->get_committee_people_table(true);
-  array_shift($cps);
-  $cp_emails = array_unique(array_filter(array_column($cps, 5)));
-  asort($cp_emails);
+  $user_emails = [];
+  $dclmn_users = $dclmn->get_committee_people_table(true);
+  array_shift($dclmn_users);
+  $user_emails = array_unique(array_filter(array_column($dclmn_users, 5)));
+  asort($user_emails);
   ?>
   <br>
   <div class="button-group">
-    <a href="mailto:?bcc=<?php echo implode(',', $cp_emails) ?>" class="button" target="_blank">Email</a>
+    <a href="mailto:?bcc=<?php echo implode(',', $user_emails) ?>" class="button" target="_blank">Email</a>
     <a href="<?php echo admin_url('admin-ajax.php?action=export_cps') ?>" class="button" target="_blank">Export</a>
   </div>
 <?php endif; ?>

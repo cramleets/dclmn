@@ -55,7 +55,7 @@ jQuery(document).ready(function ($) {
     } else {
       $result.html('<img src="/wp-includes/images/spinner.gif">').fadeIn();
 
-      $.post(sbiajaxurl, { action: 'cp_login', email: email }, function (data) {
+      $.post(sbiajaxurl, { action: 'user_login', email: email }, function (data) {
         try {
           var json = jQuery.parseJSON(data);
         } catch (err) {
@@ -71,4 +71,23 @@ jQuery(document).ready(function ($) {
       });
     }
   });
+
+  $('.precinct-voters-table thead h1').on('click', function () {
+    let party = $(this).data('party');
+    $('.precinct-voters-table .header-row[data-party=' + party + ']').slideToggle();
+    $('.precinct-voters-table tbody[data-party=' + party + ']').slideToggle();
+  });
+
+  function contact_table_toggle() {
+    $('.contacts-table tr').hide();
+    $('.contact-table-toggle:checked').each(function(){
+      $('.contacts-table tr[data-contact_type_id='+ $(this).data('contact_type_id') +']').show();
+    });
+  }
+
+  $('.contact-table-toggle').on('click', function () {
+    contact_table_toggle();
+  });
+  
+  contact_table_toggle();
 })

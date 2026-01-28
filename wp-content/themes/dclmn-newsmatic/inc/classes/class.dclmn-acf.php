@@ -13,8 +13,8 @@ class DCLMN_ACF {
     $fields = [
       ['key' => 'field_pa_district_id', 'label' => 'PA District', 'name' => 'pa_district_id', 'type' => 'post_object', 'post_type' => ['pa_district'], 'return_format' => 'id', 'ui' => 1],
       ['key' => 'field_polling_place_id', 'label' => 'Polling Place', 'name' => 'polling_place_id', 'type' => 'post_object', 'post_type' => ['polling_place'], 'return_format' => 'id', 'ui' => 1],
-      //['key' => 'field_cp_1_id', 'label' => 'CP 1', 'name' => 'cp_1_id', 'type' => 'post_object', 'post_type' => ['committee_person'], 'return_format' => 'id', 'ui' => 1],
-      //['key' => 'field_cp_2_id', 'label' => 'CP 2', 'name' => 'cp_2_id', 'type' => 'post_object', 'post_type' => ['committee_person'], 'return_format' => 'id', 'ui' => 1],
+      //['key' => 'field_user_1_id', 'label' => 'CP 1', 'name' => 'user_1_id', 'type' => 'post_object', 'post_type' => ['committee_person'], 'return_format' => 'id', 'ui' => 1],
+      //['key' => 'field_user_2_id', 'label' => 'CP 2', 'name' => 'user_2_id', 'type' => 'post_object', 'post_type' => ['committee_person'], 'return_format' => 'id', 'ui' => 1],
       ['key' => 'field_objectid', 'label' => 'Object ID', 'name' => 'objectid', 'type' => 'number'],
       ['key' => 'field_full_muni_name', 'label' => 'Full Municipality Name', 'name' => 'full_muni_name', 'type' => 'text'],
       ['key' => 'field_municipality', 'label' => 'Municipality', 'name' => 'municipality', 'type' => 'text'],

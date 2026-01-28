@@ -1,2 +1,1 @@
-<?php $chairperson = get_page_by_path('chairperson', NULL, 'committee-position'); ?>
-<div class="committee-position-info">For more information, or to enquire about committee person vacancies, contact: <a href="mailto:<?php echo $chairperson->email ?>" target="_self" rel="noopener"><?php echo $chairperson->first_name ?> <?php echo $chairperson->last_name ?></a>.</div>
+<div class="committee-position-info">For more information, or to enquire about committee person vacancies, contact: <?php echo dclmn_board_member_email_link('Chairperson') ?>.</div>

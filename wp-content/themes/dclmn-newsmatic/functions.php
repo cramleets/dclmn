@@ -10,10 +10,11 @@ require_once dirname(__FILE__) . '/inc/classes/class.dclmn.php';
 require_once dirname(__FILE__) . '/inc/classes/class.dclmn-acf.php';
 require_once dirname(__FILE__) . '/inc/classes/class.dclmn-cps.php';
 require_once dirname(__FILE__) . '/inc/classes/class.dclmn-populator.php';
+require_once dirname(__FILE__) . '/inc/classes/class.dclmn-user.php';
 require_once dirname(__FILE__) . '/inc/classes/class.widget-rotating-quotes.php';
 
 require_once dirname(__FILE__) . '/inc/activate.php';
 
 $dclmn = new DCLMN();
 $dclmn_acf = new DCLMN_ACF();
-$dclmn_cps = new DCLMN_CPS();
+$dclmn_users = new DCLMN_Users();

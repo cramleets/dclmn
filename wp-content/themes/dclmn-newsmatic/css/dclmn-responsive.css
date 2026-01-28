@@ -349,6 +349,7 @@
 
     .stripes td {
         display: block;
+        text-align: left !important;
     }
 
     .stripes td.precinct,
@@ -444,6 +445,10 @@
 
     .street-name-generator h2 {
         font-size: 2em;
+    }
+
+    .user-info table tr td:first-of-type {
+        text-align: left;
     }
 }
 

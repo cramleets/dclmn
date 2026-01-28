@@ -404,7 +404,7 @@ class DCLMN_Populator {
 
           // set precinct cp
           //preg_match('/#(\d)$/', $person->post_title, $matches);
-          //update_post_meta($precinct->ID, 'cp_'. $matches[1] .'_id', $person->ID);
+          //update_post_meta($precinct->ID, 'user_'. $matches[1] .'_id', $person->ID);
         } else {
           die("No precinct found for {$precinct_name}");
         }

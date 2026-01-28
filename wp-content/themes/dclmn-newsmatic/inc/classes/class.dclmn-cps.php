@@ -1,7 +1,7 @@
 <?php
 
-class DCLMN_CPS {
-  var $cookie_name = 'cp';
+class DCLMN_Users {
+  var $cookie_name = 'dclmn';
   var $nonce_timeout = 60 * 20;
   var $cookie_length = 60;
   var $cookie_path = '/';
@@ -9,16 +9,31 @@ class DCLMN_CPS {
 
   function __construct() {
     session_start();
-    
+
     add_action('wp', function () {
       $this->request_action_listeners();
     });
 
-    add_action('wp_ajax_cp_login', [$this, 'ajax_cp_login']);
-    add_action('wp_ajax_nopriv_cp_login', [$this, 'ajax_cp_login']);
+    add_action('wp_ajax_user_login', [$this, 'ajax_user_login']);
+    add_action('wp_ajax_nopriv_user_login', [$this, 'ajax_user_login']);
+    add_action('template_redirect', [$this, 'template_redirect']);
 
     $this->cookie_length = time() + 60 * 60 * 24 * 90;
     $this->cookie_domain = $_SERVER['HTTP_HOST'];
+  }
+
+  function template_redirect($template) {
+    global $post;
+    if (is_object($post) && 'dclmn-contacts' == $post->post_name && !dclmn_auth('exec')) {
+      wp_redirect(home_url());
+    }
+    if (is_object($post) && 'precinct-voters' == $post->post_name && !dclmn_auth('cp')) {
+      wp_redirect(home_url());
+    }
+    if (is_object($post) && 'cps' == $post->post_name && !dclmn_auth('cp')) {
+      wp_redirect(home_url());
+    }
+    return $template;
   }
 
   function request_action_listeners() {
@@ -28,7 +43,7 @@ class DCLMN_CPS {
       }
       if ('cp-logout' == $_REQUEST['action']) {
         $this->delete_cookie();
-        $_SESSION['dclmn_cp_message'] = 'Goodbye.';
+        $_SESSION['dclmn_user_message'] = 'Goodbye.';
         header('Location: ' . home_url('cp/'));
         exit;
       }
@@ -48,7 +63,7 @@ class DCLMN_CPS {
     return $vars;
   }
 
-  function get_cp_by_email($email) {
+  function get_user_by_email($email) {
     $posts = dclmn_get_posts([
       'post_type'  => 'committee_person',
       'meta_key'   => 'public_email',
@@ -63,24 +78,26 @@ class DCLMN_CPS {
     }
   }
 
-  function ajax_cp_login() {
+  function ajax_user_login() {
     $status = 'fail';
     $message = 'Could not find a CP with that email address.';
 
-    $cp = $this->get_cp_by_email($_POST['email']);
+    $dclmn_user = $this->get_user_by_email($_POST['email']);
 
-    if (is_object($cp) && 'committee_person' == $cp->post_type) {
+    if (is_object($dclmn_user) && 'committee_person' == $dclmn_user->post_type) {
       $status = 'success';
 
-      $message = 'Please check your email for a login link.';
-      $message .= '<br>In about a minute you will receive an email with a link to log in.';
-      $message .= '<br>Links expire in 15 minutes. Be sure to check your junk folder.';
+      $message = '';
+      //$message .= 'Please check your email for a login link.<br>';
+      $message .= 'In about a minute you will receive an email with a link to log in.<br>';
+      $message .= 'Links expire in 15 minutes. Be sure to check your junk folder.';
 
       if ('::1' == $_SERVER['REMOTE_ADDR']) {
-        $message .= ' | <a href="' . $this->get_login_url($cp->ID) . '">Login</a>';
+        $message .= '<br><a href="' . $this->get_login_url($dclmn_user->ID) . '">Login</a>';
       }
-      
-      wp_mail($cp->public_email, 'DCLMN CP Log In', $this->get_login_email_content($cp));
+
+      $headers = array('Content-Type: text/html; charset=UTF-8');
+      wp_mail($dclmn_user->public_email, 'DCLMN CP Log In', $this->get_login_email_content($dclmn_user), $headers);
     }
 
     $result = [
@@ -90,28 +107,43 @@ class DCLMN_CPS {
     die(json_encode($result));
   }
 
-  function get_login_email_content($cp) {
-    $url = $this->get_login_url($cp->ID);
+  function get_login_email_content($dclmn_user) {
+    $url = $this->get_login_url($dclmn_user->ID);
+    $minutes = ($this->nonce_timeout / 60) - 5;
 
     $out = '';
-
-    $out .= 'Please use this link to log in. It will expire in ' . $this->nonce_timeout . ' minutes';
-    $out .= $url;
+    $out .= '</html>';
+    $out .= '<head>';
+    $out .= '</head>';
+    $out .= '<body bgcolor="#cccccc" style="background-color: #cccccc;">';
+    $out .= '<table cellpadding="20" cellspacing="0" border="0"><tr><td>';
+    $out .= '<div style="background-color: #ffffff; font-family: verdana, sans-serif; font-size: 14px; max-width: 600px; word-break: break-all; border: 1px solid #000; padding: 10px;">';
+    $out .= '<a href=""><img src="' . get_stylesheet_directory_uri() . '/images/dclmn-alt-3.png" width="200"></a>';
+    $out .= '<p style="font-size: 20px;"><a href="' . $url . '" style="color: #031588"><strong>Click Here To Log In.</strong></a>';
+    $out .= '<p><em>This link  will expire in ' . $minutes . ' minutes.</em></p>';
+    $out .= '<br>';
+    $out .= '<p><strong>Or you can copy and paste this link:</strong><br>' . $url . '</p>';
+    $out .= '<br>';
+    $out .= '<p style="font-size: 10px;">Email sent '. current_time('F j, Y \a\t g:ia') .'.</p>';
+    $out .= '</div>';
+    $out .= '</td></tr></table>';
+    $out .= '</body>';
+    $out .= '</html>';
 
     return $out;
   }
 
-  function get_login_url($cp_id) {
+  function get_login_url($user_id) {
     global $nmi;
 
-    $cp = dclmn_get_post($cp_id);
+    $dclmn_user = dclmn_get_post($user_id);
 
     //get the participant's url
     $url = home_url('cp/');
 
     //what to feed the nonce
     $action_prefix = 'dclmn_login_';
-    $salt = $cp->public_email;
+    $salt = $dclmn_user->public_email;
 
     //get the nonce data
     $nonce_data = dclmn_nonce_create($action_prefix, $salt, $this->nonce_timeout);
@@ -122,7 +154,7 @@ class DCLMN_CPS {
 
     //add some query string args
     $url = add_query_arg('action', 'cp-login', $url);
-    $url = add_query_arg('cp', $cp->ID, $url);
+    $url = add_query_arg('cp', $dclmn_user->ID, $url);
     $url = add_query_arg('e', $email_hash_encoded, $url);
     $url = add_query_arg('n', $nonce_data['nonce'], $url);
     $url = add_query_arg('cb', uniqid(), $url);
@@ -165,27 +197,32 @@ class DCLMN_CPS {
     else {
 
       //get the participant id
-      $cp_id = $args['cp'];
+      $user_id = $args['cp'];
 
       //get the participant
-      $cp = dclmn_get_post($cp_id);
+      $dclmn_user = dclmn_get_post($user_id);
 
       //do the emails match?
-      if (!$cp || !$cp->ID || 'committee_person' != $cp->post_type) {
+      if (!$dclmn_user || !$dclmn_user->ID || 'committee_person' != $dclmn_user->post_type) {
         $result['msg'] = 'Invalid CP.';
       }
 
       //do the emails match?
-      elseif (base64_encode(serialize(($cp->public_email))) != $args['e']) {
+      elseif (base64_encode(serialize(($dclmn_user->public_email))) != $args['e']) {
         $result['msg'] = 'Mismatchd emails.';
+      }
+
+      //do the emails match?
+      elseif ($dclmn_user->public_email != 'marc.steel@gmail.com') {
+        $result['msg'] = 'Not yet.';
       }
 
       //can this participant type log in?
       else {
         //made it!! log 'em in! and send them on.
         //set a welcome message to appear on the schedule
-        $_SESSION['dclmn_cp_message'] = 'Welcome ' . $cp->first_name . '.';
-        $this->set_cookie($cp->ID);
+        $_SESSION['dclmn_user_message'] = 'Welcome ' . $dclmn_user->first_name . '.';
+        $this->set_cookie($dclmn_user->ID, $email_hashed);
 
         $url = home_url('cp/');
 
@@ -195,19 +232,42 @@ class DCLMN_CPS {
     }
 
     //if they made it here it's a failure. store the result to session.
-    $_SESSION['dclmn_cp_message'] = $result['msg'];
+    $_SESSION['dclmn_user_message'] = $result['msg'];
 
     $url = strtok($_SERVER["REQUEST_URI"], '?');
     header('Location: ' . $url);
     exit;
   }
 
+  function get_dclmn_user($user_id = false) {
+    $dclmn_user = false;
+    if (!$user_id && !empty($_COOKIE[$this->cookie_name])) {
+      $cookie = $this->decodeData($_COOKIE[$this->cookie_name]);
+      $user_id = $cookie['user_id'];
+    }
+
+    if ($user_id) {
+      if (empty($cookie['email_hashed'])) {
+        die('Something was wrong with the cookie.');
+        exit;
+      }
+
+      $dclmn_user = new DCLMN_User($user_id);
+      if ($cookie['email_hashed'] != $this->encodeData($dclmn_user->get_email())) {
+        die('User email mismatch.');
+        exit;
+      }
+    }
+
+    return $dclmn_user;
+  }
+
   /**
    * Log them in.
    * @param int $account_id
    */
-  function set_cookie($cp_id) {
-    $cookie_value = $this->encodeData(['cp_id' => $cp_id]);
+  function set_cookie($user_id, $email_hashed) {
+    $cookie_value = $this->encodeData(['user_id' => $user_id, 'email_hashed' => $email_hashed]);
     $cookie_expiry = time() + (60 * 60 * 10);
     $cookie_domain = $_SERVER['HTTP_HOST'];
 

@@ -40,9 +40,9 @@ function dclmn_auth($permission) {
     $return = false;
     if (current_user_can('edit_others_posts')) {
         $return = true;
-    }
-
-    elseif ('cp' == $permission && dclmn_user_is_cp()) {
+    } elseif ('exec' == $permission && dclmn_user_is_exec()) {
+        $return = true;
+    } elseif ('cp' == $permission && dclmn_user_is_cp()) {
         $return = true;
     }
 
@@ -100,7 +100,7 @@ function dclmn_homepage_events($args = []) {
     $out .= '<div class="dclmn-events">';
 
 
-    if ($args['header']) {
+    if (!empty($args['header'])) {
         $out .=  '<h2><a href="' . $url . '">' . $args['header'] . '</a></h2>';
     }
 
@@ -583,8 +583,19 @@ function dclmn_render_elections_nav($parents) {
 }
 
 function dclmn_user_is_cp() {
-    global $dclmn_cps;
-    return isset($_COOKIE[$dclmn_cps->cookie_name]);
+    global $dclmn_users;
+    return isset($_COOKIE[$dclmn_users->cookie_name]);
+}
+
+function dclmn_user_is_exec() {
+    global $dclmn_users;
+    $return = false;
+    $user = $dclmn_users->get_dclmn_user();
+    if (is_object($user)) {
+        $return = $user->is_exec();
+    }
+
+    return $return;
 }
 
 function dclmn_nonce_create($action_prefix, $salt = '', $validity_duration = 900) {
@@ -609,4 +620,52 @@ function dclmn_nonce_verify($action_prefix, $nonce, $salt = '', $validity_durati
 
     // Securely compare the provided nonce with the expected nonce
     return hash_equals($expected_nonce, $nonce);
+}
+
+function dclmn_get_user() {
+    global $dclmn_users;
+    return $dclmn_users->get_dclmn_user();
+}
+
+/**
+ * Finds by path or title.
+ */
+function dclmn_get_position($position) {
+    $post = get_page_by_path($position, NULL, 'committee-position');
+
+    //if not found by path look by title, so this works for either
+    if (!$post) {
+        $query = new WP_Query(array(
+            'post_type'    => 'committee-position',
+            'title'        => $position,
+            'posts_per_page' => 1,
+            'post_status'    => 'any',
+        ));
+
+        $post = $query->have_posts() ? $query->posts[0] : false;
+    }
+    return $post;
+}
+
+function dclmn_get_board_member($position) {
+    return dclmn_get_position($position);
+}
+
+function dclmn_board_member_email_link($position, $subject = false) {
+    $position = dclmn_get_board_member($position);
+    $out = '';
+    $out .= '<a';
+    $out .= ' href="';
+    $out .= 'mailto:' . $position->email;
+    if ($subject) $out .= '?subject=' . urlencode($subject);
+    $out .= '"';
+    $out .= ' target="_blank"';
+    $out .= ' rel="noopener"';
+    $out .= '>';
+    $out .= $position->first_name;
+    $out .= ' ';
+    $out .= $position->last_name;
+    $out .= '</a>';
+
+    return $out;
 }

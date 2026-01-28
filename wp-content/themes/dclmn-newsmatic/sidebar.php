@@ -8,7 +8,7 @@
  * @since 1.0.0
  */
 
-if (is_page('map')) {
+if (is_page('map') || is_page('dclmn-contacts')) {
 	return;
 }
 

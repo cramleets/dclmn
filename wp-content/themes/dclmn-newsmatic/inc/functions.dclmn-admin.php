@@ -35,6 +35,11 @@ function dclmn_import_committee_people_from_csv($csv_file, $run = false) {
 
       $email = trim($data['Email'] ?? '');
       $phone = trim($data['Phone'] ?? '');
+      $address = trim($data['address'] ?? '');
+      $address2 = trim($data['address2'] ?? '');
+      $city = trim($data['city'] ?? '');
+      $state = trim($data['state'] ?? '');
+      $zip = trim($data['zip'] ?? '');
 
       if (empty($email)) {
         $results['failures'][] = $data;
@@ -57,7 +62,12 @@ function dclmn_import_committee_people_from_csv($csv_file, $run = false) {
 
         // Update phone meta
         if ($run) {
-          update_post_meta($post_id, 'phone', $phone);
+          update_field('phone', $phone, $post_id);
+          update_field('street_address_1', $address, $post_id);
+          update_field('street_address_2', $address2, $post_id);
+          update_field('city', $city, $post_id);
+          update_field('state', $state, $post_id);
+          update_field('zip', $zip, $post_id);
         }
 
         $results['success'][] = [
