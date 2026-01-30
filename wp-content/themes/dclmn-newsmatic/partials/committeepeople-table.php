@@ -73,7 +73,7 @@ $dclmn_user = dclmn_get_user();
       }
       $out .= '<td data-label="Polling Place"><a href="' . $dclmn->map_url($precinct->polling_place) . '" target="_blank">' . $site_name . '</a></td>';
       if (current_user_can('edit_others_posts')) {
-        $out .= '<td><a href="' . get_edit_post_link($person->ID) . '" target="_blank" class="button">Edit</a></td>';
+        $out .= '<td><a href="' . get_edit_post_link($person->ID) . '" target="_blank">edit</a></td>';
       }
       $out .= '</tr>';
     }

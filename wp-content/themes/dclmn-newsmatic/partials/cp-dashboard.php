@@ -29,9 +29,6 @@ if ($dclmn_user || !empty($extra_content)) {
     $out .= '<span class="welcome">Welcome ' . $dclmn_user->first_name . '</span>';
     $out .= '</div>';
     $out .= '<div>';
-    if (current_user_can('edit_posts')) {
-      $out .= '<a href="' . get_edit_post_link($dclmn_user->ID) . '" target="_blank" class="button">Edit</a>';
-    }
     $out .= '<a href="' . home_url('cp/?action=cp-logout&cb=' . uniqid()) . '" class="button" onclick="return confirm(\'Are you sure?\');">Log Out</a>';
     $out .= '</div>';
   }
@@ -76,15 +73,17 @@ if ($dclmn_user || !empty($extra_content)) {
   <div class="dclmn-tools">
     <h3>DCLMN Tools & Resources</h3>
     <ul>
-    <?php if ($dclmn_user->is_exec()): ?>
-      <li><a href="<?php echo home_url('cp/dclmn-contacts/') ?>">DCLMN Contacts</a></li>
-    <?php endif; ?>
+      <?php if ($dclmn_user->is_exec()): ?>
+        <li><a href="<?php echo home_url('cp/dclmn-contacts/') ?>">DCLMN Contacts</a></li>
+      <?php endif; ?>
       <li><a href="<?php echo home_url('cp/cps/') ?>">View CPs</a></li>
       <li><a href="mailto:?bcc=<?php echo implode(',', $user_emails) ?>" target="_blank">Email CPs</a></li>
       <!-- <li><a href="<?php echo admin_url('admin-ajax.php?action=export_cps') ?>">Export CPs</a></li> -->
       <li><a href="mailto:?bcc=<?php echo implode(',', $leadersip_emails) ?>" target="_blank">Email Leadership</a></li>
       <!-- <li><a href="<?php echo admin_url('admin-ajax.php?action=export_leadership') ?>">Export Leadership</a></li> -->
-      <li><a href="<?php echo home_url('cp/precinct-voters/') ?>">My Voters</a></li>
+      <?php if (current_user_can('edit_others_posts')): ?>
+        <li><a href="<?php echo home_url('cp/precinct-voters/') ?>">My Voters</a></li>
+      <?php endif; ?>
     </ul>
   </div>
   <hr>

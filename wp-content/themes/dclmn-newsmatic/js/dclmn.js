@@ -84,10 +84,4 @@ jQuery(document).ready(function ($) {
       $('.contacts-table tr[data-contact_type_id='+ $(this).data('contact_type_id') +']').show();
     });
   }
-
-  $('.contact-table-toggle').on('click', function () {
-    contact_table_toggle();
-  });
-  
-  contact_table_toggle();
 })

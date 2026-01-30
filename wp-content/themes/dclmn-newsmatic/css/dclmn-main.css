@@ -1202,4 +1202,6 @@ body.hidden-sidebar.right-sidebar #theme-content .row .primary-content {
 .stripes.committee-people.small td.vacant {
     font-weight: 700;
     text-transform: uppercase;
+    background-color: var(--color-gray);
+    color: var(--color-black);
 }

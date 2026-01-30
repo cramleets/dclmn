@@ -18,7 +18,7 @@ class DCLMN_Users {
     add_action('wp_ajax_nopriv_user_login', [$this, 'ajax_user_login']);
     add_action('template_redirect', [$this, 'template_redirect']);
 
-    $this->cookie_length = time() + 60 * 60 * 24 * 90;
+    $this->cookie_length = time() + MONTH_IN_SECONDS;
     $this->cookie_domain = $_SERVER['HTTP_HOST'];
   }
 
@@ -85,19 +85,27 @@ class DCLMN_Users {
     $dclmn_user = $this->get_user_by_email($_POST['email']);
 
     if (is_object($dclmn_user) && 'committee_person' == $dclmn_user->post_type) {
-      $status = 'success';
 
-      $message = '';
-      //$message .= 'Please check your email for a login link.<br>';
-      $message .= 'In about a minute you will receive an email with a link to log in.<br>';
-      $message .= 'Links expire in 15 minutes. Be sure to check your junk folder.';
 
-      if ('::1' == $_SERVER['REMOTE_ADDR']) {
-        $message .= '<br><a href="' . $this->get_login_url($dclmn_user->ID) . '">Login</a>';
+      if (1 && 'marc.steel@gmail.com' != $dclmn_user->public_email) {
+        $status = 'fail';
+        $message = 'Undergoing maintenance.';
+        $message = 'Not open for business.';
+      } else {
+        $status = 'success';
+
+        $message = '';
+        //$message .= 'Please check your email for a login link.<br>';
+        $message .= 'In about a minute you will receive an email with a link to log in.<br>';
+        $message .= 'Links expire in 15 minutes. Be sure to check your junk folder.';
+
+        if ('::1' == $_SERVER['REMOTE_ADDR']) {
+          $message .= '<br><a href="' . $this->get_login_url($dclmn_user->ID) . '">Login</a>';
+        }
+
+        $headers = array('Content-Type: text/html; charset=UTF-8');
+        wp_mail($dclmn_user->public_email, 'DCLMN CP Log In', $this->get_login_email_content($dclmn_user), $headers);
       }
-
-      $headers = array('Content-Type: text/html; charset=UTF-8');
-      wp_mail($dclmn_user->public_email, 'DCLMN CP Log In', $this->get_login_email_content($dclmn_user), $headers);
     }
 
     $result = [
@@ -124,7 +132,7 @@ class DCLMN_Users {
     $out .= '<br>';
     $out .= '<p><strong>Or you can copy and paste this link:</strong><br>' . $url . '</p>';
     $out .= '<br>';
-    $out .= '<p style="font-size: 10px;">Email sent '. current_time('F j, Y \a\t g:ia') .'.</p>';
+    $out .= '<p style="font-size: 10px;">Email sent ' . current_time('F j, Y \a\t g:ia') . '.</p>';
     $out .= '</div>';
     $out .= '</td></tr></table>';
     $out .= '</body>';
