@@ -14,4 +14,4 @@ $line .= $_SERVER['HTTP_USER_AGENT']. "\n";
 
 file_put_contents($file, $line, FILE_APPEND | LOCK_EX); 
 
-header('Location: https://www.dclmnsl.org/production/streetlists/login.php');
+header('Location: https://www.dclmnsl.org/streetlists/login.php');
