@@ -7,6 +7,7 @@ if (strpos($_SERVER['HTTP_HOST'], 'dclmn.us') === false) {
 
 require_once dirname(__FILE__) . '/inc/functions.dclmn.php';
 require_once dirname(__FILE__) . '/inc/classes/class.dclmn.php';
+require_once dirname(__FILE__) . '/inc/classes/class.dclmn-logger.php';
 require_once dirname(__FILE__) . '/inc/classes/class.dclmn-acf.php';
 require_once dirname(__FILE__) . '/inc/classes/class.dclmn-cps.php';
 require_once dirname(__FILE__) . '/inc/classes/class.dclmn-populator.php';

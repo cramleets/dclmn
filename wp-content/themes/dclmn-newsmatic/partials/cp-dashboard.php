@@ -28,14 +28,12 @@ if ($dclmn_user || !empty($extra_content)) {
     $out .= '<div>';
     $out .= '<span class="welcome">Welcome ' . $dclmn_user->first_name . '</span>';
     $out .= '</div>';
-    $out .= '<div>';
-    $out .= '<a href="' . home_url('cp/?action=cp-logout&cb=' . uniqid()) . '" class="button" onclick="return confirm(\'Are you sure?\');">Log Out</a>';
-    $out .= '</div>';
   }
   $out .= '</div>';
   $out .= '<div class="clear"></div>';
 }
 ?>
+<?php if ($dclmn_user) get_template_part('partials/cp-nav'); ?>
 <?php echo $out; ?>
 <?php if (!is_object($dclmn_user)): ?>
   <form method="post" id="cp-login-form">
@@ -71,30 +69,46 @@ if ($dclmn_user || !empty($extra_content)) {
   </div>
   <hr>
   <div class="dclmn-tools">
-    <h3>DCLMN Tools & Resources</h3>
-    <ul>
-      <?php if ($dclmn_user->is_exec()): ?>
-        <li><a href="<?php echo home_url('cp/dclmn-contacts/') ?>">DCLMN Contacts</a></li>
-      <?php endif; ?>
-      <li><a href="<?php echo home_url('cp/cps/') ?>">View CPs</a></li>
-      <li><a href="mailto:?bcc=<?php echo implode(',', $user_emails) ?>" target="_blank">Email CPs</a></li>
-      <!-- <li><a href="<?php echo admin_url('admin-ajax.php?action=export_cps') ?>">Export CPs</a></li> -->
-      <li><a href="mailto:?bcc=<?php echo implode(',', $leadersip_emails) ?>" target="_blank">Email Leadership</a></li>
-      <!-- <li><a href="<?php echo admin_url('admin-ajax.php?action=export_leadership') ?>">Export Leadership</a></li> -->
-      <?php if (current_user_can('edit_others_posts')): ?>
-        <li><a href="<?php echo home_url('cp/precinct-voters/') ?>">My Voters</a></li>
-      <?php endif; ?>
-    </ul>
-  </div>
-  <hr>
-  <h3>Meetings</h3>
-  <?php
-  $meeting_events_args = [
-    // 'header' => 'Meetings',
-    'category' => 'meetings',
-    'posts_per_page' => 2,
-  ];
+    <div class="flex">
+      <div>
+        <h3>Election Resources</h3>
+        <ul>
+          <li><a href="https://drive.google.com/drive/folders/1aKBNH8LehMBqKRV_xzOli_XcCN9eWjkB" target="_blank" style="font-size: 1.25em; font-weight: 700;">Petitions</a></li>
+        </ul>
+        <?php if ($documents = dclmn_get_posts(['post_type' => 'document', 'posts_per_page' => -1])): ?>
+          <h3>DCLMN Documents</h3>
+          <ul>
+            <?php foreach ($documents as $post): ?>
+              <li><a href="<?php echo $post->href ?>" target="_blank"><?php echo $post->post_title ?></a></li>
+            <?php endforeach; ?>
+          </ul>
+        <?php endif; ?>
+        <h3>DCLMN Tools & Resources</h3>
+        <ul>
+          <li><a href="<?php echo home_url('cp/cps/') ?>">View and Contact Committee People</a></li>
+          <li><a href="<?php echo home_url('cp/leadership/') ?>">View and Contact Leadership</a></li>
+          <?php if (current_user_can('edit_published_contacts')): ?>
+            <li><a href="<?php echo home_url('cp/dclmn-contacts/') ?>">View and Contact DCLMN Contacts</a></li>
+          <?php elseif ($dclmn_user->is_exec()): ?>
+            <li><a href="<?php echo home_url('cp/dclmn-contacts/') ?>">View DCLMN Contacts</a></li>
+          <?php endif; ?>
+          <?php if (current_user_can('edit_others_posts')): ?>
+            <li><a href="<?php echo home_url('cp/precinct-voters/') ?>">My Voters</a></li>
+          <?php endif; ?>
+        </ul>
+      </div>
+      <div>
+        <h3>Meetings</h3>
+        <?php
+        $meeting_events_args = [
+          // 'header' => 'Meetings',
+          'category' => 'meetings',
+          'posts_per_page' => 2,
+        ];
 
-  echo dclmn_homepage_events($meeting_events_args);
-  ?>
+        echo dclmn_homepage_events($meeting_events_args);
+        ?>
+      </div>
+    </div>
+  </div>
 <?php endif; ?>

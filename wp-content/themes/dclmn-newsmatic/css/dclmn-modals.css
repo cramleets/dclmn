@@ -1,0 +1,225 @@
+/*
+https://www.sliderrevolution.com/resources/styling-radio-buttons/
+*/
+
+.dclmn-tools .flex>div {
+  flex-basis: 48%;
+}
+
+.dclmn-tools .dclmn-events {
+  border-width: 0;
+  padding-top: 0;
+}
+
+.dclmn-tools .dclmn-events p:last-of-type {
+  font-weight: bold;
+  font-size: 1.25em;
+  padding-top: 0;
+}
+
+.dclmn-modal-bg {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--color-black);
+  height: 100%;
+  width: 100%;
+  z-index: 10000;
+  filter: alpha(opacity=86);
+  opacity: .86;
+  -moz-opacity: .86;
+}
+
+.dclmn-modal-window {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #fff;
+  width: 640px;
+  height: 240px;
+  text-align: center;
+  overflow: hidden;
+  z-index: 10001;
+  border: 2px #999 solid;
+  margin: auto;
+}
+
+body.modal-open .dclmn-modal-bg,
+body.modal-open .dclmn-modal-window {
+  display: block;
+}
+
+#prestitial-close {
+  font-size: 14px;
+  position: absolute;
+  top: .25em;
+  right: .5em;
+  background-color: var(--color-root);
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  text-align: center;
+  color: var(--color-white);
+  cursor: pointer;
+  text-align: center;
+}
+
+#prestitial-close:hover {
+  color: var(--color-highlight);
+}
+
+#prestitial-counter {
+  font-weight: 700;
+}
+
+
+
+
+
+
+
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600");
+
+.dclmn-modal-window fieldset {
+  margin: 0;
+  padding: 1rem;
+  box-sizing: border-box;
+  display: block;
+  border: none;
+  min-width: 0;
+  background-color: #FFF;
+}
+
+.dclmn-modal-window fieldset legend {
+  margin: 0 0 .25rem;
+  padding: 0;
+  width: 100%;
+  float: left;
+  display: table;
+  font-size: 1.5rem;
+  line-height: 140%;
+  font-weight: 600;
+  color: #333;
+}
+
+.dclmn-modal-window fieldset legend+* {
+  clear: both;
+}
+
+body:not(:-moz-handler-blocked) .dclmn-modal-window fieldset {
+  display: table-cell;
+}
+
+/* TOGGLE STYLING */
+.dclmn-modal-window .toggle {
+  margin: 1rem 0 1rem;
+  box-sizing: border-box;
+  font-size: 0;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.dclmn-modal-window .toggle input {
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: -9999px;
+}
+
+.dclmn-modal-window .toggle input+label {
+  margin: 0;
+  padding: 0.5em 2em;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  border: solid 1px #DDD;
+  background-color: #FFF;
+  font-size: 1rem;
+  line-height: 140%;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+  flex-basis: 35%;
+  transition: border-color 0.15s ease-out, color 0.25s ease-out, background-color 0.15s ease-out, box-shadow 0.15s ease-out;
+  /* ----- */
+}
+
+.dclmn-modal-window .toggle input+label:first-of-type {
+  border-radius: 6px 0 0 6px;
+  border-right: none;
+}
+
+.dclmn-modal-window .toggle input+label:last-of-type {
+  border-radius: 0 6px 6px 0;
+  border-left: none;
+}
+
+.dclmn-modal-window .toggle input:hover+label {
+  border-color: #213140;
+}
+
+.dclmn-modal-window .toggle input:checked+label {
+  background-color: var(--color-root);
+  color: var(--color-white);
+  box-shadow: 0 0 10px rgba(3, 21, 136, 0.5);
+  border-color: #4B9DEA;
+  z-index: 1;
+}
+
+.dclmn-modal-window .toggle input:focus+label {
+  outline: dotted 1px #CCC;
+  outline-offset: 0.45rem;
+}
+
+.entry-content .button.copy-checked {
+  display: inline-block;
+  width: 190px;
+  text-align: center;
+}
+
+.entry-content .button.email-checked {
+  display: inline-block;
+  width: 130px;
+  text-align: center;
+}
+
+.entry-content .button.email-go {
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.entry-content .button.copy-checked.loading,
+.entry-content .button.copy-checked.loading:hover {
+  background-color: #cfc !important;
+  border-color: #090;
+  color: #090;
+}
+
+.entry-content .button.error,
+.entry-content .button.error:hover {
+  background-color: #fcc !important;
+  border-color: #f00;
+  color: #f00;
+}
+
+@media (max-width:550px) {
+  .dclmn-tools .flex>div {
+    flex-basis: 100%;
+  }
+}
+
+@media (max-width: 800px) {
+  .dclmn-modal-window .toggle input+label {
+    padding: 0.75rem 0.25rem;
+    flex: 0 0 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

@@ -14,12 +14,15 @@ class DCLMN {
     function __construct() {
         DCLMN_Populator::theme_init();
 
+        add_filter('tribe_widget_events-list_args_to_context', [$this, 'widget_events_list_args_to_contex'], 10, 3);
+
         add_action('wp_enqueue_scripts', function () {
             $parent_style = 'dclmn-parent';
 
             wp_enqueue_style($parent_style, get_template_directory_uri() . '/style.css', [], filemtime(get_template_directory() . '/style.css'));
             wp_enqueue_style('dclmn-child', get_stylesheet_directory_uri() . '/css/dclmn-main.css', [$parent_style], filemtime(get_stylesheet_directory() . '/css/dclmn-main.css'));
             wp_enqueue_style('dclmn-responsive', get_stylesheet_directory_uri() . '/css/dclmn-responsive.css', ['dclmn-child'], filemtime(get_stylesheet_directory() . '/css/dclmn-responsive.css'));
+            wp_enqueue_style('dclmn-modals', get_stylesheet_directory_uri() . '/css/dclmn-modals.css', ['dclmn-child'], filemtime(get_stylesheet_directory() . '/css/dclmn-modals.css'));
 
             wp_enqueue_script('dclmn', get_stylesheet_directory_uri() . '/js/dclmn.js', ['jquery'], filemtime(get_stylesheet_directory() . '/js/dclmn.js'));
         }, 98);
@@ -982,5 +985,10 @@ class DCLMN {
 
             return $menu_objects;
         }, 10, 2);
+    }
+
+    function widget_events_list_args_to_contex($alterations, $arguments, $widget) {
+        //pobj($alterations,1);
+        return $alterations;
     }
 }

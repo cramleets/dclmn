@@ -16,7 +16,7 @@ asort($leadersip_emails);
   <thead>
     <tr>
       <td>Office</td>
-      <td>Offical</td>
+      <td>Official</td>
       <td>Phone</td>
     </tr>
   </thead>

@@ -19,7 +19,8 @@ class Rotating_Quotes_Widget extends WP_Widget {
       $post = $posts[0];
 
       $out .= '<section class="widget rotating-quotes">';
-      $out .= '<a href="'. home_url('quotes/') .'">';
+      $out .= '<div class="rotating-quotes-content">';
+      $out .= '<a href="' . home_url('quotes/') . '">';
       $out .= '<figure class="wp-block-pullquote">';
       $out .= '<blockquote>';
       //$out .= '<h3>Quotation</h3>';
@@ -28,6 +29,10 @@ class Rotating_Quotes_Widget extends WP_Widget {
       $out .= '</blockquote>';
       $out .= '</figure>';
       $out .= '</a>';
+      $out .= '</div>';
+      $out .= '<div class="rotating-quotes-footer">';
+      $out .= '<a href="' . home_url('quotes/') . '">Suggest a Quote</a>';
+      $out .= '</div>';
       $out .= '</section>';
     }
 

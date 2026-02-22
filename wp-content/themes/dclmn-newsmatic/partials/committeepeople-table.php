@@ -30,6 +30,7 @@ $dclmn_user = dclmn_get_user();
   $out .= '<table border cellpadding="5" cellspacing="0" class="stripes committee-people small">';
   $out .= '<thead>';
   $out .= '<tr valign="top">';
+  $out .= '<td data-label="Email All" style="text-align: center;"><input type="checkbox" class="email-checkbox-all" style="vertical-align: middle;"></td>';
   $out .= '<td>Precinct</td>';
   $out .= '<td>Region</td>';
   $out .= '<td>District</td>';
@@ -59,6 +60,11 @@ $dclmn_user = dclmn_get_user();
       $site_name = (!empty($precinct->polling_place->custom_label)) ? $precinct->polling_place->custom_label : $precinct->polling_place->site_name;
 
       $out .= '<tr valign="top" data-region="' . $precinct->region . '">';
+      if ($vacant) {
+        $out .= '<td>&nbsp;</td>';
+      } else {
+        $out .= '<td data-label="Send Email" style="text-align: center;"><input type="checkbox" class="email-checkbox" data-post_id="" ' . $person->ID . '"></td>';
+      }
       $out .= '<td data-label="Precinct"" class="precinct searchable">' . $title . '</td>';
       $out .= '<td data-label="Region" style="text-align: center;">' . substr($precinct->region, 0, 1) . '</td>';
       $out .= '<td data-label="District" class="searchable">' . $precinct->pa_district->district . '</td>';
@@ -81,15 +87,29 @@ $dclmn_user = dclmn_get_user();
   $out .= '</tbody>';
   $out .= '</table>';
   ?>
-  <p class="dashboard-button"><a href="<?php echo home_url('cp/') ?>" class="button">Back to Dashboard</a></p>
+  <?php get_template_part('partials/modal-email-to-bcc'); ?>
+  <?php get_template_part('partials/cp-nav'); ?>
   <div class="contact-table-toggles">
     <input id="cps-search-terms" placeholder="Search">
-    <?php foreach (get_terms(['taxonomy' => 'dclmn_region', 'hide_empty' => true]) as $term): ?>
-      <label><input type="checkbox" class="regions-toggle" data-region="<?php echo $term->name ?>" checked> <?php echo $term->name ?></label>
-    <?php endforeach; ?>
-    | <a href="<?php echo admin_url('admin-ajax.php?action=export_cps_full') ?>" class="button" target="_blank">Export</a>
+    <span class="cp-search-terms">
+      <?php foreach (get_terms(['taxonomy' => 'dclmn_region', 'hide_empty' => true]) as $term): ?>
+        <label><input type="checkbox" class="regions-toggle" data-region="<?php echo $term->name ?>" checked> <?php echo $term->name ?></label>
+      <?php endforeach; ?>
+    </span>
+    <span class="cp-table-buttons">
+      <span> | </span>
+      <a href="<?php echo admin_url('admin-ajax.php?action=export_cps_full') ?>" class="button" target="_blank">Export</a>
+      <span> | </span>
+      <a href="mailto:" class="button email-checked" target="_blank">Email Checked</a>
+      <span> | </span>
+      <a href="#" class="button copy-checked" target="_blank">Copy Checked to Clipboard</a>
+    </span>
   </div>
   <?php echo $out; ?>
+  <div class="contact-table-toggles">
+    <a href="mailto:" class="button email-checked" target="_blank">Email Checked</a>
+    <a href="#" class="button copy-checked" target="_blank">Copy Checked to Clipboard</a>
+  </div>
   <script>
     jQuery(document).ready(function($) {
       $('#cps-search-terms').focus();
@@ -126,6 +146,7 @@ $dclmn_user = dclmn_get_user();
               $tr.show();
               return false;
             } else {
+              $tr.find('input[type=checkbox]').prop('checked', false);
               $tr.hide();
             }
           });

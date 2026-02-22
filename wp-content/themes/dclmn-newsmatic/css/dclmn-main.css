@@ -54,7 +54,7 @@
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     flex-flow: row wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
 }
 
 ul.flex,
@@ -550,22 +550,28 @@ body.hidden-sidebar .secondary-sidebar,
     text-align: center;
 } */
 
-.rotating-quotes {
+.widget.rotating-quotes {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.rotating-quotes .rotating-quotes-content {
     background-color: var(--color-root);
     padding: 0 1em;
 }
 
-.rotating-quotes a {
+.rotating-quotes .rotating-quotes-content a {
     color: var(--color-white);
     text-decoration: none;
 }
 
-.rotating-quotes a:hover {
+.rotating-quotes .rotating-quotes-content a:hover {
     color: var(--color-highlight);
 }
 
 .rotating-quotes .wp-block-pullquote {
     box-shadow: 10px 4px 2px 0px rgba(0, 0, 0, 0.3);
+    margin-bottom: .75em;
 }
 
 .widget.rotating-quotes h3 {
@@ -582,6 +588,20 @@ body.hidden-sidebar .secondary-sidebar,
 
 .rotating-quotes a:hover blockquote {
     border-color: var(--color-white);
+}
+
+.rotating-quotes .rotating-quotes-footer {
+    text-align: center;
+}
+
+.rotating-quotes .rotating-quotes-footer a {
+    text-decoration: none;
+    padding: .25em .5em;
+}
+
+.rotating-quotes .rotating-quotes-footer a:active,
+.rotating-quotes .rotating-quotes-footer a:hover {
+    background-color: var(--color-highlight);
 }
 
 .quotes-page {
@@ -1044,7 +1064,7 @@ input.error {
     margin-bottom: 1em;
 }
 
-.cp-dashboard-statusbar > div:last-of-type a:not(:last-of-type) {
+.cp-dashboard-statusbar>div:last-of-type a:not(:last-of-type) {
     margin-right: .5em;
 }
 
@@ -1139,6 +1159,7 @@ input.error {
 .dclmn-contacts table {
     font-size: .75em;
 }
+
 .dclmn-contacts table tr {
     vertical-align: top;
 }
@@ -1148,11 +1169,27 @@ body.hidden-sidebar.right-sidebar #theme-content .row .primary-content {
     flex: 0 1 100%;
 }
 
-.dashboard-button {
-    position: absolute;
-    right: 0;
-    top: -6em;
+.cp-dashboard-nav {
+    display: block;
+    background-color: var(--color-light-gray);
+    border: 1px solid var(--color-dark-gray);
+    border-width: 1px 0;
     font-size: 0.75em;
+    margin-bottom: 2.5em;
+    display: flex;
+}
+
+.entry-content .cp-dashboard-nav a.button {
+    border-radius: 0;
+    margin: 0;
+    box-shadow: none;
+    border-width: 0;
+    border-right: 1px solid var(--color-white);
+    padding: .75em 1.5em;
+}
+
+.entry-content .cp-dashboard-nav a.button:hover {
+    border-right-color: transparent;
 }
 
 .precinct-voters-table thead .header-row,
@@ -1204,4 +1241,61 @@ body.hidden-sidebar.right-sidebar #theme-content .row .primary-content {
     text-transform: uppercase;
     background-color: var(--color-gray);
     color: var(--color-black);
+}
+
+.yt-feed.flex>div {
+    flex-basis: 30%;
+    line-height: 1.25;
+    font-size: .85em;
+}
+
+.yt-feed.flex>div img {
+    width: 100%;
+}
+
+.yt-feed a {
+    color: var(--color-black);
+}
+
+.how-do-i-vote {
+    font-size: 1.5em;
+    font-weight: 800;
+}
+
+.how-do-i-vote h2 {
+    margin: 0;
+}
+
+.how-do-i-vote h2 a {
+    display: block;
+    font-size: 2em;
+    margin: 0;
+    background: var(--color-root);
+    color: var(--color-white);
+    color: #fff;
+    padding: 0.25em .25em;
+    line-height: 1;
+    font-weight: 900;
+}
+
+.how-do-i-vote h2 a:hover {
+    color: var(--color-root);
+    background-color: var(--color-highlight);
+}
+
+.how-do-i-vote p {
+    margin: 0;
+    padding: 0;
+    margin-top: .5em;
+}
+
+.subscribe-intro {
+    font-size: 1.25em;
+    font-weight: 700;
+}
+
+.contact-type-click-note {
+    font-weight: 700;
+    padding: .5em .25em .75em;
+    color: var(--color-red);
 }

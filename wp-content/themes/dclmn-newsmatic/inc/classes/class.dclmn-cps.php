@@ -84,10 +84,12 @@ class DCLMN_Users {
 
     $dclmn_user = $this->get_user_by_email($_POST['email']);
 
+    $this->log('request-made', $this->encodeData($_POST['email']));
+
     if (is_object($dclmn_user) && 'committee_person' == $dclmn_user->post_type) {
 
 
-      if (1 && 'marc.steel@gmail.com' != $dclmn_user->public_email) {
+      if (0 && 'marc.steel@gmail.com' != $dclmn_user->public_email) {
         $status = 'fail';
         $message = 'Undergoing maintenance.';
         $message = 'Not open for business.';
@@ -105,6 +107,8 @@ class DCLMN_Users {
 
         $headers = array('Content-Type: text/html; charset=UTF-8');
         wp_mail($dclmn_user->public_email, 'DCLMN CP Log In', $this->get_login_email_content($dclmn_user), $headers);
+
+        $this->log('request-sent', $this->encodeData($dclmn_user->public_email, $dclmn_user->ID));
       }
     }
 
@@ -126,7 +130,7 @@ class DCLMN_Users {
     $out .= '<body bgcolor="#cccccc" style="background-color: #cccccc;">';
     $out .= '<table cellpadding="20" cellspacing="0" border="0"><tr><td>';
     $out .= '<div style="background-color: #ffffff; font-family: verdana, sans-serif; font-size: 14px; max-width: 600px; word-break: break-all; border: 1px solid #000; padding: 10px;">';
-    $out .= '<a href=""><img src="' . get_stylesheet_directory_uri() . '/images/dclmn-alt-3.png" width="200"></a>';
+    $out .= '<a href=""><img src="' . dclmn_thumb(get_stylesheet_directory_uri() . '/images/dclmn-alt-3.png', ['width' => 200, 'height' => 116]) . '" width="200" height="116"></a>';
     $out .= '<p style="font-size: 20px;"><a href="' . $url . '" style="color: #031588"><strong>Click Here To Log In.</strong></a>';
     $out .= '<p><em>This link  will expire in ' . $minutes . ' minutes.</em></p>';
     $out .= '<br>';
@@ -231,6 +235,7 @@ class DCLMN_Users {
         //set a welcome message to appear on the schedule
         $_SESSION['dclmn_user_message'] = 'Welcome ' . $dclmn_user->first_name . '.';
         $this->set_cookie($dclmn_user->ID, $email_hashed);
+        $this->log('login', $email_hashed, $dclmn_user->ID);
 
         $url = home_url('cp/');
 
@@ -307,5 +312,24 @@ class DCLMN_Users {
 
   function decodeData($data) {
     return unserialize(base64_decode($data));
+  }
+
+  function log($action, $email_hashed=false, $dclmn_user_id=false) {
+    $path = $_SERVER['DOCUMENT_ROOT'] . '/wp-content/uploads/logs/cp-logins';
+    if (!is_dir($path)) {
+      mkdir($path, 0755, true);
+    }
+
+    $file = $path . '/cp-logins.log';
+
+    $line = "";
+    $line .= date('Y-m-d H:i:s') . "\t";
+    $line .= $_SERVER['REMOTE_ADDR'] . "\t";
+    $line .= $action ."\t";
+    $line .= $email_hashed ."\t";
+    $line .= $dclmn_user_id ."\t";
+    $line .= $_SERVER['HTTP_USER_AGENT'] . "\n";
+
+    file_put_contents($file, $line, FILE_APPEND | LOCK_EX);
   }
 }

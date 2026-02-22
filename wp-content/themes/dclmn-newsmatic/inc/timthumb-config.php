@@ -21,3 +21,6 @@ define( 'MAX_HEIGHT', 1500 );    // Maximum image height
 define( 'NOT_FOUND_IMAGE', '' );    //Image to serve if any 404 occurs 
 define( 'ERROR_IMAGE', '' );    //Image to serve if an error occurs instead of showing error message 
 
+$ALLOWED_SITES = ['i.ytimg.com'];
+
+$_GET['src'] = str_replace('|ttps', 'https', $_GET['src']);

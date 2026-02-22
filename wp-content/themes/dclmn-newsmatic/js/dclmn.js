@@ -80,8 +80,122 @@ jQuery(document).ready(function ($) {
 
   function contact_table_toggle() {
     $('.contacts-table tr').hide();
-    $('.contact-table-toggle:checked').each(function(){
-      $('.contacts-table tr[data-contact_type_id='+ $(this).data('contact_type_id') +']').show();
+    $('.contact-table-toggle:checked').each(function () {
+      $('.contacts-table tr[data-contact_type_id=' + $(this).data('contact_type_id') + ']').show();
     });
   }
+
+
+  function email_checked_cps() {
+    let emails = get_checked_cps();
+
+    if (!emails.length) {
+      alert('No One Selected.');
+      return;
+    }
+
+    // Flags to control where emails go
+    const toFlag = $('#to_button').is(':checked');
+    const bccFlag = $('#bcc_button').is(':checked');
+
+    let url = 'mailto:';
+    if (toFlag) url += emails.join(',');
+
+    const params = [];
+    if (bccFlag) params.push('bcc=' + encodeURIComponent(emails.join(',')));
+
+    if (params.length) url += '?' + params.join('&');
+
+    window.open(url);
+  }
+
+  function get_checked_cps() {
+    let emails = [];
+    $('.email-checkbox:checked').each(function () {
+      const email = $(this).closest('tr').find('td[data-label="Email"]').text().trim();
+      if (email) emails.push(email);
+    });
+
+    return emails;
+  }
+
+  function copy_checked_cps() {
+    let emails = get_checked_cps();
+
+    if (!emails.length) {
+      alert('No One Selected.');
+      return false;
+    }
+
+    // Collect checked emails
+    $(emails).each(function () {
+      const email = $(this).closest('tr').find('td[data-label="Email"]').text().trim();
+      if (email) emails.push(email);
+    });
+    let dummy = document.createElement("textarea");
+    document.body.appendChild(dummy);
+    dummy.value = emails.join(',');
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+
+    return true;
+  }
+
+  $('.email-checkbox-all').on('click', function () {
+    $('.email-checkbox, .email-checkbox-all').prop('checked', $(this).is(':checked'));    
+  });
+
+  $('.email-checked').on('click', function (e) {
+    e.preventDefault();
+    let checked_cps = get_checked_cps();
+    let $el = $(this);
+    let text_holder = $el.text();
+
+    if (!checked_cps.length) {
+      $el.addClass('error').text('No One Selected');
+      setTimeout(function () {
+        $el.text(text_holder).removeClass('error');
+      }, 1500);
+      return;
+    }
+    $('body').addClass('modal-open');
+  });
+
+  $('.copy-checked').on('click', function (e) {
+    e.preventDefault();
+
+    let checked_cps = get_checked_cps();
+    console.log(checked_cps);
+    let $el = $(this);
+    let text_holder = $el.text();
+
+    //delay this interacction for a moment. "feels" better.
+    setTimeout(function () {
+      if (!checked_cps.length) {
+        $el.addClass('error').text('No One Selected');
+        setTimeout(function () {
+          $el.text(text_holder).removeClass('error');
+        }, 1500);
+        return;
+      }
+
+      if (copy_checked_cps()) {
+        $el.addClass('loading').text('Copied');
+        setTimeout(function () {
+          $el.text(text_holder).removeClass('loading');
+        }, 1000);
+      }
+    }, 90);
+
+  });
+
+  $(document).on('click', '#prestitial-close', function () {
+    $('body').removeClass('modal-open');
+  });
+
+  $(document).on('click', '.email-go', function () {
+    email_checked_cps();
+    $('body').removeClass('modal-open');
+  });
 })

@@ -31,6 +31,7 @@ function dclmn_get_posts($args) {
         foreach (get_post_meta($post->ID) as $k => $v) {
             $post->$k = $v[0];
         }
+        $post->href = get_permalink($post->ID);
         $posts[] = $post;
     }
     return $posts;
@@ -372,6 +373,7 @@ function dclmn_thumb($src, $args = array()) {
 
     //urlencode the src
     $src = preg_replace('#^' . home_url() . '#', '', $src);
+    $src = str_replace('https', '|ttps', $src);
     $src = urlencode($src);
 
     $url = home_url('/thumb.php');
@@ -668,4 +670,8 @@ function dclmn_board_member_email_link($position, $subject = false) {
     $out .= '</a>';
 
     return $out;
+}
+
+function logger($message, $level = 'info', $name = 'default') {
+    (new DCLMN_Logger())->log( $message, $level, $name );
 }

@@ -27,6 +27,15 @@
         padding: 15px 10px;
         transition-duration: 0s;
     }
+
+    .cp-table-buttons {
+        display: block;
+        margin-top: .75em;
+    }
+
+    .cp-table-buttons>span:first-of-type {
+        display: none;
+    }
 }
 
 
@@ -45,6 +54,91 @@
         padding: 15px 10px;
         font-size: 14px;
     }
+
+
+
+
+
+
+
+
+
+
+    /* Data table adjustments */
+    .hidden-sidebar .stripes thead {
+        position: absolute;
+        left: -9999px;
+        top: -9999px;
+    }
+
+    .hidden-sidebar .stripes tr {
+        border-top: 2px solid var(--color-root);
+    }
+
+    .hidden-sidebar .stripes,
+    .hidden-sidebar .stripes tbody,
+    .hidden-sidebar .stripes tr,
+    .hidden-sidebar .stripes td {
+        display: block;
+        width: 100%;
+    }
+
+    .hidden-sidebar .stripes tr {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hidden-sidebar .stripes td {
+        display: block;
+        text-align: left !important;
+    }
+
+    .hidden-sidebar .stripes td.precinct,
+    .hidden-sidebar .stripes td.position {
+        font-size: 1.25em;
+        font-weight: bold;
+    }
+
+    .hidden-sidebar .stripes td.position {
+        font-size: 1em;
+    }
+
+    /* display the  */
+    .hidden-sidebar .stripes td[data-label]::before {
+        display: inline-block;
+        content: attr(data-label);
+        font-weight: 800;
+        font-size: .75em;
+        margin-right: .5em;
+    }
+
+    .hidden-sidebar .stripes td[data-label="Committee People"] {
+        line-height: 1.75;
+        margin-bottom: .25em;
+    }
+
+    .hidden-sidebar .stripes td[data-label="Polling Place"]::before,
+    .hidden-sidebar .stripes td[data-label="Committee People"]::before {
+        display: block;
+    }
+
+    /* reorder the columns */
+    .hidden-sidebar .stripes.committee-people td:nth-child(3) {
+        order: 4;
+    }
+
+    .hidden-sidebar .stripes.committee-people td:nth-child(4) {
+        order: 3;
+    }
+
+    .hidden-sidebar table.stripes tbody tr:hover {
+        background-color: var(--color-white);
+    }
+
+    .hidden-sidebar table.stripes tbody tr:nth-child(even):hover {
+        background-color: #efefef;
+    }
+
 }
 
 @media (max-width: 869px) {
@@ -73,6 +167,10 @@
     .main-navigation .menu li a,
     .main-navigation .nav.menu li a {
         padding: 15px 0px;
+    }
+
+    .how-do-i-vote h2 a {
+        font-size: 1.75em;
     }
 }
 
@@ -180,6 +278,23 @@
         display: inline-block;
         line-height: initial;
         margin-top: 0;
+    }
+
+    .yt-feed.flex>div {
+        flex-basis: 48%;
+    }
+
+    .how-do-i-vote h2 a {
+        font-size: 1.5em;
+    }
+
+    #cp-login-result .result {
+        font-size: .85em;
+    }
+
+    .entry-content .cp-dashboard-nav a.button {
+        padding: .75em 1em;
+        font-size: 1em;
     }
 
     /* #header-menu {
@@ -426,9 +541,9 @@
         display: none;
     }
 
-    .banner-layout--four .main-banner-wrap .slick-list article .post-element a {
+    /* .banner-layout--four .main-banner-wrap .slick-list article .post-element a {
         font-size: ;
-    }
+    } */
 
     .entry-content ul,
     .entry-content ol {
@@ -450,6 +565,63 @@
     .user-info table tr td:first-of-type {
         text-align: left;
     }
+
+    .how-do-i-vote h2 a {
+        font-size: 1.25em;
+    }
+
+    .yt-feed.flex>div {
+        flex-basis: 100%;
+    }
+
+    .entry-content .cp-table-buttons .button {
+        display: block !important;
+        margin-top: .75em;
+        width: auto !important;
+        text-align: left !important;
+        margin: .75em 0;
+        font-size: 1em !important;
+    }
+
+    .cp-table-buttons>span {
+        display: none;
+    }
+
+    .cp-search-terms {
+        display: block;
+        margin-top: .5em;
+    }
+
+    .cp-search-terms label {
+        display: block;
+        margin-top: .75em;
+    }
+
+    #cps-search-terms {
+        width: 100%;
+        font-size: 1.25em;
+        padding: .25em;
+    }
+
+    #cp-login-result .result {
+        font-size: .75em;
+    }
+
+    .entry-content .cp-dashboard-nav {
+        display: block;
+    }
+
+    .entry-content .cp-dashboard-nav a.button {
+        padding: .75em 1.5em;
+        font-size: 1.5em;
+        display: block;
+        width: 100%;
+        border-bottom: 1px solid var(--color-gray);
+    }
+
+    .entry-content .cp-dashboard-nav a.button:last-of-type {
+        border-bottom-width: 0;
+    }
 }
 
 /* 550px */
@@ -469,6 +641,10 @@
     .wp-block-search__button,
     .widget.widget_search .search-submit {
         font-size: 1em;
+    }
+
+    .how-do-i-vote h2 a {
+        font-size: 1.25em;
     }
 }
 
