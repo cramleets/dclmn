@@ -312,6 +312,38 @@ $broadcast_date = '';
             </td>
           </tr>
           <tr>
+            <td>
+              <table cellpadding="0" cellspacing="0" width="100%" class="header-below-logo" bgcolor="#031588">
+                <tr>
+                  <td id="header-nav" align="center" style="">
+                    <table cellspacing="0" cellpadding="0" class="main-navigation">
+                      <tbody>
+                        <tr>
+                          <td style="color: #ffffff;" class="column">
+                            <table cellspacing="0" cellpadding="14">
+                              <tr>
+                                <td class="column header_nav_td link" style="font-family:verdana, sans-serif;color:#000000;font-size:12px;line-height:1.5;padding:7px 14px;"><a href="<?php echo home_url('get-involved/?') ?>" target="_blank" style="font-family:verdana, sans-serif;color:#ffffff;font-size:14px;line-height:1.5;text-decoration:none;">VOLUNTEER</a></td>
+                                <td class="column header_nav_td link" style="font-family:verdana, sans-serif;color:#000000;font-size:12px;line-height:1.5;padding:7px 14px;"><a href="https://secure.actblue.com/donate/democratic-committee-of-lower-merion-and-narberth-1" target="_blank" style="font-family:verdana, sans-serif;color:#ffffff;font-size:14px;line-height:1.5;text-decoration:none;">DONATE</a></td>
+                              </tr>
+                            </table>
+                          </td>
+                          <td class="column">
+                            <table cellspacing="0" cellpadding="14" width="100%" class="header-social-icons">
+                              <tr>
+                                <td align="center" class="header_nav_td social left" style="font-family:verdana, sans-serif;color:#000000;font-size:12px;line-height:1.5;padding:7px 14px;"><a href="https://www.facebook.com/DCLMNPA/" target="_blank"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/icons/facebook-white.png" width="25" height="25" alt="Facebook" border="0"></a></td>
+                                <td align="center" class="header_nav_td social right" style="font-family:verdana, sans-serif;color:#000000;font-size:12px;line-height:1.5;padding:7px 14px;"><a href="https://www.instagram.com/lowermerion_narberthdems/" target="_blank"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/icons/linkedin-white.png" width="25" height="25" alt="LinkedIn" border="0"></a></td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
             <td valign="top">
               <table border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" width="100%">
                 <tr>
