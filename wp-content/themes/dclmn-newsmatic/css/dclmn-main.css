@@ -300,11 +300,11 @@ table.stripes a:hover {
     margin: 0 auto;
 }
 
-.officials-table-wrap.lower-merion-township img,
+/* .officials-table-wrap.lower-merion-township img,
 .officials-table-wrap.narberth-borough img,
 .officials-table-wrap.lower-merion-school-board img {
     border-radius: 50%;
-}
+} */
 
 .officials-table>div a {
     color: #000;
@@ -959,6 +959,7 @@ body.home #block-21 {
     --gap: 1em;
     gap: var(--gap);
     padding: 0;
+    justify-content: center;
 }
 
 .election img {
@@ -976,9 +977,10 @@ body.home #block-21 {
     gap: 0;
 }
 
+.election.pennsylvania-house-of-representatives-district-148 ul.flex li,
 .election.narberth-council ul.flex li,
 .election.lower-merion-school-board ul.flex li {
-    flex-basis: 25%;
+    flex-basis: 22%;
 }
 
 .election p a {
