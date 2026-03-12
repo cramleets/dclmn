@@ -552,7 +552,8 @@ function dclmn_render_elections_output($parents) {
             $out .= '</ul>';
 
             if ($num_candidates === 1) {
-                $out .= ($text = get_field('text', $child)) ? $text : '<br>';
+	            $text = (get_field('text', $child)) ?: $post->post_content;
+                $out .= ($text) ? $text : '<br>';
             }
 
             $out .= '</div>';
