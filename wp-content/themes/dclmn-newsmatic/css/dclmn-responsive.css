@@ -549,6 +549,10 @@
     .entry-content ol {
         padding-left: 1.25em;
     }
+    
+	.entry-content .dclmn-events.election-dates ul {
+		padding-left: 0;
+	}
 
     .election ul.flex {
         display: block;
@@ -644,7 +648,8 @@
     }
 
     .how-do-i-vote h2 a {
-        font-size: 1.25em;
+        font-size: 1em;
+        line-height: 1;
     }
 }
 
@@ -657,5 +662,9 @@
     #masthead img {
         width: 180px;
         height: auto !important;
+    }
+    
+    .election-dates h2 {
+    	font-size: 1.25em;
     }
 }
