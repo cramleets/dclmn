@@ -1,39 +1,53 @@
 <?php
 
-$out = '';
 $channel_id = 'UCaQmivO7R6UzHnj_NmEI10g';
-$feed_url   = "https://www.youtube.com/feeds/videos.xml?channel_id={$channel_id}";
-$rss = fetch_feed($feed_url);
+$all = 'https://www.youtube.com/feeds/videos.xml?channel_id='. $channel_id;
+$videos = 'https://www.youtube.com/feeds/videos.xml?playlist_id=UULFaQmivO7R6UzHnj_NmEI10g';
+$shorts = 'https://www.youtube.com/feeds/videos.xml?playlist_id=UUSHaQmivO7R6UzHnj_NmEI10g';
+$live = 'https://www.youtube.com/feeds/videos.xml?playlist_id=UULVaQmivO7R6UzHnj_NmEI10g';
 
-if (! is_wp_error($rss)) {
-  $maxitems = $rss->get_item_quantity(25);
-  $rss_items = $rss->get_items(0, $maxitems);
-  if ($maxitems > 0) {
-    $out .= '<div class="yt-feed flex">';
-    foreach ($rss_items as $item) {
-      $link  = $item->get_link();
-      $title = $item->get_title();
-      $date = $item->get_date('F Y');
+function output_youtube_feed($feed_url) {
+  $out = '';
+  $rss = fetch_feed($feed_url);
 
-      // Extract video ID from URL
-      parse_str(parse_url($link, PHP_URL_QUERY), $params);
-      $video_id = isset($params['v']) ? $params['v'] : '';
+  if (! is_wp_error($rss)) {
+    $maxitems = $rss->get_item_quantity(25);
+    $rss_items = $rss->get_items(0, $maxitems);
+    if ($maxitems > 0) {
+      $out .= '<div class="yt-feed flex">';
+      foreach ($rss_items as $item) {
+        $link  = $item->get_link();
+        $title = $item->get_title();
+        $date = $item->get_date('F Y');
 
-      if ($video_id) {
-        $thumb = "https://i.ytimg.com/vi/{$video_id}/hqdefault.jpg";
-        $src = dclmn_thumb($thumb, ['width' => 400, 'height' => 225]);
+        // Extract video ID from URL
+        parse_str(parse_url($link, PHP_URL_QUERY), $params);
+        $video_id = isset($params['v']) ? $params['v'] : '';
 
-        $out .= '<div class="yt-item" data-video="' . esc_attr($video_id) . '">';
-        $out .= '<a class="yt-item" href="' . esc_url($link) . '" target="_blank" rel="noopener">';
-        $out .= '<img src="' . $src . '" alt="' . esc_attr($title) . '">';
-        $out .= '<br><strong>' . $title . '</strong>';
-        $out .= '</a>';
-        $out .= '<br>' . $date;
-        $out .= '</div>';
+        if ($video_id) {
+          $thumb = "https://i.ytimg.com/vi/{$video_id}/hqdefault.jpg";
+          $src = dclmn_thumb($thumb, ['width' => 400, 'height' => 225]);
+
+          $out .= '<div class="yt-item" data-video="' . esc_attr($video_id) . '">';
+          $out .= '<a class="yt-item" href="' . esc_url($link) . '" target="_blank" rel="noopener">';
+          $out .= '<img src="' . $src . '" alt="' . esc_attr($title) . '">';
+          $out .= '<br><strong>' . $title . '</strong>';
+          $out .= '</a>';
+          $out .= '<br>' . $date;
+          $out .= '</div>';
+        }
       }
+      $out .= '</div>';
     }
-    $out .= '</div>';
   }
+
+  return $out;
 }
 
+$out = '';
+$out .= '<h2>Live Streams</h2>';
+$out .= output_youtube_feed($live);
+$out .= '<hr>';
+$out .= '<h2>Videos</h2>';
+$out .= output_youtube_feed($videos);
 echo $out;
