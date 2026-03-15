@@ -673,6 +673,6 @@ function dclmn_board_member_email_link($position, $subject = false) {
     return $out;
 }
 
-function logger($message, $level = 'info', $name = 'default') {
-    (new DCLMN_Logger())->log( $message, $level, $name );
+function logger($message, $name = 'default', $level = 'info') {
+    (new DCLMN_Logger($name))->log( $message, $level );
 }

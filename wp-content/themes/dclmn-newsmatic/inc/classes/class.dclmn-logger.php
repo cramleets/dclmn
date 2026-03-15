@@ -11,7 +11,7 @@ class DCLMN_Logger {
     }
 
     public function getDirectoryPath() {
-        $yearDir = $this->logPath . current_time('Y');
+        $yearDir = trailingslashit($this->logPath) . current_time('Y');
         $monthDir = $yearDir . DIRECTORY_SEPARATOR . current_time('m');
 
         $this->createDir(wp_get_upload_dir()['basedir'].'/logs');
@@ -30,10 +30,13 @@ class DCLMN_Logger {
         }
     }
 
-    public function log($time, $level, $record) {
-        pobj(func_get_args());
-        $record = $time . "\t" . strtoupper($level) . "\t" . $record . PHP_EOL;
-        @file_put_contents($this->logPath, $record, FILE_APPEND);
+    public function log($message, $level) {
+        if (!is_string($message)) {
+            $message = print_r($message,1);
+        }
+        $time = date('Y-m-d H:i:s');
+        $record = $time . "\t" . strtoupper($level) . "\t" . $message . PHP_EOL;
+        file_put_contents($this->logPath, $record, FILE_APPEND);
     }
 
     public function shouldHandle($context, $level) {
