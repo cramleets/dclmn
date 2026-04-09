@@ -34,7 +34,15 @@ foreach ($events as $post) {
   $event_month_short   = $display_date->format_i18n('M');
   $event_date_attr = $display_date->format(Dates::DBDATEFORMAT);
 
-  $out .= '<li><a href="' . $post->permalink->__toString() . '"><span class="month">' . $event_month .'</span> <span class="dom">'. $event_day_num .'</span><br>'. $post->post_title . '</a></li>';
+  $out .= '<li class="';
+  if (has_term('election-date-featured', 'tribe_events_cat', $post)) $out .= 'featured';
+  $out .= '">';
+  $out .= '<a href="' . $post->permalink->__toString() . '">';
+  $out .= '<span class="month">' . $event_month .'</span> <span class="dom">'. $event_day_num .'</span>';
+  $out .= '<div class="election-date-title"><strong>'. $post->post_title .'.</strong></div>';
+  $out .= (!empty($post->post_content)) ? '<div class="election-date-note">'. $post->post_content .'</div>' : '';
+  $out .= '</a>';
+  $out .= '</li>';
 }
 $out .= '</ul>';
 $out .= '</div>';
