@@ -225,7 +225,7 @@ class DCLMN_Users {
       }
 
       //do the emails match?
-      elseif ($dclmn_user->public_email != 'marc.steel@gmail.com') {
+      elseif (0 && $dclmn_user->public_email != 'marc.steel@gmail.com') {
         $result['msg'] = 'Not yet.';
       }
 

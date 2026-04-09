@@ -143,7 +143,7 @@ jQuery(document).ready(function ($) {
   }
 
   $('.email-checkbox-all').on('click', function () {
-    $('.email-checkbox, .email-checkbox-all').prop('checked', $(this).is(':checked'));    
+    $('.email-checkbox, .email-checkbox-all').prop('checked', $(this).is(':checked'));
   });
 
   $('.email-checked').on('click', function (e) {
@@ -197,5 +197,17 @@ jQuery(document).ready(function ($) {
   $(document).on('click', '.email-go', function () {
     email_checked_cps();
     $('body').removeClass('modal-open');
+  });
+
+  $('#hide-cp-email-address').on('click', function () {
+    data = {
+      action: 'hide_cp_email_address',
+      hide: $(this).is(':checked'),
+    };
+
+    $('#hide-cp-email-address-result').html('<img src="/wp-includes/images/spinner.gif">').removeClass('session-login-message');
+    $.post(sbiajaxurl, data, function (data) {
+      $('#hide-cp-email-address-result').html('');//.addClass('session-login-message');
+    });
   });
 })

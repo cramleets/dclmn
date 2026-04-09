@@ -13,6 +13,7 @@ class DCLMN_User {
   var $city;
   var $state;
   var $zip;
+  var $hide_email_address;
 
   function __construct($user_id) {
     foreach (dclmn_get_post($user_id) as $k => $v) {
@@ -84,5 +85,9 @@ class DCLMN_User {
     }
 
     return $voters;
+  }
+
+  function email_address_is_hidden() {
+    return $this->hide_email_address;
   }
 }

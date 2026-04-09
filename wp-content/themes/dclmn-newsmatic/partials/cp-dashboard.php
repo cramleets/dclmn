@@ -51,10 +51,10 @@ if ($dclmn_user || !empty($extra_content)) {
     <h2><?php echo $dclmn_user->get_precinct()->post_title; ?></h2>
     <hr>
     <h3>Your Information</h3>
-    <p class="note">Please contact <?php echo dclmn_board_member_email_link('Subcommittee Chair–Technology', 'DCLMN Contact Info') ?> if you need any of this information updated.</p>
+    <p class="note">Please contact <?php echo dclmn_board_member_email_link('Subcommittee Chair – Technology', 'DCLMN Contact Info') ?> if you need any of this information updated.</p>
     <table cellpadding="5" cellspacing="0" class="stripes">
       <tr>
-        <td>Email</td>
+        <td width="180">Email</td>
         <td><?php echo $dclmn_user->get_email(); ?></td>
       </tr>
       <tr>
@@ -64,6 +64,18 @@ if ($dclmn_user || !empty($extra_content)) {
       <tr>
         <td>Address</td>
         <td><?php echo $dclmn_user->get_address(); ?></td>
+      </tr>
+    </table>
+    <br>
+    <table cellpadding="5" cellspacing="0" class="">
+      <tr>
+        <td width="180">
+          <input type="checkbox" id="hide-cp-email-address" <?php if ($dclmn_user->email_address_is_hidden()) echo 'checked' ?>>
+        </td>
+        <td>
+          <label for="hide-cp-email-address"><strong>Do Not Publish My Email Address</strong></label>
+          <span id="hide-cp-email-address-result"></span>
+        </td>
       </tr>
     </table>
   </div>
@@ -94,6 +106,7 @@ if ($dclmn_user || !empty($extra_content)) {
           <?php endif; ?>
           <?php if (current_user_can('edit_others_posts')): ?>
             <li><a href="<?php echo home_url('cp/precinct-voters/') ?>">My Voters</a></li>
+            <li><a href="<?php echo home_url('cp/check-in-sheet/') ?>">Meeting Check-In Sheet</a></li>
           <?php endif; ?>
         </ul>
       </div>

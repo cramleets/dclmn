@@ -87,6 +87,10 @@ class DCLMN {
         add_action('wp_ajax_nopriv_get_street_name', [$this, 'wp_ajax_get_street_name']);
         add_action('wp_ajax_export_cps_full', [$this, 'wp_ajax_export_cps_full']);
         add_action('wp_ajax_nopriv_export_cps_full', [$this, 'wp_ajax_export_cps_full']);
+        add_action('wp_ajax_hide_cp_email_address', [$this, 'wp_hide_cp_email_address']);
+        add_action('wp_ajax_nopriv_hide_cp_email_address', [$this, 'wp_hide_cp_email_address']);
+
+        
 
         add_filter('tec_events_views_v2_view_header_title', function ($title, $obj) {
             if (empty($title)) $title = 'Events';
@@ -478,7 +482,9 @@ class DCLMN {
                         $out .= $person->first_name;
                         $out .= ' - <a href="' . home_url('committee-person-description/') . '">Inquire</a>';
                     } else {
-                        $out .= ($person->public_email) ? '<a href="mailto:' . $person->public_email . '" target="_blank">' : '';
+                        $email = $person->public_email;
+                        if ($person->hide_email_address) $email = $title .'@dclmn.org';
+                        $out .= ($person->public_email) ? '<a href="mailto:' . $email . '" target="_blank">' : '';
                         $out .= $person->first_name;
                         $out .= ($person->last_name) ? ' ' . $person->last_name : '';
                         $out .= ($person->public_email) ? '</a>' : '';
@@ -990,5 +996,12 @@ class DCLMN {
     function widget_events_list_args_to_contex($alterations, $arguments, $widget) {
         //pobj($alterations,1);
         return $alterations;
+    }
+
+    function wp_hide_cp_email_address() {
+        $dclmn_user = dclmn_get_user();
+        $hide = filter_var($_REQUEST['hide'], FILTER_VALIDATE_BOOLEAN);
+        update_post_meta($dclmn_user->ID, 'hide_email_address', $hide);
+        die('done.');
     }
 }
