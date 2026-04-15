@@ -98,7 +98,7 @@ $dclmn_user = dclmn_get_user();
     </span>
     <span class="cp-table-buttons">
       <span> | </span>
-      <a href="<?php echo admin_url('admin-ajax.php?action=export_cps_full') ?>" class="button" target="_blank">Export</a>
+      <a href="<?php echo admin_url('admin-ajax.php?action=export_cps_full') ?>" class="button export-cps" target="_blank">Export</a>
       <span> | </span>
       <a href="mailto:" class="button email-checked" target="_blank">Email Checked</a>
       <span> | </span>
