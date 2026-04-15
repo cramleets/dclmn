@@ -1,6 +1,7 @@
 <?php
 //Template Name: Newsletter  
 $broadcast_date = '';
+$hr = '<div style="font-family:verdana, sans-serif;color:#000000;font-size:10px;line-height:0;margin-bottom:20px;margin-top:14px;border-bottom:1px #333 solid;">&nbsp;</div>';
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -47,10 +48,6 @@ $broadcast_date = '';
         border: 0 !important;
       }
 
-      #header td {
-        padding: 20px 0;
-      }
-
       .ad,
       .ad .liveintent,
       .ad .liveintent img {
@@ -81,17 +78,6 @@ $broadcast_date = '';
         max-width: 310px;
       }
 
-
-      #header-logo {
-        background: url(https://local.piworld.com/wp-content/themes/pi/creative-templates/today-on-pi/images/header-mobile.png) no-repeat top left;
-        height: px;
-        background-position: center center;
-      }
-
-      #header-logo img {
-        display: none;
-      }
-
       #header-nav td,
       #footer-nav td {
         padding: 0 !important;
@@ -112,14 +98,6 @@ $broadcast_date = '';
 
       img.header {
         max-width: 300px;
-      }
-
-      .header_background_img {
-        display: none;
-      }
-
-      .header_background_table {
-        margin-top: 20px;
       }
 
       #header-date {
@@ -261,22 +239,13 @@ $broadcast_date = '';
       .pm_supplier_specials td img {
         width: auto !important;
       }
-    }
 
-    @media only screen and (max-width: 800px) {
       #header-logo img {
-        display: none;
-      }
-
-      #header-logo a {
-        display: block;
-        height: 100px;
-      }
-
-      #header td {
-        padding: 0 !important;
+        max-width: none;
       }
     }
+
+    @media only screen and (max-width: 800px) {}
   </style>
 </head>
 
@@ -294,7 +263,7 @@ $broadcast_date = '';
           </tr>
           <tr>
             <td valign="top">
-              <table id="header" style="width: 100%;" border="0" cellpadding="20" cellspacing="0" bgcolor="#ffffff">
+              <table id="header" style="width: 100%;" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
                 <tr>
                   <td valign="top" id="header-logo" align="left">
                     <a
@@ -303,8 +272,8 @@ $broadcast_date = '';
                       href="<?php echo home_url() ?>"
                       target="_blank"><img
                         style="font-family:verdana, sans-serif;color:#000000;font-size:12px;line-height:1.5;border:0px;padding-top:0;"
-                        src="<?php echo get_stylesheet_directory_uri() ?>/images/dclmn-alt-3.png"
-                        width="280"
+                        src="<?php echo get_stylesheet_directory_uri() ?>/images/bg-blue-horizontal.png"
+                        width="100%"
                         border="0"></a>
                   </td>
                 </tr>
@@ -348,8 +317,8 @@ $broadcast_date = '';
               <table border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" width="100%">
                 <tr>
                   <td width="20" class="content-spacer">&nbsp;</td>
-                  <td class="main-content">
-                    <table border="0" cellpadding="0" cellspacing="0">
+                  <td class="main-content" width="700">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
                       <tr>
                         <td id="header-date" style="font-family:verdana, sans-serif;color:#000000;font-size:12px;line-height:1.5;font-weight:bold;padding-left:1px;padding-top:10px;">
                           December 16, 2025 </td>
@@ -357,54 +326,45 @@ $broadcast_date = '';
                       <tr>
                         <td valign="top" style="width: 100%;" id="main-content">
                           <div style="font-family:verdana, sans-serif;color:#000000;font-size:12px;line-height:1.5;height:10px;" class="spacer">&nbsp;</div>
-
-                          <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                            <tr valign="top">
-                              <th colspan="10" align="left" style="text-align: left; font-weight: normal;">
-                                <div style="font-family: verdana, sans-serif;color: #000000;font-size: 12px;line-height: 1.5;"></div>
-                              </th>
-                            </tr>
-                            <tr valign="top">
-                              <th width="350" id="left" style="text-align: left; font-weight: normal;">
-                              </th>
-                              <th width="20" class="spacer">&nbsp;</th>
-                              <th width="350" id="right" style="text-align: left; font-weight: normal;">
-                              </th>
-                            </tr>
-                            <tr>
-                              <th colspan="10" style="text-align: left; font-weight: normal;">
-                              </th>
-                            </tr>
-                          </table>
-                          <br>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td id="footer-contacts-holder">
-                        </td>
-                      </tr>
-                      <tr>
-                        <td id="footer-boxes-holder">
+                          <?php echo $hr ?>
                         </td>
                       </tr>
                     </table>
                   </td>
                   <td width="20" class="content-spacer">&nbsp;</td>
                 </tr>
-              </table>
-              <table cellpadding="10" cellspacing="0" width="100%" bgcolor="#ffffff" id="footer-branding">
-                <tr valign="middle">
-                  <td valign="top" id="header-logo" align="center" style="">
-                    <a
-                      title="Democratic Committee of Lower Merion"
-                      alt="Democratic Committee of Lower Merion"
-                      href="<?php echo home_url() ?>"
-                      target="_blank"><img
-                        style="font-family:verdana, sans-serif;color:#000000;font-size:12px;line-height:1.5;border:0px;padding-top:0;"
-                        src="<?php echo get_stylesheet_directory_uri() ?>/images/newsletter-footer.png"
-                        width="350"
-                        border="0"></a>
+                <tr>
+                  <td width="20" class="content-spacer">&nbsp;</td>
+                  <td align="center">
+                    <?php echo $hr ?>
+                    <br>Did this newsletter get forwarded to you? <a href="<?php echo home_url('subscribe/'); ?>" style="font-family:verdana, sans-serif;color:#006;font-size:11px;line-height:1.5;text-decoration:none;">Click here to subscribe</a>.<br><br>
+                    <?php echo $hr ?>
+                    <p>Copyright (C) 2026 DCLMN. All rights reserved.</p>
+                    <p>You are receiving this email because you opted in via our website.</p>
+                    <p>Our mailing address is:<br>DCLMN PO Box 485 Wynnewood, PA 19096 USA</p>
+                    <br>
+                    <p><a
+                        title="Democratic Committee of Lower Merion"
+                        alt="Democratic Committee of Lower Merion"
+                        href="<?php echo home_url() ?>"
+                        target="_blank"><img
+                          style="font-family:verdana, sans-serif;color:#000000;font-size:12px;line-height:1.5;border:0px;padding-top:0;"
+                          src="<?php echo get_stylesheet_directory_uri() ?>/images/newsletter-footer.png"
+                          width="150"
+                          border="0"></a>
+                      <a
+                        title="Montgomery County Democratic Committee"
+                        alt="Montgomery County Democratic Committee"
+                        href="https://mcdems.org/"
+                        target="_blank"><img
+                          style="font-family:verdana, sans-serif;color:#000000;font-size:12px;line-height:1.5;border:0px;padding-top:0;"
+                          src="<?php echo get_stylesheet_directory_uri() ?>/images/mcdc.png"
+                          width="150"
+                          border="0"></a>
+                    </p>
+                    <br>
                   </td>
+                  <td width="20" class="content-spacer">&nbsp;</td>
                 </tr>
               </table>
             </td>
@@ -415,7 +375,6 @@ $broadcast_date = '';
                 <tr>
                   <td valign="top" style="font-family:verdana, sans-serif;color:#000000;font-size:11px;line-height:1.5;padding:20px 10px;hyphens:none;" id="footer-top">
                     Help us help you! Send feedback about this newsletter to <a href="mailto:dclmn.commns@gmail.com?subject=DCLMN%20Newsletter" style="font-family:verdana, sans-serif;color:#006;font-size:11px;line-height:1.5;text-decoration:none;">dclmn.commns@gmail.com</a>
-                    <br><br>Did this edition of the DCLMN newsletter get forwarded to you? <a href="<?php echo home_url('subscribe/'); ?>" style="font-family:verdana, sans-serif;color:#006;font-size:11px;line-height:1.5;text-decoration:none;">Click here to subscribe</a>.
                   </td>
                 </tr>
               </table>
