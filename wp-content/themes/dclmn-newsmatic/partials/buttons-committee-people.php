@@ -3,7 +3,7 @@
   <a class="button" href="<?php echo home_url('committee-person-description/') ?>">Committee Person Description</a>
   <a href="<?php echo home_url('map/') ?>" class="button">Map</a>
 </div>
-<?php if (dclmn_auth('cp') || current_user_can('edit_others_posts')): ?>
+<?php if (dclmn_auth('exec') || current_user_can('edit_others_posts')): ?>
   <?php
   global $dclmn;
   $user_emails = [];
@@ -16,7 +16,7 @@
   <div class="button-group">
     <a href="mailto:?bcc=<?php echo implode(',', $user_emails) ?>" class="button" target="_blank">Email</a>
     <?php if (current_user_can('edit_others_posts')): ?>
-      <a href="<?php echo admin_url('admin-ajax.php?action=export_cps') ?>" class="button" target="_blank">Export</a>
+      <a href="<?php echo admin_url('admin-ajax.php?action=export_cps') ?>" class="button export-cps" target="_blank">Export</a>
     <?php endif; ?>
   </div>
 <?php endif; ?>
