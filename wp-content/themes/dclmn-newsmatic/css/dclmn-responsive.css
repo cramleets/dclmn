@@ -66,9 +66,20 @@
 
     /* Data table adjustments */
     .hidden-sidebar .stripes thead {
-        position: absolute;
-        left: -9999px;
-        top: -9999px;
+        display: block;
+    }
+
+    .hidden-sidebar .stripes thead td:not(:first-of-type) {
+        display: none;
+        width: 100%;
+    }
+
+    .hidden-sidebar .stripes thead td:first-of-type {
+        width: 100%;
+        text-align: right !important;
+        font-size: 1.5em;
+        padding-right: 1em;
+        text-transform: uppercase;
     }
 
     .hidden-sidebar .stripes tr {
@@ -549,10 +560,10 @@
     .entry-content ol {
         padding-left: 1.25em;
     }
-    
-	.entry-content .dclmn-events.election-dates ul {
-		padding-left: 0;
-	}
+
+    .entry-content .dclmn-events.election-dates ul {
+        padding-left: 0;
+    }
 
     .election ul.flex {
         display: block;
@@ -626,6 +637,20 @@
     .entry-content .cp-dashboard-nav a.button:last-of-type {
         border-bottom-width: 0;
     }
+
+    .dclmn-modal-window .toggle {
+        display: block;
+    }
+
+    .dclmn-modal-window {
+        width: 90%;
+        height: 19em;
+    }
+
+    .dclmn-modal-window .toggle input+label {
+        width: 280px;
+        margin: 1em auto;
+    }
 }
 
 /* 550px */
@@ -663,8 +688,8 @@
         width: 180px;
         height: auto !important;
     }
-    
+
     .election-dates h2 {
-    	font-size: 1.25em;
+        font-size: 1.25em;
     }
 }
