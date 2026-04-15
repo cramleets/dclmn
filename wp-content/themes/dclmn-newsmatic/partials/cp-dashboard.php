@@ -104,10 +104,25 @@ if ($dclmn_user || !empty($extra_content)) {
           <?php elseif ($dclmn_user->is_exec()): ?>
             <li><a href="<?php echo home_url('cp/dclmn-contacts/') ?>">View DCLMN Contacts</a></li>
           <?php endif; ?>
+          <li><a href="<?php echo home_url('subcommittees/') ?>">View DCLMN Subcommittees</a></li>
           <?php if (current_user_can('edit_others_posts')): ?>
             <li><a href="<?php echo home_url('cp/precinct-voters/') ?>">My Voters</a></li>
             <li><a href="<?php echo home_url('cp/check-in-sheet/') ?>">Meeting Check-In Sheet</a></li>
           <?php endif; ?>
+        </ul>
+        <h3>MCDC Tools</h3>
+        <ul>
+          <li>
+            <a href="https://mcdems.org/cpc/">MCDC Committee Person Center</a>
+            <ul>
+              <li>Committee Person Hand Book</li>
+              <li>MCDC By-laws</li>
+              <li>CP Appointment Form</li>
+              <li>CP Resignation Form</li>
+              <li>Executive Committee Proxy Form</li>
+              <li>Endorsement Convention Proxy</li>
+            </ul>
+          </li>
         </ul>
       </div>
       <div>
