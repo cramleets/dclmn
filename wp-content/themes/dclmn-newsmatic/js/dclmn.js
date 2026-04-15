@@ -210,4 +210,8 @@ jQuery(document).ready(function ($) {
       $('#hide-cp-email-address-result').html('');//.addClass('session-login-message');
     });
   });
+
+  $('.export-cps').on('click', function(){
+    return confirm('This will download a Microsoft Excel file of all DCLMN committee people to your device.\n\nDo you wish to continue?');
+  });
 })
