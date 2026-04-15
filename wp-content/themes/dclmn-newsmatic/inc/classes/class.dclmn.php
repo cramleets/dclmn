@@ -21,8 +21,8 @@ class DCLMN {
 
             wp_enqueue_style($parent_style, get_template_directory_uri() . '/style.css', [], filemtime(get_template_directory() . '/style.css'));
             wp_enqueue_style('dclmn-child', get_stylesheet_directory_uri() . '/css/dclmn-main.css', [$parent_style], filemtime(get_stylesheet_directory() . '/css/dclmn-main.css'));
-            wp_enqueue_style('dclmn-responsive', get_stylesheet_directory_uri() . '/css/dclmn-responsive.css', ['dclmn-child'], filemtime(get_stylesheet_directory() . '/css/dclmn-responsive.css'));
             wp_enqueue_style('dclmn-modals', get_stylesheet_directory_uri() . '/css/dclmn-modals.css', ['dclmn-child'], filemtime(get_stylesheet_directory() . '/css/dclmn-modals.css'));
+            wp_enqueue_style('dclmn-responsive', get_stylesheet_directory_uri() . '/css/dclmn-responsive.css', ['dclmn-child'], filemtime(get_stylesheet_directory() . '/css/dclmn-responsive.css'));
 
             wp_enqueue_script('dclmn', get_stylesheet_directory_uri() . '/js/dclmn.js', ['jquery'], filemtime(get_stylesheet_directory() . '/js/dclmn.js'));
         }, 98);
