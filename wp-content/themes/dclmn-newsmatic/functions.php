@@ -16,6 +16,7 @@ require_once dirname(__FILE__) . '/inc/classes/class.widget-rotating-quotes.php'
 
 require_once dirname(__FILE__) . '/inc/classes/class.cpanel-api.php';
 require_once dirname(__FILE__) . '/inc/classes/class.dclmn-cpanel-api.php';
+require_once dirname(__FILE__) . '/inc/classes/class.dclmn-zoom-api.php';
 
 require_once dirname(__FILE__) . '/inc/activate.php';
 
