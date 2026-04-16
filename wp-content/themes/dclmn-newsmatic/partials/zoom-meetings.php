@@ -6,7 +6,7 @@ $webinars = $zoom->get_webinars();
 
 $out = '';
 foreach ($meetings as $meeting) {
-  if (stristr($meeting['topic'], 'exec')) continue;
+  if (!dclmn_auth('exec') && stristr($meeting['topic'], 'exec')) continue;
 
   $dt = new DateTime($meeting['start_time']);
   $dt->setTimezone(new DateTimeZone($meeting['timezone']));
