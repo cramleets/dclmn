@@ -104,7 +104,8 @@ if ($dclmn_user || !empty($extra_content)) {
           <?php elseif ($dclmn_user->is_exec()): ?>
             <li><a href="<?php echo home_url('cp/dclmn-contacts/') ?>">View DCLMN Contacts</a></li>
           <?php endif; ?>
-          <li><a href="<?php echo home_url('subcommittees/') ?>">View DCLMN Subcommittees</a></li>
+          <li><a href="<?php echo home_url('subcommittees/') ?>">DCLMN Subcommittees</a></li>
+          <li><a href="<?php echo get_stylesheet_directory_uri() ?>/assets/dclmn-guide-to-welcoming-new-residents.pdf" target="_blank">DCLMN Guide to Welcoming New Residents</a></li>
           <?php if (current_user_can('edit_others_posts')): ?>
             <li><a href="<?php echo home_url('cp/precinct-voters/') ?>">My Voters</a></li>
             <li><a href="<?php echo home_url('cp/check-in-sheet/') ?>">Meeting Check-In Sheet</a></li>
