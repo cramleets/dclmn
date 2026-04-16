@@ -15,6 +15,7 @@ class DCLMN {
         DCLMN_Populator::theme_init();
 
         add_filter('tribe_widget_events-list_args_to_context', [$this, 'widget_events_list_args_to_contex'], 10, 3);
+        add_filter('embed_oembed_html', [$this, 'custom_embed_wrapper'], 10, 4);
 
         add_action('wp_enqueue_scripts', function () {
             $parent_style = 'dclmn-parent';
@@ -1003,5 +1004,15 @@ class DCLMN {
         $hide = filter_var($_REQUEST['hide'], FILTER_VALIDATE_BOOLEAN);
         update_post_meta($dclmn_user->ID, 'hide_email_address', $hide);
         die('done.');
+    }
+
+
+    function custom_embed_wrapper($html, $url, $attr, $post_id) {
+        // Check if the embedded content is from YouTube
+        if (strpos($html, 'youtube') !== false || strpos($html, 'youtu.be') !== false) {
+            return '<div class="video-container">' . $html . '</div>';
+        }
+        // Return original HTML for other embeds
+        return $html;
     }
 }
