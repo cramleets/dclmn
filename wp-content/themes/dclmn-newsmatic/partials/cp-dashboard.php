@@ -137,6 +137,7 @@ if ($dclmn_user || !empty($extra_content)) {
 
         echo dclmn_homepage_events($meeting_events_args);
         ?>
+        <?php get_template_part('partials/zoom-meetings') ?>
       </div>
     </div>
   </div>

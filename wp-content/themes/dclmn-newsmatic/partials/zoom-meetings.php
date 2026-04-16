@@ -5,9 +5,9 @@ $meetings = $zoom->get_meetings();
 $webinars = $zoom->get_webinars();
 
 $out = '';
-$out .= '<h2>Upcoming Zoom Meetings</h2>';
-$out .= '<ul>';
 foreach ($meetings as $meeting) {
+  if (stristr($meeting['topic'], 'exec')) continue;
+
   $dt = new DateTime($meeting['start_time']);
   $dt->setTimezone(new DateTimeZone($meeting['timezone']));
 
@@ -25,6 +25,9 @@ foreach ($meetings as $meeting) {
   $out .= '</ul>';
   $out .= '</li>';
 }
-$out .= '</ul>';
+
+if (!empty($out)) {
+  $out = '<h3>Upcoming Zoom Meetings</h3><ul>'. $out .'</ul>';
+}
 
 echo $out;
