@@ -4,14 +4,13 @@ $precincts = $dclmn->get_committee_people_table(true);
 array_shift($precincts);
 ?>
 <style>
-
-body, td {
-  font-size: 14px;
-  font-family: tahoma;
-}
-
+  body,
+  td {
+    font-size: 14px;
+    font-family: tahoma;
+  }
 </style>
-<?php if (!dclmn_auth('exec')): ?>
+<?php if (!dclmn_user_is_exec()): ?>
   <h2>You do not have permission to view this.</h2>
 <?php else: ?>
   <h2>DCLMN Meeting Sign In Sheet</h2>
