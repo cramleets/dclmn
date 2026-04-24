@@ -1334,3 +1334,12 @@ body.hidden-sidebar.right-sidebar #theme-content .row .primary-content {
     border-bottom-width: 0;
     padding: 0;
 }
+
+.dclmn-tools ul li {
+    margin-bottom: .25em;
+}
+
+.dclmn-tools ul ul {
+    margin-top: .25em;
+    margin-bottom: 1em;
+}
