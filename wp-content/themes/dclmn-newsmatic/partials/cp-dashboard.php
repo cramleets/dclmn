@@ -78,15 +78,18 @@ if ($dclmn_user || !empty($extra_content)) {
         </td>
       </tr>
     </table>
+    <br>
+    <table cellpadding="5" cellspacing="0" class="">
+      <tr>
+        <td width="180"></td>
+        <td>Emails sent to <a href="mailto:<?php echo $dclmn_user->get_mailbox(); ?>" target="_blank"><strong><?php echo $dclmn_user->get_mailbox(); ?></strong></a> will be forwarded to you.</td>
+      </tr>
+    </table>
   </div>
   <hr>
   <div class="dclmn-tools">
     <div class="flex">
       <div>
-        <h3>Election Resources</h3>
-        <ul>
-          <li><a href="https://drive.google.com/drive/folders/1aKBNH8LehMBqKRV_xzOli_XcCN9eWjkB" target="_blank" style="font-size: 1.25em; font-weight: 700;">Petitions</a></li>
-        </ul>
         <?php if ($documents = dclmn_get_posts(['post_type' => 'document', 'posts_per_page' => -1])): ?>
           <h3>DCLMN Documents</h3>
           <ul>
@@ -95,36 +98,55 @@ if ($dclmn_user || !empty($extra_content)) {
             <?php endforeach; ?>
           </ul>
         <?php endif; ?>
-        <h3>DCLMN Tools & Resources</h3>
+        <h3>DCLMN Tools</h3>
         <ul>
           <li><a href="<?php echo home_url('cp/cps/') ?>">View and Contact Committee People</a></li>
           <li><a href="<?php echo home_url('cp/leadership/') ?>">View and Contact Leadership</a></li>
-          <?php if (current_user_can('edit_published_contacts')): ?>
-            <li><a href="<?php echo home_url('cp/dclmn-contacts/') ?>">View and Contact DCLMN Contacts</a></li>
-          <?php elseif ($dclmn_user->is_exec()): ?>
-            <li><a href="<?php echo home_url('cp/dclmn-contacts/') ?>">View DCLMN Contacts</a></li>
-          <?php endif; ?>
-          <li><a href="<?php echo home_url('subcommittees/') ?>">DCLMN Subcommittees</a></li>
-          <li><a href="<?php echo get_stylesheet_directory_uri() ?>/assets/dclmn-guide-to-welcoming-new-residents.pdf" target="_blank">DCLMN Guide to Welcoming New Residents</a></li>
-          <?php if (current_user_can('edit_others_posts')): ?>
-            <li><a href="<?php echo home_url('cp/precinct-voters/') ?>">My Voters</a></li>
-            <li><a href="<?php echo home_url('cp/check-in-sheet/') ?>">Meeting Check-In Sheet</a></li>
-          <?php endif; ?>
+          <li><a href="https://www.votebuilder.com/" target="_blank">Vote Builder</a></li>
+          <li><a href="https://local.dclmn.us/streetlists/" target="_blank">Street Lists</a></li>
         </ul>
+        <h3>DCLMN Resources</h3>
+        <ul>
+          <li><a href="<?php echo get_stylesheet_directory_uri() ?>/assets/dclmn-guide-to-welcoming-new-residents.pdf" target="_blank">Guide to Welcoming New Residents</a></li>
+          <li><a href="<?php echo get_stylesheet_directory_uri() ?>/assets/dclmn-proxy-form-generic.docx" target="_blank">Generic Proxy Form</a></li>
+          <li><a href="https://drive.google.com/drive/folders/1aKBNH8LehMBqKRV_xzOli_XcCN9eWjkB" target="_blank">Petitions</a></li>
+          <li><a href="<?php echo home_url('subcommittees/') ?>" target="_blank">Subcommittees</a></li>
+        </ul>
+        <?php if (dclmn_user_is_exec()): ?>
+          <h3>Exec Tools</h3>
+          <ul>
+            <?php if (current_user_can('update_core')): ?>
+              <li><a href="<?php echo home_url('cp/dclmn-contacts/') ?>">View and Contact DCLMN Contacts</a></li>
+            <?php endif; ?>
+            <li><a href="<?php echo home_url('cp/check-in-sheet/') ?>" target="_blank">Meeting Check-In Sheet</a></li>
+          </ul>
+        <?php endif; ?>
+
+        <?php if (current_user_can('edit_others_posts')): ?>
+          <h3>Testing Tools</h3>
+          <ul>
+            <li><a href="<?php echo home_url('cp/precinct-voters/') ?>">My Voters</a></li>
+          </ul>
+        <?php endif; ?>
         <h3>MCDC Tools</h3>
         <ul>
           <li>
-            <a href="https://mcdems.org/cpc/">MCDC Committee Person Center</a>
+            <strong><a href="https://mcdems.org/cpc/" target="_blank">MCDC Committee Person Center</a></strong>
+            <div><strong>Here you can find the latest...</strong></div>
             <ul>
               <li>Committee Person Hand Book</li>
               <li>MCDC By-laws</li>
               <li>CP Appointment Form</li>
               <li>CP Resignation Form</li>
               <li>Executive Committee Proxy Form</li>
-              <li>Endorsement Convention Proxy</li>
+              <li>Endorsement Convention Proxy Form</li>
             </ul>
           </li>
         </ul>
+        <h3>Miscellaneous</h3>
+        <ul>
+          <li><a href="<?php echo home_url('lower-merion-street-name-generator/') ?>" target="_blank">Lower Merion Street Name Generator</a></li>
+        </ul>        
       </div>
       <div>
         <h3>Meetings</h3>
