@@ -80,31 +80,61 @@ class DCLMN_Zoom_API {
     return json_decode($response, true);
   }
 
-  function get_meetings($force = false) {
+  function get_upcoming_zooms($entries) {
+    foreach ($entries as $i => $entry) {
+      $start = new DateTime($entry['start_time']);
+      $start->setTimezone(new DateTimeZone('America/New_York'));
+
+      $end = clone $start;
+      $end->modify('+' . $entry['duration'] . ' minutes');
+
+      $now = new DateTime('now', new DateTimeZone('America/New_York'));
+
+      $isOver = $now > $end;
+      if ($isOver) {
+        unset($entries[$i]);
+      }
+    }
+
+    return array_values($entries);
+  }
+
+  function get_meetings($force = false, $upcoming = true) {
     $transient_name = 'zoom_meetings';
     if ($force || !$return = get_transient($transient_name)) {
-      $return = $this->call('meetings');
-      if (isset($return['meetings'])) $return = $return['meetings'];
+      $return = [];
+      $result = $this->call('meetings');
+      if (isset($result['meetings'])) $return = $result['meetings'];
 
       $return = base64_encode(serialize($return));
       set_transient($transient_name, $return, 60 * 60 * 24);
     }
 
     $return = unserialize(base64_decode($return));
+    if ($upcoming) {
+      $return = $this->get_upcoming_zooms($return);
+    }
+
     return $return;
   }
 
-  function get_webinars($force = false) {
+  function get_webinars($force = false, $upcoming = true) {
     $transient_name = 'zoom_webinars';
     if ($force || !$return = get_transient($transient_name)) {
-      $return = $this->call('webinars');
-      if (isset($return['webinars'])) $return = $return['webinars'];
+      $return = [];
+      $result = $this->call('webinars');
+      if (isset($result['webinars'])) $return = $result['webinars'];
 
       $return = base64_encode(serialize($return));
       set_transient($transient_name, $return, 60 * 60 * 24);
     }
 
-    $return = unserialize(base64_decode($return));
+    $return = (array) unserialize(base64_decode($return));
+
+    if ($upcoming) {
+      $return = $this->get_upcoming_zooms($return);
+    }
+
     return $return;
   }
 }
