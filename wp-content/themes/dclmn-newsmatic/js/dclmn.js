@@ -205,9 +205,9 @@ jQuery(document).ready(function ($) {
       hide: $(this).is(':checked'),
     };
 
-    $('#hide-cp-email-address-result').html('<img src="/wp-includes/images/spinner.gif">').removeClass('session-login-message');
+    $('#hide-cp-email-address-result').html('<img src="/wp-includes/images/spinner.gif" style="width: 16px; height: 16px; vertical-align: middle;">').removeClass('session-login-message');
     $.post(sbiajaxurl, data, function (data) {
-      $('#hide-cp-email-address-result').html('');//.addClass('session-login-message');
+      $('#hide-cp-email-address-result').html('Updated.').addClass('session-login-message').css('font-size', '.75em');
     });
   });
 
