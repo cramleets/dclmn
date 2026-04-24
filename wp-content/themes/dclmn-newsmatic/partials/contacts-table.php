@@ -2,7 +2,7 @@
 global $dclmn;
 $dclmn_user = dclmn_get_user();
 ?>
-<?php if (is_object($dclmn_user) && $dclmn_user->is_exec()): ?>
+<?php if (is_object($dclmn_user) && dclmn_user_is_exec()): ?>
   <?php get_template_part('partials/cp-nav'); ?>
   <p>When DCLMN sends out invites to Zoom meetings the following people get included.</p>
   <div class="contact-table-toggles">
