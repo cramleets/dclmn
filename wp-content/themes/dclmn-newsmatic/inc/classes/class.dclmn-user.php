@@ -90,4 +90,12 @@ class DCLMN_User {
   function email_address_is_hidden() {
     return $this->hide_email_address;
   }
+
+  function get_mailbox() {
+    $mailbox = $this->get_precinct()->post_title;
+    $mailbox = str_replace('Narberth ', 'N-', $mailbox);
+    $mailbox = str_replace('Lower Merion ', '', $mailbox);
+    $mailbox = strtolower($mailbox) .'@dclmn.us';
+    return $mailbox;
+  }
 }
