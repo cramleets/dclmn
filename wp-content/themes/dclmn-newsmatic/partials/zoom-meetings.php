@@ -5,6 +5,7 @@ $meetings = $zoom->get_meetings();
 $webinars = $zoom->get_webinars();
 
 $out = '';
+$out .= '<div class="zoom-meetings">';
 foreach ($meetings as $meeting) {
   if (!dclmn_auth('exec') && stristr($meeting['topic'], 'exec')) continue;
 
@@ -25,6 +26,7 @@ foreach ($meetings as $meeting) {
   $out .= '</ul>';
   $out .= '</li>';
 }
+$out .= '</div>';
 
 if (!empty($out)) {
   $out = '<h3>Upcoming Zoom Meetings</h3><ul>'. $out .'</ul>';
