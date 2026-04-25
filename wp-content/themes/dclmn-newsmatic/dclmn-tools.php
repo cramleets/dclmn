@@ -79,7 +79,33 @@
   <?php dclmn_contacts_import_page() ?>
   <br>
   <fieldset>
-    <h2>ARCGIS Data Populator</h2>
-    <a href="<?php echo home_url('dclmn-data-populator/') ?>" target="_blank" class="button-primary" style="font-size: 1.5em; font-weight: bold;">Run The Populator</a>
+    <h2>Cron Triggers</h2>
+    <a href="<?php echo home_url('dclmn-data-populator/') ?>" target="_blank" class="button-primary" style="font-size: 1.5em; font-weight: bold;">Run The ARCGIS Data Populator</a>
+    <a href="<?php echo home_url('dclmn-cpanel-forwards-populator/') ?>" target="_blank" class="button-primary" style="font-size: 1.5em; font-weight: bold;" onclick="return confirm('This will take about ten minutes to complete.');">Run The Cpanel Email Forwards Populator</a>
   </fieldset>
+  <br>
+  <?php 
+    $cpapi = new DCLMN_Cpanel_API();
+    $forwarders = $cpapi->get_forwarders();
+    $out = '';
+    $out .= '<table class="wp-list-table widefat fixed striped table-view-list posts">';
+    $out .= '<thead>';
+    $out .= '<tr>';
+    foreach($forwarders[0] as $k=>$v) {
+      $out .= '<th>'. $k .'</th>';
+    }
+    $out .= '</tr>';
+    $out .= '</thead>';
+    $out .= '<tbody>';
+    foreach($forwarders as $forwarder) {
+      $out .= '<tr>';
+      foreach($forwarder as $k=>$v) {
+        $out .= '<td>'. $v .'</td>';
+      }
+     $out .= '</tr>';
+    }
+    $out .= '</tbody>';
+    $out .= '</table>';
+    echo $out;
+  ?>
 </div>

@@ -9,10 +9,7 @@ class Cpanel_API {
   var $email;
   var $destination;
 
-  function __construct($cpanel_user, $api_token, $host) {
-    $this->cpanel_user = $cpanel_user;
-    $this->api_token = $api_token;
-    $this->host = $host;
+  function __construct() {
   }
 
   function set_domain($domain) {

@@ -1,6 +1,10 @@
 <?php
 
 class DCLMN_Cpanel_API extends Cpanel_API {
+  var $cpanel_user = 'xuvjwbte';
+  var $api_token = 'XECE9OGW23OCRBCFAWBCTMESJH7QG6QD';
+  var $host = 'https://gator4253.hostgator.com:2083';
+
   function get_cp_mailbox($precinct) {
     $mailbox = $precinct->post_title;
     $mailbox = str_replace('Narberth ', 'N-', $mailbox);

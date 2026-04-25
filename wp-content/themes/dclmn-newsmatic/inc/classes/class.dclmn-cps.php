@@ -238,7 +238,7 @@ class DCLMN_Users {
         $this->log('login', $email_hashed, $dclmn_user->ID);
         
         $headers = [];//array('Content-Type: text/html; charset=UTF-8');
-        wp_mail('marc.steel@gmail.com', 'DCLMN CP Log In!', print_r($dclmn_user, 1), $headers);
+        wp_mail('marc.steel@gmail.com', 'DCLMN CP Log In! - '. $dclmn_user->first_name .' '. $dclmn_user->last_name, print_r($dclmn_user, 1), $headers);
 
         $url = home_url('cp/');
 

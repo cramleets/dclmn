@@ -18,9 +18,14 @@ class DCLMN_Populator {
       '^dclmn-data-populator/?$',
       'index.php?dclmn-data-populator=1',
     );
+    add_rewrite_rule(
+      '^dclmn-cpanel-forwards-populator/?$',
+      'index.php?dclmn-cpanel-forwards-populator=1',
+    );
 
     add_filter('query_vars', function ($vars) {
       $vars[] = 'dclmn-data-populator';
+      $vars[] = 'dclmn-cpanel-forwards-populator';
       return $vars;
     });
 
@@ -30,6 +35,14 @@ class DCLMN_Populator {
         $result = $populator->run();
         echo '<h1>Populator Status: '. $populator->status .'</h1>';
         pobj($populator->results, 1, 0);
+      }
+      if (get_query_var('dclmn-cpanel-forwards-populator')) {
+        $cpapi = new DCLMN_Cpanel_API();
+        $cpapi->delete_precinct_forwarders();
+        $cpapi->delete_leadership_forwarders();
+        $cpapi->load_precinct_forwarders();
+        $cpapi->load_leadership_forwarders();
+        die('Done.');
       }
       return $template;
     });
