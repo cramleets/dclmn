@@ -1,0 +1,27 @@
+#poll-choices-target {
+  margin-top: 1em;
+}
+
+#poll-choices-target tbody tr:hover {
+  background-color: #ff0;
+}
+
+#poll-choices-target tbody tr.deleting {
+  background-color: #fcc;
+}
+
+#poll-choices-target tbody tr.deleting.deleted {
+  background-color: #f99;
+}
+
+#poll-choices table.striped thead tr td {
+  background-color: #000;
+  color: #fff;
+  font-weight: bold;
+}
+
+#poll-choices .drag-icon {
+  cursor: move;
+  line-height: 0.3;
+  font-size: 1.5em;
+}

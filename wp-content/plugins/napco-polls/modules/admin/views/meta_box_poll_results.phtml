@@ -1,0 +1,15 @@
+<?php
+$poll = new DCLMN_Poll(get_the_ID());
+
+// $mvc = new dclmn_WP_MVC( array( 'primary_directory' => dirname( __FILE__ ) . '/../../../' ) );
+// $mvc->module = 'poll';
+// $mvc->action = 'ajax-results';
+// $mvc->view->data = [ 'poll' => $poll ];
+
+// $out = $mvc->partial( 'results' );
+
+$out = '';
+// include '/Users/mps/Sites/DCLMN/dclmn/wp-content/plugins/napco-polls/modules/poll/views/partials/results.phtml';
+?>
+<a href="<?php echo trailingslashit($poll->href) ?>/results/" target="_blank" style="display: block; text-align: center; font-size: 1.5em;">Link to the Results Page</a>
+<?php echo $out; ?>

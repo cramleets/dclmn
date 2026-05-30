@@ -1,0 +1,37 @@
+
+
+
+#results-target-wrapper {
+  position: relative;
+  text-align: center;
+  margin-top: 2em;
+}
+
+#results-target-wrapper h3 {
+  display: none;
+  background-color: #fff;
+  padding: 0.5em 1em;
+  border: 1px #999 solid;
+  position: absolute;
+  z-index: 99;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+#results-target-wrapper.loading #results-target {
+  opacity: 0.2;
+}
+
+#results-target-wrapper.loading h3 {
+  display: inline-block;
+}
+
+#donutchart {
+  margin: 0 auto;
+}
+
+#votes-target {
+  margin-top: 1em;
+}

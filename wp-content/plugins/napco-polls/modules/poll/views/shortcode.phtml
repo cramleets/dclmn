@@ -1,0 +1,52 @@
+<?php
+
+$out = '';
+
+$out .= '<div class="napco-poll-wrapper">';
+$out .= '<h4>' . $poll->post_title . '</h4>';
+$out .= '<div class="napco-poll-action-wrapper">';
+
+if ( $poll->poll_closed ) {
+  $out .= '<p>Voting is closed.</p>';
+} elseif ( $dclmn_polls->user_has_voted( $poll->ID ) ) {
+  $href = add_query_arg( [ 'action' => 'reset', 'poll_id' => $poll->ID ], $poll->href );
+  $out .= 'Thank you for voting.';
+  if ( $poll->unlimited_votes ) {
+    $out .= '<p class="vote-again"><a href="' . $href . '">Vote Again</a></p>';
+  }
+
+  //not ready. will finish if ever requested
+  //if ( 'voted' == $poll->show_results ) {
+  //  $this->view->data['poll'] = $poll;
+  //  $out .= $this->partial( 'results' );
+  //}
+} else {
+  $qr_code_url = 'https://chart.googleapis.com/chart?chs=200x200&cht=qr&choe=UTF-8&chl=%s';
+  $poll_url = home_url( 'poll-vote/?poll_id=%d&choice_id=%d' );
+
+  $out .= '<form action="' . home_url( 'poll-vote/' ) . '" method="post" class="napco-poll">';
+  $out .= '<input type="hidden" name="action" value="dclmn_poll_vote">';
+  $out .= '<input type="hidden" name="poll_id" value="' . $poll->ID . '">';
+  $out .= '<ul>';
+
+  foreach ( $poll->choices as $choice ) {
+    $poll_entry_url = sprintf( $poll_url, $poll->ID, $choice->ID );
+    $this_qr_code_url = sprintf( $qr_code_url, urlencode( $poll_entry_url ) );
+
+    $choice_description = apply_filters( 'the_content', $choice->post_content );
+
+    $out .= '<li>';
+    $out .= '<label for="poll_choice_' . $choice->ID . '">';
+    $out .= '<input type="radio" name="choice_id" value="' . $choice->ID . '" id="poll_choice_' . $choice->ID . '">';
+    $out .= ' ' . $choice->choice_label;
+    $out .= '</label>';
+    $out .= '</li>';
+  }
+  $out .= '</ul>';
+  $out .= '<div class="napco-poll-submit-wrap"><input type="submit" class="button" value="submit"></div>';
+  $out .= '</form>';
+}
+$out .= '</div>'; //.napco-poll-action-wrapper
+$out .= '</div>'; //.napco-poll-wrapper
+
+echo $out;

@@ -1,0 +1,121 @@
+<?php
+$out = '';
+
+$out .= $this->partial('header');
+
+if ($poll->poll_closed) {
+  $out .= '<p>Voting is closed.</p>';
+} elseif ($dclmn_polls->user_has_voted($poll->ID)) {
+  $href = add_query_arg(['action' => 'reset', 'poll_id' => $poll->ID], $poll->href);
+  $out .= 'Thank you for voting.';
+  if ($poll->unlimited_votes) {
+    $out .= '<p class="vote-again"><a href="' . $href . '">Vote Again</a></p>';
+  }
+
+  if ('voted' == $poll->show_results) {
+    $out .= $this->partial('results');
+  }
+} else {
+  $qr_code_url = 'https://chart.googleapis.com/chart?chs=200x200&cht=qr&choe=UTF-8&chl=%s';
+  $poll_url = home_url('poll-vote/?poll_id=%d&choice_id=%d');
+
+  $do_qrs = $_GET['qrs'];
+  $do_list = $_GET['list'];
+  $do_form = $_GET['form'];
+
+  if (!$do_qrs && !$do_list && !$do_qrs) {
+    $do_form = true;
+  }
+
+  if ($do_qrs) {
+    $out .= '<div class="flex">';
+  } elseif ($do_form) {
+    $out .= '<form action="' . home_url('poll-vote/') . '" method="post" class="napco-poll">';
+    $out .= '<input type="hidden" name="poll_id" value="' . $poll->ID . '">';
+    $out .= '<section class="flex">';
+  } elseif ($do_list) {
+    $out .= '<ul class="poll-choices">';
+  }
+
+  foreach ($poll->choices as $choice) {
+    $poll_entry_url = sprintf($poll_url, $poll->ID, $choice->ID);
+    $this_qr_code_url = sprintf($qr_code_url, urlencode($poll_entry_url));
+
+    $choice_description = apply_filters('the_content', $choice->post_content);
+
+    if ($do_qrs) {
+      $out .= '<a href="' . $poll_entry_url . '">';
+      $out .= '<div style="text-align: center; border: 1px #999 solid; width: 220px; padding: .5em; margin: 1em;">';
+      $out .= '<h2>' . $choice->choice_label . '</h2>';
+      $out .= '<img src="' . $this_qr_code_url . '">';
+      $out .= '</div>';
+      $out .= '</a>';
+    } elseif ($do_form) {
+      $out .= '<div>';
+      $out .= '<input type="radio" name="choice_id" value="' . $choice->ID . '" id="poll_choice_' . $choice->ID . '">';
+      $out .= '<label for="poll_choice_' . $choice->ID . '">';
+
+      if ($choice->choice_image) {
+        $out .= '<img src="' . $choice->choice_image . '" width="100">';
+      }
+
+      $out .= '<h2';
+      if ($choice->choice_image) {
+        $out .= ' class="has-image"';
+      }
+      $out .= '>' . $choice->choice_label . '</h2>';
+      if ($choice->post_content) {
+        $out .= '<p>' . $choice->post_content . '</p>';
+      }
+
+      if ($choice->choice_url) {
+        $out .= '<a href="' . $choice->choice_url . '" class="choice-url">Learn More</a>';
+      }
+      $out .= '</label>';
+      $out .= '</div>';
+    } elseif ($do_list) {
+      $out .= '<li>';
+      $out .= '<a href="' . $poll_entry_url . '" class="vote-url">';
+      $out .= $choice->choice_label;
+      $out .= $choice_description;
+      $out .= '</a>';
+      if ($choice->choice_url) {
+        $out .= '<a href="' . $choice->choice_url . '" class="choice-url">Learn More</a>';
+      }
+      $out .= '</li>';
+    }
+  }
+
+  if ($do_qrs) {
+    $out .= '</div>';
+  } elseif ($do_form) {
+    $out .= '</section>';
+    $out .= '<div class="clear"></div>';
+    $out .= '<input type="submit" class="button" value="submit">';
+    $out .= '<div class="clear"></div>';
+    $out .= '</form>';
+  } elseif ($do_list) {
+    $out .= '</ul>';
+  }
+
+  if ('always' == $poll->show_results) {
+    $out .= $this->partial('results');
+  }
+}
+?>
+<style>
+  <?php
+  echo $this->partial('css/poll-single.css');
+  echo $this->partial('css/poll-single-radio.css');
+  ?>
+</style>
+<script>
+  <?php
+  echo $this->partial('js/poll-single.js');
+  ?>
+</script>
+<div class="holder">
+  <div class="inner">
+    <?php echo $out; ?>
+  </div>
+</div>

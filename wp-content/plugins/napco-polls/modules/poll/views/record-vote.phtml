@@ -1,0 +1,14 @@
+<?php
+
+$poll_id = $_REQUEST['poll_id'];
+$choice_id = $_REQUEST['choice_id'];
+
+if ( !$poll_id || !$choice_id ) {
+  die( 'missing info.' );
+}
+
+$vote_id = $dclmn_polls->record_vote( $poll_id, $choice_id );
+
+$url = dclmn_get_post( $poll_id )->href;
+
+header( 'Location: ' . $url );

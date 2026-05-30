@@ -1,0 +1,36 @@
+<?php
+$vote = dclmn_get_post( get_the_ID() );
+
+$poll_id = $vote->poll_id;
+$choice_id = $vote->choice_id;
+$vote_meta = $vote->vote_meta;
+
+$poll = dclmn_get_post( $poll_id );
+$choice = dclmn_get_post( $choice_id );
+
+$choice_label = $vote_meta['choice_label'];
+$ip = $vote_meta['ip'];
+$ua = $vote_meta['ua'];
+$referer = $vote_meta['referer'];
+?>
+<ul>
+  <li>Poll: <strong><?php echo $poll->post_title ?></strong> <a href="<?php echo get_edit_post_link( $poll->ID ) ?>" target="_blank">edit</a> | <a href="<?php echo $poll->href ?>" target="_blank">view</a></li>
+  <li>Choice ID: <strong><?php echo $choice->ID ?></strong></li>
+  <li>Choice Label Now: <strong><?php echo $choice->choice_label ?></strong></li>
+  <li>Choice Label At Time of Vote: <strong><?php echo $choice_label ?></strong></li>
+  <li>Date Created: <strong><?php echo $vote->post_date ?></strong></li>
+  <li>IP Address: <strong><?php echo $ip ?></strong></li>
+  <li>User Agent: <strong><?php echo $ua ?></strong></li>
+  <li>Referer: <strong><?php echo $referer ?></strong></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+

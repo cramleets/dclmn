@@ -1,0 +1,54 @@
+<?php
+$votes = $poll->get_votes();
+
+$results = [];
+foreach ( $votes as $vote ) {
+  $results[$vote->choice_id] ++;
+}
+
+foreach ( $poll->get_choices() as $choice ) {
+  $terms[$choice->ID] = $choice->choice_label;
+}
+?>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Results - <?php echo $poll->post_title ?> - <?php bloginfo() ?></title>
+    <style>
+      body {
+        font-family: arial, sans-serif;
+        font-size: 12px;
+        background-color: #ccc;
+      }
+
+      .wrapper {
+        max-width: 700px;
+        margin: 0 auto;
+        background-color: #fff;
+        border: 1px #999 solid;
+        padding: 1em;
+      }
+
+      h1 {
+        margin: 0 0 .5em 0;
+        font-size: 2.5em;
+        text-align: center;
+      }
+
+      h2 {
+        text-align: center;
+      }
+    </style>
+    <script src="/wp-includes/js/jquery/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1><?php echo $poll->post_title ?></h1>
+      <?php if ( !current_user_can( 'edit_others_posts' ) ): ?>
+        <h2>You Are Not Authorized.</h2>
+      <?php else: ?>
+        <?php echo $this->partial( 'results-bar' ); ?>
+      <?php endif; ?>
+    </div>
+  </body>
+</html>

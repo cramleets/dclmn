@@ -1,0 +1,9 @@
+<?php
+
+$out = '';
+if ( $poll->thumb_src ) {
+  $out .= '<div class="poll-image">';
+  $out .= '<img src="' . dclmn_thumb( $poll->thumb_src, ['width'=>300] ) . '">';
+  $out .= '</div>';
+}
+echo $out;

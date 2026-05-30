@@ -1,0 +1,38 @@
+<?php
+$args = [
+    'orderby' => 'date',
+    'order' => 'DESC',
+];
+$votes = $poll->get_votes( $args );
+$vote_count = count( $votes );
+?>
+<table cellpadding="5" cellspacing="0" border="1" width="100%" class="striped">
+  <thead>
+    <tr valign="bottom" style="background-color: #000; color: #fff; font-weight: bold;">
+      <td>#</td>
+      <td>Date</td>
+      <td>Vote ID</td>
+      <td>Poll ID</td>
+      <td>Choice ID</td>
+      <td>Vote Label</td>
+      <td>IP Address</td>
+      <td>User Agent</td>
+      <td>Referer</td>
+    </tr>
+  </thead>
+  <tbody>
+    <?php foreach ( $votes as $vote ): ?>
+      <tr valign="top">
+        <td><?php echo $vote_count-- ?>
+        <td><?php echo $vote->post_date ?>
+        <td><?php echo $vote->ID ?>
+        <td><?php echo $vote->poll_id ?>
+        <td><?php echo $vote->choice_id ?>
+        <td><?php echo $vote->vote_meta['choice_label'] ?>
+        <td><?php echo $vote->vote_meta['ip'] ?>
+        <td><?php echo $vote->vote_meta['ua'] ?>
+        <td><?php echo $vote->vote_meta['referer'] ?>
+      </tr>
+    <?php endforeach; ?>
+  </tbody>
+</table>

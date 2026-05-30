@@ -1,0 +1,10 @@
+<?php if ( 0 && ! count( $post->choices ) && 'publish' != $post->post_status ): ?>
+  Please publish the poll before adding choices.
+<?php else: ?>
+  <div id="poll-choices">
+    <input type="button" class="button-primary open-poll-choice-modal" value="Add Choice">
+    <input type="button" class="button-secondary get-poll-choices" value="Get Choices">
+    <div id="poll-choices-target"></div>
+  </div>
+  <div id="sort_choices_result" class="ajax-result"></div>
+<?php endif; ?>

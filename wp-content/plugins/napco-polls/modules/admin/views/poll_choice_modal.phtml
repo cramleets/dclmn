@@ -1,0 +1,80 @@
+<?php
+if ( $_REQUEST['choice_id'] ) {
+  $choice = dclmn_get_post( $_REQUEST['choice_id'] );
+}
+
+$user = wp_get_current_user();
+$button_label = ( $choice ) ? 'Edit Choice' : 'Add Choice';
+?>
+<style>
+  #poll-choice label {
+    display: block;
+    font-weight: bold;
+    margin-top: .5em;
+  }
+
+  #poll-choice input[type=text],
+  #poll-choice textarea {
+    width: 100%;
+    font-size: 1.25em;
+    padding: .25em;
+    font-family: tahoma, helvetica, arial, sans-serif;
+  }
+
+  #poll-choice textarea {
+    padding: .5em;
+  }
+
+  #poll-choice-footer {
+    text-align: right;
+    margin-top: .5em;
+  }
+
+  #poll-choice-footer img {
+    vertical-align: middle;
+  }
+</style>
+<script>
+  jQuery(document).ready(function ($) {
+    $('form#poll-choice').on('submit', function (e) {
+      e.preventDefault();
+
+      $(this).find('input[type=submit]').attr('disabled', true);
+      var parent_id = $(this).find('input[name=parent_id]').val();
+
+      data = {
+        action: 'add_edit_poll_choice',
+        data: $(this).serialize(),
+      };
+
+      $('#poll-choice-result').removeClass('ajax-result').html('<img src="/wp-includes/images/spinner.gif">').show();
+      $.post(ajaxurl, data, function (data) {
+        $('#poll-choice-result').addClass('ajax-result').html('Choice #' + data + ' Added.').show();
+        get_poll_choices(parent_id);
+        setTimeout(function () {
+          tb_remove();
+        }, 2000);
+      })
+    });
+  });
+</script>
+<form id="poll-choice">
+  <input type="hidden" name="parent_id" value="<?php echo $_REQUEST['parent_id'] ?>">
+  <?php if ( $choice ): ?>
+    <input type="hidden" name="choice_id" value="<?php echo $choice->ID ?>">
+  <?php endif; ?>
+  <label>User</label>
+  <input type="text" value="<?php echo $user->data->display_name ?>" disabled>
+  <label>Choice Label</label>
+  <input type="text" name="choice_label" value="<?php echo esc_attr( $choice->choice_label ) ?>">
+  <label>Choice Description</label>
+  <textarea name="choice_description"><?php echo $choice->post_content ?></textarea>
+  <label>Choice URL</label>
+  <input type="text" name="choice_url" value="<?php echo esc_attr( $choice->choice_url ) ?>">
+  <label>Choice Image</label>
+  <input type="text" name="choice_image" value="<?php echo esc_attr( $choice->choice_image ) ?>" placeholder="Paste in an image URL">
+  <div id="poll-choice-footer">
+    <span id="poll-choice-result"></span>
+    <input type="submit" class="button-primary" value="<?php echo $button_label ?>">
+  </div>
+</form>

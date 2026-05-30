@@ -1,0 +1,24 @@
+<?php $poll = dclmn_get_post( $post->post_parent ) ?>
+<ul>
+  <li>Poll: <strong><?php echo $poll->post_title ?></strong> <a href="<?php echo get_edit_post_link( $poll->ID ) ?>" target="_blank">edit</a> | <a href="<?php echo $poll->href ?>" target="_blank">view</a></li>
+  <li>Choice ID: <strong><?php echo $post->ID ?></strong></li>
+  <li>URL Slug: <strong><?php echo $post->post_name ?></strong></li>
+  <li>Date Created: <strong><?php echo $post->post_date ?></strong></li>
+  <li>Date Modified: <strong><?php echo $post->post_modified ?></strong></li>
+  <li>Created By: <strong><?php echo $post->user_id ?></strong></li>
+  <li>Choice Label: <strong><?php echo $post->choice_label ?></strong></li>
+  <li>Choice Description: <strong><?php echo $post->post_content ?></strong></li>
+  <li>Choice URL: <strong><?php echo $post->choice_url ?></strong></li>
+  <li>Choice Image: <strong><?php echo $post->choice_image ?></strong></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,7 @@
+<div class="poll-description">
+  <?php
+  if ( $poll->post_content && ! $dclmn_polls->user_has_voted( $poll->ID ) ) {
+    echo apply_filters( 'the_content', $poll->post_content );
+  }
+  ?>
+</div>

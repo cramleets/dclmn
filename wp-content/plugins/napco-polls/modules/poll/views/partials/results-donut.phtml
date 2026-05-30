@@ -1,0 +1,60 @@
+<?php
+$votes = $poll->get_votes();
+
+$results = [];
+foreach ( $votes as $vote ) {
+  $results[$vote->choice_id] ++;
+}
+
+foreach ( $poll->get_choices() as $choice ) {
+  $terms[$choice->ID] = $choice->choice_label;
+}
+?>
+<section>
+  <div id="donutchart" style="width: 600px; height: 400px;"></div>
+</section>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load("current", {packages: ["corechart"]});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Promo Code', 'Uses'],
+<?php
+$out = '';
+foreach ( $results as $k => $v ) {
+  $label = addslashes( $terms[$k] );
+  $out .= "['$label ($v)',$v],";
+}
+echo $out;
+?>
+    ]);
+
+    var options = {
+      //        title: 'My Daily Activities',
+      is3D: true,
+      pieSliceText: 'percentage',
+      chartArea: {
+        left: 0,
+        top: 0,
+        width: "100%",
+        height: "100%"
+      }
+    };
+    var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+
+    chart.draw(data, options);
+  }
+
+  jQuery(document).ready(function ($) {
+    $(window).on("resize", function (event) {
+      var options = {
+        width: '100%',
+        height: '100%'
+      };
+
+      var data = google.visualization.arrayToDataTable([]);
+      drawChart(data, options);
+    });
+  });
+</script>

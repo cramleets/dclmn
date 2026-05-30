@@ -1,0 +1,57 @@
+<?php
+
+$dimension = 545;
+
+$qr_code_url = "https://chart.googleapis.com/chart?chs={$dimension}x{$dimension}&cht=qr&choe=UTF-8&chl=%s";
+
+$poll_url = home_url( 'poll-vote/?poll_id=%d&choice_id=%d&qr=1' );
+
+foreach ( $poll->get_choices() as $choice ) {
+  $poll_entry_url = sprintf( $poll_url, $poll->ID, $choice->ID );
+  $this_qr_code_url = sprintf( $qr_code_url, urlencode( $poll_entry_url ) );
+
+  $out .= '<div class="qr-box">';
+  $out .= '<h1>'. $poll->post_title .'</h1>';
+  $out .= '<h2>' . $choice->choice_label . '</h2>';
+  $out .= '<img src="' . $this_qr_code_url . '">';
+  $out .= '<a href="'. $poll_entry_url .'">Clicky</a>';
+  $out .= '</div>';
+}
+?>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>QR Codes - <?php bloginfo() ?></title>
+    <style>
+      body {
+        font-family: arial, sans-serif;
+        font-size: 12px;
+      }
+
+      h1 {
+        margin: 0 0 .5em 0;
+        font-size: 3em;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 2em;
+      }
+
+      .qr-box {
+        text-align: center;
+        margin: 1em auto;
+        box-size: border-box;
+      }
+
+      @media print {
+        .qr-box {
+          page-break-after: always;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <?php echo $out; ?>
+  </body>
+</html>

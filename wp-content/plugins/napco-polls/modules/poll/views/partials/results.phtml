@@ -1,0 +1,13 @@
+<?php
+if (!isset($out)) $out = '';
+$out .= '<div id="results-target-wrapper">';
+$out .= '<h3>... loading ...</h3>';
+$out .= '<div id="results-target">';
+ob_start();
+include dirname(__FILE__).'.results-bar.phtml';
+$out .= ob_end_clean();
+$out .= '</div>';
+$out .= '<a href="#" class="button" id="results-refresh-trigger">REFRESH</a>';
+$out .= '</div>';
+
+echo $out;
