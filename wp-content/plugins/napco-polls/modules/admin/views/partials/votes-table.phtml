@@ -23,15 +23,15 @@ $vote_count = count( $votes );
   <tbody>
     <?php foreach ( $votes as $vote ): ?>
       <tr valign="top">
-        <td><?php echo $vote_count-- ?>
-        <td><?php echo $vote->post_date ?>
-        <td><?php echo $vote->ID ?>
-        <td><?php echo $vote->poll_id ?>
-        <td><?php echo $vote->choice_id ?>
-        <td><?php echo $vote->vote_meta['choice_label'] ?>
-        <td><?php echo $vote->vote_meta['ip'] ?>
-        <td><?php echo $vote->vote_meta['ua'] ?>
-        <td><?php echo $vote->vote_meta['referer'] ?>
+        <td><?php echo $vote_count-- ?></td>
+        <td><?php echo $vote->post_date ?></td>
+        <td><?php echo $vote->ID ?></td>
+        <td><?php echo $vote->poll_id ?></td>
+        <td><?php echo $vote->choice_id ?></td>
+        <td><?php echo $vote->vote_meta['choice_label'] ?></td>
+        <td><?php echo $vote->vote_meta['ip'] ?></td>
+        <td><?php echo $vote->vote_meta['ua'] ?></td>
+        <td><?php echo $vote->vote_meta['referer'] ?></td>
       </tr>
     <?php endforeach; ?>
   </tbody>

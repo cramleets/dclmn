@@ -10,10 +10,10 @@ jQuery(document).ready(function ($) {
 
     data = {
       action: 'results_refresh',
-      poll_id: $('meta[property="dclmn_page_id"]').attr('content'),
+      poll_id: $('#dclmn_poll_id').val(),
     };
 
-    $.post(ajaxurl, data, function (data) {
+    $.post(sbiajaxurl, data, function (data) {
       $('#results-target-wrapper').removeClass('loading');
 
       var data = jQuery.parseJSON(data);

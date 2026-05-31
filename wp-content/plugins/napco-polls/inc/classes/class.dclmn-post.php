@@ -3,6 +3,8 @@
 class DCLMN_Post {
 
   var $ID;
+  var $href;
+  var $thumb_src;
 
   function __construct($id, $thumb_size = false) {
 
@@ -40,6 +42,9 @@ class DCLMN_Post {
       foreach ($post as $key => $value) {
         $this->$key = $value;
       }
+
+      $this->href = get_permalink($this->ID);
+
       unset($post);
     }
   }

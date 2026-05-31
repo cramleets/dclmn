@@ -9,6 +9,7 @@ if ( !$poll_id || !$choice_id ) {
 
 $vote_id = $dclmn_polls->record_vote( $poll_id, $choice_id );
 
-$url = dclmn_get_post( $poll_id )->href;
+$url = get_permalink( $poll_id );
 
 header( 'Location: ' . $url );
+exit;

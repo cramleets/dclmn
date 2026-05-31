@@ -5,6 +5,9 @@ $out .= $this->partial('header');
 
 if ($poll->poll_closed) {
   $out .= '<p>Voting is closed.</p>';
+} elseif ($poll->cp_only & !dclmn_auth('cp')) {
+  $out .= '<h2>You must be logged in as a committee person to vote.</h2>';
+  $out .= '<h3><a href="'. home_url('cp/') .'">Log In</a></h3>';
 } elseif ($dclmn_polls->user_has_voted($poll->ID)) {
   $href = add_query_arg(['action' => 'reset', 'poll_id' => $poll->ID], $poll->href);
   $out .= 'Thank you for voting.';
@@ -13,15 +16,16 @@ if ($poll->poll_closed) {
   }
 
   if ('voted' == $poll->show_results) {
+    $out .= '<div class="clear"></div>';
     $out .= $this->partial('results');
   }
 } else {
   $qr_code_url = 'https://chart.googleapis.com/chart?chs=200x200&cht=qr&choe=UTF-8&chl=%s';
   $poll_url = home_url('poll-vote/?poll_id=%d&choice_id=%d');
 
-  $do_qrs = $_GET['qrs'];
-  $do_list = $_GET['list'];
-  $do_form = $_GET['form'];
+  $do_qrs = $_GET['qrs'] ?? false;
+  $do_list = $_GET['list'] ?? false;
+  $do_form = $_GET['form'] ?? false;
 
   if (!$do_qrs && !$do_list && !$do_qrs) {
     $do_form = true;
@@ -41,7 +45,7 @@ if ($poll->poll_closed) {
     $poll_entry_url = sprintf($poll_url, $poll->ID, $choice->ID);
     $this_qr_code_url = sprintf($qr_code_url, urlencode($poll_entry_url));
 
-    $choice_description = apply_filters('the_content', $choice->post_content);
+    // $choice_description = apply_filters('the_content', $choice->post_content);
 
     if ($do_qrs) {
       $out .= '<a href="' . $poll_entry_url . '">';
@@ -103,15 +107,16 @@ if ($poll->poll_closed) {
   }
 }
 ?>
+<input type="hidden" id="dclmn_poll_id" value="<?php echo $poll->ID ?>">
 <style>
   <?php
-  echo $this->partial('css/poll-single.css');
-  echo $this->partial('css/poll-single-radio.css');
+  include dirname(__FILE__) . '/../css/poll-single.css';
+  include dirname(__FILE__) . '/../css/poll-single-radio.css';
   ?>
 </style>
 <script>
   <?php
-  echo $this->partial('js/poll-single.js');
+  include dirname(__FILE__) . '/../js/poll-single.js';
   ?>
 </script>
 <div class="holder">

@@ -5,6 +5,9 @@ class DCLMN_Poll extends DCLMN_Post {
   var $choices;
   var $randomize_choices;
   var $poll_closed = false;
+  var $unlimited_votes;
+  var $show_results;
+  var $cp_only;
 
   function __construct( $id, $thumb_size = false ) {
     parent::__construct( $id, $thumb_size );
@@ -43,7 +46,11 @@ class DCLMN_Poll extends DCLMN_Post {
     
     $args = wp_parse_args( $args, $defaults );
 
-    return dclmn_get_posts( $args );
+    $posts = [];
+    foreach(get_posts($args) as $i=>$post) {
+      $posts[] = new DCLMN_Poll_vote($post->ID);
+    }
+    return $posts;
   }
 
 }

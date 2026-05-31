@@ -13,19 +13,64 @@ class DCLMN_Polls {
     add_action('manage_poll_entry_posts_custom_column', array($this, 'manage_poll_entry_posts_custom_column'), 10, 2);
 
     add_action('add_meta_boxes', array($this, 'add_meta_boxes'), 10, 2);
-    add_action('dclmn_wp_site_init_request_listeners', array($this, 'request_action_listeners')); //hook into napco wp site to init request listeners
+    add_action('wp', array($this, 'request_action_listeners')); //hook into napco wp site to init request listeners
 
-    add_shortcode('poll', array($this, 'shortcode'));
+    add_action('template_redirect', array($this, 'template_redirect_module_view'));
+    add_filter('query_vars', array($this, 'query_vars'));
+  }
+
+
+
+  public function query_vars($vars) {
+    $vars[] = 'module';
+    $vars[] = 'action';
+    $vars[] = 'module_view';
+    $vars[] = 'module_primary_directory';
+    return $vars;
+  }
+
+
+
+  /**
+   * "Intercepts" the display and looks to see if our custom module view flag
+   * has been set in the non-rewritten URL query variables. If it is found then 
+   * the module is displayed and the script exits.
+   * @param object $query WP Query object.
+   */
+  public function template_redirect_module_view() {
+    global $wp_query;
+
+    if (!empty($wp_query->query_vars['module_view'])) {
+      $module = get_query_var('module');
+      $action = get_query_var('action');
+      $module_primary_directory = get_query_var('module_primary_directory');
+
+      $args = array();
+      if ($module_primary_directory) $args['primary_directory'] = $module_primary_directory;
+
+      header('HTTP/1.1 200 OK');
+      $wp_query->is_404 = false;
+      $wp_query->is_home = false;
+
+      ob_start();
+      require dirname(__FILE__) . '/../../modules/' . $module . '/controller.php';
+      include dirname(__FILE__) . '/../../modules/' . $module . '/views/' . $action . '.phtml';
+      echo ob_get_clean();
+
+      die();
+    }
   }
 
   function request_action_listeners() {
-    switch ($_GET['action']) {
-      case 'reset':
-        if ($_GET['poll_id']) {
-          $this->reset_status($_GET['poll_id']);
-          header('Location: ' . $_SERVER['HTTP_REFERER']);
-          exit;
-        }
+    if (!empty($_GET['action'])) {
+      switch ($_GET['action']) {
+        case 'reset':
+          if ($_GET['poll_id']) {
+            $this->reset_status($_GET['poll_id']);
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
+          }
+      }
     }
   }
 
@@ -251,7 +296,7 @@ class DCLMN_Polls {
   }
 
   function get_cookie($poll_id) {
-    return $_COOKIE[$this->get_cookie_name($poll_id)];
+    return $_COOKIE[$this->get_cookie_name($poll_id)] ?? null;
   }
 
   function get_cookie_name($poll_id) {
@@ -281,7 +326,7 @@ class DCLMN_Polls {
   }
 
   function get_session_var($poll_id, $key) {
-    return $this->get_session($poll_id)[$key];
+    return $this->get_session($poll_id)[$key] ?? null;
   }
 
   //  function throttle_user( $poll_id ) {
@@ -290,6 +335,7 @@ class DCLMN_Polls {
   //  }
 
   function get_user_status($poll_id) {
+    $status = false;
     if ($this->get_cookie($poll_id)) {
       $status = 'voted';
     } else if ($this->get_session_var($poll_id, 'vote_id')) {
@@ -363,12 +409,8 @@ class DCLMN_Polls {
   }
 
   function ajax_results_refresh() {
-    $mvc = new dclmn_WP_MVC(array('primary_directory' => dirname(__FILE__) . '/../../'));
-    $mvc->module = 'poll';
-    $mvc->action = 'ajax-results';
-    $mvc->view->data = ['poll' => dclmn_get_post($_REQUEST['poll_id'])];
-
-    $out = $mvc->partial('results-bar');
+    $poll = new DCLMN_Poll($_REQUEST['poll_id']);
+    $out = $this->partial('results-bar', 'poll', ['poll' => $poll]);
 
     if (!$out) {
       $status = 'fail';
@@ -389,12 +431,16 @@ class DCLMN_Polls {
   }
 
   function ajax_votes_refresh() {
-    $mvc = new dclmn_WP_MVC(array('primary_directory' => dirname(__FILE__) . '/../../'));
-    $mvc->module = 'admin';
-    $mvc->action = 'ajax-votes';
-    $mvc->view->data = ['poll' => dclmn_get_post($_REQUEST['poll_id'])];
+    $poll = new DCLMN_Poll($_REQUEST['poll_id']);
+    $out = $this->partial('votes-table', 'admin', ['poll' => $poll]);
 
-    $out = $mvc->partial('votes-table');
+
+    // ob_start();
+    // require dirname(__FILE__) . '/../../modules/poll/controller.php';
+    // include dirname(__FILE__) . '/../../modules/poll/views/single.phtml';
+    // $out = ob_get_clean();
+    // $content .= $out;
+
 
     if (!$out) {
       $status = 'fail';
@@ -443,25 +489,6 @@ class DCLMN_Polls {
     ];
 
     die(json_encode($return));
-  }
-
-  function shortcode($atts, $content = '') {
-    global $dclmn_polls;
-    $atts = shortcode_atts(array(
-      'id' => 0,
-    ), $atts, 'shortcode');
-
-    $mvc = new dclmn_WP_MVC(array('primary_directory' => dirname(__FILE__) . '/../../'));
-    $mvc->module = 'poll';
-    $mvc->action = 'shortcode';
-
-    $out = $mvc->get_view($mvc->get_view_path('poll', 'shortcode'), [
-      'poll' => dclmn_get_post($atts['id']),
-      'dclmn_polls' => $dclmn_polls,
-    ]);
-
-    $mvc->enqueue_scripts_and_styles();
-    return $out;
   }
 
   function ajax_dclmn_poll_vote() {
@@ -528,9 +555,10 @@ class DCLMN_Polls {
     return $content;
   }
 
-  function partial($partial, $module='poll') {
-      ob_start();
-      include dirname(__FILE__) . '/../../modules/'. $module .'/views/partials/'. $partial .'.phtml';
-      return ob_get_clean();
+  function partial($partial, $module = 'poll', $vars = []) {
+    extract($vars);
+    ob_start();
+    include dirname(__FILE__) . '/../../modules/' . $module . '/views/partials/' . $partial . '.phtml';
+    return ob_get_clean();
   }
 }

@@ -25,7 +25,7 @@ $args = array(
     'show_ui' => true,
     'show_in_menu' => true,
     'query_var' => true,
-    'rewrite' => true,
+    'rewrite' => ['slug' => 'poll', 'with_front' => false],
     'capability_type' => 'post',
     'has_archive' => false,
     'hierarchical' => false,

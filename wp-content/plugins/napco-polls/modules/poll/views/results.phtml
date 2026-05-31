@@ -3,7 +3,7 @@ $votes = $poll->get_votes();
 
 $results = [];
 foreach ( $votes as $vote ) {
-  $results[$vote->choice_id] ++;
+  $results[$vote->choice_id] = ($results[$vote->choice_id] ?? 0) + 1;
 }
 
 foreach ( $poll->get_choices() as $choice ) {

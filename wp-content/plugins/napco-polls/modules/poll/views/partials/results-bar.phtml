@@ -1,12 +1,13 @@
 <?php
-$votes = $poll->get_votes();
+if (empty($this->poll)) $this->poll = new DCLMN_Poll($_GET['poll_id']);
+$votes = $this->poll->get_votes();
 
 $results = [];
 foreach ( $votes as $vote ) {
-  $results[$vote->choice_id] ++;
+  $results[$vote->choice_id] = ($results[$vote->choice_id] ?? 0) + 1;
 }
 
-foreach ( $poll->get_choices() as $choice ) {
+foreach ( $this->poll->get_choices() as $choice ) {
   $terms[$choice->ID] = $choice->choice_label;
 }
 ?>
