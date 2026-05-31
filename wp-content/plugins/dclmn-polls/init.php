@@ -1,7 +1,7 @@
 <?php
 
 /*
-  Plugin Name: dclmn Polls
+  Plugin Name: DCLMN Polls
  * Description: Clear permalinks after activation.
  */
 
