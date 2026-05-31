@@ -3,6 +3,23 @@
 //phpinfo(); exit;
 require(dirname(__FILE__) . '/wp-blog-header.php');
 
+
+
+
+$args = array(
+    'post_type'      => 'committee_person',
+    'orderby'        => 'modified',
+    'order'          => 'DESC', // Use ASC for oldest modified first
+    'posts_per_page' => 10,
+);
+
+$query = dclmn_get_posts($args);
+pobj($query,1);
+
+
+
+
+
 die((new DCLMN_Users())->get_login_url(1195));
 
 exit;
