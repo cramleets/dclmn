@@ -84,28 +84,83 @@
     <a href="<?php echo home_url('dclmn-cpanel-forwards-populator/') ?>" target="_blank" class="button-primary" style="font-size: 1.5em; font-weight: bold;" onclick="return confirm('This will take about ten minutes to complete.');">Run The Cpanel Email Forwards Populator</a>
   </fieldset>
   <br>
-  <?php 
-    $cpapi = new DCLMN_Cpanel_API();
-    $forwarders = $cpapi->get_forwarders();
-    $out = '';
-    $out .= '<table class="wp-list-table widefat fixed striped table-view-list posts">';
-    $out .= '<thead>';
+
+  <?php
+  $path = $_SERVER['DOCUMENT_ROOT'] . '/wp-content/uploads/logs/cp-logins';
+  $file = file_get_contents(trim($path) . '/cp-logins.log');
+  $file = explode("\n", trim($file));
+  $file = array_map(function ($x) {
+    return explode("\t", trim($x));
+  }, $file);
+  $file = array_filter(array_reverse($file));
+
+  $out = '';
+  $out .= '<h2>Dashboard Logins</h2>';
+  $out .= '<table class="wp-list-table widefat fixed striped table-view-list posts">';
+  $out .= '<thead>';
+  $out .= '<tr>';
+  $out .= '<th>#</th>';
+  $out .= '<th>Date</th>';
+  $out .= '<th>IP Address</th>';
+  $out .= '<th>Action</th>';
+  $out .= '<th>Email Hashed</th>';
+  $out .= '<th>Email</th>';
+  $out .= '<th>ID</th>';
+  $out .= '<th>UA</th>';
+  $out .= '</tr>';
+  $out .= '</thead>';
+
+  $out .= '<tbody>';
+
+  $i = 0;
+  foreach ($file as $login) {
+    $i++;
     $out .= '<tr>';
-    foreach($forwarders[0] as $k=>$v) {
-      $out .= '<th>'. $k .'</th>';
+    $out .= '<td style="text-align: right;">' . $i . '</td>';
+    foreach ($login as $k => $v) {
+      $out .= '<td>' . $v . '</td>';
+
+      if (3 == $k) {
+        $out .= '<td>'. unserialize(base64_decode($v)) .'</td>';
+      }
     }
     $out .= '</tr>';
-    $out .= '</thead>';
-    $out .= '<tbody>';
-    foreach($forwarders as $forwarder) {
-      $out .= '<tr>';
-      foreach($forwarder as $k=>$v) {
-        $out .= '<td>'. $v .'</td>';
-      }
-     $out .= '</tr>';
+  }
+  $out .= '</tbody>';
+  $out .= '</table>';
+
+  echo $out;
+  ?>
+  <br>
+  <?php
+  $cpapi = new DCLMN_Cpanel_API();
+  $forwarders = $cpapi->get_forwarders();
+  $out = '';
+  $out .= '<h2>Cpanel Forwarders</h2>';
+  $out .= '<table class="wp-list-table widefat fixed striped table-view-list posts">';
+  $out .= '<thead>';
+  $out .= '<tr>';
+  $out .= '<th style="text-align: right;">#</th>';
+  foreach ($forwarders[0] as $k => $v) {
+    $out .= '<th>' . $k . '</th>';
+  }
+  $out .= '</tr>';
+  $out .= '</thead>';
+  $out .= '<tbody>';
+
+  $i = 0;
+  foreach ($forwarders as $forwarder) {
+    $i++;
+
+    $out .= '<tr>';
+    $out .= '<td style="text-align: right;">' . $i . '</td>';
+    foreach ($forwarder as $k => $v) {
+      $out .= '<td>' . $v . '</td>';
     }
-    $out .= '</tbody>';
-    $out .= '</table>';
-    echo $out;
+    $out .= '</tr>';
+  }
+  $out .= '</tbody>';
+  $out .= '</table>';
+  echo $out;
   ?>
 </div>
