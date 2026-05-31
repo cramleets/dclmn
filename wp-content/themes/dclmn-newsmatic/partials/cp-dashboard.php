@@ -3,7 +3,7 @@ global $dclmn;
 $dclmn_user = dclmn_get_user();
 $out = $extra_content = $class = '';
 
-if (!empty($_SESSION) && $_SESSION['dclmn_user_message'] || !empty($_GET['msg'])) {
+if (!empty($_SESSION) && !empty($_SESSION['dclmn_user_message']) || !empty($_GET['msg'])) {
   $class = (dclmn_auth('cp')) ? 'session-login-message' : 'session-login-error';
   $msg = ($_SESSION['dclmn_user_message']) ?: $_GET['msg'];
   $extra_content = $msg;
