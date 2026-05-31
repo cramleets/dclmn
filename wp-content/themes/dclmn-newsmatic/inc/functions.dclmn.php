@@ -84,6 +84,36 @@ function dclmn_get_events($args = []) {
         $events[$i] = tribe_get_event($event->ID);
     }
 
+    $events = attach_zoom_data_to_events($events);
+
+    return $events;
+}
+
+function attach_zoom_data_to_events($events) {
+    $zoom = new DCLMN_Zoom_API();
+    $meetings = $zoom->get_meetings();
+
+    foreach ($events as $i => $event) {
+        if (stristr($event->title, 'general meeting')) {
+            $wpDate = date('Y-m-d', strtotime($event->start_date_utc));
+
+            $matchedMeeting = null;
+
+            foreach ($meetings as $meeting) {
+                $zoomDate = date('Y-m-d', strtotime($meeting['start_time']));
+
+                if ($zoomDate === $wpDate) {
+                    $matchedMeeting = $meeting;
+                    break;
+                }
+            }
+
+            if ($matchedMeeting) {
+                $event->zoom = $matchedMeeting;
+            }
+        }
+    }
+
     return $events;
 }
 
@@ -98,67 +128,81 @@ function dclmn_homepage_events($args = []) {
 
     $out = '';
 
-    $out .= '<div class="dclmn-events">';
 
-
-    if (!empty($args['header'])) {
-        $out .=  '<h2><a href="' . $url . '">' . $args['header'] . '</a></h2>';
-    }
-
-    foreach ($events as $event) {
-        $display_date = empty($is_past) && ! empty($request_date)
-            ? max($event->dates->start_display, $request_date)
-            : $event->dates->start_display;
-
-        $event_week_day  = $display_date->format_i18n('l');
-        $event_week_day_short  = $display_date->format_i18n('D');
-        $event_week_day_shorter = substr($event_week_day_short, 0, 2);
-
-        $event_day_num   = $display_date->format_i18n('j');
-        $event_month   = $display_date->format_i18n('F');
-        $event_month_short   = $display_date->format_i18n('M');
-        $event_date_attr = $display_date->format(Dates::DBDATEFORMAT);
-
-        if ($event->multiday) {
-            // The date returned back contains HTML and is already escaped.
-            $event_time = $event->schedule_details->value();
-        } elseif ($event->all_day) {
-            $event_time = esc_html_x('All day', 'All day label for event', 'the-events-calendar');
-            $event_time_short = 'All Day';
-        } else {
-            // The date returned back contains HTML and is already escaped.
-            $event_time = $event->short_schedule_details->value();
-            $event_time_short = $event->dates->start->format_i18n('ga');;
+    if (empty($events)) {
+    } else {
+        $out .= '<div class="dclmn-events">';
+        if (!empty($args['header'])) {
+            $out .=  '<h2><a href="' . $url . '">' . $args['header'] . '</a></h2>';
         }
-        $out .= '<p class="dclmn-event">';
 
-        $out .= '<span class="date-box">';
-        $out .= '<span class="date-box-dow">' . $event_month_short . '</span>';
-        $out .= '<span class="date-box-date">' . $event_day_num . '</span>';
-        if (!empty($event_time_short)) $out .= '<span class="date-box-time">' . $event_time_short . '</span>';
-        $out .= '</span>';
+        $out .= '<div class="dclmn-events-loop">';
+        foreach ($events as $event) {
+            $display_date = empty($is_past) && ! empty($request_date)
+                ? max($event->dates->start_display, $request_date)
+                : $event->dates->start_display;
 
-        $out .= '<a
+            $event_week_day  = $display_date->format_i18n('l');
+            $event_week_day_short  = $display_date->format_i18n('D');
+            $event_week_day_shorter = substr($event_week_day_short, 0, 2);
+
+            $event_day_num   = $display_date->format_i18n('j');
+            $event_month   = $display_date->format_i18n('F');
+            $event_month_short   = $display_date->format_i18n('M');
+            $event_date_attr = $display_date->format(Dates::DBDATEFORMAT);
+
+            if ($event->multiday) {
+                // The date returned back contains HTML and is already escaped.
+                $event_time = $event->schedule_details->value();
+            } elseif ($event->all_day) {
+                $event_time = esc_html_x('All day', 'All day label for event', 'the-events-calendar');
+                $event_time_short = 'All Day';
+            } else {
+                // The date returned back contains HTML and is already escaped.
+                $event_time = $event->short_schedule_details->value();
+                $event_time_short = $event->dates->start->format_i18n('ga');;
+            }
+            $out .= '<p class="dclmn-event">';
+            $out .= '<span class="dclmn-event-flex">';
+
+            $out .= '<span>'; // date box flex item
+            $out .= '<span class="date-box">';
+            $out .= '<span class="date-box-dow">' . $event_month_short . '</span>';
+            $out .= '<span class="date-box-date">' . $event_day_num . '</span>';
+            if (!empty($event_time_short)) $out .= '<span class="date-box-time">' . $event_time_short . '</span>';
+            $out .= '</span>'; // /date box
+            $out .= '</span>'; // /date box flex item
+
+            $out .= '<span>'; // date links flex item
+            $out .= '<a
 		href="' . esc_url($event->permalink) . '"
 		title="' . esc_attr($event->title) . '"
 		rel="bookmark"
 		class="tribe-events-widget-events-list__event-title-link tribe-common-anchor-thin">';
 
-        //$out .= tribe_event_featured_image($event->ID, 'full', false);
-        $out .= '<span class="event-title"><strong>' . $event->title . '</strong></span>';
-        $out .= '<br>';
-        $out .= '<span class="event-week-day">' . $event_week_day . ', </span> ';
-        $out .= '<span class="event-month">' . $event_month . '</span> ';
-        $out .= '<span class="event-date">' . $event_day_num . '</span> ';
-        $out .= '  ';
-        $out .= '<span class="event-time">' . $event_time . '</span>';
-        $out .= '</a>';
-        $out .= '</p>';
+            //$out .= tribe_event_featured_image($event->ID, 'full', false);
+            $out .= '<span class="event-title"><strong>' . $event->title . '</strong></span>';
+            $out .= '<br>';
+            $out .= '<span class="event-week-day">' . $event_week_day . ', </span> ';
+            $out .= '<span class="event-month">' . $event_month . '</span> ';
+            $out .= '<span class="event-date">' . $event_day_num . '</span> ';
+            $out .= '  ';
+            $out .= '<span class="event-time">' . $event_time . '</span>';
+            $out .= '</a>';
+
+            if (!empty($event->zoom)) {
+                $out .= '<a href="' . $event->zoom['join_url'] . '" class="event-zoom-link" target="_blank">Join on Zoom</a>';
+            }
+            $out .= '</span>';
+            $out .= '</span>'; // /date links flex item
+            $out .= '</p>';
+        }
+        $out .= '</div>';
+
+        $out .=  '<p class="dclmn-event-view-more"><a href="' . $url . '">View More &raquo;</a></p>';
+
+        $out .= '</div>';
     }
-
-    $out .=  '<p><a href="' . $url . '">View More &raquo;</a></p>';
-
-    $out .= '</div>';
 
     return $out;
 }
@@ -552,7 +596,7 @@ function dclmn_render_elections_output($parents) {
             $out .= '</ul>';
 
             if ($num_candidates === 1) {
-	            $text = (get_field('text', $child)) ?: $post->post_content;
+                $text = (get_field('text', $child)) ?: $post->post_content;
                 $out .= ($text) ? $text : '<br>';
             }
 
@@ -674,5 +718,5 @@ function dclmn_board_member_email_link($position, $subject = false) {
 }
 
 function logger($message, $name = 'default', $level = 'info') {
-    (new DCLMN_Logger($name))->log( $message, $level );
+    (new DCLMN_Logger($name))->log($message, $level);
 }
