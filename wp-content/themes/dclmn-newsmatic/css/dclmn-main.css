@@ -690,7 +690,7 @@ body.hidden-sidebar .secondary-sidebar,
     clear: both;
 }
 
-.dclmn-events .dclmn-event {
+.dclmn-events .dclmn-event .dclmn-event-flex {
     display: flex;
     align-items: flex-start;
     gap: .75em;
@@ -714,7 +714,7 @@ body.hidden-sidebar .secondary-sidebar,
     clear: both;
 }
 
-.dclmn-events p:last-of-type {
+.dclmn-events .dclmn-event-view-more {
     font-weight: bold;
     font-size: 1.25em;
     padding-top: .25em;
@@ -726,6 +726,13 @@ body.hidden-sidebar .secondary-sidebar,
 
 .dclmn-event .event-title {
     font-size: 1.15em;
+    color: var(--color-root);
+}
+
+.dclmn-event .event-zoom-link {
+    display: inline-block;
+    margin-top: .5em;
+    font-weight: bold;
     color: var(--color-root);
 }
 
@@ -1342,4 +1349,8 @@ body.hidden-sidebar.right-sidebar #theme-content .row .primary-content {
 .dclmn-tools ul ul {
     margin-top: .25em;
     margin-bottom: 1em;
+}
+
+.election-group {
+    margin-top: 3.5em;
 }
