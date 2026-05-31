@@ -34,7 +34,7 @@ if ($poll->poll_closed) {
   if ($do_qrs) {
     $out .= '<div class="flex">';
   } elseif ($do_form) {
-    $out .= '<form action="' . home_url('poll-vote/') . '" method="post" class="napco-poll">';
+    $out .= '<form action="' . home_url('poll-vote/') . '" method="post" class="dclmn-poll">';
     $out .= '<input type="hidden" name="poll_id" value="' . $poll->ID . '">';
     $out .= '<section class="flex">';
   } elseif ($do_list) {

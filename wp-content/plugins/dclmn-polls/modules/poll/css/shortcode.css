@@ -3,7 +3,7 @@
   display: block;
   clear: both;
 }
-.napco-poll-wrapper {
+.dclmn-poll-wrapper {
   float: right;
   background-color: #efefef;
   padding: 1em;
@@ -12,10 +12,10 @@
   min-width: 200px;
 }
 
-.napco-poll-wrapper h4 {
+.dclmn-poll-wrapper h4 {
   margin-bottom: .5em;
 }
 
-.napco-poll-submit-wrap {
+.dclmn-poll-submit-wrap {
   margin-top: .5em;
 }

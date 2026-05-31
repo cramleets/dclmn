@@ -32,7 +32,7 @@ jQuery(document).ready(function ($) {
     });
   });
   
-  $('form.napco-poll').on('submit', function(){
+  $('form.dclmn-poll').on('submit', function(){
     if (!$('input[name=choice_id]:checked').length) {
       alert('Please make a selection.');
       return false;

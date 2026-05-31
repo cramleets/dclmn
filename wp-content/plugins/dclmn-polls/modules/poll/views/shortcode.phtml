@@ -2,9 +2,9 @@
 
 $out = '';
 
-$out .= '<div class="napco-poll-wrapper">';
+$out .= '<div class="dclmn-poll-wrapper">';
 $out .= '<h4>' . $poll->post_title . '</h4>';
-$out .= '<div class="napco-poll-action-wrapper">';
+$out .= '<div class="dclmn-poll-action-wrapper">';
 
 if ( $poll->poll_closed ) {
   $out .= '<p>Voting is closed.</p>';
@@ -24,7 +24,7 @@ if ( $poll->poll_closed ) {
   $qr_code_url = 'https://chart.googleapis.com/chart?chs=200x200&cht=qr&choe=UTF-8&chl=%s';
   $poll_url = home_url( 'poll-vote/?poll_id=%d&choice_id=%d' );
 
-  $out .= '<form action="' . home_url( 'poll-vote/' ) . '" method="post" class="napco-poll">';
+  $out .= '<form action="' . home_url( 'poll-vote/' ) . '" method="post" class="dclmn-poll">';
   $out .= '<input type="hidden" name="action" value="dclmn_poll_vote">';
   $out .= '<input type="hidden" name="poll_id" value="' . $poll->ID . '">';
   $out .= '<ul>';
@@ -43,10 +43,10 @@ if ( $poll->poll_closed ) {
     $out .= '</li>';
   }
   $out .= '</ul>';
-  $out .= '<div class="napco-poll-submit-wrap"><input type="submit" class="button" value="submit"></div>';
+  $out .= '<div class="dclmn-poll-submit-wrap"><input type="submit" class="button" value="submit"></div>';
   $out .= '</form>';
 }
-$out .= '</div>'; //.napco-poll-action-wrapper
-$out .= '</div>'; //.napco-poll-wrapper
+$out .= '</div>'; //.dclmn-poll-action-wrapper
+$out .= '</div>'; //.dclmn-poll-wrapper
 
 echo $out;

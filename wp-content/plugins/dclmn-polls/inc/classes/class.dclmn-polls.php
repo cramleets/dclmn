@@ -13,7 +13,7 @@ class DCLMN_Polls {
     add_action('manage_poll_entry_posts_custom_column', array($this, 'manage_poll_entry_posts_custom_column'), 10, 2);
 
     add_action('add_meta_boxes', array($this, 'add_meta_boxes'), 10, 2);
-    add_action('wp', array($this, 'request_action_listeners')); //hook into napco wp site to init request listeners
+    add_action('wp', array($this, 'request_action_listeners')); //hook into dclmn wp site to init request listeners
 
     add_action('template_redirect', array($this, 'template_redirect_module_view'));
     add_filter('query_vars', array($this, 'query_vars'));
