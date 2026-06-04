@@ -29,7 +29,7 @@
   <small>
   <div class="button-group">
     <a
-      href="//pennmaps.maps.arcgis.com/apps/Embed/index.html?webmap=aef3c44d3d5f4984b6664521bf5082d3&extent=-75.3716,39.9791,-75.1692,40.0732&home=true&zoom=true&scale=true&search=true&searchextent=true&disable_scroll=false&theme=light"
+      href="https://pennmaps.maps.arcgis.com/apps/instant/lookup/index.html?appid=2db6d420f3e442c78baf1869230a1373"
       target="_blank" class="button">View larger map</a>
       </div>
   </small>
@@ -43,5 +43,5 @@
     marginwidth="0"
     title="DCLMN Voting Districts"
     style="max-height: 60vh;"
-    src="//pennmaps.maps.arcgis.com/apps/Embed/index.html?webmap=aef3c44d3d5f4984b6664521bf5082d3&extent=-75.3716,39.9791,-75.1692,40.0732&home=true&zoom=true&previewImage=false&scale=true&search=true&searchextent=true&disable_scroll=false&theme=light"></iframe>
+    src="https://pennmaps.maps.arcgis.com/apps/instant/lookup/index.html?appid=2db6d420f3e442c78baf1869230a1373"></iframe>
 </div>

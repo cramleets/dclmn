@@ -30,8 +30,28 @@ asort($leadersip_emails);
           echo $l->first_name . ' ' . $l->last_name;
           if ($l->email) echo '</a>';
           ?>
+          <?php if (!empty($l->first_name_2)): ?>
+            <?php
+            echo '<br>';
+            if ($l->email_2) echo '<a href="mailto:' . $l->email_2 . '" target="_blank">';
+            echo $l->first_name_2 . ' ' . $l->last_name_2;
+            if ($l->email_2) echo '</a>';
+            ?>
+          <?php endif; ?>
         </td>
-        <td nowrap><?php echo $dclmn->get_phone_link($l->phone); ?></td>
+        <td nowrap>
+          <?php
+          if (!empty($l->phone) && !empty($l->show_phone)) {
+            echo $dclmn->get_phone_link($l->phone);
+          }
+          if (!empty($l->phone) && !empty($l->show_phone) && !empty($l->phone_2) && !empty($l->show_phone_2)) {
+          }
+          if (!empty($l->phone_2) && !empty($l->show_phone_2)) {
+            echo '<br>';
+            echo $dclmn->get_phone_link($l->phone_2);
+          }
+          ?>
+        </td>
       </tr>
     <?php endforeach; ?>
   </tbody>
