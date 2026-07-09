@@ -10,15 +10,14 @@ if (!empty($_SESSION) && !empty($_SESSION['dclmn_user_message']) || !empty($_GET
   unset($_SESSION['dclmn_user_message']);
 }
 
-$user_emails = [];
-$dclmn_users = $dclmn->get_committee_people_table(true);
-array_shift($dclmn_users);
-$user_emails = array_unique(array_filter(array_column($dclmn_users, 5)));
-asort($user_emails);
+// $user_emails = [];
+// $dclmn_users = $dclmn->get_committee_people_table(true);
+// array_shift($dclmn_users);
+// $user_emails = array_unique(array_filter(array_column($dclmn_users, 5)));
+// asort($user_emails);
 
-$leadership = $dclmn->get_leadership();
-$leadersip_emails = array_unique(array_filter(wp_list_pluck($leadership, 'email')));
-asort($leadersip_emails);
+// $leadersip_emails = $dclmn->get_leadership_emails();
+// asort($leadersip_emails);
 
 if ($dclmn_user || !empty($extra_content)) {
   $out .= '<div class="cp-dashboard-statusbar">';
@@ -47,11 +46,13 @@ if ($dclmn_user || !empty($extra_content)) {
   </script>
 <?php else: ?>
   <div class="user-info">
-    <h3>Your Precinct</h3>
-    <h2><?php echo $dclmn_user->get_precinct()->post_title; ?></h2>
-    <hr>
+    <?php if ($dclmn_user->is_cp()): ?>
+      <h3>Your Precinct</h3>
+      <h2><?php echo $dclmn_user->get_precinct()->post_title; ?></h2>
+      <hr>
+    <?php endif; ?>
     <h3>Your Information</h3>
-    <p class="note">Please contact <?php echo dclmn_board_member_email_link('Subcommittee Chair – Technology', 'DCLMN Contact Info') ?> if you need any of this information updated.</p>
+    <p class="note">Please contact <?php echo dclmn_board_member_email_link('Subcommittee Chair - Technology', 'DCLMN Contact Info') ?> if you need any of this information updated.</p>
     <table cellpadding="5" cellspacing="0" class="stripes">
       <tr>
         <td width="180">Email</td>
@@ -85,8 +86,54 @@ if ($dclmn_user || !empty($extra_content)) {
         <td>Emails sent to <a href="mailto:<?php echo $dclmn_user->get_mailbox(); ?>" target="_blank"><strong><?php echo $dclmn_user->get_mailbox(); ?></strong></a> will be forwarded to you.</td>
       </tr>
     </table>
+  <hr>
+
+    <?php if ($dclmn_user->exec_cp): ?>
+      <h3>Your Precinct</h3>
+      <h2><?php echo $dclmn_user->exec_cp->get_precinct()->post_title; ?></h2>
+      <hr>
+    <?php endif; ?>
+    <h3>Your Information</h3>
+    <p class="note">Please contact <?php echo dclmn_board_member_email_link('Subcommittee Chair - Technology', 'DCLMN Contact Info') ?> if you need any of this information updated.</p>
+    <table cellpadding="5" cellspacing="0" class="stripes">
+      <tr>
+        <td width="180">Email</td>
+        <td><?php echo $dclmn_user->exec_cp->get_email(); ?></td>
+      </tr>
+      <tr>
+        <td>Phone</td>
+        <td><?php echo $dclmn_user->exec_cp->get_phone(); ?></td>
+      </tr>
+      <tr>
+        <td>Address</td>
+        <td><?php echo $dclmn_user->exec_cp->get_address(); ?></td>
+      </tr>
+    </table>
+    <br>
+    <table cellpadding="5" cellspacing="0" class="">
+      <tr>
+        <td width="180">
+          <input type="checkbox" id="hide-cp-email-address" <?php if ($dclmn_user->exec_cp->email_address_is_hidden()) echo 'checked' ?>>
+        </td>
+        <td>
+          <label for="hide-cp-email-address"><strong>Do Not Publish My Email Address</strong></label>
+          <span id="hide-cp-email-address-result"></span>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <table cellpadding="5" cellspacing="0" class="">
+      <tr>
+        <td width="180"></td>
+        <td>Emails sent to <a href="mailto:<?php echo $dclmn_user->exec_cp->get_mailbox(); ?>" target="_blank"><strong><?php echo $dclmn_user->exec_cp->get_mailbox(); ?></strong></a> will be forwarded to you.</td>
+      </tr>
+    </table>
   </div>
   <hr>
+
+
+
+
   <div class="dclmn-tools">
     <div class="flex">
       <div>
@@ -107,6 +154,7 @@ if ($dclmn_user || !empty($extra_content)) {
         </ul>
         <h3>DCLMN Resources</h3>
         <ul>
+          <li><a href="<?php echo get_stylesheet_directory_uri() ?>/assets/dclmn-roberts-rules-cheat-sheet.pdf" target="_blank">Robert's Rules Cheat Sheet</a></li>
           <li><a href="<?php echo get_stylesheet_directory_uri() ?>/assets/dclmn-guide-to-welcoming-new-residents.pdf" target="_blank">Guide to Welcoming New Residents</a></li>
           <li><a href="<?php echo get_stylesheet_directory_uri() ?>/assets/dclmn-proxy-form-generic.docx" target="_blank">Generic Proxy Form</a></li>
           <li><a href="https://drive.google.com/drive/folders/1aKBNH8LehMBqKRV_xzOli_XcCN9eWjkB" target="_blank">Petitions</a></li>
@@ -146,7 +194,7 @@ if ($dclmn_user || !empty($extra_content)) {
         <h3>Miscellaneous</h3>
         <ul>
           <li><a href="<?php echo home_url('lower-merion-street-name-generator/') ?>" target="_blank">Lower Merion Street Name Generator</a></li>
-        </ul>        
+        </ul>
       </div>
       <div>
         <h3>Meetings</h3>
