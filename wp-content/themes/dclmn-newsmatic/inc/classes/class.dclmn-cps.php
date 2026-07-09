@@ -80,7 +80,7 @@ class DCLMN_Users {
 
   function ajax_user_login() {
     $status = 'fail';
-    $message = 'Could not find a CP with that email address.';
+    $message = 'Could not find a user with that email address.';
 
     $dclmn_user = $this->get_user_by_email($_POST['email']);
 
