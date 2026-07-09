@@ -50,7 +50,7 @@ function dclmn_import_committee_people_from_csv($csv_file, $run = false) {
       $post_id = $wpdb->get_var($wpdb->prepare(
         "SELECT post_id FROM $wpdb->postmeta pm
 				 JOIN $wpdb->posts p ON p.ID = pm.post_id
-				 WHERE pm.meta_key = 'public_email'
+				 WHERE pm.meta_key = 'email'
 				   AND pm.meta_value = %s
 				   AND p.post_type = 'committee_person'
 				 LIMIT 1",

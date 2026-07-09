@@ -66,7 +66,7 @@ class DCLMN_Users {
   function get_user_by_email($email) {
     $posts = dclmn_get_posts([
       'post_type'  => 'committee_person',
-      'meta_key'   => 'public_email',
+      'meta_key'   => 'email',
       'meta_value' => $email,
       'numberposts' => 1
     ]);
@@ -89,7 +89,7 @@ class DCLMN_Users {
     if (is_object($dclmn_user) && 'committee_person' == $dclmn_user->post_type) {
 
 
-      if (0 && 'marc.steel@gmail.com' != $dclmn_user->public_email) {
+      if (0 && 'marc.steel@gmail.com' != $dclmn_user->email) {
         $status = 'fail';
         $message = 'Undergoing maintenance.';
         $message = 'Not open for business.';
@@ -106,9 +106,9 @@ class DCLMN_Users {
         }
 
         $headers = array('Content-Type: text/html; charset=UTF-8');
-        wp_mail($dclmn_user->public_email, 'DCLMN CP Log In', $this->get_login_email_content($dclmn_user), $headers);
+        wp_mail($dclmn_user->email, 'DCLMN CP Log In', $this->get_login_email_content($dclmn_user), $headers);
 
-        $this->log('request-sent', $this->encodeData($dclmn_user->public_email, $dclmn_user->ID));
+        $this->log('request-sent', $this->encodeData($dclmn_user->email, $dclmn_user->ID));
       }
     }
 
@@ -155,7 +155,7 @@ class DCLMN_Users {
 
     //what to feed the nonce
     $action_prefix = 'dclmn_login_';
-    $salt = $dclmn_user->public_email;
+    $salt = $dclmn_user->email;
 
     //get the nonce data
     $nonce_data = dclmn_nonce_create($action_prefix, $salt, $this->nonce_timeout);
@@ -220,12 +220,12 @@ class DCLMN_Users {
       }
 
       //do the emails match?
-      elseif (base64_encode(serialize(($dclmn_user->public_email))) != $args['e']) {
+      elseif (base64_encode(serialize(($dclmn_user->email))) != $args['e']) {
         $result['msg'] = 'Mismatchd emails.';
       }
 
       //for testing
-      elseif (0 && $dclmn_user->public_email != 'marc.steel@gmail.com') {
+      elseif (0 && $dclmn_user->email != 'marc.steel@gmail.com') {
         $result['msg'] = 'Not yet.';
       }
 

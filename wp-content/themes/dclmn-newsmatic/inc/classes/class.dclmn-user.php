@@ -4,7 +4,7 @@ class DCLMN_User {
   var $ID;
   var $first_name;
   var $last_name;
-  var $public_email;
+  var $email;
   var $phone;
   var $precinct;
   var $street_address_1;
@@ -22,11 +22,7 @@ class DCLMN_User {
   }
 
   function get_email() {
-    return $this->get_public_email();
-  }
-
-  function get_public_email() {
-    return $this->public_email;
+    return $this->email;
   }
 
   function get_phone() {

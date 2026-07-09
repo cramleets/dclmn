@@ -496,7 +496,7 @@ class DCLMN {
                             $precinct->region,
                             $person->first_name,
                             $person->last_name,
-                            $person->public_email,
+                            $person->email,
                             $person->phone,
                             $person->street_address_1,
                             $person->street_address_2,
@@ -514,7 +514,7 @@ class DCLMN {
                             $precinct->region,
                             $person->first_name,
                             $person->last_name,
-                            $person->public_email,
+                            $person->email,
                             $person->phone,
                             ($person->phone_display_on_site) ? 1 : '',
                             $precinct->polling_place->post_title,
@@ -551,12 +551,12 @@ class DCLMN {
                         $out .= $person->first_name;
                         $out .= ' - <a href="' . home_url('committee-person-description/') . '">Inquire</a>';
                     } else {
-                        $email = $person->public_email;
+                        $email = $person->email;
                         if ($person->hide_email_address) $email = $title . '@dclmn.org';
-                        $out .= ($person->public_email) ? '<a href="mailto:' . $email . '" target="_blank">' : '';
+                        $out .= ($person->email) ? '<a href="mailto:' . $email . '" target="_blank">' : '';
                         $out .= $person->first_name;
                         $out .= ($person->last_name) ? ' ' . $person->last_name : '';
-                        $out .= ($person->public_email) ? '</a>' : '';
+                        $out .= ($person->email) ? '</a>' : '';
 
                         if (current_user_can('edit_others_posts') || (!empty($person->phone) && $person->phone_display_on_site)) {
                             $out .= (empty($person->phone)) ? '' : '<br><small><a href="tel:' . $person->phone . '">' . $person->phone . '</a></small>';

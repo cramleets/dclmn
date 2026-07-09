@@ -74,7 +74,7 @@ $dclmn_user = dclmn_get_user();
       } else {
         $out .= '<td data-label="First Name" class="searchable">' . $person->first_name . '</td>';
         $out .= '<td data-label="Last Name" class="searchable">' . $person->last_name . '</td>';
-        $out .= '<td data-label="Email"><a href="mailto:' . $person->public_email . '" target="_blank">' . $person->public_email . '</a></td>';
+        $out .= '<td data-label="Email"><a href="mailto:' . $person->email . '" target="_blank">' . $person->email . '</a></td>';
         $out .= '<td data-label="Phone"><a href="tel:' . $person->phone . '">' . $person->phone . '</a></td>';
         $out .= '<td data-label="Address">' . get_address($person) . '</td>';
       }

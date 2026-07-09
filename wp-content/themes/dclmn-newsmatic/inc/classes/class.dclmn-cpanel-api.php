@@ -32,7 +32,7 @@ class DCLMN_Cpanel_API extends Cpanel_API {
         $email_1 = "$mailbox@$domain";
         $email_2 = str_replace('-', '_', $email_1);
         $email_3 = str_replace('-', '.', $email_1);
-        $destination = strtolower($person->public_email);
+        $destination = strtolower($person->email);
 
         $result = $this->add_forwarder($domain, $email_1, $destination);
         logger("Added CP Forwarder {$domain} {$email_1} {$destination}", 'cpanel-api');
@@ -59,7 +59,7 @@ class DCLMN_Cpanel_API extends Cpanel_API {
       foreach ($precinct->committe_people as $person) {
         $vacant = ('vacant' == strtolower($person->first_name));
         if ($vacant) continue;
-        if (!$person->public_email) continue;
+        if (!$person->email) continue;
 
         $mailbox = $this->get_cp_mailbox($precinct);
 
@@ -67,7 +67,7 @@ class DCLMN_Cpanel_API extends Cpanel_API {
         $email_1 = "$mailbox@$domain";
         $email_2 = str_replace('-', '_', $email_1);
         $email_3 = str_replace('-', '.', $email_1);
-        $destination = strtolower($person->public_email);
+        $destination = strtolower($person->email);
 
         $result = $this->delete_forwarder($email_1, $destination);
         logger("Deleted CP Forwarder {$email_1} {$destination}", 'cpanel-api');
