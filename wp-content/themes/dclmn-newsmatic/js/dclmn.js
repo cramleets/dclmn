@@ -37,7 +37,7 @@ jQuery(document).ready(function ($) {
   $('.street-name-refresh').on('click', function (e) {
     e.preventDefault();
     $('#street-name-generator-content').html('<img src="/wp-includes/images/spinner.gif">');
-    $.get(sbiajaxurl, { action: 'get_street_name' }, function (data) {
+    $.get(ajaxurl, { action: 'get_street_name' }, function (data) {
       $('#street-name-generator-content').html(data);
     });
   });
@@ -55,7 +55,7 @@ jQuery(document).ready(function ($) {
     } else {
       $result.html('<img src="/wp-includes/images/spinner.gif">').fadeIn();
 
-      $.post(sbiajaxurl, { action: 'user_login', email: email }, function (data) {
+      $.post(ajaxurl, { action: 'user_login', email: email }, function (data) {
         try {
           var json = jQuery.parseJSON(data);
         } catch (err) {
@@ -206,7 +206,7 @@ jQuery(document).ready(function ($) {
     };
 
     $('#hide-cp-email-address-result').html('<img src="/wp-includes/images/spinner.gif" style="width: 16px; height: 16px; vertical-align: middle;">').removeClass('session-login-message');
-    $.post(sbiajaxurl, data, function (data) {
+    $.post(ajaxurl, data, function (data) {
       $('#hide-cp-email-address-result').html('Updated.').addClass('session-login-message').css('font-size', '.75em');
     });
   });
