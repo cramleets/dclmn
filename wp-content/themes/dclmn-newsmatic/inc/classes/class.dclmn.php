@@ -35,6 +35,7 @@ class DCLMN {
         });
 
         add_action('wp_head', function () {
+            echo '<script>var ajaxurl="' . admin_url('admin-ajax.php') . '"</script>' . PHP_EOL;
             get_template_part('partials/google-analytics');
         });
 
@@ -90,8 +91,6 @@ class DCLMN {
         add_action('wp_ajax_nopriv_export_cps_full', [$this, 'wp_ajax_export_cps_full']);
         add_action('wp_ajax_hide_cp_email_address', [$this, 'wp_hide_cp_email_address']);
         add_action('wp_ajax_nopriv_hide_cp_email_address', [$this, 'wp_hide_cp_email_address']);
-
-        
 
         add_filter('tec_events_views_v2_view_header_title', function ($title, $obj) {
             if (empty($title)) $title = 'Events';
@@ -198,6 +197,11 @@ class DCLMN {
             return '';
         });
 
+        add_filter('tribe_events_views_v2_url_query_args', function ($query_args, $obj, $canonical) {
+            unset($query_args['tribe-bar-date']);
+            return $query_args;
+        }, 10, 3);
+
         $this->add_candidates_to_menu('main-menu');
     }
 
@@ -208,7 +212,71 @@ class DCLMN {
             'order' => 'ASC'
         ];
 
-        return dclmn_get_posts($args);
+        $posts = dclmn_get_posts($args);
+
+        $raw_positions = [];
+        foreach ($posts as $post) {
+            $label = (!empty($post->position_label)) ? $post->position_label : $post->post_title;
+            $raw_positions[$label][] = $post;
+        }
+
+        foreach ($raw_positions as &$people) {
+            usort($people, function ($a, $b) {
+                return strcasecmp($a->last_name, $b->last_name);
+            });
+        }
+        unset($people);
+
+        $new_positions = [];
+
+        $positions = [];
+        foreach ($raw_positions as $label => $people) {
+            if (count($people) > 1) {
+                $label = $this->pluralize_committee_position($label);
+            }
+
+            $positions[$label] = $people;
+        }
+
+        return $positions;
+    }
+
+    function pluralize_committee_position($label) {
+        if ('Chairperson' == $label) {
+            $label = 'Chairpersons';
+        } elseif ('Secretary' == $label) {
+            $label = 'Secretaries';
+        } elseif ('Delegate-at-Large' == $label) {
+            $label = 'Delegates-at-Large';
+        } elseif (strstr($label, 'Vice Chair')) {
+            $label = str_replace('Vice Chair', 'Co-Vice Chair', $label);
+        } elseif (strstr($label, 'Subcommittee Chair')) {
+            $label = str_replace('Chair', 'Co-Chairs', $label);
+        } elseif (strstr($label, 'Representative')) {
+            $label = str_replace('Representative', 'Representatives', $label);
+        } else {
+            $label .= 's';
+        }
+
+        return $label;
+    }
+
+    function get_leadership_emails() {
+        global $wpdb;
+
+        $meta_key = 'email';
+        $post_type = 'committee-position';
+
+        $sql = "SELECT pm.meta_value
+        FROM {$wpdb->postmeta} pm
+        INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+		WHERE pm.meta_key = %s
+		AND p.post_type = %s
+		";
+
+        $emails = $wpdb->get_col($wpdb->prepare($sql, [$meta_key, $post_type]));
+        $emails = array_unique(array_filter($emails));
+        return $emails;
     }
 
     function get_committee_people() {
@@ -484,7 +552,7 @@ class DCLMN {
                         $out .= ' - <a href="' . home_url('committee-person-description/') . '">Inquire</a>';
                     } else {
                         $email = $person->public_email;
-                        if ($person->hide_email_address) $email = $title .'@dclmn.org';
+                        if ($person->hide_email_address) $email = $title . '@dclmn.org';
                         $out .= ($person->public_email) ? '<a href="mailto:' . $email . '" target="_blank">' : '';
                         $out .= $person->first_name;
                         $out .= ($person->last_name) ? ' ' . $person->last_name : '';
