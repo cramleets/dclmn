@@ -11,11 +11,11 @@ https://www.sliderrevolution.com/resources/styling-radio-buttons/
   padding-top: 0;
 }
 
-.dclmn-tools .dclmn-events p:last-of-type {
+/* .dclmn-tools .dclmn-events p:last-of-type {
   font-weight: bold;
   font-size: 1.25em;
   padding-top: 0;
-}
+} */
 
 .dclmn-modal-bg {
   display: none;
