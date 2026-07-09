@@ -984,11 +984,11 @@ body.home #block-21 {
     gap: 0;
 }
 
-.election.pennsylvania-house-of-representatives-district-148 ul.flex li,
+/* .election.pennsylvania-house-of-representatives-district-148 ul.flex li,
 .election.narberth-council ul.flex li,
 .election.lower-merion-school-board ul.flex li {
     flex-basis: 22%;
-}
+} */
 
 .election p a {
     font-weight: bold;
