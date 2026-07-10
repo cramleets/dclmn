@@ -6,6 +6,7 @@ class DCLMN_Users {
   var $cookie_length = 60;
   var $cookie_path = '/';
   var $cookie_domain;
+  var $valid_user_post_types = ['committee_person', 'committee-position'];
 
   function __construct() {
     session_start();
@@ -63,13 +64,50 @@ class DCLMN_Users {
     return $vars;
   }
 
-  function get_user_by_email($email) {
+  function get_user_by_email_1($email) {
     $posts = dclmn_get_posts([
-      'post_type'  => 'committee_person',
+      'post_type'  => $this->valid_user_post_types,
       'meta_key'   => 'email',
       'meta_value' => $email,
       'numberposts' => 1
     ]);
+
+    if (empty($posts)) {
+      return false;
+    } else {
+      return $posts[0];
+    }
+  }
+
+  function get_user_by_email($email) {
+    //give priority to exec
+    add_filter('posts_ordesrby', function ($orderby, $query) {
+      if ($query->get('committee_priority')) {
+        global $wpdb;
+
+        return "FIELD({$wpdb->posts}.post_type, 'committee_person',  'committee-position')";
+      }
+
+      return $orderby;
+    }, 10, 2);
+
+    //
+    $args = [
+      'post_type'      => ['committee_person', 'committee-position'],
+      'posts_per_page' => 1,
+      'committee_priority' => true,
+      'suppress_filters' => false,
+      'meta_query' => [
+        'relation' => 'OR',
+        ['key' => 'public_email', 'value' => $email],
+        ['key' => 'email', 'value' => $email]
+      ]
+    ];
+
+    $posts = get_posts($args);
+
+    //prob not necessary but might as well
+    remove_all_filters('posts_orderby');
 
     if (empty($posts)) {
       return false;
@@ -86,7 +124,7 @@ class DCLMN_Users {
 
     $this->log('request-made', $this->encodeData($_POST['email']));
 
-    if (is_object($dclmn_user) && 'committee_person' == $dclmn_user->post_type) {
+    if (is_object($dclmn_user) && in_array($dclmn_user->post_type, $this->valid_user_post_types)) {
 
 
       if (0 && 'marc.steel@gmail.com' != $dclmn_user->email) {
@@ -215,8 +253,8 @@ class DCLMN_Users {
       $dclmn_user = dclmn_get_post($user_id);
 
       //do the emails match?
-      if (!$dclmn_user || !$dclmn_user->ID || 'committee_person' != $dclmn_user->post_type) {
-        $result['msg'] = 'Invalid CP.';
+      if (!$dclmn_user || !$dclmn_user->ID || !in_array($dclmn_user->post_type, $this->valid_user_post_types)) {
+        $result['msg'] = 'Invalid User.';
       }
 
       //do the emails match?
@@ -236,9 +274,9 @@ class DCLMN_Users {
         $_SESSION['dclmn_user_message'] = 'Welcome ' . $dclmn_user->first_name . '.';
         $this->set_cookie($dclmn_user->ID, $email_hashed);
         $this->log('login', $email_hashed, $dclmn_user->ID);
-        
-        $headers = [];//array('Content-Type: text/html; charset=UTF-8');
-        wp_mail('marc.steel@gmail.com', 'DCLMN CP Log In! - '. $dclmn_user->first_name .' '. $dclmn_user->last_name, print_r($dclmn_user, 1), $headers);
+
+        $headers = []; //array('Content-Type: text/html; charset=UTF-8');
+        wp_mail('marc.steel@gmail.com', 'DCLMN CP Log In! - ' . $dclmn_user->first_name . ' ' . $dclmn_user->last_name, print_r($dclmn_user, 1), $headers);
 
         $url = home_url('cp/');
 
@@ -317,7 +355,7 @@ class DCLMN_Users {
     return unserialize(base64_decode($data));
   }
 
-  function log($action, $email_hashed=false, $dclmn_user_id=false) {
+  function log($action, $email_hashed = false, $dclmn_user_id = false) {
     $path = $_SERVER['DOCUMENT_ROOT'] . '/wp-content/uploads/logs/cp-logins';
     if (!is_dir($path)) {
       mkdir($path, 0755, true);
@@ -328,9 +366,9 @@ class DCLMN_Users {
     $line = "";
     $line .= date('Y-m-d H:i:s') . "\t";
     $line .= $_SERVER['REMOTE_ADDR'] . "\t";
-    $line .= $action ."\t";
-    $line .= $email_hashed ."\t";
-    $line .= $dclmn_user_id ."\t";
+    $line .= $action . "\t";
+    $line .= $email_hashed . "\t";
+    $line .= $dclmn_user_id . "\t";
     $line .= $_SERVER['HTTP_USER_AGENT'] . "\n";
 
     file_put_contents($file, $line, FILE_APPEND | LOCK_EX);

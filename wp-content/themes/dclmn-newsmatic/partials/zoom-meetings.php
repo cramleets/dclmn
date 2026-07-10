@@ -28,7 +28,7 @@ foreach ($meetings as $meeting) {
 }
 $out .= '</div>';
 
-if (!empty($out)) {
+if (!empty($meetings)) {
   $out = '<h3>Upcoming Zoom Meetings</h3><ul>'. $out .'</ul>';
 }
 

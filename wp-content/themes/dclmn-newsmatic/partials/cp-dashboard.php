@@ -47,93 +47,91 @@ if ($dclmn_user || !empty($extra_content)) {
 <?php else: ?>
   <div class="user-info">
     <?php if ($dclmn_user->is_cp()): ?>
-      <h3>Your Precinct</h3>
-      <h2><?php echo $dclmn_user->get_precinct()->post_title; ?></h2>
-      <hr>
+      <div class="dashboard-group">
+        <h3>Your CP Information</h3>
+        <h2><?php echo $dclmn_user->get_precinct()->post_title; ?></h2>
+        <p class="note">Please contact <?php echo dclmn_board_member_email_link('Subcommittee Chair - Technology', 'DCLMN Contact Info') ?> if you need any of this information updated.</p>
+        <table cellpadding="5" cellspacing="0" class="stripes">
+          <tr>
+            <td width="180">Email</td>
+            <td><?php echo $dclmn_user->get_email(); ?></td>
+          </tr>
+          <tr>
+            <td>Phone</td>
+            <td><?php echo $dclmn_user->get_phone(); ?></td>
+          </tr>
+          <tr>
+            <td>Address</td>
+            <td><?php echo $dclmn_user->get_address(); ?></td>
+          </tr>
+        </table>
+        <br>
+        <table cellpadding="5" cellspacing="0" class="">
+          <tr>
+            <td width="180">
+              <input type="checkbox" id="hide-cp-email-address" data-post_id="<?php echo $dclmn_user->ID ?>" <?php if ($dclmn_user->email_address_is_hidden()) echo 'checked' ?>>
+            </td>
+            <td>
+              <label for="hide-cp-email-address"><strong>Do Not Publish My Email Address</strong></label>
+              <span id="hide-cp-email-address-result"></span>
+            </td>
+          </tr>
+        </table>
+        <br>
+        <table cellpadding="5" cellspacing="0" class="">
+          <tr>
+            <td width="180"></td>
+            <td>Emails sent to <a href="mailto:<?php echo $dclmn_user->get_mailbox(); ?>" target="_blank"><strong><?php echo $dclmn_user->get_mailbox(); ?></strong></a> will be forwarded to you.</td>
+          </tr>
+        </table>
+      </div>
     <?php endif; ?>
-    <h3>Your Information</h3>
-    <p class="note">Please contact <?php echo dclmn_board_member_email_link('Subcommittee Chair - Technology', 'DCLMN Contact Info') ?> if you need any of this information updated.</p>
-    <table cellpadding="5" cellspacing="0" class="stripes">
-      <tr>
-        <td width="180">Email</td>
-        <td><?php echo $dclmn_user->get_email(); ?></td>
-      </tr>
-      <tr>
-        <td>Phone</td>
-        <td><?php echo $dclmn_user->get_phone(); ?></td>
-      </tr>
-      <tr>
-        <td>Address</td>
-        <td><?php echo $dclmn_user->get_address(); ?></td>
-      </tr>
-    </table>
-    <br>
-    <table cellpadding="5" cellspacing="0" class="">
-      <tr>
-        <td width="180">
-          <input type="checkbox" id="hide-cp-email-address" <?php if ($dclmn_user->email_address_is_hidden()) echo 'checked' ?>>
-        </td>
-        <td>
-          <label for="hide-cp-email-address"><strong>Do Not Publish My Email Address</strong></label>
-          <span id="hide-cp-email-address-result"></span>
-        </td>
-      </tr>
-    </table>
-    <br>
-    <table cellpadding="5" cellspacing="0" class="">
-      <tr>
-        <td width="180"></td>
-        <td>Emails sent to <a href="mailto:<?php echo $dclmn_user->get_mailbox(); ?>" target="_blank"><strong><?php echo $dclmn_user->get_mailbox(); ?></strong></a> will be forwarded to you.</td>
-      </tr>
-    </table>
-  <hr>
 
-    <?php if ($dclmn_user->exec_cp): ?>
-      <h3>Your Precinct</h3>
-      <h2><?php echo $dclmn_user->exec_cp->get_precinct()->post_title; ?></h2>
-      <hr>
+    <?php if ($dclmn_user->is_exec()): ?>
+      <div class="dashboard-group">
+        <h2>Executive Committee Position<?php if (count($dclmn_user->positions) != 1): ?>s<?php endif; ?></h2>
+        <?php foreach ($dclmn_user->positions as $position): ?>
+          <div class="committee-position">
+            <h3><?php echo $position->position_label ?></h3>
+            <table cellpadding="5" cellspacing="0" class="stripes">
+              <tr>
+                <td width="180">Email</td>
+                <td><?php echo $position->email; ?></td>
+              </tr>
+              <tr>
+                <td>Phone</td>
+                <td><?php echo $position->phone; ?></td>
+              </tr>
+            </table>
+            <?php if (0): ?>
+              <br>
+              <table cellpadding="5" cellspacing="0" class="">
+                <tr>
+                  <td width="180">
+                    <input type="checkbox" id="hide-cp-email-address" data-post_id="<?php echo $position->ID ?>" <?php if ($position->email_address_is_hidden()) echo 'checked' ?>>
+                  </td>
+                  <td>
+                    <label for="hide-cp-email-address"><strong>Do Not Publish My Email Address</strong></label>
+                    <span id="hide-cp-email-address-result"></span>
+                  </td>
+                </tr>
+              </table>
+              <?php if (!empty($position->mailbox)): ?>
+                <br>
+                <table cellpadding="5" cellspacing="0" class="">
+                  <tr>
+                    <td width="180"></td>
+                    <td>Emails sent to <a href="mailto:<?php echo $position->get_mailbox(); ?>" target="_blank"><strong><?php echo $position->get_mailbox(); ?></strong></a> will be forwarded to you.</td>
+                  </tr>
+                </table>
+              <?php endif; ?>
+            <?php endif; ?>
+          </div>
+        <?php endforeach; ?>
+      </div>
+      <p><a href="<?php echo home_url('cp/room-request/') ?>" class="button">Event/Meeting Room Request</a></p>
     <?php endif; ?>
-    <h3>Your Information</h3>
-    <p class="note">Please contact <?php echo dclmn_board_member_email_link('Subcommittee Chair - Technology', 'DCLMN Contact Info') ?> if you need any of this information updated.</p>
-    <table cellpadding="5" cellspacing="0" class="stripes">
-      <tr>
-        <td width="180">Email</td>
-        <td><?php echo $dclmn_user->exec_cp->get_email(); ?></td>
-      </tr>
-      <tr>
-        <td>Phone</td>
-        <td><?php echo $dclmn_user->exec_cp->get_phone(); ?></td>
-      </tr>
-      <tr>
-        <td>Address</td>
-        <td><?php echo $dclmn_user->exec_cp->get_address(); ?></td>
-      </tr>
-    </table>
-    <br>
-    <table cellpadding="5" cellspacing="0" class="">
-      <tr>
-        <td width="180">
-          <input type="checkbox" id="hide-cp-email-address" <?php if ($dclmn_user->exec_cp->email_address_is_hidden()) echo 'checked' ?>>
-        </td>
-        <td>
-          <label for="hide-cp-email-address"><strong>Do Not Publish My Email Address</strong></label>
-          <span id="hide-cp-email-address-result"></span>
-        </td>
-      </tr>
-    </table>
-    <br>
-    <table cellpadding="5" cellspacing="0" class="">
-      <tr>
-        <td width="180"></td>
-        <td>Emails sent to <a href="mailto:<?php echo $dclmn_user->exec_cp->get_mailbox(); ?>" target="_blank"><strong><?php echo $dclmn_user->exec_cp->get_mailbox(); ?></strong></a> will be forwarded to you.</td>
-      </tr>
-    </table>
   </div>
-  <hr>
-
-
-
-
   <div class="dclmn-tools">
     <div class="flex">
       <div>
@@ -156,9 +154,13 @@ if ($dclmn_user || !empty($extra_content)) {
         <ul>
           <li><a href="<?php echo get_stylesheet_directory_uri() ?>/assets/dclmn-roberts-rules-cheat-sheet.pdf" target="_blank">Robert's Rules Cheat Sheet</a></li>
           <li><a href="<?php echo get_stylesheet_directory_uri() ?>/assets/dclmn-guide-to-welcoming-new-residents.pdf" target="_blank">Guide to Welcoming New Residents</a></li>
-          <li><a href="<?php echo get_stylesheet_directory_uri() ?>/assets/dclmn-proxy-form-generic.docx" target="_blank">Generic Proxy Form</a></li>
           <li><a href="https://drive.google.com/drive/folders/1aKBNH8LehMBqKRV_xzOli_XcCN9eWjkB" target="_blank">Petitions</a></li>
           <li><a href="<?php echo home_url('subcommittees/') ?>" target="_blank">Subcommittees</a></li>
+          <li>
+            Generic Proxy Form:
+            <a href="<?php echo get_stylesheet_directory_uri() ?>/assets/dclmn-proxy-form-generic.pdf" target="_blank">PDF</a> |
+            <a href="<?php echo get_stylesheet_directory_uri() ?>/assets/dclmn-proxy-form-generic.docx" target="_blank">Word Doc</a>
+          </li>
         </ul>
         <?php if (dclmn_user_is_exec()): ?>
           <h3>Exec Tools</h3>

@@ -27,43 +27,45 @@ $leadership = $dclmn->get_leadership();
       </tr>
     </thead>
     <tbody>
-      <?php foreach ($leadership as $l): ?>
-        <tr valign="top">
-          <?php if (!empty($l->email)): ?>
-            <td data-label="Send Email" style="text-align: center;"><input type="checkbox" class="email-checkbox" data-post_id="<?php echo $l->ID ?>"></td>
-          <?php else: ?>
-            <td>&nbsp;</td>
-          <?php endif; ?>
-          <td class="position"><?php echo str_replace(' (', '<br><small>(', $l->post_title . '</small>') ?></td>
-          <td nowrap>
-            <?php
-            if ($l->email) echo '<a href="mailto:' . $l->email . '" target="_blank">';
-            echo $l->first_name . ' ' . $l->last_name;
-            if ($l->email) echo '</a>';
-            ?>
-          </td>
-          <td nowrap data-label="Email"><a href="mailto:<?php echo $l->email ?>" target="_blank"><?php echo $l->email ?></td>
-          <td nowrap><?php echo $dclmn->get_phone_link($l->phone); ?></td>
-        </tr>
-        <?php if (!empty($l->first_name_2)): ?>
+      <?php foreach ($leadership as $leadership_label => $posts): ?>
+        <?php foreach ($posts as $l): ?>
           <tr valign="top">
             <?php if (!empty($l->email)): ?>
               <td data-label="Send Email" style="text-align: center;"><input type="checkbox" class="email-checkbox" data-post_id="<?php echo $l->ID ?>"></td>
             <?php else: ?>
               <td>&nbsp;</td>
             <?php endif; ?>
-            <td class="position">&nbsp;</td>
+            <td class="position"><?php echo str_replace(' (', '<br><small>(', $l->position_label . '</small>') ?></td>
             <td nowrap>
               <?php
-              if ($l->email_2) echo '<a href="mailto:' . $l->email_2 . '" target="_blank">';
-              echo $l->first_name_2 . ' ' . $l->last_name_2;
-              if ($l->email_2) echo '</a>';
+              if ($l->email) echo '<a href="mailto:' . $l->email . '" target="_blank">';
+              echo $l->first_name . ' ' . $l->last_name;
+              if ($l->email) echo '</a>';
               ?>
             </td>
-            <td nowrap data-label="Email"><a href="mailto:<?php echo $l->email_2 ?>" target="_blank"><?php echo $l->email_2 ?></td>
-            <td nowrap><?php echo $dclmn->get_phone_link($l->phone_2); ?></td>
+            <td nowrap data-label="Email"><a href="mailto:<?php echo $l->email ?>" target="_blank"><?php echo $l->email ?></td>
+            <td nowrap><?php echo $dclmn->get_phone_link($l->phone); ?></td>
           </tr>
-        <?php endif; ?>
+          <?php if (!empty($l->first_name_2)): ?>
+            <tr valign="top">
+              <?php if (!empty($l->email)): ?>
+                <td data-label="Send Email" style="text-align: center;"><input type="checkbox" class="email-checkbox" data-post_id="<?php echo $l->ID ?>"></td>
+              <?php else: ?>
+                <td>&nbsp;</td>
+              <?php endif; ?>
+              <td class="position">&nbsp;</td>
+              <td nowrap>
+                <?php
+                if ($l->email_2) echo '<a href="mailto:' . $l->email_2 . '" target="_blank">';
+                echo $l->first_name_2 . ' ' . $l->last_name_2;
+                if ($l->email_2) echo '</a>';
+                ?>
+              </td>
+              <td nowrap data-label="Email"><a href="mailto:<?php echo $l->email_2 ?>" target="_blank"><?php echo $l->email_2 ?></td>
+              <td nowrap><?php echo $dclmn->get_phone_link($l->phone_2); ?></td>
+            </tr>
+          <?php endif; ?>
+        <?php endforeach; ?>
       <?php endforeach; ?>
     </tbody>
   </table>

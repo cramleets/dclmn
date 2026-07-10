@@ -14,11 +14,77 @@ class DCLMN_User {
   var $state;
   var $zip;
   var $hide_email_address;
+  var $positions;
+  var $post_type;
 
   function __construct($user_id) {
     foreach (dclmn_get_post($user_id) as $k => $v) {
       $this->$k = $v;
     }
+
+    $this->set_positions();
+    $this->set_precinct();
+  }
+
+  function is_cp() {
+    return !empty($this->precinct);
+  }
+
+  function is_exec() {
+    return count($this->positions);
+  }
+
+  function set_positions() {
+    global $wpdb;
+
+    $sql = $wpdb->prepare("SELECT p.*
+    FROM {$wpdb->posts} p
+    WHERE p.post_status = 'publish'
+    AND p.post_type IN ('committee-position')
+    AND EXISTS (
+        SELECT 1
+        FROM {$wpdb->postmeta} pm
+        WHERE pm.post_id = p.ID
+        AND pm.meta_key IN ('email')
+        AND pm.meta_value = %s
+    )", $this->email);
+
+    $postitions = [];
+    foreach ($wpdb->get_results($sql) as $row) {
+      $postitions[] = dclmn_get_post($row->ID);
+    }
+
+    $this->positions = $postitions;
+  }
+
+  function set_precinct() {
+    if (!empty($this->precinct)) return;
+
+    global $wpdb;
+
+    $sql = $wpdb->prepare("SELECT p.*
+    FROM {$wpdb->posts} p
+    WHERE p.post_status = 'publish'
+    AND p.post_type IN ('committee_person')
+    AND EXISTS (
+        SELECT 1
+        FROM {$wpdb->postmeta} pm
+        WHERE pm.post_id = p.ID
+        AND pm.meta_key IN ('email')
+        AND pm.meta_value = %s
+    )", $this->email);
+
+    $posts =$wpdb->get_results($sql);
+    if (count($posts)) {
+      $precinct = get_post_meta($posts[0]->ID, 'precinct', true);
+      if (!empty($precinct)) {
+        $this->precinct = dclmn_get_post($precinct);
+      }
+    }
+  }
+
+  function get_positions() {
+    return $this->positions;
   }
 
   function get_email() {
@@ -53,26 +119,16 @@ class DCLMN_User {
     return $out;
   }
 
-  function is_exec() {
-    $query = new WP_Query(array(
-      'post_type'    => 'committee-position',
-      'meta_key' => 'email',
-      'meta_value' => $this->get_email(),
-      'posts_per_page' => 1,
-      'post_status'    => 'any',
-    ));
-
-    return $query->have_posts();
-  }
-
   function get_voters() {
+    if (!$this->is_cp()) return [];
+
     ini_set('memory_limit', '-1');
     global $wpdb;
 
     $precinct = $this->get_precinct();
 
     $sql = 'SELECT * FROM streetlists.mcdc_data WHERE precinct=%d';
-    $sql = $wpdb->prepare($sql, $precinct->precinct_number);
+    $sql = $wpdb->prepare($sql,  $this->get_precinct()->precinct_number);
     $results = $wpdb->get_results($sql);
 
     $voters = [];
@@ -88,10 +144,16 @@ class DCLMN_User {
   }
 
   function get_mailbox() {
-    $mailbox = $this->get_precinct()->post_title;
-    $mailbox = str_replace('Narberth ', 'N-', $mailbox);
-    $mailbox = str_replace('Lower Merion ', '', $mailbox);
-    $mailbox = strtolower($mailbox) .'@dclmn.us';
+    if ($this->is_cp()) {
+      $mailbox = $this->get_precinct()->post_title;
+      $mailbox = str_replace('Narberth ', 'N-', $mailbox);
+      $mailbox = str_replace('Lower Merion ', '', $mailbox);
+    } else {
+      $mailbox = $this->mailbox;
+    }
+
+    $mailbox = strtolower($mailbox) . '@dclmn.us';
+
     return $mailbox;
   }
 }
