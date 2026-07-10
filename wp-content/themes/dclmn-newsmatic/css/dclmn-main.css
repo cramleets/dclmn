@@ -1367,3 +1367,29 @@ body.hidden-sidebar.right-sidebar #theme-content .row .primary-content {
 .dashboard-group .committee-position {
     margin-top: 1em;
 }
+
+.tribe-events-header .tribe-events-c-top-bar {
+    position: relative;
+}
+
+.tribe-events .tribe-events-header .tribe-events-c-subscribe-dropdown {
+    margin: 0 !important;
+    /* position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateX(-50%);
+    float: none; */
+}
+
+.tribe-events .tribe-events-header .tribe-events-c-subscribe-dropdown .tribe-events-c-subscribe-dropdown__content {
+    position: absolute;
+    z-index: 999;
+}
+
+.tribe-events.tribe-common .tribe-events-header  .tribe-common-c-btn-border {
+    width: auto;
+}
+
+.tribe-events .tribe-events-header__events-bar {
+    margin-left: 1em;
+}

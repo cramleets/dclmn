@@ -1,0 +1,1 @@
+<?php $this->template( 'components/ical-link' ); ?>

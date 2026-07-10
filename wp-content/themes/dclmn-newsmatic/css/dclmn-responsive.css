@@ -308,6 +308,10 @@
         font-size: 1em;
     }
 
+    .tribe-events-c-top-bar.tribe-events-header__top-bar {
+        display: flex;
+    }
+
     /* #header-menu {
         position: fixed;
         height: 100%;
@@ -650,6 +654,10 @@
     .dclmn-modal-window .toggle input+label {
         width: 280px;
         margin: 1em auto;
+    }
+
+    .tribe-events .tribe-events-header__events-bar {
+        margin-bottom: 1em;
     }
 }
 
