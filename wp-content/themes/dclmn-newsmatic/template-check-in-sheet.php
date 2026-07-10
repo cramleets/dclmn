@@ -9,6 +9,11 @@ array_shift($precincts);
     font-size: 14px;
     font-family: tahoma;
   }
+
+  .checkbox {
+    font-size: 1.5em;
+    line-height: 1;
+  }
 </style>
 <?php if (!dclmn_user_is_exec()): ?>
   <h2>You do not have permission to view this.</h2>
@@ -18,12 +23,14 @@ array_shift($precincts);
     <tr style="font-weight: bold; background-color: #333; color: #fff;">
       <td width="180">Precinct</td>
       <td width="180">Name</td>
+      <td width="40">Zoom</td>
       <td>Signature</td>
     </tr>
     <?php foreach ($precincts as $precinct): ?>
       <tr>
         <td><?php echo $precinct[0] ?></td>
         <td><?php echo $precinct[3] ?> <?php echo $precinct[4] ?></td>
+        <td align="center" class="checkbox">&#9744;</td>
         <td>&nbsp;</td>
       </tr>
     <?php endforeach; ?>
