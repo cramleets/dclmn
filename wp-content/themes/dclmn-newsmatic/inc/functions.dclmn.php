@@ -678,41 +678,45 @@ function dclmn_get_user() {
  * Finds by path or title.
  */
 function dclmn_get_position($position) {
-    $post = get_page_by_path($position, NULL, 'committee-position');
-
     //if not found by path look by title, so this works for either
-    if (!$post) {
-        $query = new WP_Query(array(
-            'post_type'    => 'committee-position',
-            'title'        => $position,
-            'posts_per_page' => 1,
-            'post_status'    => 'any',
-        ));
 
-        $post = $query->have_posts() ? $query->posts[0] : false;
-    }
-    return $post;
+    $args = [
+        'post_type'    => 'committee-position',
+        'post_status'    => 'any',
+        'meta_key' => 'position_label',
+        'meta_value' => $position,
+    ];
+
+    $posts = dclmn_get_posts($args);
+    return $posts;
 }
 
-function dclmn_get_board_member($position) {
+function dclmn_get_board_members($position) {
     return dclmn_get_position($position);
 }
 
 function dclmn_board_member_email_link($position, $subject = false) {
-    $position = dclmn_get_board_member($position);
+    $positions = dclmn_get_board_members($position);
+
     $out = '';
-    $out .= '<a';
-    $out .= ' href="';
-    $out .= 'mailto:' . $position->email;
-    if ($subject) $out .= '?subject=' . urlencode($subject);
-    $out .= '"';
-    $out .= ' target="_blank"';
-    $out .= ' rel="noopener"';
-    $out .= '>';
-    $out .= $position->first_name;
-    $out .= ' ';
-    $out .= $position->last_name;
-    $out .= '</a>';
+    $sep = ' or ';
+    foreach ($positions as $position) {
+        $out .= '<a';
+        $out .= ' href="';
+        $out .= 'mailto:' . $position->email;
+        if ($subject) $out .= '?subject=' . urlencode($subject);
+        $out .= '"';
+        $out .= ' target="_blank"';
+        $out .= ' rel="noopener"';
+        $out .= '>';
+        $out .= $position->first_name;
+        $out .= ' ';
+        $out .= $position->last_name;
+        $out .= '</a>';
+        $out .= $sep;
+    }
+    
+    $out = rtrim($out, $sep);
 
     return $out;
 }
