@@ -47,6 +47,11 @@ class DCLMN {
             return $title;
         });
 
+        add_filter('tribe_ical_feed_item', function ($item) {
+            unset($item['CATEGORIES']);
+            return $item;
+        }, 20);
+
         add_action('newsmatic_after_header_hook', 'newsmatic_header_ads_banner_part', 10);
         add_action('newsmatic_main_banner_hook', 'newsmatic_header_ads_banner_part_footer', 999);
 
