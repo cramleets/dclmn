@@ -3,7 +3,6 @@ jQuery(document).ready(function ($) {
 
   function setActiveLink() {
     var hash = window.location.hash.replace(/#/g, '');
-    console.log(hash);
     $('.button-group-voting-center a').removeClass('current');
     if (hash) {
       $('.button-group-voting-center a.' + hash).addClass('current');
@@ -166,7 +165,6 @@ jQuery(document).ready(function ($) {
     e.preventDefault();
 
     let checked_cps = get_checked_cps();
-    console.log(checked_cps);
     let $el = $(this);
     let text_holder = $el.text();
 
@@ -199,15 +197,17 @@ jQuery(document).ready(function ($) {
     $('body').removeClass('modal-open');
   });
 
-  $('#hide-cp-email-address').on('click', function () {
+  $('.hide-user-email-address').on('click', function () {
     data = {
-      action: 'hide_cp_email_address',
+      action: 'hide_user_email_address',
       hide: $(this).is(':checked'),
+      post_id: $(this).data('post_id'),
     };
 
-    $('#hide-cp-email-address-result').html('<img src="/wp-includes/images/spinner.gif" style="width: 16px; height: 16px; vertical-align: middle;">').removeClass('session-login-message');
+    $result_el = $('#hide-user-email-address-result' +'-' + $(this).data('post_id'));
+    $result_el.html('<img src="/wp-includes/images/spinner.gif" style="width: 16px; height: 16px; vertical-align: middle;">').removeClass('session-login-message');
     $.post(ajaxurl, data, function (data) {
-      $('#hide-cp-email-address-result').html('Updated.').addClass('session-login-message').css('font-size', '.75em');
+      $result_el.html('Updated.').addClass('session-login-message').css('font-size', '.75em');
     });
   });
 

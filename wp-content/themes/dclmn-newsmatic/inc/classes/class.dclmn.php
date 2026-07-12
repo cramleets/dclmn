@@ -94,8 +94,8 @@ class DCLMN {
         add_action('wp_ajax_nopriv_get_street_name', [$this, 'wp_ajax_get_street_name']);
         add_action('wp_ajax_export_cps_full', [$this, 'wp_ajax_export_cps_full']);
         add_action('wp_ajax_nopriv_export_cps_full', [$this, 'wp_ajax_export_cps_full']);
-        add_action('wp_ajax_hide_cp_email_address', [$this, 'wp_hide_cp_email_address']);
-        add_action('wp_ajax_nopriv_hide_cp_email_address', [$this, 'wp_hide_cp_email_address']);
+        add_action('wp_ajax_hide_user_email_address', [$this, 'wp_hide_user_email_address']);
+        add_action('wp_ajax_nopriv_hide_user_email_address', [$this, 'wp_hide_user_email_address']);
 
         add_filter('tec_events_views_v2_view_header_title', function ($title, $obj) {
             if (empty($title)) $title = 'Events';
@@ -557,6 +557,7 @@ class DCLMN {
                         $out .= ' - <a href="' . home_url('committee-person-description/') . '">Inquire</a>';
                     } else {
                         $email = $person->email;
+                       if ('Steel' == $person->last_name ) pobj($person,1);
                         if ($person->hide_email_address) $email = $title . '@dclmn.org';
                         $out .= ($person->email) ? '<a href="mailto:' . $email . '" target="_blank">' : '';
                         $out .= $person->first_name;
@@ -1072,10 +1073,10 @@ class DCLMN {
         return $alterations;
     }
 
-    function wp_hide_cp_email_address() {
+    function wp_hide_user_email_address() {
         $dclmn_user = dclmn_get_user();
         $hide = filter_var($_REQUEST['hide'], FILTER_VALIDATE_BOOLEAN);
-        update_post_meta($dclmn_user->ID, 'hide_email_address', $hide);
+        update_post_meta($_REQUEST['post_id'], 'hide_email_address', $hide);
         die('done.');
     }
 

@@ -38,6 +38,9 @@ class DCLMN_Populator {
       }
       if (get_query_var('dclmn-cpanel-forwards-populator')) {
         $cpapi = new DCLMN_Cpanel_API();
+  
+        $cpapi->set_existing_forwarders();
+
         $cpapi->delete_precinct_forwarders();
         $cpapi->delete_leadership_forwarders();
         $cpapi->load_precinct_forwarders();

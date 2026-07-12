@@ -81,7 +81,7 @@ class DCLMN_Users {
 
   function get_user_by_email($email) {
     //give priority to exec
-    add_filter('posts_ordesrby', function ($orderby, $query) {
+    add_filter('posts_orderby', function ($orderby, $query) {
       if ($query->get('committee_priority')) {
         global $wpdb;
 

@@ -12,6 +12,7 @@ require_once dirname(__FILE__) . '/inc/classes/class.dclmn-acf.php';
 require_once dirname(__FILE__) . '/inc/classes/class.dclmn-cps.php';
 require_once dirname(__FILE__) . '/inc/classes/class.dclmn-populator.php';
 require_once dirname(__FILE__) . '/inc/classes/class.dclmn-user.php';
+require_once dirname(__FILE__) . '/inc/classes/class.dclmn-position-user.php';
 require_once dirname(__FILE__) . '/inc/classes/class.widget-rotating-quotes.php';
 
 require_once dirname(__FILE__) . '/inc/classes/class.cpanel-api.php';

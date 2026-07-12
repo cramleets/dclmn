@@ -42,6 +42,31 @@
     text-align: right;
     margin-right: .5em;
   }
+
+  .widefat thead tr.forwarder-type td {
+    background-color: #000 !important;
+    color: #fff !important;
+    font-weight: bold;
+    font-size: 1.25em;
+    text-transform: uppercase;
+  }
+
+  #forwarders tbody {
+    display: block;
+    height: 250px;
+    overflow: auto;
+  }
+
+  #forwarders thead,
+  #forwarders tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  #forwarders thead {
+    width: calc(100% - 1em)
+  }
 </style>
 <div class="wrap">
   <div id="icon-tools" class="icon32"></div>
@@ -96,6 +121,7 @@
 
   $out = '';
   $out .= '<h2>Dashboard Logins</h2>';
+  $out .= '<div style="max-height: 200px; overflow: auto;">';
   $out .= '<table class="wp-list-table widefat fixed striped table-view-list posts">';
   $out .= '<thead>';
   $out .= '<tr>';
@@ -121,46 +147,62 @@
       $out .= '<td>' . $v . '</td>';
 
       if (3 == $k) {
-        $out .= '<td>'. unserialize(base64_decode($v)) .'</td>';
+        $out .= '<td>' . unserialize(base64_decode($v)) . '</td>';
       }
     }
     $out .= '</tr>';
   }
   $out .= '</tbody>';
   $out .= '</table>';
+  $out .= '</div>';
 
   echo $out;
   ?>
   <br>
   <?php
   $cpapi = new DCLMN_Cpanel_API();
-  $forwarders = $cpapi->get_forwarders();
+  $forwarders = $cpapi->get_sorted_forwarders();
+  $first_key = array_key_first($forwarders);
+  $forwarders_keys = array_keys($forwarders[$first_key][0]);
+
   $out = '';
   $out .= '<h2>Cpanel Forwarders</h2>';
-  $out .= '<table class="wp-list-table widefat fixed striped table-view-list posts">';
-  $out .= '<thead>';
-  $out .= '<tr>';
-  $out .= '<th style="text-align: right;">#</th>';
-  foreach ($forwarders[0] as $k => $v) {
-    $out .= '<th>' . $k . '</th>';
-  }
-  $out .= '</tr>';
-  $out .= '</thead>';
-  $out .= '<tbody>';
+  if (!count($forwarders)) {
+    $out .= 'None found.';
+  } else {
+    $out .= '<div id="forwarders">';
+    $out .= '<table class="wp-list-table widefat fixed striped table-view-list posts">';
 
-  $i = 0;
-  foreach ($forwarders as $forwarder) {
-    $i++;
+    foreach ($forwarders as $key => $key_forwarders) {
+      $out .= '<thead>';
+      $out .= '<tr class="forwarder-type""><td colspan="8">' . $key . '</td></tr>';
+      $out .= '<tr>';
+      $out .= '<th style="text-align: right;">#</th>';
+      $out .= '<th>Type</th>';
+      foreach ($forwarders_keys as $v) {
+        $out .= '<th>' . $v . '</th>';
+      }
+      $out .= '</tr>';
+      $out .= '</thead>';
+      $out .= '<tbody>';
 
-    $out .= '<tr>';
-    $out .= '<td style="text-align: right;">' . $i . '</td>';
-    foreach ($forwarder as $k => $v) {
-      $out .= '<td>' . $v . '</td>';
+      $i = 0;
+      foreach ($key_forwarders as $forwarder) {
+        $i++;
+
+        $out .= '<tr>';
+        $out .= '<td width="50" style="text-align: right;">' . $i . '</td>';
+        $out .= '<td width="50">' . $key . '</td>';
+        foreach ($forwarder as $k => $v) {
+          $out .= '<td>' . $v . '</td>';
+        }
+        $out .= '</tr>';
+      }
+      $out .= '</tbody>';
     }
-    $out .= '</tr>';
+    $out .= '</table>';
+    $out .= '</div>';
   }
-  $out .= '</tbody>';
-  $out .= '</table>';
   echo $out;
   ?>
 </div>

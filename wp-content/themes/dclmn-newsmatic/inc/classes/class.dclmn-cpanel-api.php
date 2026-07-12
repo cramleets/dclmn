@@ -13,6 +13,43 @@ class DCLMN_Cpanel_API extends Cpanel_API {
     return $mailbox;
   }
 
+  function set_existing_forwarders() {
+    $forwarders = $this->get_forwarders();
+    foreach ($forwarders as $forwarder) {
+      $this->existing_forwarders[$forwarder['dest']][] = $forwarder['forward'];
+    }
+  }
+
+  function get_sorted_forwarders() {
+    $forwarders_raw = $this->get_forwarders();
+
+    //sort each entry by key
+    foreach ($forwarders_raw as &$forwarder) {
+      ksort($forwarder);
+    }
+    unset($forwarder); // break the reference
+
+    //sort the array by destination
+    usort($forwarders_raw, function ($a, $b) {
+      $aIsN = str_starts_with(strtolower($a['dest']), 'n');
+      $bIsN = str_starts_with(strtolower($b['dest']), 'n');
+
+      if ($aIsN !== $bIsN) {
+        return $aIsN ? -1 : 1;
+      }
+
+      return strnatcasecmp($a['dest'], $b['dest']);
+    });
+
+    $forwarders = [];
+    foreach ($forwarders_raw as $forwarder) {
+      $key = (preg_match('/^(?:\d+|\*|n)[-._]\d/', $forwarder['dest'])) ? 'CPs' : 'Exec';
+      $forwarders[$key][] = $forwarder;
+    }
+
+    return $forwarders;
+  }
+
   function load_precinct_forwarders() {
     global $dclmn;
 
@@ -32,16 +69,18 @@ class DCLMN_Cpanel_API extends Cpanel_API {
         $email_1 = "$mailbox@$domain";
         $email_2 = str_replace('-', '_', $email_1);
         $email_3 = str_replace('-', '.', $email_1);
-        $destination = strtolower($person->email);
+        $fwdemail = strtolower($person->email);
 
-        $result = $this->add_forwarder($domain, $email_1, $destination);
-        logger("Added CP Forwarder {$domain} {$email_1} {$destination}", 'cpanel-api');
+        //if ('marc.steel@gmail.com' != $fwdemail) continue;
 
-        $result = $this->add_forwarder($domain, $email_2, $destination);
-        logger("Added CP Forwarder {$domain} {$email_2} {$destination}", 'cpanel-api');
+        $result = $this->add_forwarder($domain, $email_1, $fwdemail);
+        logger("Added CP Forwarder {$domain} {$email_1} {$fwdemail}", 'cpanel-api');
 
-        $result = $this->add_forwarder($domain, $email_3, $destination);
-        logger("Added CP Forwarder {$domain} {$email_3} {$destination}", 'cpanel-api');
+        $result = $this->add_forwarder($domain, $email_2, $fwdemail);
+        logger("Added CP Forwarder {$domain} {$email_2} {$fwdemail}", 'cpanel-api');
+
+        $result = $this->add_forwarder($domain, $email_3, $fwdemail);
+        logger("Added CP Forwarder {$domain} {$email_3} {$fwdemail}", 'cpanel-api');
       }
     }
     logger("Load CP Forwarders - END", 'cpanel-api');
@@ -89,30 +128,32 @@ class DCLMN_Cpanel_API extends Cpanel_API {
     $leadership = $dclmn->get_leadership();
 
     logger("Load Leadership Forwarders - START", 'cpanel-api');
-    foreach ($leadership as $person) {
-      $mailbox = $person->mailbox;
+    foreach ($leadership as $position_label => $people) {
+      foreach ($people as $person) {
+        $mailbox = $person->mailbox;
 
-      if (empty($mailbox)) continue;
+        if (empty($mailbox)) continue;
 
-      $mailbox = sanitize_title(strtolower($mailbox));
+        $mailbox = sanitize_title(strtolower($mailbox));
 
-      $domain = "dclmn.us";
-      $email_1 = "$mailbox@$domain";
-      $email_2 = str_replace('-', '_', $email_1);
-      $email_3 = str_replace('-', '.', $email_1);
-      $destination = strtolower($person->email);
+        $domain = "dclmn.us";
+        $email_1 = "$mailbox@$domain";
+        $email_2 = str_replace('-', '_', $email_1);
+        $email_3 = str_replace('-', '.', $email_1);
+        $destination = strtolower($person->email);
 
-      $result = $this->add_forwarder($domain, $email_1, $destination);
-      logger("Added Leadership Forwarder {$domain} {$email_1} {$destination}", 'cpanel-api');
+        $result = $this->add_forwarder($domain, $email_1, $destination);
+        logger("Added Leadership Forwarder {$domain} {$email_1} {$destination}", 'cpanel-api');
 
-      if ($email_1 != $email_2) {
-        $result = $this->add_forwarder($domain, $email_2, $destination);
-        logger("Added Leadership Forwarder {$domain} {$email_2} {$destination}", 'cpanel-api');
-      }
+        if ($email_1 != $email_2) {
+          $result = $this->add_forwarder($domain, $email_2, $destination);
+          logger("Added Leadership Forwarder {$domain} {$email_2} {$destination}", 'cpanel-api');
+        }
 
-      if ($email_1 != $email_3) {
-        $result = $this->add_forwarder($domain, $email_3, $destination);
-        logger("Added Leadership Forwarder {$domain} {$email_3} {$destination}", 'cpanel-api');
+        if ($email_1 != $email_3) {
+          $result = $this->add_forwarder($domain, $email_3, $destination);
+          logger("Added Leadership Forwarder {$domain} {$email_3} {$destination}", 'cpanel-api');
+        }
       }
     }
     logger("Load Leadership Forwarders - END", 'cpanel-api');
@@ -125,30 +166,32 @@ class DCLMN_Cpanel_API extends Cpanel_API {
     $leadership = $dclmn->get_leadership();
 
     logger("Delete Leadership Forwarders - START", 'cpanel-api');
-    foreach ($leadership as $person) {
-      $mailbox = $person->mailbox;
+    foreach ($leadership as $position_label => $people) {
+      foreach ($people as $person) {
+        $mailbox = $person->mailbox;
 
-      if (empty($mailbox)) continue;
+        if (empty($mailbox)) continue;
 
-      $domain = "dclmn.us";
-      $email_1 = "$mailbox@$domain";
-      $email_2 = str_replace('-', '_', $email_1);
-      $email_3 = str_replace('-', '.', $email_1);
-      $destination = strtolower($person->email);
+        $domain = "dclmn.us";
+        $email_1 = "$mailbox@$domain";
+        $email_2 = str_replace('-', '_', $email_1);
+        $email_3 = str_replace('-', '.', $email_1);
+        $destination = strtolower($person->email);
 
-      $result = $this->delete_forwarder($email_1, $destination);
-      logger("Deleted Leadership Forwarder {$email_1} {$destination}", 'cpanel-api');
+        $result = $this->delete_forwarder($email_1, $destination);
+        logger("Deleted Leadership Forwarder {$email_1} {$destination}", 'cpanel-api');
 
-      if ($email_1 != $email_2) {
-        $result = $this->delete_forwarder($email_2, $destination);
-        logger("Deleted Leadership Forwarder {$email_2} {$destination}", 'cpanel-api');
+        if ($email_1 != $email_2) {
+          $result = $this->delete_forwarder($email_2, $destination);
+          logger("Deleted Leadership Forwarder {$email_2} {$destination}", 'cpanel-api');
+        }
+
+        if ($email_1 != $email_3) {
+          $result = $this->delete_forwarder($email_3, $destination);
+          logger("Deleted Leadership Forwarder {$email_3} {$destination}", 'cpanel-api');
+        }
       }
-
-      if ($email_1 != $email_3) {
-        $result = $this->delete_forwarder($email_3, $destination);
-        logger("Deleted Leadership Forwarder {$email_3} {$destination}", 'cpanel-api');
-      }
+      logger("Delete Leadership Forwarders - END", 'cpanel-api');
     }
-    logger("Delete Leadership Forwarders - END", 'cpanel-api');
   }
 }

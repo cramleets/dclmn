@@ -8,6 +8,7 @@ class Cpanel_API {
   var $domain;
   var $email;
   var $destination;
+  var $existing_forwarders = [];
 
   function __construct() {
   }
@@ -32,18 +33,21 @@ class Cpanel_API {
     $fields = [
       "domain"   => $domain,
       "email"    => $email,
-      "fwdemail" => $destination,
+      "fwdemail" => $fwdemail,
       "fwdopt"   => $fwdopt,
     ];
+
     return $this->call("/execute/Email/add_forwarder", $fields);
   }
 
   function delete_forwarder($email, $destination) {
-    $fields = [
-      "address"    => $email,
-      "forwarder" => $destination
-    ];
-    return $this->call("/execute/Email/delete_forwarder", $fields);
+    if (array_key_exists($email, $this->existing_forwarders) && in_array($destination, $this->existing_forwarders[$email])) {
+      $fields = [
+        "address"    => $email,
+        "forwarder" => $destination
+      ];
+      return $this->call("/execute/Email/delete_forwarder", $fields);
+    }
   }
 
   function call($path, $fields = []) {
@@ -70,6 +74,7 @@ class Cpanel_API {
       if (1 !== $data['status']) {
         logger($data['errors'], 'cpanel-api-errors', 'error');
         pobj($data['errors']);
+        exit;
       } else {
         return $data['data'];
       }
