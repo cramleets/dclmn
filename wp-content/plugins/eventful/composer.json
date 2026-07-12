@@ -1,0 +1,18 @@
+{
+    "name": "themeatelier/eventful",
+    "description": "Professional Event Post Layouts Addon For WordPress",
+    "type": "wordpress-plugins",
+    "license": "GPL-2.0+",
+    "autoload": {
+        "psr-4": {
+            "ThemeAtelier\\Eventful\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ThemeAtelier",
+            "email": "themeatelierbd@gmail.com"
+        }
+    ],
+    "require": {}
+}

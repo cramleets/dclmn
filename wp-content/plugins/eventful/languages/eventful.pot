@@ -1,0 +1,4105 @@
+# Copyright (C) 2026 Eventful
+# This file is distributed under the same license as the Eventful package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Eventful\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-07-06 09:00+0000\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/Admin/Admin.php:91, src/Admin/Admin.php:92, src/Admin/Views/EventfulSettings.php:42
+msgid "Settings"
+msgstr ""
+
+#: src/Admin/Admin.php:99, src/Admin/Admin.php:100, src/Admin/Views/EventfulReplaceLayout.php:47, src/Admin/Views/EventfulReplaceLayout.php:57
+msgid "Replace Layout"
+msgstr ""
+
+#: src/Admin/Admin.php:107, src/Admin/Admin.php:108, src/Admin/Views/EventfulTools.php:33, src/Admin/Views/EventfulTools.php:42
+msgid "Tools"
+msgstr ""
+
+#: src/Admin/Admin.php:146, src/Admin/GutenbergBlock/Gutenberg_Block_Init.php:132
+msgid "Eventful Layout"
+msgstr ""
+
+#: src/Admin/Admin.php:147, src/Includes/Eventful.php:222, src/Admin/HelpPage/Help.php:1070
+msgid "Shortcode"
+msgstr ""
+
+#: src/Admin/Admin.php:148, src/Admin/ElementBlock/Eventful_Shortcode_Widget.php:46, src/Admin/Helpers/ReviewNotice.php:63, src/Admin/Helpers/ReviewNotice.php:66, src/Admin/Helpers/ReviewNotice.php:67, src/Admin/Views/EventfulMetaboxes.php:58, src/Admin/Views/EventfulSettings.php:51
+msgid "Eventful"
+msgstr ""
+
+#: src/Admin/Admin.php:149
+msgid "All Layouts"
+msgstr ""
+
+#: src/Admin/Admin.php:150
+msgid "Add Layout"
+msgstr ""
+
+#: src/Admin/Admin.php:151, src/Admin/Admin.php:152
+msgid "Add New Layout"
+msgstr ""
+
+#: src/Admin/Admin.php:153
+msgid "Edit Generated Shortcode"
+msgstr ""
+
+#: src/Admin/Admin.php:154
+msgid "View Generated Shortcode"
+msgstr ""
+
+#: src/Admin/Admin.php:155
+msgid "Eventful Generator"
+msgstr ""
+
+#: src/Admin/Admin.php:156
+msgid "Search Generated Shortcode"
+msgstr ""
+
+#: src/Admin/Admin.php:157
+msgid "Parent Generated Shortcode:"
+msgstr ""
+
+#: src/Admin/Admin.php:158
+msgid "No Shortcode found."
+msgstr ""
+
+#: src/Admin/Admin.php:159
+msgid "No Shortcode found in Trash."
+msgstr ""
+
+#: src/Admin/Admin.php:166, src/Admin/Admin.php:167
+msgid "Eventful Shortcode"
+msgstr ""
+
+#: src/Admin/Admin.php:209, src/Admin/Framework/fields/group/group.php:25
+msgid "Add New"
+msgstr ""
+
+#: src/Admin/Admin.php:210
+msgid "Support"
+msgstr ""
+
+#: src/Admin/Admin.php:213
+msgid "Go Pro!"
+msgstr ""
+
+#: src/Admin/Admin.php:230, src/Admin/HelpPage/Help.php:565
+msgid "Live Demo"
+msgstr ""
+
+#. translators: 1: start strong tag, 2: close strong tag. 3: start link 4: close link
+#: src/Admin/Admin.php:250
+msgid "<i>Enjoying %1$sEventful?%2$s Please rate us %3$sWordPress.org%4$s. Your positive feedback will help us grow more. Thank you! 😊</i>"
+msgstr ""
+
+#: src/Admin/Eventful_Duplicator.php:39, src/Admin/Eventful_Duplicator.php:58
+msgid "No shortcode to duplicate has been supplied!"
+msgstr ""
+
+#: src/Admin/Eventful_Duplicator.php:114
+msgid "Shortcode creation failed, could not find original post: "
+msgstr ""
+
+#: src/Admin/Eventful_Duplicator.php:130
+msgid "Duplicate"
+msgstr ""
+
+#: src/Includes/Eventful.php:162
+msgid "Eventful plugin requires installing The Events Calendar plugin"
+msgstr ""
+
+#: src/Includes/Eventful.php:163
+msgid "Install and activate The Events Calendar plugin to start using all of Eventful plugin’s features."
+msgstr ""
+
+#: src/Includes/Eventful.php:164, src/Admin/HelpPage/Help.php:258
+msgid "Install Now"
+msgstr ""
+
+#: src/Includes/Eventful.php:152
+msgid "Eventful plugin requires activate The Events Calendar plugin"
+msgstr ""
+
+#: src/Includes/Eventful.php:153
+msgid "Activate The Events Calendar plugin to start using all of Eventful plugin’s features."
+msgstr ""
+
+#: src/Includes/Eventful.php:154
+msgid "Activate Now"
+msgstr ""
+
+#: src/Includes/Eventful.php:221, src/Admin/Views/Generator/EventfulDisplay.php:539, src/Admin/Views/Generator/EventfulFilterPost.php:156, src/Admin/Views/Generator/EventfulTypography.php:66, src/Admin/Views/Settings/EventfulColorScheme.php:322
+msgid "Title"
+msgstr ""
+
+#: src/Includes/Eventful.php:223
+msgid "Layout"
+msgstr ""
+
+#: src/Includes/Eventful.php:224
+msgid "Date"
+msgstr ""
+
+#: src/Includes/Import_Export.php:169, src/Admin/Framework/functions/actions.php:53, src/Admin/Framework/functions/actions.php:100, src/Admin/Framework/functions/actions.php:138, src/Admin/Framework/functions/actions.php:173, src/Admin/Framework/functions/actions.php:202
+msgid "Error: Invalid nonce verification."
+msgstr ""
+
+#: src/Includes/Import_Export.php:180
+msgid "Nothing to import."
+msgstr ""
+
+#: src/Admin/ElementBlock/Eventful_Shortcode_Widget.php:109, src/Admin/Views/Settings/EventfulColorScheme.php:325
+msgid "Content"
+msgstr ""
+
+#: src/Admin/ElementBlock/Eventful_Shortcode_Widget.php:117
+msgid "Eventful Shortcode(s)"
+msgstr ""
+
+#: src/Admin/ElementBlock/Eventful_Shortcode_Widget.php:140
+msgid "Select a shortcode"
+msgstr ""
+
+#: src/Admin/GutenbergBlock/Gutenberg_Block_Init.php:133
+msgid "Events Slider, Carousel, List, and Filter Bar blocks for The Events Calendar."
+msgstr ""
+
+#: src/Admin/GutenbergBlock/Gutenberg_Block_Init.php:179
+msgid "<i></i>"
+msgstr ""
+
+#: src/Admin/Helpers/ReviewNotice.php:66
+msgid "Enjoying"
+msgstr ""
+
+#: src/Admin/Helpers/ReviewNotice.php:67
+msgid "We hope you had a wonderful experience using"
+msgstr ""
+
+#: src/Admin/Helpers/ReviewNotice.php:67
+msgid "Please take a moment to leave a review on"
+msgstr ""
+
+#: src/Admin/Helpers/ReviewNotice.php:67
+msgid "WordPress.org"
+msgstr ""
+
+#: src/Admin/Helpers/ReviewNotice.php:67
+msgid "Your positive review will help us improve. Thank you!"
+msgstr ""
+
+#: src/Admin/Helpers/ReviewNotice.php:70
+msgid "Ok, you deserve"
+msgstr ""
+
+#: src/Admin/Helpers/ReviewNotice.php:71
+msgid "Nope, maybe later"
+msgstr ""
+
+#: src/Admin/Helpers/ReviewNotice.php:73
+msgid "Never show again"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:113, src/Admin/HelpPage/Help.php:114, src/Admin/HelpPage/Help.php:443
+msgid "Recommended"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:120, src/Admin/HelpPage/Help.php:121
+msgid "Lite vs Pro"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:128, src/Admin/HelpPage/Help.php:129
+msgid "Get Help"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:250
+msgid "Activate"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:266
+msgid "More Details"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:298
+msgid "Version:"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:307
+msgid "+ Active Installations"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:315
+msgid "Last Updated:"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:316
+msgid "ago"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:436
+msgid "Get Started"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:449
+msgid "Lite Vs Pro"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:455
+msgid "Pro Plugins"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:463
+msgid "🚀 Upgrading To Pro!"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:479
+msgid ""
+"Thank you for installing Eventful! This playlist will help you get started with the\n"
+"                                    plugin. Enjoy!"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:561
+msgid "Create Layout"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:569
+msgid "Upgrade To Pro"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:580
+msgid "Documentation"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:582
+msgid "Explore Eventful plugin capabilities in our enriched documentation."
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:589
+msgid "Technical Support"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:591
+msgid "For personalized assistance, reach out to our skilled support team for prompt help."
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:598
+msgid "Hire Us!"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:600
+msgid "We are available for freelance work for any WordPress, React, NextJS projects. Click to contact us."
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:609, src/Admin/HelpPage/Help.php:1142
+msgid "Our Users Love Eventful!"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:616, src/Admin/HelpPage/Help.php:1149
+msgid "I am loving the layout options for The Events Calendar. I’m using this plugin for clients who want more control over their layouts but don’t want to always come through a developer to get small changes. It’s doing the job wonderfully. I am also impressed with the fast and responsive support.<br>Thanks guys, keep it up!"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:621, src/Admin/HelpPage/Help.php:624, src/Admin/HelpPage/Help.php:1154, src/Admin/HelpPage/Help.php:1157
+msgid "Bird House Digital"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:635, src/Admin/HelpPage/Help.php:1168
+msgid "After experiencing issues with the module that I couldn’t resolve, the team offered to help and take direct action on my site, and they took the time to do so. Everything is back to normal now, and I’m very happy about that.<br>Thanks again to the Themeatelier team for their follow-up!"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:640, src/Admin/HelpPage/Help.php:643, src/Admin/HelpPage/Help.php:1173, src/Admin/HelpPage/Help.php:1176
+msgid "Robin"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:654, src/Admin/HelpPage/Help.php:1187
+msgid "I recently started using this plugin and ran into a few minor issues. I contacted the support team and they quickly provided a solution. Many thanks for the assistance and for the nice work with this plugin, very easy to set up!"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:659, src/Admin/HelpPage/Help.php:662, src/Admin/HelpPage/Help.php:1192, src/Admin/HelpPage/Help.php:1195
+msgid "Whitelily85"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:705
+msgid "FEATURES"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:706
+msgid "Lite"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:707
+msgid "PRO"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:712
+msgid "All Free Version Features"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:718
+msgid "Layout Presets (Carousel, Slider, Grid, Minimal List, Timeline, Ticker Carousel, Center Carousel, Multi-row Carousel, Masonry, List, Timeline, Table style variants)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:719, src/Admin/HelpPage/Help.php:727, src/Admin/HelpPage/Help.php:736, src/Admin/HelpPage/Help.php:744, src/Admin/HelpPage/Help.php:778, src/Admin/HelpPage/Help.php:786, src/Admin/HelpPage/Help.php:820
+msgid "New"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:726
+msgid "Timeline Layout Styles"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:728, src/Admin/HelpPage/Help.php:754, src/Admin/HelpPage/Help.php:762, src/Admin/HelpPage/Help.php:770, src/Admin/HelpPage/Help.php:804, src/Admin/HelpPage/Help.php:812, src/Admin/HelpPage/Help.php:821, src/Admin/HelpPage/Help.php:945
+msgid "Hot"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:735
+msgid "Timeline Customization (Date Badge Color, Line Thickness & Color, Event Dot Color, Month/Year Separator)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:743
+msgid "Pre-made Templates for Quick Setup"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:753
+msgid "Filter By Event Types (Latest, Featured, Specific)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:761
+msgid "Events View By (Upcoming, Past, All)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:764
+msgid "Upcoming Only"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:765
+msgid "All options"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:769
+msgid "Filter Order By (ID, Title, Event Start Date, Slug, Random, ASC, DESC, etc.)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:777, src/Admin/Views/Generator/EventfulFilterPost.php:140
+msgid "Hide Free Events"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:785, src/Admin/Views/Generator/EventfulFilterPost.php:146
+msgid "Hide Events Without Featured Images"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:792
+msgid "Advanced Live Search & Sort By Keyword"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:797
+msgid "Advanced Live Filter By Category & Tags"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:803
+msgid "Advanced Live Filter By Venue, Organizer & Event Type (Time Based)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:811
+msgid "Filter By Timeframe & Month"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:819
+msgid "Ajax Live Filter Type (Button, Dropdown, Radio, Checkbox)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:827
+msgid "Filter by Event Date & Time Range"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:835
+msgid "Event Item Same Height"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:842
+msgid "Event Item Border, Radius, Box Shadow, Background, Inner Padding, etc."
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:849
+msgid "Event Content Position (Default, Right, Left, Overlay)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:856
+msgid "List Layout Image Position (Left, Right)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:863
+msgid "Event Image Custom Dimensions and Retina Ready Supported"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:870
+msgid "Replace Default/Featured Event Image with First Resource (Image, Video, Audio)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:877
+msgid "Enable Event Image Lazy Load"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:884
+msgid "Zoom In, Zoom Out, and Grayscale Modes for Event Images"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:893
+msgid "Event Title (HTML Tag, Character Limit, Margin)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:900
+msgid "Event Meta (Venue, Price, Event Time, Organizer, Taxonomy, Series Archive)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:907
+msgid "Event Meta Icon"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:914
+msgid "Event Meta Styles (Separator, Margin, Meta Between Margin)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:921
+msgid "Event Content (Display Type, Margin, HTML Tags)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:928
+msgid "Event Read More Button (Type, Label, Color, Border, Padding)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:935
+msgid "Custom Fields as Event Content Fields"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:944
+msgid "Social Share (Facebook, Twitter, LinkedIn, Pinterest, WhatsApp, Email, etc.)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:952
+msgid "Social Share (Icon Shape, Alignment, Margin)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:959
+msgid "Social Share Custom Icon Color"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:968
+msgid "Pagination Type (Load More, Ajax Number, Infinite Scroll, No Ajax)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:975
+msgid "Separate Mobile Pagination Type"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:982
+msgid "Number Type Pagination (Ajax)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:989
+msgid "Pagination Settings (Color, Alignment, Items Per Page, etc.)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:998
+msgid "Carousel Mode (Standard, Center, Ticker, Multi-row)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1005
+msgid "Powerful Carousel Settings (AutoPlay, AutoPlay Speed, Carousel Speed, Pause on Hover, Infinite Loop, Carousel Direction, etc.)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1012
+msgid "Carousel Transition Effect (Slide, Fade, Coverflow, Cube, Flip)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1019
+msgid "Navigation Arrows Positions"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1026
+msgid "Navigation Arrows Icon Variants"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1033
+msgid "Adaptive Carousel Height, Tab & Key Navigation, Touch Swipe, Mouse Drag, Mouse Wheel"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1041
+msgid "Detail Page Link Type (Popup, Single Page, None)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1042
+msgid "Single Page, None"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1043, src/Admin/Views/Generator/EventfulFilterPost.php:471
+msgid "All"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1046
+msgid "Customize Popup Type, Max Width, Max Height, Color, Background, Close Button, etc."
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1051
+msgid "Content Field Drag and Drop Sorting for the Detail Page"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1058
+msgid "Advanced Typography for All Elements (800+ Google Fonts)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1063
+msgid "Global Color Scheme"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1075
+msgid "Gutenberg Block"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1080
+msgid "Compatible With Elementor"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1085
+msgid "Multilingual Support (WPML & Polylang)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1090
+msgid "RTL Language Support"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1095
+msgid "Multisite Compatible"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1102
+msgid "Events Schema SEO Support"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1107
+msgid "Tools (Export / Import)"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1116
+msgid "Upgrade To PRO & Enjoy Advanced Features!"
+msgstr ""
+
+#. translators: %s: Number of people using Eventful (e.g., 1300+).
+#: src/Admin/HelpPage/Help.php:1120
+msgid "Already, %s people are using Eventful on their websites to create beautiful event showcases, why won’t you!"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1125
+msgid "Upgrade to Pro Now!"
+msgstr ""
+
+#. translators: %s: Refund Policy link.
+#: src/Admin/HelpPage/Help.php:1130
+msgid "14-Day No-Questions-Asked %s"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1130
+msgid "Refund Policy"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1133
+msgid "See All Features"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1134
+msgid "Pro Live Demo"
+msgstr ""
+
+#: src/Admin/HelpPage/Help.php:1141
+msgid "NO NEED TO TAKE OUR WORD FOR IT"
+msgstr ""
+
+#: src/Admin/Views/EventfulMetaboxes.php:38
+msgid "Live Preview"
+msgstr ""
+
+#: src/Admin/Views/EventfulMetaboxes.php:80
+msgid "View Options"
+msgstr ""
+
+#: src/Admin/Views/EventfulMetaboxes.php:106
+msgid "How to use"
+msgstr ""
+
+#: src/Admin/Views/EventfulMetaboxes.php:126
+msgid "Page Builders"
+msgstr ""
+
+#: src/Admin/Views/EventfulMetaboxes.php:157
+msgid "Additional Features in Pro"
+msgstr ""
+
+#. translators: %s: Eventful Pro upgrade link.
+#: src/Admin/Views/EventfulReplaceLayout.php:71
+msgid "Want to redesign or replace the default Events Calendar archive, category, tag, and related events sections with an attractive Eventful layout? %s "
+msgstr ""
+
+#: src/Admin/Views/EventfulReplaceLayout.php:72
+msgid "Upgrade To Pro!"
+msgstr ""
+
+#: src/Admin/Views/EventfulReplaceLayout.php:80
+msgid "Event Archive Page"
+msgstr ""
+
+#: src/Admin/Views/EventfulReplaceLayout.php:81
+msgid "The main events listing page (your site's \"/events/\" archive)."
+msgstr ""
+
+#: src/Admin/Views/EventfulReplaceLayout.php:86
+msgid "Event Category Page"
+msgstr ""
+
+#: src/Admin/Views/EventfulReplaceLayout.php:87
+msgid "Pages that list the events in a single event category."
+msgstr ""
+
+#: src/Admin/Views/EventfulReplaceLayout.php:92
+msgid "Event Tag Page"
+msgstr ""
+
+#: src/Admin/Views/EventfulReplaceLayout.php:93
+msgid "Pages that list the events sharing a single tag."
+msgstr ""
+
+#: src/Admin/Views/EventfulReplaceLayout.php:100
+msgid "Related Events"
+msgstr ""
+
+#: src/Admin/Views/EventfulReplaceLayout.php:101
+msgid "The \"Related Events\" section shown beneath a single event. The chosen layout replaces it."
+msgstr ""
+
+#: src/Admin/Views/EventfulReplaceLayout.php:129
+msgid "Select a Layout"
+msgstr ""
+
+#: src/Admin/Views/EventfulReplaceLayout.php:130
+msgid "Choose which Eventful layout to show here."
+msgstr ""
+
+#: src/Admin/Views/EventfulReplaceLayout.php:131
+msgid "Select a layout"
+msgstr ""
+
+#: src/Admin/Views/EventfulReplaceLayout.php:150, src/Admin/Views/Generator/EventfulCarousel.php:60, src/Admin/Views/Generator/EventfulCarousel.php:97, src/Admin/Views/Generator/EventfulCarousel.php:108, src/Admin/Views/Generator/EventfulCarousel.php:119, src/Admin/Views/Generator/EventfulCarousel.php:393, src/Admin/Views/Generator/EventfulCarousel.php:404, src/Admin/Views/Generator/EventfulCarousel.php:415, src/Admin/Views/Generator/EventfulCarousel.php:426, src/Admin/Views/Generator/EventfulCarousel.php:437, src/Admin/Views/Generator/EventfulDisplay.php:108, src/Admin/Views/Generator/EventfulDisplay.php:197, src/Admin/Views/Generator/EventfulDisplay.php:405, src/Admin/Views/Generator/EventfulDisplay.php:497, src/Admin/Views/Generator/EventfulDisplay.php:1278, src/Admin/Views/Generator/EventfulDisplay.php:1695, src/Admin/Views/Generator/EventfulFilterPost.php:196, src/Admin/Views/Generator/EventfulFilterPost.php:212, src/Admin/Views/Generator/EventfulFilterPost.php:573, src/Admin/Views/Generator/EventfulTimeline.php:76, src/Admin/Views/Settings/EventfulAccessibility.php:35, src/Admin/Framework/fields/sorter/sorter.php:21
+msgid "Enabled"
+msgstr ""
+
+#: src/Admin/Views/EventfulReplaceLayout.php:151, src/Admin/Views/Generator/EventfulCarousel.php:61, src/Admin/Views/Generator/EventfulCarousel.php:98, src/Admin/Views/Generator/EventfulCarousel.php:109, src/Admin/Views/Generator/EventfulCarousel.php:120, src/Admin/Views/Generator/EventfulCarousel.php:394, src/Admin/Views/Generator/EventfulCarousel.php:405, src/Admin/Views/Generator/EventfulCarousel.php:416, src/Admin/Views/Generator/EventfulCarousel.php:427, src/Admin/Views/Generator/EventfulCarousel.php:438, src/Admin/Views/Generator/EventfulDisplay.php:109, src/Admin/Views/Generator/EventfulDisplay.php:198, src/Admin/Views/Generator/EventfulDisplay.php:406, src/Admin/Views/Generator/EventfulDisplay.php:498, src/Admin/Views/Generator/EventfulDisplay.php:1279, src/Admin/Views/Generator/EventfulDisplay.php:1696, src/Admin/Views/Generator/EventfulFilterPost.php:200, src/Admin/Views/Generator/EventfulFilterPost.php:213, src/Admin/Views/Generator/EventfulFilterPost.php:574, src/Admin/Views/Generator/EventfulTimeline.php:77, src/Admin/Views/Settings/EventfulAccessibility.php:36, src/Admin/Framework/fields/sorter/sorter.php:22
+msgid "Disabled"
+msgstr ""
+
+#: src/Admin/Views/EventfulTools.php:54
+msgid "Export"
+msgstr ""
+
+#: src/Admin/Views/EventfulTools.php:61
+msgid "Choose What To Export"
+msgstr ""
+
+#: src/Admin/Views/EventfulTools.php:64
+msgid "All Eventful Views (Shortcodes)"
+msgstr ""
+
+#: src/Admin/Views/EventfulTools.php:65
+msgid "Selected Eventful Views (Shortcodes)"
+msgstr ""
+
+#: src/Admin/Views/EventfulTools.php:79
+msgid "Choose eventful view(s)"
+msgstr ""
+
+#: src/Admin/Views/EventfulTools.php:102, src/Admin/Framework/fields/backup/backup.php:28
+msgid "Import"
+msgstr ""
+
+#: src/Admin/Views/EventfulTools.php:108
+msgid "Import JSON File To Upload"
+msgstr ""
+
+#: src/Frontend/Helpers/EventfulFunctions.php:507, src/Frontend/templates/theme/grid/theme-one.php:190, src/Frontend/templates/theme/grid/theme-three.php:150, src/Frontend/templates/theme/grid/theme-two.php:161, src/Frontend/templates/theme/minimal-list/theme-three.php:77, src/Frontend/templates/theme/minimal-list/theme-two.php:158
+msgid " + Google Map"
+msgstr ""
+
+#: src/Frontend/Helpers/EventfulFunctions.php:837, src/Admin/Views/Generator/EventfulDisplay.php:1053
+msgid "Facebook"
+msgstr ""
+
+#: src/Frontend/Helpers/EventfulFunctions.php:838, src/Admin/Views/Generator/EventfulDisplay.php:1054
+msgid "Twitter"
+msgstr ""
+
+#: src/Frontend/Helpers/EventfulFunctions.php:839, src/Admin/Views/Generator/EventfulDisplay.php:1055
+msgid "LinkedIn"
+msgstr ""
+
+#: src/Frontend/Helpers/EventfulFunctions.php:840, src/Admin/Views/Generator/EventfulDisplay.php:1056
+msgid "Email"
+msgstr ""
+
+#: src/Frontend/Helpers/EventfulFunctions.php:841, src/Admin/Views/Generator/EventfulDisplay.php:1057
+msgid "WhatsApp"
+msgstr ""
+
+#: src/Frontend/Helpers/EventfulFunctions.php:947
+msgid "%s ticket left"
+msgid_plural "(%s tickets left)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Frontend/Helpers/EventfulFunctions.php:945
+msgid "%s spot left"
+msgid_plural "%s spots left"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Frontend/Helpers/EventfulFunctions.php:963
+msgid "Buy Now"
+msgstr ""
+
+#: src/Frontend/Helpers/EventfulFunctions.php:960
+msgid "RSVP Now"
+msgstr ""
+
+#: src/Frontend/Helpers/EventfulFunctions.php:911
+msgctxt "list view stock sold out"
+msgid "Sold out"
+msgstr ""
+
+#: src/Frontend/Helpers/EventfulLoopHtml.php:694
+msgid "No events found based on your criteria."
+msgstr ""
+
+#: src/Admin/Framework/Classes/Eventful.php:496
+msgid "Are you sure?"
+msgstr ""
+
+#. translators: %s: Minimum number of characters required.
+#: src/Admin/Framework/Classes/Eventful.php:499
+msgid "Please enter %s or more characters"
+msgstr ""
+
+#: src/Admin/Framework/Classes/Eventful.php:500
+msgid "Searching..."
+msgstr ""
+
+#: src/Admin/Framework/Classes/Eventful.php:501
+msgid "No results found."
+msgstr ""
+
+#: src/Admin/Framework/Classes/Eventful.php:600
+msgid "Oops! Not allowed."
+msgstr ""
+
+#: src/Admin/Framework/Classes/Eventful.php:681, src/Admin/Framework/Classes/Eventful.php:678
+msgid "Field not found!"
+msgstr ""
+
+#: src/Admin/Framework/Classes/EventfulMetabox.php:267, src/Admin/Framework/Classes/EventfulOptions.php:645, src/Admin/Framework/functions/actions.php:73, src/Admin/Framework/fields/button_set/button_set.php:63, src/Admin/Framework/fields/checkbox/checkbox.php:82, src/Admin/Framework/fields/radio/radio.php:75, src/Admin/Framework/fields/select/select.php:126
+msgid "No data available."
+msgstr ""
+
+#: src/Admin/Framework/Classes/EventfulMetabox.php:276
+msgid "Show Preview"
+msgstr ""
+
+#: src/Admin/Framework/Classes/EventfulMetabox.php:282, src/Admin/Framework/Classes/EventfulOptions.php:550, src/Admin/Framework/Classes/EventfulOptions.php:668, src/Admin/Framework/fields/backup/backup.php:33
+msgid "Reset"
+msgstr ""
+
+#: src/Admin/Framework/Classes/EventfulMetabox.php:283
+msgid "update event"
+msgstr ""
+
+#: src/Admin/Framework/Classes/EventfulMetabox.php:283
+msgid "Cancel"
+msgstr ""
+
+#: src/Admin/Framework/Classes/EventfulOptions.php:177
+msgid "Error while saving the changes."
+msgstr ""
+
+#: src/Admin/Framework/Classes/EventfulOptions.php:237
+msgid "Settings successfully imported."
+msgstr ""
+
+#: src/Admin/Framework/Classes/EventfulOptions.php:278, src/Admin/Framework/Classes/EventfulOptions.php:248
+msgid "Default settings restored."
+msgstr ""
+
+#: src/Admin/Framework/Classes/EventfulOptions.php:364
+msgid "Settings saved."
+msgstr ""
+
+#: src/Admin/Framework/Classes/EventfulOptions.php:541
+msgid "You have unsaved changes, save your changes!"
+msgstr ""
+
+#: src/Admin/Framework/Classes/EventfulOptions.php:543
+msgid "show all settings"
+msgstr ""
+
+#: src/Admin/Framework/Classes/EventfulOptions.php:545, src/Admin/Views/Generator/EventfulFilterPost.php:275, src/Admin/Framework/fields/icon/icon.php:58, src/Admin/Framework/fields/map/map.php:23
+msgid "Search..."
+msgstr ""
+
+#: src/Admin/Framework/Classes/EventfulOptions.php:548, src/Admin/Framework/Classes/EventfulOptions.php:666
+msgid "Save"
+msgstr ""
+
+#: src/Admin/Framework/Classes/EventfulOptions.php:548, src/Admin/Framework/Classes/EventfulOptions.php:666
+msgid "Saving..."
+msgstr ""
+
+#: src/Admin/Framework/Classes/EventfulOptions.php:549, src/Admin/Framework/Classes/EventfulOptions.php:667
+msgid "Reset Section"
+msgstr ""
+
+#: src/Admin/Framework/Classes/EventfulOptions.php:549, src/Admin/Framework/Classes/EventfulOptions.php:667
+msgid "Are you sure to reset this section options?"
+msgstr ""
+
+#: src/Admin/Framework/Classes/EventfulOptions.php:550, src/Admin/Framework/Classes/EventfulOptions.php:668
+msgid "Reset All"
+msgstr ""
+
+#: src/Admin/Framework/Classes/EventfulOptions.php:550, src/Admin/Framework/Classes/EventfulOptions.php:668
+msgid "Are you sure you want to reset all settings to default values?"
+msgstr ""
+
+#: src/Admin/Framework/Classes/fields.class.php:306, src/Admin/Views/Generator/EventfulDisplay.php:738
+msgid "Select Taxonomy"
+msgstr ""
+
+#: src/Admin/Framework/functions/actions.php:40
+msgid "Error: Nonce verification has failed. Please try again."
+msgstr ""
+
+#: src/Admin/Framework/functions/actions.php:37
+msgid "You do not have required permissions to access."
+msgstr ""
+
+#: src/Admin/Framework/functions/actions.php:63, src/Admin/Views/Settings/EventfulAdvanced.php:73
+msgid "IcoFont"
+msgstr ""
+
+#: src/Admin/Framework/functions/actions.php:104, src/Admin/Framework/functions/actions.php:142
+msgid "Error: Invalid key."
+msgstr ""
+
+#: src/Admin/Framework/functions/actions.php:146
+msgid "Error: The response is not a valid JSON response."
+msgstr ""
+
+#: src/Admin/Framework/functions/actions.php:206
+msgid "Error: Invalid term ID."
+msgstr ""
+
+#: src/Admin/Framework/functions/actions.php:212
+msgid "Error: You do not have permission to do that."
+msgstr ""
+
+#: src/Admin/Framework/functions/validate.php:14, src/Admin/Framework/functions/validate.php:86
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: src/Admin/Framework/functions/validate.php:32, src/Admin/Framework/functions/validate.php:106
+msgid "Please enter a valid number."
+msgstr ""
+
+#: src/Admin/Framework/functions/validate.php:50, src/Admin/Framework/functions/validate.php:126
+msgid "This field is required."
+msgstr ""
+
+#: src/Admin/Framework/functions/validate.php:68, src/Admin/Framework/functions/validate.php:146
+msgid "Please enter a valid URL."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:28
+msgid "Carousel Controls"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:36
+msgid "Carousel Control"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:42
+msgid "Slide To Scroll"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:43
+msgid "Number of event(s) to scroll at a time."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:44, src/Admin/Views/Generator/EventfulDisplay.php:75, src/Admin/Views/Generator/EventfulFilterPost.php:536, src/Admin/Framework/fields/column/column.php:46
+msgid "Large Desktop"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:44, src/Admin/Views/Generator/EventfulCarousel.php:44, src/Admin/Views/Generator/EventfulCarousel.php:44, src/Admin/Views/Generator/EventfulCarousel.php:44, src/Admin/Views/Generator/EventfulCarousel.php:44, src/Admin/Views/Generator/EventfulDisplay.php:75, src/Admin/Views/Generator/EventfulDisplay.php:75, src/Admin/Views/Generator/EventfulDisplay.php:75, src/Admin/Views/Generator/EventfulDisplay.php:76, src/Admin/Views/Generator/EventfulDisplay.php:76, src/Admin/Views/Generator/EventfulFilterPost.php:536, src/Admin/Views/Generator/EventfulFilterPost.php:536, src/Admin/Views/Generator/EventfulFilterPost.php:536, src/Admin/Views/Generator/EventfulFilterPost.php:537, src/Admin/Views/Generator/EventfulFilterPost.php:537, src/Admin/Framework/fields/dimensions/dimensions.php:22
+msgid "width"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:44, src/Admin/Views/Generator/EventfulDisplay.php:75, src/Admin/Views/Generator/EventfulFilterPost.php:536, src/Admin/Framework/fields/column/column.php:47
+msgid "Desktop"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:44, src/Admin/Views/Generator/EventfulDisplay.php:75, src/Admin/Views/Generator/EventfulFilterPost.php:536, src/Admin/Framework/fields/column/column.php:48
+msgid "Tablet"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:44, src/Admin/Views/Generator/EventfulDisplay.php:76, src/Admin/Views/Generator/EventfulFilterPost.php:537, src/Admin/Framework/fields/column/column.php:49
+msgid "Mobile Landscape"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:44, src/Admin/Views/Generator/EventfulDisplay.php:76, src/Admin/Views/Generator/EventfulFilterPost.php:537, src/Admin/Framework/fields/column/column.php:50
+msgid "Mobile"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:58
+msgid "AutoPlay"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:59
+msgid "Enable or disable automatic slide rotation."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:69
+msgid "AutoPlay Speed"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:70
+msgid "Control the delay time between slides during autoplay."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:82
+msgid "Carousel Speed"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:83
+msgid "Adjust the transition animation speed between slides."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:95
+msgid "Pause on Hover"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:96
+msgid "Pause the carousel animation when the mouse hovers over it."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:106
+msgid "Infinite Loop"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:107
+msgid "Enable continuous looping of carousel slides."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:117, src/Admin/Views/Generator/EventfulDisplay.php:495
+msgid "Lazy Load"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:118
+msgid "Load images only when they are about to enter the viewport for better performance."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:128, src/Admin/Views/Settings/EventfulColorScheme.php:195
+msgid "Preloader Color"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:129
+msgid "Set the color of the image preloader shown while slides are loading."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:135
+msgid "Carousel Direction"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:136
+msgid "Choose the reading and sliding direction of the carousel."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:138
+msgid "Right to Left"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:139
+msgid "Left to Right"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:146
+msgid "Transition Effect"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:147, src/Admin/Views/Generator/EventfulCarousel.php:165
+msgid "Select how slides transition between each other (e.g., fade, cube, or flip)."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:149, src/Admin/Views/Generator/EventfulCarousel.php:169
+msgid "Slide"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:150
+msgid "Fade (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:151
+msgid "Coverflow (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:152
+msgid "Cube (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:153
+msgid "Flip (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:164
+msgid "Slider Style"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:173
+msgid "Fade"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:178
+msgid "Cover Flow"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:183
+msgid "Cube"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:188
+msgid "Flip"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:198, src/Admin/Views/Generator/EventfulCarousel.php:205
+msgid "Navigation"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:206
+msgid "Show or hide the carousel navigation arrows."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:208, src/Admin/Views/Generator/EventfulCarousel.php:329, src/Admin/Views/Generator/EventfulDisplay.php:44, src/Admin/Views/Generator/EventfulDisplay.php:331, src/Admin/Views/Generator/EventfulDisplay.php:540, src/Admin/Views/Generator/EventfulDisplay.php:622, src/Admin/Views/Generator/EventfulDisplay.php:835, src/Admin/Views/Generator/EventfulDisplay.php:920, src/Admin/Views/Generator/EventfulDisplay.php:1038, src/Admin/Views/Generator/EventfulDisplay.php:1525, src/Admin/Views/Generator/EventfulDisplay.php:1539, src/Admin/Views/Generator/EventfulDisplay.php:1576, src/Admin/Views/Generator/EventfulDisplay.php:1632, src/Admin/Views/Generator/EventfulDisplay.php:1647, src/Admin/Views/Generator/EventfulDisplay.php:1674, src/Admin/Views/Generator/EventfulFilterPost.php:601
+msgid "Show"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:209, src/Admin/Views/Generator/EventfulCarousel.php:330, src/Admin/Views/Generator/EventfulDisplay.php:45, src/Admin/Views/Generator/EventfulDisplay.php:332, src/Admin/Views/Generator/EventfulDisplay.php:541, src/Admin/Views/Generator/EventfulDisplay.php:623, src/Admin/Views/Generator/EventfulDisplay.php:836, src/Admin/Views/Generator/EventfulDisplay.php:921, src/Admin/Views/Generator/EventfulDisplay.php:1039, src/Admin/Views/Generator/EventfulDisplay.php:1526, src/Admin/Views/Generator/EventfulDisplay.php:1540, src/Admin/Views/Generator/EventfulDisplay.php:1577, src/Admin/Views/Generator/EventfulDisplay.php:1633, src/Admin/Views/Generator/EventfulDisplay.php:1648, src/Admin/Views/Generator/EventfulDisplay.php:1675, src/Admin/Views/Generator/EventfulFilterPost.php:602
+msgid "Hide"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:210, src/Admin/Views/Generator/EventfulCarousel.php:331
+msgid "Hide on Mobile"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:218
+msgid "Select Position"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:219
+msgid "Choose where the navigation arrows appear in the carousel."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:221
+msgid "Top right"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:222
+msgid "Top center"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:223
+msgid "Top left"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:224
+msgid "Bottom left (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:225
+msgid "Bottom center (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:226
+msgid "Bottom right (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:227
+msgid "Vertically center outer (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:228
+msgid "Vertically center inner (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:229
+msgid "Vertically center inner on hover (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:240
+msgid "Choose an Icon"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:241
+msgid "Select an icon style for the navigation arrows."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:277
+msgid "Arrow Icon Size"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:278
+msgid "Set the size of the navigation arrow icons."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:289
+msgid "Navigation Border Radius"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:290
+msgid "Control the border radius of navigation arrow backgrounds."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:304
+msgid "Navigation Color"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:305
+msgid "Set colors for navigation icons, background, border, and hover states."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:307, src/Admin/Views/Generator/EventfulCarousel.php:364, src/Admin/Views/Generator/EventfulDisplay.php:178, src/Admin/Views/Generator/EventfulDisplay.php:188, src/Admin/Views/Generator/EventfulFilterPost.php:636, src/Admin/Views/Generator/EventfulFilterPost.php:638, src/Admin/Views/Settings/EventfulColorScheme.php:70, src/Admin/Views/Settings/EventfulColorScheme.php:92, src/Admin/Views/Settings/EventfulColorScheme.php:114, src/Admin/Views/Settings/EventfulColorScheme.php:129, src/Admin/Views/Settings/EventfulColorScheme.php:148, src/Admin/Views/Settings/EventfulColorScheme.php:242, src/Admin/Views/Settings/EventfulColorScheme.php:264, src/Admin/Views/Settings/EventfulColorScheme.php:279, src/Admin/Views/Settings/EventfulColorScheme.php:358, src/Admin/Views/Settings/EventfulColorScheme.php:374, src/Admin/Views/Settings/EventfulColorScheme.php:397, src/Admin/Views/Settings/EventfulColorScheme.php:410, src/Admin/Views/Settings/EventfulColorScheme.php:425, src/Admin/Views/Settings/EventfulColorScheme.php:440, src/Admin/Views/Settings/EventfulColorScheme.php:454, src/Admin/Framework/fields/background/background.php:280, src/Admin/Framework/fields/border/border.php:138
+msgid "Color"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:308, src/Admin/Views/Generator/EventfulDisplay.php:179, src/Admin/Views/Generator/EventfulDisplay.php:189, src/Admin/Views/Generator/EventfulFilterPost.php:637, src/Admin/Views/Generator/EventfulFilterPost.php:639, src/Admin/Views/Settings/EventfulColorScheme.php:71, src/Admin/Views/Settings/EventfulColorScheme.php:93, src/Admin/Views/Settings/EventfulColorScheme.php:115, src/Admin/Views/Settings/EventfulColorScheme.php:130, src/Admin/Views/Settings/EventfulColorScheme.php:149, src/Admin/Views/Settings/EventfulColorScheme.php:243, src/Admin/Views/Settings/EventfulColorScheme.php:280, src/Admin/Views/Settings/EventfulColorScheme.php:359, src/Admin/Views/Settings/EventfulColorScheme.php:375, src/Admin/Views/Settings/EventfulColorScheme.php:411, src/Admin/Views/Settings/EventfulColorScheme.php:426, src/Admin/Framework/fields/border/border.php:147, src/Admin/Framework/fields/typography/typography.php:393
+msgid "Hover Color"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:309, src/Admin/Views/Generator/EventfulDisplay.php:175, src/Admin/Views/Generator/EventfulDisplay.php:953, src/Admin/Views/Generator/EventfulDisplay.php:1771, src/Admin/Views/Generator/EventfulFilterPost.php:455, src/Admin/Views/Settings/EventfulColorScheme.php:52, src/Admin/Views/Settings/EventfulColorScheme.php:72, src/Admin/Views/Settings/EventfulColorScheme.php:94, src/Admin/Views/Settings/EventfulColorScheme.php:131, src/Admin/Views/Settings/EventfulColorScheme.php:171, src/Admin/Views/Settings/EventfulColorScheme.php:193, src/Admin/Views/Settings/EventfulColorScheme.php:244, src/Admin/Views/Settings/EventfulColorScheme.php:281, src/Admin/Views/Settings/EventfulColorScheme.php:376
+msgid "Background"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:310, src/Admin/Views/Generator/EventfulDisplay.php:954, src/Admin/Views/Generator/EventfulDisplay.php:1772, src/Admin/Views/Settings/EventfulColorScheme.php:73, src/Admin/Views/Settings/EventfulColorScheme.php:95, src/Admin/Views/Settings/EventfulColorScheme.php:132, src/Admin/Views/Settings/EventfulColorScheme.php:194, src/Admin/Views/Settings/EventfulColorScheme.php:245, src/Admin/Views/Settings/EventfulColorScheme.php:282, src/Admin/Views/Settings/EventfulColorScheme.php:377
+msgid "Hover Background"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:311, src/Admin/Views/Generator/EventfulDisplay.php:118, src/Admin/Views/Generator/EventfulDisplay.php:439, src/Admin/Views/Generator/EventfulFilterPost.php:453, src/Admin/Views/Settings/EventfulColorScheme.php:50, src/Admin/Views/Settings/EventfulColorScheme.php:246
+msgid "Border"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:312, src/Admin/Views/Settings/EventfulColorScheme.php:247
+msgid "Hover Border"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:319, src/Admin/Views/Generator/EventfulCarousel.php:326, src/Admin/Views/Generator/EventfulDisplay.php:1686, src/Admin/Views/Generator/EventfulDisplay.php:1693, src/Admin/Views/Settings/EventfulColorScheme.php:158
+msgid "Pagination"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:327
+msgid "Show or hide the carousel pagination indicators."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:339, src/Admin/Views/Generator/EventfulDisplay.php:1705
+msgid "Pagination Type"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:340
+msgid "Choose the style of pagination to display."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:343
+msgid "Dots"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:346
+msgid "Number"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:357
+msgid "Pagination Color"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:358
+msgid "Customize colors for pagination dots or numbers."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:365, src/Admin/Views/Settings/EventfulColorScheme.php:265
+msgid "Active Color"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:375
+msgid "Dynamic Pagination"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:376
+msgid "Enable dynamic pagination bullets for better navigation with large slide sets."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:383
+msgid "Miscellaneous"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:390
+msgid "Adaptive Carousel Height"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:391
+msgid "Dynamically adjust the event carousel height based on each slide’s content height."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:401
+msgid "Tab and Key Navigation"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:402
+msgid "Enable keyboard navigation using tab and arrow keys for carousel accessibility."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:413
+msgid "Touch Swipe"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:414
+msgid "Allow users to navigate the carousel using touch gestures on mobile devices."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:424
+msgid "Mouse Draggable"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:425
+msgid "Enable dragging slides using the mouse on desktop devices."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:435
+msgid "Mouse Wheel"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulCarousel.php:436
+msgid "Navigate carousel slides using the mouse wheel."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDetailSettings.php:28
+msgid "Detail Page Settings"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDetailSettings.php:34
+msgid "Detail Page Link Type"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDetailSettings.php:35
+msgid "Choose a link type for the (item) detail page."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDetailSettings.php:37
+msgid "Single Page"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDetailSettings.php:38
+msgid "None (no link action)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDetailSettings.php:39
+msgid "Popup (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDetailSettings.php:46
+msgid "Target"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDetailSettings.php:47
+msgid "Set a target for the item link."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDetailSettings.php:49
+msgid "Current Tab"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDetailSettings.php:50
+msgid "New Tab"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDetailSettings.php:51
+msgid "Parent"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDetailSettings.php:52
+msgid "Top"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDetailSettings.php:60
+msgid "Add rel=\"nofollow\" to item links"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDetailSettings.php:61
+msgid "Check this to add rel=\"nofollow\" to event links."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:28
+msgid "DISPLAY OPTIONS"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:36
+msgid "General"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:42
+msgid "Section Title "
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:43
+msgid "Show/Hide item showcase section title."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:51
+msgid "Section Title Margin"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:52
+msgid "Set margin for the section title."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:73
+msgid "Column(s)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:74
+msgid "Set number of column(s) in different devices for responsive view."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:90, src/Admin/Views/Generator/EventfulFilterPost.php:550
+msgid "Margin Between Columns"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:91
+msgid "Set margin between columns (items)."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:105
+msgid "Same Height"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:106
+msgid "Enable to make all items/slides the same height as the tallest one."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:119
+msgid "Set border for the item."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:129, src/Admin/Views/Generator/EventfulDisplay.php:451
+msgid "Border Radius"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:130
+msgid "Set border radius for item."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:140
+msgid "Box-Shadow"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:141
+msgid "Show box-shadow for the item."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:147
+msgid "Box-Shadow Values"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:148
+msgid "Set box-shadow property values for the item."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:162
+msgid "Inner Padding"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:163
+msgid "Set inner padding for item."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:176, src/Admin/Views/Generator/EventfulDisplay.php:1170
+msgid "Set background color for the item."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:185
+msgid "Featured Events Background"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:186
+msgid "Set featured events background color for the item."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:195
+msgid "Preloader"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:196
+msgid "Items will be hidden until page load completed."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:206
+msgid "Template Styles"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:213
+msgid "Template Type"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:214
+msgid "Choose whether to use a custom template or a pre-made layout."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:215
+msgid "Custom lets you fully control the layout. Pre-made Templates provide ready-to-use designs you can customize."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:215, src/Admin/Views/Generator/EventfulDisplay.php:276, src/Admin/Views/Generator/EventfulDisplay.php:315, src/Admin/Views/Generator/EventfulDisplay.php:1181, src/Admin/Views/Generator/EventfulFilterPost.php:42, src/Admin/Views/Generator/EventfulFilterPost.php:178, src/Admin/Views/Generator/EventfulFilterPost.php:189, src/Admin/Views/Generator/EventfulFilterPost.php:211, src/Admin/Views/Generator/EventfulFilterPost.php:226, src/Admin/Views/Generator/EventfulFilterPost.php:248, src/Admin/Views/Generator/EventfulFilterPost.php:378, src/Admin/Views/Generator/EventfulTypography.php:43, src/Admin/Views/Settings/EventfulAccessibility.php:34, src/Admin/Views/Settings/EventfulAdvanced.php:42, src/Admin/Views/Settings/EventfulColorScheme.php:46, src/Admin/Views/Settings/EventfulColorScheme.php:90, src/Admin/Views/Settings/EventfulColorScheme.php:165, src/Admin/Views/Settings/EventfulColorScheme.php:215, src/Admin/Views/Settings/EventfulColorScheme.php:233, src/Admin/Views/Settings/EventfulColorScheme.php:299, src/Admin/Views/Settings/EventfulColorScheme.php:320, src/Admin/Views/Settings/EventfulColorScheme.php:394
+msgid "Open Docs"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:217, src/Admin/Views/Generator/EventfulDisplay.php:719, src/Admin/Views/Generator/EventfulDisplay.php:1111
+msgid "Custom"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:218
+msgid "Pre-made Templates"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:226
+msgid "Event Content Position"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:227
+msgid "Choose where the event content will be positioned in the layout."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:232, src/Admin/Views/Generator/EventfulFilterPost.php:193, src/Admin/Framework/fields/typography/typography.php:162, src/Admin/Framework/fields/typography/typography.php:176, src/Admin/Framework/fields/typography/typography.php:189, src/Admin/Framework/fields/typography/typography.php:204, src/Admin/Framework/fields/typography/typography.php:224, src/Admin/Framework/fields/typography/typography.php:242, src/Admin/Framework/fields/typography/typography.php:261, src/Admin/Framework/fields/typography/typography.php:284
+msgid "Default"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:237, src/Admin/Framework/fields/typography/typography.php:219
+msgid "Right"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:243, src/Admin/Framework/fields/typography/typography.php:217
+msgid "Left"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:249, src/Admin/Framework/fields/background/background.php:275
+msgid "Overlay"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:260, src/Admin/Views/Generator/EventfulDisplay.php:1121, src/Admin/Views/Generator/EventfulDisplay.php:1310, src/Admin/Views/Generator/EventfulDisplay.php:1779, src/Admin/Views/Generator/EventfulFilterPost.php:280, src/Admin/Views/Generator/EventfulFilterPost.php:490
+msgid "Alignment"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:261
+msgid "Set the alignment for event."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:275
+msgid "Template Style Minimal List"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:276, src/Admin/Views/Generator/EventfulDisplay.php:1181
+msgid "Choose from available ready-made templates to control how events are displayed."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:276, src/Admin/Views/Generator/EventfulDisplay.php:315, src/Admin/Views/Generator/EventfulDisplay.php:1181, src/Admin/Views/Generator/EventfulFilterPost.php:226, src/Admin/Views/Generator/EventfulFilterPost.php:248, src/Admin/Framework/fields/layout_preset/layout_preset.php:55
+msgid "Demo"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:277
+msgid "Select which template style you want to display."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:279, src/Admin/Views/Generator/EventfulDisplay.php:1183
+msgid "Template One"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:280, src/Admin/Views/Generator/EventfulDisplay.php:1184
+msgid "Template Two"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:281, src/Admin/Views/Generator/EventfulDisplay.php:1185
+msgid "Template Three"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:290
+msgid "Content Position"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:291
+msgid "Set a position for the event content."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:295
+msgid "Left Image"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:300
+msgid "Right Image"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:314
+msgid "Sortable Event Elements"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:315
+msgid "Drag and drop elements to reorder them, and enable or disable items to control what appears in the event layout."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:325
+msgid "Event Thumbnial"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:330
+msgid "Thumbnail"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:339, src/Admin/Views/Generator/EventfulDisplay.php:374
+msgid "Size"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:346, src/Admin/Views/Generator/EventfulDisplay.php:381, src/Admin/Views/Generator/EventfulDisplay.php:1214, src/Admin/Views/Generator/EventfulDisplay.php:1249
+msgid "Custom Size"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:347, src/Admin/Views/Generator/EventfulDisplay.php:382, src/Admin/Views/Generator/EventfulDisplay.php:1215, src/Admin/Views/Generator/EventfulDisplay.php:1250
+msgid "Set custom width and height, choose crop style."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:363, src/Admin/Views/Generator/EventfulDisplay.php:395, src/Admin/Views/Generator/EventfulDisplay.php:1231, src/Admin/Views/Generator/EventfulDisplay.php:1266
+msgid "Hard-crop"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:404, src/Admin/Views/Generator/EventfulDisplay.php:1277
+msgid "Load 2x Resolution Image in Retina Display"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:415
+msgid "Replace With"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:416
+msgid "This will replace your default/featured image with the first resource (image/video/audio) from content."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:418
+msgid "Image (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:419
+msgid "Video (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:420
+msgid "Audio (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:429
+msgid "If no featured image found"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:430
+msgid "Even featured image was found"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:452
+msgid "Set border radius for the thumbnail."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:467
+msgid "Zoom Effect"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:468
+msgid "Choose a zoom effect for the thumbnail."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:470, src/Admin/Framework/fields/border/border.php:71, src/Admin/Framework/fields/dimensions_advanced/dimensions_advanced.php:90, src/Admin/Framework/fields/typography/typography.php:255, src/Admin/Framework/fields/typography/typography.php:274
+msgid "None"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:471
+msgid "Zoom In (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:472
+msgid "Zoom Out (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:480
+msgid "Image Mode"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:481
+msgid "Choose grayscale effect for the thumbnail."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:483, src/Admin/Framework/fields/background/background.php:272, src/Admin/Framework/fields/link_color/link_color.php:36, src/Admin/Framework/fields/typography/typography.php:237
+msgid "Normal"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:484
+msgid "Grayscale and normal on hover (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:485
+msgid "Grayscale on hover (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:486
+msgid "Always grayscale (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:496
+msgid "Defer image loading to improve performance."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:505
+msgid "Thumbnail Background"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:512, src/Admin/Views/Generator/EventfulDisplay.php:1135, src/Admin/Views/Generator/EventfulFilterPost.php:552
+msgid "Margin"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:513
+msgid "Set margin around the thumbnail."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:534, src/Admin/Views/Generator/EventfulDisplay.php:1537
+msgid "Event Title"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:548
+msgid "Title HTML Tag"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:549
+msgid "Select the HTML tag for the event title."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:551
+msgid "h1"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:552
+msgid "h2"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:553
+msgid "h3"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:554
+msgid "h4"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:555
+msgid "h5"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:556
+msgid "h6"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:557
+msgid "p"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:558
+msgid "div"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:567
+msgid "Limit Character"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:568
+msgid "Enable to limit the number of characters in the title."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:575, src/Admin/Views/Generator/EventfulDisplay.php:1552
+msgid "Title Length"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:576, src/Admin/Views/Generator/EventfulDisplay.php:1553
+msgid "Leave it empty to show full event title."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:593
+msgid "Title Margin"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:594
+msgid "Set margin around the event title."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:615, src/Admin/Views/Generator/EventfulTypography.php:93
+msgid "Event Meta Fields"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:620
+msgid "Meta Fields"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:621
+msgid "Enable or disable the display of event meta fields."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:630
+msgid "Add New Meta"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:637
+msgid "Select Meta"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:638
+msgid "Select which meta field to display for this event."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:639
+msgid "Select a meta"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:641
+msgid "Venue"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:642
+msgid "Event Time"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:643
+msgid "Price"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:644, src/Admin/Views/Generator/EventfulFilterPost.php:327
+msgid "Organizer (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:645
+msgid "Taxonomy (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:646
+msgid "Series Archive (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:652
+msgid "Venue Settings"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:653
+msgid "Choose which venue fields to display."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:654, src/Admin/Views/Generator/EventfulDisplay.php:1051
+msgid "Choose an option"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:659
+msgid "Venue Name"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:660
+msgid "Address"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:661
+msgid "City"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:662
+msgid "Country"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:663
+msgid "State"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:664
+msgid "Postal Code"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:665
+msgid "Phone"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:674
+msgid "Show Map Link"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:675
+msgid "Turn on to show a clickable map link for the venue."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:683
+msgid "Meta Icon"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:684
+msgid "Select an icon to display for this meta field."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:690
+msgid "Date Type"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:691
+msgid "Choose how the event date should be displayed."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:694
+msgid "Start Date and Time"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:695
+msgid "End Date and Time"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:696
+msgid "Start Date Time With End Date Time"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:707
+msgid "Default (01 January 2025 12:00 AM)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:708
+msgid "(January 01 2025 12:00 AM)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:709
+msgid "(January 01 12:00 AM)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:710
+msgid "( 01 January 12:00 AM)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:711
+msgid "( 01 Jan 12:00 AM)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:712
+msgid "( Jan 01 12:00 AM)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:713
+msgid "(01 January 2025)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:714
+msgid "(January 01 2025)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:715
+msgid "(Jan 01 2025)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:716
+msgid "(01 Jan 2025)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:717
+msgid "(12:50 AM)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:718
+msgid "(23:00)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:721, src/Admin/Views/Generator/EventfulDisplay.php:729, src/Admin/Views/Generator/EventfulDisplay.php:730
+msgid "j F, Y g:i A"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:722
+msgid "To define format, check "
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:722, src/Admin/Views/Generator/EventfulDisplay.php:731
+msgid "this doc"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:731
+msgid "To define format, check"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:739
+msgid "Select which taxonomy to display for the event."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:741, src/Admin/Views/Generator/EventfulFilterPost.php:324
+msgid "Event Categories"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:742, src/Admin/Views/Generator/EventfulFilterPost.php:325
+msgid "Event Tags"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:748
+msgid "No taxonomies found."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:775
+msgid "Event Meta Separator"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:776
+msgid "Choose the separator between meta fields."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:778
+msgid "Normal Space "
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:779
+msgid "Full Stop ( . ) "
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:780
+msgid "Straight Line ( | )"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:781
+msgid "Slash ( / )"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:782
+msgid "Back Slash( \ )"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:790
+msgid "Event Meta Margin"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:791
+msgid "Set margin around the event meta container."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:806
+msgid "Margin Between Event Meta"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:807
+msgid "Set spacing between individual meta fields."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:828, src/Admin/Views/Generator/EventfulDisplay.php:833, src/Admin/Views/Generator/EventfulDisplay.php:1574, src/Admin/Views/Generator/EventfulTypography.php:119
+msgid "Event Content"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:834
+msgid "Enable or disable event content display."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:843, src/Admin/Views/Generator/EventfulDisplay.php:1589
+msgid "Content Display Type"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:844, src/Admin/Views/Generator/EventfulDisplay.php:1590
+msgid "Select how the event content should be displayed."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:846, src/Admin/Views/Generator/EventfulDisplay.php:1592
+msgid "Excerpt"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:847, src/Admin/Views/Generator/EventfulDisplay.php:1593
+msgid "Content with Limit"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:848, src/Admin/Views/Generator/EventfulDisplay.php:1594
+msgid "Full Content"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:856, src/Admin/Views/Generator/EventfulDisplay.php:1607
+msgid "Content Length"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:857, src/Admin/Views/Generator/EventfulDisplay.php:1608
+msgid "Leave it empty to show full event content."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:874
+msgid "Event Content Margin"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:875
+msgid "Set margin around the event content."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:890
+msgid "HTML Tags"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:891
+msgid "Choose whether to allow or strip HTML tags in the content."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:893
+msgid "Allow All"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:894
+msgid "Strip All"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:895
+msgid "Allow Some"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:903
+msgid "Allow HTML Tags Names"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:904
+msgid "Separate multiple tags by comma, e.g., h1,h2"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:910
+msgid "Ellipsis Points Ending Excerpt"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:911
+msgid "Set the ellipsis text at the end of the excerpt."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:918, src/Admin/Views/Generator/EventfulDisplay.php:1662, src/Admin/Views/Generator/EventfulTypography.php:143, src/Frontend/templates/theme/grid/theme-one.php:200, src/Frontend/templates/theme/grid/theme-three.php:159, src/Frontend/templates/theme/grid/theme-two.php:170
+msgid "Read More"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:919
+msgid "Enable or disable the Read More button/text."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:928
+msgid "Read More Type"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:929
+msgid "Choose whether the Read More is displayed as a button or text link."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:931, src/Admin/Views/Generator/EventfulFilterPost.php:411
+msgid "Button"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:932
+msgid "Text Link"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:940
+msgid "Read More Label"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:941
+msgid "Set the text label for the Read More button or link."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:948, src/Admin/Views/Generator/EventfulDisplay.php:1013
+msgid "Read More Color"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:949
+msgid "Set the colors for the Read More button."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:951, src/Admin/Views/Generator/EventfulDisplay.php:1016, src/Admin/Views/Generator/EventfulDisplay.php:1767, src/Admin/Views/Settings/EventfulColorScheme.php:167, src/Admin/Views/Settings/EventfulColorScheme.php:189
+msgid "Text Color"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:952, src/Admin/Views/Generator/EventfulDisplay.php:1017, src/Admin/Views/Settings/EventfulColorScheme.php:190
+msgid "Text Hover Color"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:961
+msgid "Read more Button Border"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:962
+msgid "Configure the Read More button border and hover color."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:981
+msgid "Button Padding"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:982
+msgid "Set padding inside the Read More button."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:997
+msgid "Event Read More Margin"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:998
+msgid "Set margin around the Read More button."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1014
+msgid "Set the text color for the Read More text link."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1031
+msgid "Event Social Share"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1036
+msgid "Sharing Media"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1037
+msgid "Enable or disable social sharing icons."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1046
+msgid "Select Sharing Media"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1047
+msgid "Select which social media icons to display."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1058
+msgid "Pinterest (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1059
+msgid "Instagram (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1060
+msgid "VK (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1061
+msgid "digg (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1062
+msgid "Tumblr (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1063
+msgid "Reddit (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1064
+msgid "Pocket (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1065
+msgid "Xing (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1074
+msgid "Icon Shape"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1075
+msgid "Choose the shape of social media icons."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1079
+msgid "Circle"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1084
+msgid "Rounded"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1089
+msgid "Square"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1094
+msgid "Icon only"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1104
+msgid "Custom Color"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1105
+msgid "Choose between original icon colors or custom colors."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1108
+msgid "Original"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1122
+msgid "Set the alignment for social media icons."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1136
+msgid "Set margin around the social media icons."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1158
+msgid "Custom Fields (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1169
+msgid "Overlay Background"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1180
+msgid "Template Style "
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1195
+msgid "Theme Color Shims"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1196
+msgid "Set theme color shims."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1198, src/Admin/Views/Settings/EventfulColorScheme.php:217
+msgid "Featured"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1199, src/Admin/Views/Settings/EventfulColorScheme.php:218
+msgid "Non Featured"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1207
+msgid "Thumbnail Size"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1242
+msgid "Slider Thumbnail Size"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1287
+msgid "Thumbnail Border"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1288
+msgid "Configure the thumbnail border."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1311
+msgid "Set alignment for the meta content."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1523
+msgid "Event Category"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1524
+msgid "Show/Hide event category."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1538
+msgid "Show/Hide event title."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1575
+msgid "Show/Hide event content."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1630
+msgid "Event Venue"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1631
+msgid "Show/Hide event venue."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1645
+msgid "Event Read More Button"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1646
+msgid "Show/Hide event read more button."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1660
+msgid "Event Read More Button Label"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1661
+msgid "Set the label for the event read more button."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1672
+msgid "Event Price"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1673
+msgid "Show/Hide event price."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1694
+msgid "Enable or disable item pagination."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1706
+msgid "Select how pagination should behave on desktop view."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1707
+msgid "More amazing Ajax Pagination Settings are available in "
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1708
+msgid "Pro"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1710, src/Admin/Views/Generator/EventfulDisplay.php:1724, src/Admin/Views/Generator/EventfulDisplay.php:1736
+msgid "Load More Button (Ajax)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1711
+msgid "Ajax Number Pagination (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1712, src/Admin/Views/Generator/EventfulDisplay.php:1738
+msgid "Infinite Scroll (Ajax) (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1713, src/Admin/Views/Generator/EventfulDisplay.php:1739
+msgid "No Ajax (Normal Pagination) (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1721
+msgid "Filter Pagination Type"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1722
+msgid "Select the pagination type for filtered results."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1725
+msgid "Infinite Scroll (Ajax)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1733
+msgid "Pagination Type for Mobile"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1734
+msgid "Choose pagination behavior for mobile devices."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1737
+msgid "Ajax Pagination (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1747
+msgid "Load More Button Label"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1748
+msgid "Set the label for the Load More button."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1749
+msgid "Load More"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1755
+msgid "Ending Message"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1756
+msgid "Message shown when there are no more events to load."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1757
+msgid "No more events available"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1764
+msgid "Load More Button Color"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1765
+msgid "Customize text, hover text, border, and background colors for the Load More button."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1768
+msgid "Text hover Color"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1769, src/Admin/Views/Settings/EventfulColorScheme.php:96, src/Admin/Views/Settings/EventfulColorScheme.php:169, src/Admin/Views/Settings/EventfulColorScheme.php:191
+msgid "Border Color"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1770, src/Admin/Views/Settings/EventfulColorScheme.php:192
+msgid "Border Hover Color"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1780
+msgid "Align pagination to left, center, or right."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1782, src/Admin/Views/Generator/EventfulFilterPost.php:282, src/Admin/Views/Generator/EventfulFilterPost.php:493
+msgid "<i class=\"icofont-align-left\" title=\"Left\"></i>"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1783, src/Admin/Views/Generator/EventfulFilterPost.php:283, src/Admin/Views/Generator/EventfulFilterPost.php:494
+msgid "<i class=\"icofont-align-center\" title=\"Center\"></i>"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1784, src/Admin/Views/Generator/EventfulFilterPost.php:284, src/Admin/Views/Generator/EventfulFilterPost.php:495
+msgid "<i class=\"icofont-align-right\" title=\"Right\"></i>"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1792
+msgid "Items Per Page"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulDisplay.php:1793
+msgid "This value should be lesser than the Limit set in the Filter Events tab."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:35, src/Admin/Views/Generator/EventfulFilterPost.php:41
+msgid "Filter Events"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:42
+msgid "Select how events should be filtered: latest events, featured events, or manually selected events."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:42
+msgid "Open Demo"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:43
+msgid "Filter the events you want to show."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:45
+msgid "Latest"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:46
+msgid "Feature"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:47
+msgid "Specific"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:57
+msgid "Include Only"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:58
+msgid "Manually choose specific events to include in the listing. Only selected events will be shown."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:59
+msgid "Choose events"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:76
+msgid "Exclude"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:77
+msgid "Exclude selected events or event types from appearing in the listing."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:88
+msgid "Choose events to exclude"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:101
+msgid "Current Event"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:102
+msgid "Password Protected Events"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:111
+msgid "Type of Event"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:112
+msgid "Choose which events to display: upcoming events, past events, or all events."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:115
+msgid "Upcoming"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:118
+msgid "Past"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:122
+msgid "All (Upcoming + Past)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:132
+msgid "Determine Event Status By Event start date"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:133
+msgid "Event start date"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:134
+msgid "Events are upcoming until they begin, and past once they start."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:141
+msgid "Check to hide free events."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:147
+msgid "Hide event if featured image not exist"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:152
+msgid "Order by"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:153
+msgid "Set a order by option."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:155
+msgid "ID"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:157
+msgid "Event Start Date"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:158
+msgid "Event slug"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:159
+msgid "Random"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:166
+msgid "Order"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:167
+msgid "Choose ascending or descending order for events."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:169
+msgid "Ascending"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:170
+msgid "Descending"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:177
+msgid "Limit"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:178
+msgid "Set the maximum number of events to display. Leave empty to show all events."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:179
+msgid "Set the total number of events to display."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:188
+msgid "Condense Events in Series"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:189
+msgid "Due to a TEC limitation, only upcoming events are displayed when this option is enabled."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:190
+msgid "Display only the next upcoming event from each event series when using Events Calendar Pro."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:209
+msgid "SEO Schema Markup"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:210
+msgid "Enable/Disable schema markup."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:211
+msgid "Schema Markup"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:211
+msgid "<b>Schema Markup</b> adds structured data to your Event Showcase, enhancing search engine visibility and improving the display of your Event Showcase in search results."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:219
+msgid "Filtering"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:225, src/Admin/Views/Generator/EventfulFilterPost.php:226, src/Admin/Views/Generator/EventfulFilterPost.php:405
+msgid "Filter Type"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:226
+msgid "Enable <b>Keyword Search</b> to let users filter events by search terms and display a search bar. Enable <b>Advanced Filtering</b> to add powerful filters such as taxonomies, venues, organizers, event type, timeframe, month, and more."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:227
+msgid "Select the filtering options you want to enable for event filtering."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:229
+msgid "Keyword Search"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:230
+msgid "Advanced Filtering"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:231
+msgid "Event Date & Time (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:240
+msgid "Keyword Search Options"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:246
+msgid "Type Keyword"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:247
+msgid "Enter a keyword to display events that match this keyword."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:248
+msgid "Enter keyword to filter and search through event titles, content, and metadata."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:253
+msgid "Show Search Bar"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:254
+msgid "Check this option to display a keyword search input for filtering events."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:261
+msgid "Search bar"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:267, src/Admin/Views/Generator/EventfulFilterPost.php:463
+msgid "Label"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:268
+msgid "Set a label text displayed above or beside the search input field."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:273
+msgid "Placeholder"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:274
+msgid "Define the placeholder text shown inside the search input field."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:291
+msgid "Max Width"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:292
+msgid "Set the maximum width of the search field."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:309
+msgid "Advanced Filtering Options"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:321
+msgid "Select Option"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:322
+msgid "Select which event data you want to filter by."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:326
+msgid "Event Venue (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:328
+msgid "Event Type (Time-Based) (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:329
+msgid "Event Timeframe (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:330
+msgid "Event Month (Pro)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:339
+msgid "Choose Category(s)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:340
+msgid "Choose the category(s) to show events from. Leave empty to display events from all available categories."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:341
+msgid "No categories found."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:342
+msgid "Select Category(s)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:358
+msgid "Choose Tag(s)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:359
+msgid "Choose the tags to show events from. Leave empty to include events from all tags."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:360
+msgid "No tags found."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:361
+msgid "Select Tag(s)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:377
+msgid "Operator"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:378
+msgid "IN - Show events which associate with one or more terms"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:378
+msgid "AND - Show events which match all terms"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:378
+msgid "NOT IN - Show events which don't match the terms"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:381
+msgid "IN"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:382
+msgid "AND"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:383
+msgid "NOT IN"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:391
+msgid "Show Ajax Live Filter"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:392
+msgid "Check this option to enable the event filter in Ajax Live Filters."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:398
+msgid "Ajax Live Filter Options"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:406
+msgid "Select a type for live filter."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:416
+msgid "Dropdown"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:422
+msgid "Radio"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:428
+msgid "Checkbox"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:439
+msgid "Filter Icon"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:440
+msgid "Select an icon for the filter button."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:447
+msgid "Button Color"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:448
+msgid "Set the color for the button text, border, background, and hover states."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:451, src/Admin/Views/Settings/EventfulColorScheme.php:48
+msgid "Text"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:452, src/Admin/Views/Settings/EventfulColorScheme.php:49
+msgid "Text Active"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:454, src/Admin/Views/Settings/EventfulColorScheme.php:51
+msgid "Border Active"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:456, src/Admin/Views/Settings/EventfulColorScheme.php:53
+msgid "Active Background"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:464
+msgid "Enter the label to show before the live filter."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:469
+msgid "Rename \"All\" Text"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:470
+msgid "Rename the \"All\" text shown in the filter. Leave empty to hide."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:477
+msgid "Hide Empty Option(s)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:478
+msgid "Check to hide filter options with no events."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:483
+msgid "Show Event Count"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:484
+msgid "Check to show the number of events for each filter option."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:491
+msgid "Set alignment of the live filter buttons."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:534
+msgid "Filter Option Column(s)"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:535
+msgid "Set the number of column(s) in different devices for a responsive view."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:551
+msgid "Adjust the spacing between each filter column. Use px values only."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:571
+msgid "Advance Filter Reset Button"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:572
+msgid "Enable to show a reset button for advanced filters."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:582
+msgid "Filter Wrapper Margin Bottom"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:583
+msgid "Set the bottom margin for the advanced filter wrapper."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:599
+msgid "Show Hide Filter Button"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:600
+msgid "Display a button to toggle the advanced filter panel."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:609
+msgid "Show Button Text"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:610
+msgid "Text displayed on the button when the filter is hidden."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:611
+msgid "Show Filter"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:621
+msgid "Hide Button Text"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:622
+msgid "Text displayed on the button when the filter is visible."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:623
+msgid "Hide Filter"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:633
+msgid "Show Hide Filter Button Background"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulFilterPost.php:634
+msgid "Set the color and hover color for the Show/Hide filter button."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulLayout.php:39
+msgid "Layout Preset"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulLayout.php:44, src/Admin/Views/Settings/EventfulColorScheme.php:227
+msgid "Carousel"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulLayout.php:49
+msgid "Slider"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulLayout.php:54
+msgid "Grid"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulLayout.php:59
+msgid "Minimal List"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulLayout.php:64, src/Admin/Views/Settings/EventfulColorScheme.php:293
+msgid "Timeline"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulLayout.php:69
+msgid "Masonry"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulLayout.php:75
+msgid "List"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulLayout.php:81
+msgid "Table"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulLayout.php:91
+msgid "Timeline Style"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulLayout.php:96
+msgid "Vertical"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulLayout.php:101
+msgid "Horizontal"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulLayout.php:112
+msgid "Carousel Style"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulLayout.php:117
+msgid "Standard"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulLayout.php:122
+msgid "Ticker"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulLayout.php:128, src/Admin/Framework/fields/typography/typography.php:218
+msgid "Center"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulLayout.php:134
+msgid "Multi Row"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTimeline.php:27
+msgid "Timeline Controls"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTimeline.php:34
+msgid "Vertical Timeline Style"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTimeline.php:35
+msgid "Choose a design style for the vertical timeline layout."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTimeline.php:39
+msgid "Style 01"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTimeline.php:44
+msgid "Style 02"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTimeline.php:50
+msgid "Style 03"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTimeline.php:56
+msgid "Style 04"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTimeline.php:62
+msgid "Style 05"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTimeline.php:73
+msgid "Month/Year Separator"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTimeline.php:74
+msgid "Show a month and year label on the timeline line between event groups."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTimeline.php:83, src/Admin/Views/Settings/EventfulColorScheme.php:298
+msgid "Timeline Colors"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTimeline.php:89
+msgid "Date Badge Color"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTimeline.php:90
+msgid "Background color for the month and year badge (for example, \"Jun 2026\") shown above each event group."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTimeline.php:96
+msgid "Timeline Line Thickness"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTimeline.php:97
+msgid "Controls the thickness of the timeline line."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTimeline.php:108
+msgid "Timeline Line Color"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTimeline.php:109
+msgid "Color of the vertical line that runs through the timeline and connects every event."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTimeline.php:115
+msgid "Event Dot Color"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTimeline.php:116
+msgid "Color of the round dot marker shown next to each event on the timeline line."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTypography.php:28, src/Admin/Views/Settings/EventfulColorScheme.php:388
+msgid "Typography"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTypography.php:41
+msgid "Section Title"
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTypography.php:42
+msgid "Set event showcase section title font properties."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTypography.php:43
+msgid "Set typography options for the section title, including font, size, and line height."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTypography.php:67
+msgid "Set typography for individual event titles, including hover color."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTypography.php:94
+msgid "Set typography for event meta fields, including hover color."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTypography.php:120
+msgid "Set typography for the event content block."
+msgstr ""
+
+#: src/Admin/Views/Generator/EventfulTypography.php:144
+msgid "Set typography for the Read More button or link."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAccessibility.php:27
+msgid "Accessibility"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAccessibility.php:33
+msgid "Carousel Accessibility"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAccessibility.php:34
+msgid "Enable accessibility support for carousel navigation and screen readers."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAccessibility.php:43
+msgid "Previous Slide Message"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAccessibility.php:44
+msgid "Accessible label announced when navigating to the previous slide."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAccessibility.php:45
+msgid "Previous slide"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAccessibility.php:51
+msgid "Next Slide Message"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAccessibility.php:52
+msgid "Accessible label announced when navigating to the next slide."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAccessibility.php:53
+msgid "Next slide"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAccessibility.php:59
+msgid "First Slide Message"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAccessibility.php:60
+msgid "Message announced when the first slide is reached."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAccessibility.php:61
+msgid "This is the first slide"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAccessibility.php:67
+msgid "Last Slide Message"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAccessibility.php:68
+msgid "Message announced when the last slide is reached."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAccessibility.php:69
+msgid "This is the last slide"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAccessibility.php:75
+msgid "Pagination Bullet Message"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAccessibility.php:76
+msgid "Accessible text announced for each pagination bullet. {{index}} will be replaced by slide number."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAccessibility.php:77
+msgid "Go to slide {{index}}"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAdvanced.php:35
+msgid "Advanced"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAdvanced.php:41
+msgid "Clean-up Data on Deletion"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAdvanced.php:42
+msgid "Delete all Eventful data from the database when the plugin is uninstalled or deleted."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAdvanced.php:46
+msgid "Enqueue or Dequeue JS"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAdvanced.php:51
+msgid "Swiper JS"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAdvanced.php:52, src/Admin/Views/Settings/EventfulAdvanced.php:65, src/Admin/Views/Settings/EventfulAdvanced.php:74
+msgid "Enqueued"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAdvanced.php:53, src/Admin/Views/Settings/EventfulAdvanced.php:66, src/Admin/Views/Settings/EventfulAdvanced.php:75
+msgid "Dequeued"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAdvanced.php:59
+msgid "Enqueue or Dequeue CSS"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulAdvanced.php:64
+msgid "Swiper CSS"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:35
+msgid "Color Scheme"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:40
+msgid "Filter Bar"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:45
+msgid "Filter Bar Button Colors"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:46
+msgid "Customize the text, border, and background colors for filter bar buttons, including hover and active states."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:67
+msgid "Show / Hide Filter Button Colors"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:68
+msgid "Set color scheme for the Show/Hide filter toggle button."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:84
+msgid "Content Fields"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:89
+msgid "Read More Button Colors"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:90
+msgid "Control text, background, and border colors for the Read More button in normal and hover states for Read more button."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:97
+msgid "Hover Border Color"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:111
+msgid "Read More Link Colors"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:112
+msgid "Set the text color and hover color for Read More links."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:126
+msgid "Social Icon Colors"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:127
+msgid "Set icon and background colors for social media buttons, including hover states."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:145
+msgid "Social Icon Border Colors"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:146
+msgid "Define the border color and hover border color for social media icons."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:164
+msgid "Pagination Colors"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:165
+msgid "Customize text, border, and background colors for pagination, including active states."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:168
+msgid "Text Active Color"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:170
+msgid "Border Active Color"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:172
+msgid "Active BG"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:186
+msgid "Load More Button Colors"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:187
+msgid "Customize text, border, and background colors for the Load More button, including hover effects."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:209
+msgid "Pre Made Theme"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:214
+msgid "Theme Color Scheme"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:215
+msgid "Set primary colors for featured and non-featured event layouts."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:232
+msgid "Carousel Lazy Preloader Color"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:233
+msgid "Select the color of the loading spinner shown while carousel slides load."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:239
+msgid "Carousel Navigation Colors"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:240
+msgid "Set icon, background, and border colors for carousel navigation arrows, including hover states."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:260
+msgid "Carousel Pagination Colors"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:261
+msgid "Control the normal and active colors for carousel pagination dots."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:275
+msgid "Carousel Number Pagination Colors"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:276
+msgid "Set text and background colors for numbered carousel pagination, including hover styles."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:299
+msgid "Customize the colors used in the timeline view, including the date badge, timeline line, and event dot to match your design."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:301
+msgid "Date Badge"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:302
+msgid "Timeline Line"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:303
+msgid "Event Dot"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:313
+msgid "Single Event Popup"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:319
+msgid "Popup Content Text Colors"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:320
+msgid "Define individual text colors for popup title, meta, and content fields."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:323
+msgid "Meta"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:324
+msgid "Meta Hover"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:338
+msgid "Popup Background Color"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:339
+msgid "Set the background color of the popup window."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:346
+msgid "Popup Overlay Color"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:347
+msgid "Choose the overlay color and transparency behind the popup."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:354
+msgid "Popup Close Button Colors"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:355
+msgid "Set the normal and hover colors for the popup close icon."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:370
+msgid "Popup Navigation Colors"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:371
+msgid "Customize the text and background colors for popup navigation controls."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:393
+msgid "Section Title Color"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:394
+msgid "Set the text color for section headings."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:406
+msgid "Event Title Colors"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:407
+msgid "Set normal and hover colors for event titles."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:421
+msgid "Event Meta Field Colors"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:422
+msgid "Set normal and hover colors for event meta information."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:436
+msgid "Event Content Color"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:437
+msgid "Set the main text color for event descriptions."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:450
+msgid "Event Custom Field Color"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulColorScheme.php:451
+msgid "Set the text color for custom event fields."
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulCustomCSS.php:25
+msgid "Custom CSS & JS"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulCustomCSS.php:31
+msgid "Custom CSS"
+msgstr ""
+
+#: src/Admin/Views/Settings/EventfulCustomCSS.php:41
+msgid "Custom JavaScript"
+msgstr ""
+
+#: src/Admin/Views/Settings/License.php:33
+msgid "LICENSE"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:38, src/Admin/Framework/fields/media/media.php:59
+msgid "Not selected"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:74, src/Admin/Framework/fields/date/date.php:31, src/Admin/Framework/fields/datetime/datetime.php:36
+msgid "From"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:92, src/Admin/Framework/fields/date/date.php:32, src/Admin/Framework/fields/datetime/datetime.php:37
+msgid "To"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:110
+msgid "Direction"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:116
+msgid "Gradient Direction"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:117
+msgid "&#8659; top to bottom"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:118
+msgid "&#8658; left to right"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:119
+msgid "&#8664; corner top to right"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:120
+msgid "&#8665; corner top to left"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:163
+msgid "Background Position"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:164
+msgid "Left Top"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:165
+msgid "Left Center"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:166
+msgid "Left Bottom"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:167
+msgid "Center Top"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:168
+msgid "Center Center"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:169
+msgid "Center Bottom"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:170
+msgid "Right Top"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:171
+msgid "Right Center"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:172
+msgid "Right Bottom"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:186
+msgid "Background Repeat"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:187
+msgid "Repeat"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:188
+msgid "No Repeat"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:189
+msgid "Repeat Horizontally"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:190
+msgid "Repeat Vertically"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:204
+msgid "Background Attachment"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:205
+msgid "Scroll"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:206
+msgid "Fixed"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:220
+msgid "Background Size"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:221
+msgid "Cover"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:222
+msgid "Contain"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:223
+msgid "Auto"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:237
+msgid "Background Origin"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:238, src/Admin/Framework/fields/background/background.php:256
+msgid "Padding Box"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:239, src/Admin/Framework/fields/background/background.php:255
+msgid "Border Box"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:240, src/Admin/Framework/fields/background/background.php:257
+msgid "Content Box"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:254
+msgid "Background Clip"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:271
+msgid "Background Blend Mode"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:273
+msgid "Multiply"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:274
+msgid "Screen"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:276
+msgid "Darken"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:277
+msgid "Lighten"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:278
+msgid "Color Dodge"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:279
+msgid "Saturation"
+msgstr ""
+
+#: src/Admin/Framework/fields/background/background.php:281
+msgid "Luminosity"
+msgstr ""
+
+#: src/Admin/Framework/fields/backup/backup.php:31
+msgid "Export & Download"
+msgstr ""
+
+#: src/Admin/Framework/fields/border/border.php:31, src/Admin/Framework/fields/dimensions_advanced/dimensions_advanced.php:51, src/Admin/Framework/fields/spacing/spacing.php:25
+msgid "top"
+msgstr ""
+
+#: src/Admin/Framework/fields/border/border.php:32, src/Admin/Framework/fields/dimensions_advanced/dimensions_advanced.php:52, src/Admin/Framework/fields/spacing/spacing.php:26
+msgid "right"
+msgstr ""
+
+#: src/Admin/Framework/fields/border/border.php:33, src/Admin/Framework/fields/dimensions_advanced/dimensions_advanced.php:53, src/Admin/Framework/fields/spacing/spacing.php:27
+msgid "bottom"
+msgstr ""
+
+#: src/Admin/Framework/fields/border/border.php:34, src/Admin/Framework/fields/dimensions_advanced/dimensions_advanced.php:54, src/Admin/Framework/fields/spacing/spacing.php:28
+msgid "left"
+msgstr ""
+
+#: src/Admin/Framework/fields/border/border.php:35, src/Admin/Framework/fields/column/column.php:51, src/Admin/Framework/fields/dimensions_advanced/dimensions_advanced.php:55, src/Admin/Framework/fields/spacing/spacing.php:29
+msgid "all"
+msgstr ""
+
+#: src/Admin/Framework/fields/border/border.php:63, src/Admin/Framework/fields/dimensions_advanced/dimensions_advanced.php:82, src/Admin/Framework/fields/typography/typography.php:275
+msgid "Solid"
+msgstr ""
+
+#: src/Admin/Framework/fields/border/border.php:64, src/Admin/Framework/fields/dimensions_advanced/dimensions_advanced.php:83, src/Admin/Framework/fields/typography/typography.php:278
+msgid "Dashed"
+msgstr ""
+
+#: src/Admin/Framework/fields/border/border.php:65, src/Admin/Framework/fields/dimensions_advanced/dimensions_advanced.php:84, src/Admin/Framework/fields/typography/typography.php:277
+msgid "Dotted"
+msgstr ""
+
+#: src/Admin/Framework/fields/border/border.php:66, src/Admin/Framework/fields/dimensions_advanced/dimensions_advanced.php:85, src/Admin/Framework/fields/typography/typography.php:276
+msgid "Double"
+msgstr ""
+
+#: src/Admin/Framework/fields/border/border.php:67, src/Admin/Framework/fields/dimensions_advanced/dimensions_advanced.php:86
+msgid "Inset"
+msgstr ""
+
+#: src/Admin/Framework/fields/border/border.php:68, src/Admin/Framework/fields/dimensions_advanced/dimensions_advanced.php:87
+msgid "Outset"
+msgstr ""
+
+#: src/Admin/Framework/fields/border/border.php:69, src/Admin/Framework/fields/dimensions_advanced/dimensions_advanced.php:88
+msgid "Groove"
+msgstr ""
+
+#: src/Admin/Framework/fields/border/border.php:70, src/Admin/Framework/fields/dimensions_advanced/dimensions_advanced.php:89
+msgid "ridge"
+msgstr ""
+
+#: src/Admin/Framework/fields/border/border.php:87
+msgid "Width"
+msgstr ""
+
+#: src/Admin/Framework/fields/border/border.php:120
+msgid "Style"
+msgstr ""
+
+#: src/Admin/Framework/fields/border/border.php:157
+msgid "Radius"
+msgstr ""
+
+#: src/Admin/Framework/fields/box_shadow/box_shadow.php:48
+msgid "X offset"
+msgstr ""
+
+#: src/Admin/Framework/fields/box_shadow/box_shadow.php:49
+msgid "Y offset"
+msgstr ""
+
+#: src/Admin/Framework/fields/box_shadow/box_shadow.php:50
+msgid "Blur"
+msgstr ""
+
+#: src/Admin/Framework/fields/box_shadow/box_shadow.php:51
+msgid "Spread"
+msgstr ""
+
+#: src/Admin/Framework/fields/checkbox/checkbox.php:23
+msgid "Check/Uncheck All"
+msgstr ""
+
+#: src/Admin/Framework/fields/checkbox/checkbox.php:93
+msgid "Hide Taxonomy Name"
+msgstr ""
+
+#: src/Admin/Framework/fields/dimensions/dimensions.php:23
+msgid "height"
+msgstr ""
+
+#: src/Admin/Framework/fields/gallery/gallery.php:20
+msgid "Add Gallery"
+msgstr ""
+
+#: src/Admin/Framework/fields/gallery/gallery.php:21
+msgid "Edit Gallery"
+msgstr ""
+
+#: src/Admin/Framework/fields/gallery/gallery.php:22
+msgid "Clear"
+msgstr ""
+
+#: src/Admin/Framework/fields/group/group.php:54, src/Admin/Framework/fields/group/group.php:109, src/Admin/Framework/fields/repeater/repeater.php:50, src/Admin/Framework/fields/repeater/repeater.php:78
+msgid "Are you sure to delete this item?"
+msgstr ""
+
+#: src/Admin/Framework/fields/group/group.php:143, src/Admin/Framework/fields/repeater/repeater.php:91
+msgid "You cannot add more."
+msgstr ""
+
+#: src/Admin/Framework/fields/group/group.php:144, src/Admin/Framework/fields/repeater/repeater.php:92
+msgid "You cannot remove more."
+msgstr ""
+
+#: src/Admin/Framework/fields/group/group.php:43, src/Admin/Framework/fields/repeater/repeater.php:29
+msgid "Error: Field ID conflict."
+msgstr ""
+
+#: src/Admin/Framework/fields/icon/icon.php:21, src/Admin/Framework/fields/icon/icon.php:54
+msgid "Add Icon"
+msgstr ""
+
+#: src/Admin/Framework/fields/icon/icon.php:22
+msgid "Remove Icon"
+msgstr ""
+
+#: src/Admin/Framework/fields/image_sizes/image_sizes.php:82
+msgid "Original uploaded image"
+msgstr ""
+
+#: src/Admin/Framework/fields/image_sizes/image_sizes.php:83
+msgid "Set custom size"
+msgstr ""
+
+#: src/Admin/Framework/fields/image_sizes/image_sizes.php:130
+msgid "No image sizes found."
+msgstr ""
+
+#: src/Admin/Framework/fields/license/license.php:50
+msgid "You're using Eventful Lite - No License Needed. Enjoy! 🙂"
+msgstr ""
+
+#: src/Admin/Framework/fields/license/license.php:52
+msgid "Upgrade to Eventful Pro and unlock all the features."
+msgstr ""
+
+#: src/Admin/Framework/fields/license/license.php:53
+msgid "Upgrade To Pro Now"
+msgstr ""
+
+#: src/Admin/Framework/fields/link/link.php:20
+msgid "Add Link"
+msgstr ""
+
+#: src/Admin/Framework/fields/link/link.php:21
+msgid "Edit Link"
+msgstr ""
+
+#: src/Admin/Framework/fields/link/link.php:22
+msgid "Remove Link"
+msgstr ""
+
+#: src/Admin/Framework/fields/link_color/link_color.php:37
+msgid "Hover"
+msgstr ""
+
+#: src/Admin/Framework/fields/link_color/link_color.php:38
+msgid "Active"
+msgstr ""
+
+#: src/Admin/Framework/fields/link_color/link_color.php:39
+msgid "Visited"
+msgstr ""
+
+#: src/Admin/Framework/fields/link_color/link_color.php:40
+msgid "Focus"
+msgstr ""
+
+#: src/Admin/Framework/fields/map/map.php:24
+msgid "Latitude"
+msgstr ""
+
+#: src/Admin/Framework/fields/map/map.php:25
+msgid "Longitude"
+msgstr ""
+
+#: src/Admin/Framework/fields/media/media.php:25, src/Admin/Framework/fields/upload/upload.php:24
+msgid "Upload"
+msgstr ""
+
+#: src/Admin/Framework/fields/media/media.php:26, src/Admin/Framework/fields/upload/upload.php:25
+msgid "Remove"
+msgstr ""
+
+#. translators: 1: start span tag, 2: close tag.
+#: src/Admin/Framework/fields/shortcode/shortcode.php:39
+msgid "Additional Features in %1$sPRO%2$s"
+msgstr ""
+
+#. translators: 1: start bold tag, 2: close tag.
+#: src/Admin/Framework/fields/shortcode/shortcode.php:46
+msgid "Here are some additional features available in Pro!"
+msgstr ""
+
+#: src/Admin/Framework/fields/shortcode/shortcode.php:52
+msgid "10+ Beautiful Layouts"
+msgstr ""
+
+#: src/Admin/Framework/fields/shortcode/shortcode.php:53
+msgid "Events View & Filter All Types"
+msgstr ""
+
+#: src/Admin/Framework/fields/shortcode/shortcode.php:54
+msgid "Ajax Live Filtering & Search"
+msgstr ""
+
+#: src/Admin/Framework/fields/shortcode/shortcode.php:55
+msgid "Filter Events By Date & Time"
+msgstr ""
+
+#: src/Admin/Framework/fields/shortcode/shortcode.php:56
+msgid "13+ Social Share Platforms"
+msgstr ""
+
+#: src/Admin/Framework/fields/shortcode/shortcode.php:57
+msgid "Custom Fields support"
+msgstr ""
+
+#: src/Admin/Framework/fields/shortcode/shortcode.php:58
+msgid "Ajax Load More & Infinite Scroll"
+msgstr ""
+
+#: src/Admin/Framework/fields/shortcode/shortcode.php:59
+msgid "Customize Details Page in Popup"
+msgstr ""
+
+#: src/Admin/Framework/fields/shortcode/shortcode.php:60
+msgid "100+ Customizations & More"
+msgstr ""
+
+#: src/Admin/Framework/fields/shortcode/shortcode.php:65
+msgid "Upgrade to Pro Now"
+msgstr ""
+
+#: src/Admin/Framework/fields/switcher/switcher.php:20
+msgid "On"
+msgstr ""
+
+#: src/Admin/Framework/fields/switcher/switcher.php:21
+msgid "Off"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:132
+msgid "Font Family"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:133
+msgid "Select a font"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:141
+msgid "Backup Font Family"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:174
+msgid "Font Style"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:188, src/Admin/Framework/fields/typography/typography.php:189
+msgid "Load Extra Styles"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:202
+msgid "Subset"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:212
+msgid "Text Align"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:216
+msgid "Inherit"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:220
+msgid "Justify"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:221
+msgid "Initial"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:233
+msgid "Font Variant"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:238
+msgid "Small Caps"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:239
+msgid "All Small Caps"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:251
+msgid "Text Transform"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:256
+msgid "Capitalize"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:257
+msgid "Uppercase"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:258
+msgid "Lowercase"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:270
+msgid "Text Decoration"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:279
+msgid "Wavy"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:280
+msgid "Overline"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:281
+msgid "Line-through"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:297
+msgid "Font Size"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:306
+msgid "Line Height"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:315
+msgid "Font Size (Tablet)"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:324
+msgid "Line Height (Tablet)"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:333
+msgid "Font Size (Mobile)"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:342
+msgid "Line Height (Mobile)"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:354
+msgid "Letter Spacing"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:366
+msgid "Word Spacing"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:382
+msgid "Font Color"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:406
+msgid "Custom Style"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:487
+msgid "Custom Web Fonts"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:493
+msgid "Safe Web Fonts"
+msgstr ""
+
+#: src/Admin/Framework/fields/typography/typography.php:516
+msgid "Google Web Fonts"
+msgstr ""
