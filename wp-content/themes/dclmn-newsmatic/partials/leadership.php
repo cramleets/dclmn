@@ -19,9 +19,11 @@ $leadership = $dclmn->get_leadership();
         <td nowrap>
           <?php foreach ($posts as $p): ?>
             <?php
-            if ($p->email) echo '<a href="mailto:' . $p->email . '" target="_blank">';
+            $email = $p->email;
+            if ($p->hide_email_address) $email = $p->mailbox . '@dclmn.org';
+            if ($email) echo '<a href="mailto:' . $email . '" target="_blank">';
             echo $p->first_name . ' ' . $p->last_name;
-            if ($p->email) echo '</a>';
+            if ($email) echo '</a>';
             echo '<br>';
             ?>
           <?php endforeach; ?>

@@ -557,7 +557,6 @@ class DCLMN {
                         $out .= ' - <a href="' . home_url('committee-person-description/') . '">Inquire</a>';
                     } else {
                         $email = $person->email;
-                       if ('Steel' == $person->last_name ) pobj($person,1);
                         if ($person->hide_email_address) $email = $title . '@dclmn.org';
                         $out .= ($person->email) ? '<a href="mailto:' . $email . '" target="_blank">' : '';
                         $out .= $person->first_name;
