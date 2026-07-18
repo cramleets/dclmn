@@ -118,6 +118,15 @@ function attach_zoom_data_to_events($events) {
 }
 
 function dclmn_homepage_events($args = []) {
+    $defaults = [
+        'show_date_box' => true,
+        'show_title' => true,
+        'show_date' => true,
+        'show_more' => true,
+    ];
+
+    $args = wp_parse_args($args, $defaults);
+
     $events = dclmn_get_events($args);
 
     $url = home_url('events/');
@@ -163,6 +172,11 @@ function dclmn_homepage_events($args = []) {
                 $event_time_short = $event->dates->start->format_i18n('ga');;
             }
             $out .= '<p class="dclmn-event">';
+            $out .= '<a
+		href="' . esc_url($event->permalink) . '"
+		title="' . esc_attr($event->title) . '"
+		rel="bookmark"
+		class="tribe-events-widget-events-list__event-title-link tribe-common-anchor-thin">';
             $out .= '<span class="dclmn-event-flex">';
 
             $out .= '<span>'; // date box flex item
@@ -174,20 +188,20 @@ function dclmn_homepage_events($args = []) {
             $out .= '</span>'; // /date box flex item
 
             $out .= '<span>'; // date links flex item
-            $out .= '<a
-		href="' . esc_url($event->permalink) . '"
-		title="' . esc_attr($event->title) . '"
-		rel="bookmark"
-		class="tribe-events-widget-events-list__event-title-link tribe-common-anchor-thin">';
 
             //$out .= tribe_event_featured_image($event->ID, 'full', false);
-            $out .= '<span class="event-title"><strong>' . $event->title . '</strong></span>';
-            $out .= '<br>';
-            $out .= '<span class="event-week-day">' . $event_week_day . ', </span> ';
-            $out .= '<span class="event-month">' . $event_month . '</span> ';
-            $out .= '<span class="event-date">' . $event_day_num . '</span> ';
-            $out .= '  ';
-            $out .= '<span class="event-time">' . $event_time . '</span>';
+            if ($args['show_title']) {
+                $out .= '<span class="event-title"><strong>' . $event->title . '</strong></span>';
+            }
+
+            if ($args['show_date']) {
+                $out .= '<br>';
+                $out .= '<span class="event-week-day">' . $event_week_day . ', </span> ';
+                $out .= '<span class="event-month">' . $event_month . '</span> ';
+                $out .= '<span class="event-date">' . $event_day_num . '</span> ';
+                $out .= '  ';
+                $out .= '<span class="event-time">' . $event_time . '</span>';
+            }
             $out .= '</a>';
 
             if (!empty($event->zoom)) {
@@ -199,7 +213,9 @@ function dclmn_homepage_events($args = []) {
         }
         $out .= '</div>';
 
-        $out .=  '<p class="dclmn-event-view-more"><a href="' . $url . '">View More &raquo;</a></p>';
+        if ($args['show_more']) {
+            $out .=  '<p class="dclmn-event-view-more"><a href="' . $url . '">View More &raquo;</a></p>';
+        }
 
         $out .= '</div>';
     }
@@ -715,7 +731,7 @@ function dclmn_board_member_email_link($position, $subject = false) {
         $out .= '</a>';
         $out .= $sep;
     }
-    
+
     $out = rtrim($out, $sep);
 
     return $out;

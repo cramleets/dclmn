@@ -194,4 +194,15 @@ class DCLMN_Cpanel_API extends Cpanel_API {
       logger("Delete Leadership Forwarders - END", 'cpanel-api');
     }
   }
+
+  function delete_existing_forwarders() {
+    logger("Delete Existing Forwarders - START", 'cpanel-api');
+    $forwarders = $this->get_forwarders();
+    foreach ($forwarders as $forwarder) {
+      die('is this a forwarder that would be created?');
+      $result = $this->delete_forwarder($forwarder['dest'], $forwarder['forward']);
+      logger("Deleted CP Forwarder {$forwarder['forward']} {$forwarder['dest']}", 'cpanel-api');
+    }
+    logger("Delete Existing Forwarders - END", 'cpanel-api');
+  }
 }

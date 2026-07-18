@@ -1053,9 +1053,9 @@ body.home #block-21 {
 }
 
 .election-dates ul li.featured a .election-date-title {
-	font-size: 1.25em;
-	text-transform: uppercase;
-	color: var(--color-root);
+    font-size: 1.25em;
+    text-transform: uppercase;
+    color: var(--color-root);
 }
 
 .election-dates ul li a,
@@ -1314,9 +1314,12 @@ body.hidden-sidebar.right-sidebar #theme-content .row .primary-content {
     padding: .5em .25em .75em;
     color: var(--color-red);
 }
+
 .video-container {
-    aspect-ratio: 16 / 9; /* Maintains the 16:9 aspect ratio */
-    width: 100%; /* Ensures it spans the full width of its container */
+    aspect-ratio: 16 / 9;
+    /* Maintains the 16:9 aspect ratio */
+    width: 100%;
+    /* Ensures it spans the full width of its container */
 }
 
 .video-container iframe {
@@ -1386,10 +1389,120 @@ body.hidden-sidebar.right-sidebar #theme-content .row .primary-content {
     z-index: 999;
 }
 
-.tribe-events.tribe-common .tribe-events-header  .tribe-common-c-btn-border {
+.tribe-events.tribe-common .tribe-events-header .tribe-common-c-btn-border {
     width: auto;
 }
 
 .tribe-events .tribe-events-header__events-bar {
     margin-left: 1em;
+}
+
+.dclmn-slick {
+    position: relative;
+    /* width: 90%; */
+    margin: 0 auto;
+}
+
+.dclmn-slick .slick-prev,
+.dclmn-slick .slick-next {
+    font-size: 0;
+    /* Hide the button text */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: transparent;
+    border-width: 0;
+}
+
+.dclmn-slick .slick-prev:before,
+.dclmn-slick .slick-next:before {
+    font-size: 32px;
+    font-weight: bold;
+    line-height: 1;
+    color: #000;
+    opacity: 1;
+    color: var(--color-root);
+}
+
+.dclmn-slick .slick-prev {
+    left: -40px;
+}
+
+.dclmn-slick .slick-next {
+    right: -40px;
+}
+
+.dclmn-slick .slick-prev:before {
+    content: "‹";
+}
+
+.dclmn-slick .slick-next:before {
+    content: "›";
+}
+
+.dclmn-slick .dclmn-event {
+    clear: none;
+    border: 1px #000 solid;
+    padding: 0;
+    margin: 0 1em 0 0;
+}
+
+.dclmn-slick .dclmn-events {
+    border: none;
+    margin: 0;
+    padding: 0;
+    clear: none;
+}
+
+.dclmn-slick .dclmn-events .dclmn-events-loop {
+    display: flex;
+}
+
+.dclmn-slick .dclmn-events .dclmn-events-loop .dclmn-event {
+    min-width: 84px;
+}
+
+.dclmn-slick .dclmn-events .dclmn-events-loop.slick-initialized {
+    display: block;
+}
+
+.dclmn-slick .dclmn-events .dclmn-event {
+    max-width: 84px;
+}
+
+.dclmn-slick .dclmn-events .dclmn-event-flex {
+    display: block;
+}
+
+.dclmn-slick .dclmn-events .date-box {
+    margin-bottom: 0;
+    border-width: 0;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+}
+
+.dclmn-slick .dclmn-event {
+    /* max-width: 81px; */
+}
+
+.canvassing-dates h2 {
+    margin: 0;
+}
+
+.canvassing-dates {
+    border: 1px #000 solid;
+    border-width: 1px 0;
+    padding: .25em .25em .75em .25em;
+}
+
+.dclmn-slick .dclmn-events .slick-track {
+    /* width: 100% !important; */
+    margin: 0;
+}
+
+.canvassing-slider-intro {
+    font-size: .85em;
+    margin-bottom: .5em;
 }

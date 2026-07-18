@@ -41,6 +41,7 @@ class DCLMN_Populator {
   
         $cpapi->set_existing_forwarders();
 
+        $cpapi->delete_existing_forwarders();
         $cpapi->delete_precinct_forwarders();
         $cpapi->delete_leadership_forwarders();
         $cpapi->load_precinct_forwarders();

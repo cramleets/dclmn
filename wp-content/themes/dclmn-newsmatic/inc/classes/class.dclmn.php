@@ -96,6 +96,7 @@ class DCLMN {
         add_action('wp_ajax_nopriv_export_cps_full', [$this, 'wp_ajax_export_cps_full']);
         add_action('wp_ajax_hide_user_email_address', [$this, 'wp_hide_user_email_address']);
         add_action('wp_ajax_nopriv_hide_user_email_address', [$this, 'wp_hide_user_email_address']);
+        add_action('newsmatic_main_banner_hook', [$this, 'newsmatic_main_banner_hook'], 1);
 
         add_filter('tec_events_views_v2_view_header_title', function ($title, $obj) {
             if (empty($title)) $title = 'Events';
@@ -557,7 +558,7 @@ class DCLMN {
                         $out .= ' - <a href="' . home_url('committee-person-description/') . '">Inquire</a>';
                     } else {
                         $email = $person->email;
-                        if ($person->hide_email_address) $email = $title . '@dclmn.org';
+                        if ($person->hide_email_address) $email = $title . '@dclmn.us';
                         $out .= ($person->email) ? '<a href="mailto:' . $email . '" target="_blank">' : '';
                         $out .= $person->first_name;
                         $out .= ($person->last_name) ? ' ' . $person->last_name : '';
@@ -1087,5 +1088,9 @@ class DCLMN {
         }
         // Return original HTML for other embeds
         return $html;
+    }
+
+    function newsmatic_main_banner_hook() {
+        get_template_part('partials/canvassing-slider');
     }
 }

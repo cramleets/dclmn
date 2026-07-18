@@ -77,6 +77,16 @@
 
       echo dclmn_homepage_events($meeting_events_args);
       ?>
+      <h3>Canvassing</h3>
+      <?php
+      $meeting_events_args = [
+        // 'header' => 'Meetings',
+        'category' => 'canvassing',
+        'posts_per_page' => 4,
+      ];
+
+      echo dclmn_homepage_events($meeting_events_args);
+      ?>
       <?php get_template_part('partials/zoom-meetings') ?>
     </div>
   </div>

@@ -204,14 +204,36 @@ jQuery(document).ready(function ($) {
       post_id: $(this).data('post_id'),
     };
 
-    $result_el = $('#hide-user-email-address-result' +'-' + $(this).data('post_id'));
+    $result_el = $('#hide-user-email-address-result' + '-' + $(this).data('post_id'));
     $result_el.html('<img src="/wp-includes/images/spinner.gif" style="width: 16px; height: 16px; vertical-align: middle;">').removeClass('session-login-message');
     $.post(ajaxurl, data, function (data) {
       $result_el.html('Updated.').addClass('session-login-message').css('font-size', '.75em');
     });
   });
 
-  $('.export-cps').on('click', function(){
+  $('.export-cps').on('click', function () {
     return confirm('This will download a Microsoft Excel file of all DCLMN committee people to your device.\n\nDo you wish to continue?');
+  });
+
+  $('.canvassing-slider .dclmn-events .dclmn-events-loop').slick({
+    slidesToShow: 12,
+    slidesToScroll: 1,
+    arrows: true,
+    dots: false,
+    autoplay: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1
+        }
+      }
+    ]
   });
 })

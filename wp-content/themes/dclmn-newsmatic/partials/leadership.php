@@ -20,7 +20,7 @@ $leadership = $dclmn->get_leadership();
           <?php foreach ($posts as $p): ?>
             <?php
             $email = $p->email;
-            if ($p->hide_email_address) $email = $p->mailbox . '@dclmn.org';
+            if ($p->hide_email_address) $email = $p->mailbox . '@dclmn.us';
             if ($email) echo '<a href="mailto:' . $email . '" target="_blank">';
             echo $p->first_name . ' ' . $p->last_name;
             if ($email) echo '</a>';
