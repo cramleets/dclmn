@@ -131,7 +131,7 @@ function dclmn_homepage_events($args = []) {
 
     $url = home_url('events/');
 
-    if ($args['category']) {
+    if (!empty($args['category'])) {
         $url .= 'category/' . $args['category'] . '/list/';
     }
 
@@ -739,4 +739,23 @@ function dclmn_board_member_email_link($position, $subject = false) {
 
 function logger($message, $name = 'default', $level = 'info') {
     (new DCLMN_Logger($name))->log($message, $level);
+}
+
+function frm_get_entry_values_by_key($entry_id) {
+
+    $entry = FrmEntry::getOne($entry_id, true);
+
+    if (! $entry) {
+        return [];
+    }
+
+    $fields = FrmField::get_all_for_form($entry->form_id);
+
+    $values = [];
+
+    foreach ($fields as $field) {
+        $values[$field->field_key] = $entry->metas[$field->id] ?? null;
+    }
+
+    return $values;
 }
