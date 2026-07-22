@@ -220,7 +220,7 @@ jQuery(document).ready(function ($) {
     slidesToScroll: 1,
     arrows: true,
     dots: false,
-    autoplay: true,
+    autoplay: false,
     responsive: [
       {
         breakpoint: 1024,
