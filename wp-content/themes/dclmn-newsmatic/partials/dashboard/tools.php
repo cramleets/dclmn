@@ -15,7 +15,7 @@
         <li><a href="<?php echo home_url('cp/cps/') ?>">View and Contact Committee People</a></li>
         <li><a href="<?php echo home_url('cp/leadership/') ?>">View and Contact Leadership</a></li>
         <li><a href="https://www.votebuilder.com/" target="_blank">Vote Builder</a></li>
-        <li><a href="https://local.dclmn.us/streetlists/" target="_blank">Street Lists</a></li>
+        <li><a href="<?php echo home_url('streetlists/') ?>" target="_blank">Street Lists</a></li>
       </ul>
       <h3>DCLMN Resources</h3>
       <ul>
