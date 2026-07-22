@@ -1426,11 +1426,11 @@ body.hidden-sidebar.right-sidebar #theme-content .row .primary-content {
 }
 
 .dclmn-slick .slick-prev {
-    left: -40px;
+    left: 0;
 }
 
 .dclmn-slick .slick-next {
-    right: -40px;
+    right: 0;
 }
 
 .dclmn-slick .slick-prev:before {
@@ -1447,7 +1447,7 @@ body.hidden-sidebar.right-sidebar #theme-content .row .primary-content {
     padding: 0;
     margin: 0 1em 0 0;
 }
-
+.slick-list.draggable,
 .dclmn-slick .dclmn-events {
     border: none;
     margin: 0;
@@ -1473,6 +1473,10 @@ body.hidden-sidebar.right-sidebar #theme-content .row .primary-content {
 
 .dclmn-slick .dclmn-events .dclmn-event-flex {
     display: block;
+}
+
+.dclmn-slick .dclmn-events .slick-list.draggable {
+    margin: 0 1.5em;
 }
 
 .dclmn-slick .dclmn-events .date-box {
@@ -1505,4 +1509,17 @@ body.hidden-sidebar.right-sidebar #theme-content .row .primary-content {
 .canvassing-slider-intro {
     font-size: .85em;
     margin-bottom: .5em;
+}
+
+.homepage-events {
+    gap: 2em;
+}
+
+.homepage-events > div {
+	width: 47%;
+}
+
+.homepage-events .dclmn-events {
+    border-bottom-width: 0;
+    padding: 0;
 }

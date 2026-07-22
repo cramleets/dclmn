@@ -36,6 +36,14 @@
     .cp-table-buttons>span:first-of-type {
         display: none;
     }
+
+    .homepage-events {
+        gap: 0;
+    }
+
+	.homepage-events > div {
+		width: 100%;
+	}
 }
 
 
@@ -311,6 +319,10 @@
     .tribe-events-c-top-bar.tribe-events-header__top-bar {
         display: flex;
     }
+
+.homepage-events > div {
+	width: 49%;
+}
 
     /* #header-menu {
         position: fixed;
