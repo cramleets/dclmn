@@ -1,5 +1,6 @@
 jQuery(document).ready(function ($) {
   $('.dclmn-mobile-header').insertBefore('#header-menu');
+  $('.frm_date').attr('autocomplete', 'off');
 
   function setActiveLink() {
     var hash = window.location.hash.replace(/#/g, '');
