@@ -545,7 +545,7 @@ class DCLMN_Polls {
 
   function the_content($content) {
     global $post;
-    if ('poll' == $post->post_type) {
+    if (is_object($post) && 'poll' == $post->post_type) {
       ob_start();
       require dirname(__FILE__) . '/../../modules/poll/controller.php';
       include dirname(__FILE__) . '/../../modules/poll/views/single.phtml';
