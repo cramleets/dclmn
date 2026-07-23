@@ -759,3 +759,20 @@ function frm_get_entry_values_by_key($entry_id) {
 
     return $values;
 }
+
+
+function frm_item_meta_to_assoc($form_id, array $item_meta) {
+
+    $fields = FrmField::get_all_for_form($form_id);
+
+    $assoc = [];
+
+    foreach ($fields as $field) {
+
+        $key = $field->field_key;    // or $field->name
+
+        $assoc[$key] = $item_meta[$field->id] ?? null;
+    }
+
+    return $assoc;
+}
