@@ -24,6 +24,7 @@ class DCLMN {
             wp_enqueue_style('dclmn-child', get_stylesheet_directory_uri() . '/css/dclmn-main.css', [$parent_style], filemtime(get_stylesheet_directory() . '/css/dclmn-main.css'));
             wp_enqueue_style('dclmn-modals', get_stylesheet_directory_uri() . '/css/dclmn-modals.css', ['dclmn-child'], filemtime(get_stylesheet_directory() . '/css/dclmn-modals.css'));
             wp_enqueue_style('dclmn-responsive', get_stylesheet_directory_uri() . '/css/dclmn-responsive.css', ['dclmn-child'], filemtime(get_stylesheet_directory() . '/css/dclmn-responsive.css'));
+            wp_enqueue_style('jquery-ui', 'https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css', [], '1.13.2');
 
             wp_enqueue_script('dclmn', get_stylesheet_directory_uri() . '/js/dclmn.js', ['jquery'], filemtime(get_stylesheet_directory() . '/js/dclmn.js'));
         }, 98);
@@ -106,6 +107,11 @@ class DCLMN {
 
         add_filter('newsmatic_query_args_filter', function ($args) {
         });
+
+        add_filter('tribe_events_views_v2_view_repository_args', [$this, 'exclude_private_events'], 10, 3);
+
+        add_action('frm_after_create_entry', [$this, 'create_tec_event'], 20, 2);
+        //add_action('frm_pre_create_entry', [$this, 'create_tec_event'], 20, 1);
 
         add_filter('tribe_widget_events-list_args_to_context', function ($args) {
             $args['tax_query'] = array(
@@ -1092,5 +1098,115 @@ class DCLMN {
 
     function newsmatic_main_banner_hook() {
         get_template_part('partials/canvassing-slider');
+    }
+
+
+    function exclude_private_events($repository_args, $context, $view) {
+        if (dclmn_auth('exec')) {
+            return $repository_args;
+        }
+
+        // Allow the private category archive to work normally.
+        if ($context->is('tribe_events_cat')) {
+            return $repository_args;
+        }
+
+        $repository_args['category_not_in'] = [
+            'private',
+        ];
+
+        return $repository_args;
+    }
+
+    function create_tec_event($entry_id, $form_id) {
+        $form = FrmForm::getOne($form_id);
+
+        if ('request-room' != $form->form_key) {
+            return;
+        }
+
+        //$values = frm_item_meta_to_assoc($entry_id['form_id'], $entry_id['item_meta']);
+        $values = frm_get_entry_values_by_key($entry_id);
+
+        $email = $values['request_room_email'];
+        $first_name = $values['request_room_name']['first'];
+        $last_name = $values['request_room_name']['last'];
+        $dclmn_title = $values['request_room_dclmn_title'];
+        $reason = $values['request_room_reason'];
+        $number_of_people = $values['request_room_number_of_people'];
+        $tables_and_chairs = $values['request_room_tables_and_chairs'];
+        $hybrid = $values['request_room_hybrid'];
+        $hybrid_plan = $values['request_room_hybrid_plan'];
+        $duration = $values['request_room_duration'];
+
+        $date = $values['request_room_date'];
+        $time = $values['request_room_time'];
+        $alternate_time = $values['request_room_alternate_time'];
+        $alternate_date = $values['request_room_alternate_date'];
+        $alternate_date_time = $values['request_room_alternate_date_time'];
+
+        $start = DateTime::createFromFormat('Y-m-d H:i', $date . ' ' . $time);
+        $end = clone $start;
+        $end->modify('+1 hour');
+
+        $event_start = $start->format('Y-m-d H:i:s');
+        $event_start_title = $start->format('l, F j, Y @ g:i A');
+        $event_end   = $end->format('Y-m-d H:i:s');
+
+        $title = "{$first_name} {$last_name} - {$event_start_title}";
+        $desc = "
+<strong>Email:</strong>
+{$email}
+
+<strong>Name:</strong>
+{$first_name} {$last_name}
+
+<strong>DCLMN Title:</strong> {$dclmn_title}
+
+<strong>Requested Date and Time:</strong>
+{$event_start_title}
+
+<strong>Duration:</strong>
+{$duration}
+
+<strong>Reason:</strong>
+{$reason}
+
+<strong>Tables and Chairs:</strong> {$tables_and_chairs}
+<strong>Hybrid:</strong> {$hybrid}
+<strong>Hybrid Plane:</strong> {$hybrid_plan}
+
+<strong>Date:</strong> {$date}
+<strong>Time:</strong> {$time}
+<strong>Alternate Time:</strong> {$alternate_time}
+
+<strong>Alternate Date:</strong> {$alternate_date}
+<strong>Alternate Date Time:</strong> {$alternate_date_time}
+";
+
+        $event_id = wp_insert_post([
+            'post_type'   => 'tribe_events',
+            'post_title'  => $title,
+            'post_content' => $desc,
+            'post_status' => 'draft',
+        ]);
+
+        if (!is_wp_error($event_id)) {
+
+            update_post_meta($event_id, '_EventStartDate', $event_start);
+            update_post_meta($event_id, '_EventEndDate', $event_end);
+            update_post_meta($event_id, '_EventStartDateUTC', get_gmt_from_date($event_start));
+            update_post_meta($event_id, '_EventEndDateUTC', get_gmt_from_date($event_end));
+
+            // Optional
+            update_post_meta($event_id, '_EventTimezone', wp_timezone_string());
+            update_post_meta($event_id, '_EventAllDay', 'no');
+
+            wp_set_object_terms(
+                $event_id,
+                'room-reservations',
+                'tribe_events_cat'
+            );
+        }
     }
 }
