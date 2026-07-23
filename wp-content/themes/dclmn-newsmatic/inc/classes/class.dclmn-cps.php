@@ -322,7 +322,7 @@ class DCLMN_Users {
    */
   function set_cookie($user_id, $email_hashed) {
     $cookie_value = $this->encodeData(['user_id' => $user_id, 'email_hashed' => $email_hashed]);
-    $cookie_expiry = time() + (60 * 60 * 10);
+    $cookie_expiry = time() + (60 * 60 * 24 * 30);
     $cookie_domain = $_SERVER['HTTP_HOST'];
 
     //Set the cookie on .napco.com;
