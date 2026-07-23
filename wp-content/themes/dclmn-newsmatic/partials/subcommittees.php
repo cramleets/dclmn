@@ -19,13 +19,16 @@ foreach ($subcommittees as $subcommittee) {
 
   foreach ($types as $type) {
     for ($i = 1; $i <= 5; $i++) {
-      $person = dclmn_get_post(get_field("{$type}_{$i}", $subcommittee->ID)[0]->ID);
+      $field = get_field("{$type}_{$i}", $subcommittee->ID);
+      if (empty($field)) continue;
+      $person = dclmn_get_post($field[0]->ID);
 
       if (!empty($person)) {
         $out .= '<div>';
         $out .= '<strong>' . $person->first_name . ' ' . $person->last_name . '</strong>';
-        if ($person->email) $out .= ', <a href="mailto:' . $person->email . '" target="_blank">' . $person->email . '</a>';
-        if ($person->phone) $out .= ', ' . $dclmn->get_phone_link($person->phone);
+        if ($person->mailbox) $out .= ' | <a href="mailto:' . $person->mailbox . '@dclmn.us" target="_blank">' . $person->mailbox . '@dclmn.us</a>';
+        if ($person->email) $out .= ' | <a href="mailto:' . $person->email . '" target="_blank">' . $person->email . '</a>';
+        if ($person->phone) $out .= ' | ' . $dclmn->get_phone_link($person->phone);
         $out .= '</div>';
       }
     }
