@@ -273,6 +273,7 @@ class DCLMN_Users {
         //set a welcome message to appear on the schedule
         $_SESSION['dclmn_user_message'] = 'Welcome ' . $dclmn_user->first_name . '.';
         $this->set_cookie($dclmn_user->ID, $email_hashed);
+        $this->wp_login($email);
         $this->log('login', $email_hashed, $dclmn_user->ID);
 
         $headers = []; //array('Content-Type: text/html; charset=UTF-8');
@@ -337,6 +338,22 @@ class DCLMN_Users {
 
     //set for immediate use.
     $_COOKIE[$this->cookie_name] = $cookie_value;
+  }
+
+  function wp_login($email) {
+    $email = trim($email);
+
+    if (is_email($email)) {
+      $user = get_user_by('email', $email);
+
+      if ($user) {
+        // Log the user in.
+        wp_clear_auth_cookie();
+        wp_set_current_user($user->ID);
+        wp_set_auth_cookie($user->ID, true);
+        do_action('wp_login', $user->user_login, $user);
+      }
+    }
   }
 
   /**
