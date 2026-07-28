@@ -169,7 +169,11 @@ function dclmn_homepage_events($args = []) {
             } else {
                 // The date returned back contains HTML and is already escaped.
                 $event_time = $event->short_schedule_details->value();
-                $event_time_short = $event->dates->start->format_i18n('ga');;
+                $display_time_format = $event->dates->start->format('i') === '00'
+                    ? 'g a'
+                    : 'g:i a';
+
+                $event_time_short = $event->dates->start->format_i18n($display_time_format);
             }
             $out .= '<p class="dclmn-event">';
             $out .= '<a
