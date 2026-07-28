@@ -25,7 +25,7 @@ foreach ($meetings as $meeting) {
   $event_time_short       = $dt->format('g:i a');;
 
 
-  $out .= '<div class="dclmn-event">';
+  $out .= '<p class="dclmn-event">';
   $out .= '<span class="dclmn-event-flex">';
   $out .= '<span>'; // date box flex item
   $out .= '<span class="date-box">';
@@ -46,7 +46,7 @@ foreach ($meetings as $meeting) {
   $out .= '<br><a href="' .  $meeting['join_url'] . '" target="_blank"><strong>Click Here to Join</strong></a>';
   $out .= '</span>';
   $out .= '</span>'; // /date links flex item
-  $out .= '</div>';
+  $out .= '</p>';
 }
 $out .= '</div>';
 

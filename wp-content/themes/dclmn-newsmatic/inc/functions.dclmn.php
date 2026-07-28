@@ -168,7 +168,11 @@ function dclmn_homepage_events($args = []) {
                 $event_time_short = 'All Day';
             } else {
                 // The date returned back contains HTML and is already escaped.
-                $event_time = $event->short_schedule_details->value();
+                //$event_time = $event->short_schedule_details->value();
+                $event_time = tribe_format_date( $event->start_date, false, 'g:i A' );
+                $event_time .= ' – ';
+                $event_time .= tribe_format_date( $event->end_date, false, 'g:i A' );
+
                 $display_time_format = $event->dates->start->format('i') === '00'
                     ? 'g a'
                     : 'g:i a';
@@ -176,22 +180,20 @@ function dclmn_homepage_events($args = []) {
                 $event_time_short = $event->dates->start->format_i18n($display_time_format);
             }
             $out .= '<p class="dclmn-event">';
-            $out .= '<a
-		href="' . esc_url($event->permalink) . '"
-		title="' . esc_attr($event->title) . '"
-		rel="bookmark"
-		class="tribe-events-widget-events-list__event-title-link tribe-common-anchor-thin">';
             $out .= '<span class="dclmn-event-flex">';
 
             $out .= '<span>'; // date box flex item
+            $out .= '<a href="' . esc_url($event->permalink) . '" title="' . esc_attr($event->title) . '" rel="bookmark" class="tribe-events-widget-events-list__event-title-link tribe-common-anchor-thin">';
             $out .= '<span class="date-box">';
             $out .= '<span class="date-box-dow">' . $event_month_short . '</span>';
             $out .= '<span class="date-box-date">' . $event_day_num . '</span>';
             if (!empty($event_time_short)) $out .= '<span class="date-box-time">' . $event_time_short . '</span>';
             $out .= '</span>'; // /date box
+            $out .= '</a>';
             $out .= '</span>'; // /date box flex item
 
             $out .= '<span>'; // date links flex item
+            $out .= '<a href="' . esc_url($event->permalink) . '" title="' . esc_attr($event->title) . '" rel="bookmark" class="tribe-events-widget-events-list__event-title-link tribe-common-anchor-thin">';
 
             //$out .= tribe_event_featured_image($event->ID, 'full', false);
             if ($args['show_title']) {
@@ -202,14 +204,14 @@ function dclmn_homepage_events($args = []) {
                 $out .= '<br>';
                 $out .= '<span class="event-week-day">' . $event_week_day . ', </span> ';
                 $out .= '<span class="event-month">' . $event_month . '</span> ';
-                $out .= '<span class="event-date">' . $event_day_num . '</span> ';
+                $out .= '<span class="event-date">' . $event_day_num . ',</span> ';
                 $out .= '  ';
                 $out .= '<span class="event-time">' . $event_time . '</span>';
             }
             $out .= '</a>';
 
             if (!empty($event->zoom)) {
-                $out .= '<a href="' . $event->zoom['join_url'] . '" class="event-zoom-link" target="_blank">Join on Zoom</a>';
+                $out .= '<br><a href="' . $event->zoom['join_url'] . '" class="event-zoom-link" target="_blank">Join on Zoom</a>';
             }
             $out .= '</span>';
             $out .= '</span>'; // /date links flex item

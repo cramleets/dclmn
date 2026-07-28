@@ -107,7 +107,7 @@ class DCLMN_Zoom_API {
       if (isset($result['meetings'])) $return = $result['meetings'];
 
       $return = base64_encode(serialize($return));
-      set_transient($transient_name, $return, 60 * 60 * 24);
+      set_transient($transient_name, $return, 60 * 60);
     }
 
     $return = unserialize(base64_decode($return));

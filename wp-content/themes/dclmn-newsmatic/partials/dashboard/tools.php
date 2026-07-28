@@ -61,12 +61,18 @@
           </ul>
         </li>
       </ul>
+      <h3>Exec Board Links</h3>
+      <?php if ($dclmn_user->is_exec()): ?>
+        <ul>
+          <li><a href="<?php echo home_url('cp/room-request/') ?>">Event/Meeting Room Request</a></li>
+        </ul>
+      <?php endif; ?>
       <h3>Miscellaneous</h3>
       <ul>
         <li><a href="<?php echo home_url('lower-merion-street-name-generator/') ?>" target="_blank">Lower Merion Street Name Generator</a></li>
       </ul>
-    </div>
-    <div>
+    </div><!-- end left column -->
+    <div><!-- begin right column -->
       <h3>Meetings</h3>
       <?php
       $meeting_events_args = [
@@ -90,7 +96,4 @@
       <?php get_template_part('partials/zoom-meetings') ?>
     </div>
   </div>
-  <?php if ($dclmn_user->is_exec()): ?>
-    <p><a href="<?php echo home_url('cp/room-request/') ?>" class="button">Event/Meeting Room Request</a></p>
-  <?php endif; ?>
 </div>
