@@ -169,9 +169,9 @@ function dclmn_homepage_events($args = []) {
             } else {
                 // The date returned back contains HTML and is already escaped.
                 //$event_time = $event->short_schedule_details->value();
-                $event_time = tribe_format_date( $event->start_date, false, 'g:i A' );
+                $event_time = tribe_format_date($event->start_date, false, 'g:i A');
                 $event_time .= ' – ';
-                $event_time .= tribe_format_date( $event->end_date, false, 'g:i A' );
+                $event_time .= tribe_format_date($event->end_date, false, 'g:i A');
 
                 $display_time_format = $event->dates->start->format('i') === '00'
                     ? 'g a'
@@ -781,4 +781,188 @@ function frm_item_meta_to_assoc($form_id, array $item_meta) {
     }
 
     return $assoc;
+}
+
+function format_event_schedule($event) {
+    $start = new DateTime($event->start_date);
+    $end   = new DateTime($event->end_date);
+
+    if ($event->all_day) {
+        return sprintf(
+            '%s %s',
+            strtoupper($start->format('l')),
+            $start->format('n/j')
+        );
+    }
+
+    $weekday = strtoupper($start->format('l'));
+    $date    = $start->format('n/j');
+
+    $start_time = $start->format($start->format('i') === '00' ? 'g' : 'g:i');
+    $end_time   = $end->format($end->format('i') === '00' ? 'g' : 'g:i');
+
+    $start_ampm = strtolower($start->format('a'));
+    $end_ampm   = strtolower($end->format('a'));
+
+
+
+    // Same-day event.
+    if ($start->format('Ymd') === $end->format('Ymd')) {
+
+        // Same AM/PM.
+        if ($start_ampm === $end_ampm) {
+            return sprintf(
+                '%s %s, %s-%s%s',
+                $weekday,
+                $date,
+                $start_time,
+                $end_time,
+                $end_ampm
+            );
+        }
+
+        // Crosses noon.
+        return sprintf(
+            '%s %s, %s%s-%s%s',
+            $weekday,
+            $date,
+            $start_time,
+            $start_ampm,
+            $end_time,
+            $end_ampm
+        );
+    }
+
+    // Multi-day event.
+    return sprintf(
+        '%s %s, %s%s - %s %s, %s%s',
+        $weekday,
+        $date,
+        $start_time,
+        $start_ampm,
+        strtoupper($end->format('l')),
+        $end->format('n/j'),
+        $end_time,
+        $end_ampm
+    );
+}
+
+function newsletter_events($args=[]) {
+    $defaults = [
+        'show_date_box' => true,
+        'show_title' => true,
+        'show_date' => true,
+        'show_more' => true,
+        'posts_per_page' => 200,
+    ];
+
+    $args = wp_parse_args($args, $defaults);
+
+
+    $events = dclmn_get_events($args);
+
+    $out = '';
+    $i = 0;
+    foreach ($events as $event) {
+        $i++;
+
+        $display_date = $event->dates->start_display;
+
+
+        $event_week_day  = $display_date->format_i18n('l');
+        $event_week_day_short  = $display_date->format_i18n('D');
+        $event_week_day_shorter = substr($event_week_day_short, 0, 2);
+
+        $event_day_num   = $display_date->format_i18n('j');
+        $event_month   = $display_date->format_i18n('F');
+        $event_month_short   = $display_date->format_i18n('n');
+
+        $event_time = tribe_format_date($event->start_date, false, 'g:i A');
+        $event_time .= ' – ';
+        $event_time .= tribe_format_date($event->end_date, false, 'g:i A');
+        $display_time_format = $event->dates->start->format('i') === '00'
+            ? 'g a'
+            : 'g:i a';
+
+        $event_time_short = $event->dates->start->format_i18n($display_time_format);
+
+        $formatted_date = format_event_schedule($event);
+
+        $bgcolors = ['#E0F1F8', '#ffffff'];
+        $bgcolor = $bgcolors[$i % count($bgcolors)];
+
+        $fgcolors = ['#1930a6', '#1930a6'];
+        $fgcolor = $fgcolors[$i % count($fgcolors)];
+
+        $event_url = get_permalink($event);
+
+        $event_content = strip_tags($event->post_content, ['b', 'i', 'u', 'strong', 'em', 'span', 'a']);
+        $event_content = trim($event_content);
+
+        $html = <<<HTML
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:separate" role="presentation">
+  <tbody>
+    <tr>
+      <td style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;border:0;border-radius:0" valign="top">
+        <table width="100%" style="border:0;background-color:{$bgcolor};border-radius:0;border-collapse:separate">
+          <tbody>
+            <tr>
+              <td style="padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:12px">
+                <p style="text-align: left;">
+                  <strong>
+                    <span style="color:{$fgcolor};">
+                      <span style="font-family: 'DM Sans', sans-serif">
+                         <a href="{$event_url}" target="_blank"style="color:{$fgcolor}; text-decoration: none;">{$event->post_title}</a>
+                      </span>
+                    </span>
+                  </strong>
+                  <br>
+                  <span style="color:{$fgcolor};">
+                    <span style="font-size: 14px">
+                      <span style="font-family: 'DM Sans', sans-serif">{$formatted_date}</span>
+                    </span>
+                  </span>
+                </p>
+                <p style="text-align: left;">
+                  <span style="color:#000;">
+                    <span style="font-size: 15px">
+                      <span style="font-family: &quot;DM Sans&quot;, sans-serif">{$event_content}</span>
+                    </span>
+                  </span>
+                </p>
+                <p style="text-align: left;">
+                  <a href="{$event_url}" target="_blank"style="color:{$fgcolor}; text-decoration: underline;">
+                    <strong>
+                      <span style="font-size: 15px">
+                        <span style="font-family: 'DM Sans', sans-serif" style="color:{$fgcolor};">CLICK HERE</span>
+                      </span>
+                    </strong>
+                  </a>
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
+HTML;
+
+        if (0) {
+            $out .= '<div>';
+            $out .= '<strong>' . $event->post_title . '</strong>';
+            //$out .= ", {$event_week_day} {$event_month_short}/{$event_day_num} {$event_time_short}";
+            $out .= ', ' . $formatted_date;
+            $out .= '<div>' . $event->post_content . '</div>';
+            $out .= '</div>';
+            $out .= '<br>';
+        } else {
+            $out .= $html;
+        }
+    }
+
+    // $out = '<textarea>'. $out .'</textarea>';
+
+    return $out;
 }

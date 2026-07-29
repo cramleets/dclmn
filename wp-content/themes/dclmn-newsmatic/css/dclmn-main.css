@@ -347,6 +347,7 @@ body #mc_embed_signup .button,
     box-shadow: -1px 1px 2px 2px rgba(0, 0, 0, 0.3);
     line-height: 1em;
     transition: var(--transition);
+    cursor: pointer;
 }
 
 .entry-content .button:visited {
@@ -1503,7 +1504,7 @@ body.hidden-sidebar.right-sidebar #theme-content .row .primary-content {
 
 .dclmn-slick .dclmn-events .slick-track {
     /* width: 100% !important; */
-    margin: 0;
+    /* margin: 0; */
 }
 
 .canvassing-slider-intro {
