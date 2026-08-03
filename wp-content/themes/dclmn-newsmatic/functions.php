@@ -13,6 +13,7 @@ require_once dirname(__FILE__) . '/inc/classes/class.dclmn-cps.php';
 require_once dirname(__FILE__) . '/inc/classes/class.dclmn-populator.php';
 require_once dirname(__FILE__) . '/inc/classes/class.dclmn-user.php';
 require_once dirname(__FILE__) . '/inc/classes/class.dclmn-position-user.php';
+require_once dirname(__FILE__) . '/inc/classes/class.dclmn-private-events.php';
 require_once dirname(__FILE__) . '/inc/classes/class.widget-rotating-quotes.php';
 
 require_once dirname(__FILE__) . '/inc/classes/class.cpanel-api.php';
@@ -24,3 +25,4 @@ require_once dirname(__FILE__) . '/inc/activate.php';
 $dclmn = new DCLMN();
 $dclmn_acf = new DCLMN_ACF();
 $dclmn_users = new DCLMN_Users();
+$dclmn_private_events = new DCLMN_Private_Events();

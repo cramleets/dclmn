@@ -10,9 +10,15 @@ class DCLMN {
     var $elected_officials = [];
     var $builds = [];
     var $drop_boxes = [];
+    var $room_reservations_calendar_url = 'https://calendar.google.com/calendar/ical/d0036e27da63247fb0eac2203212464cb8ccc2b60a29c9f123733156dec5e4f4%40group.calendar.google.com/private-6605a9d15f5f9a4e9a50bb9709ee7f79/basic.ics';
 
     function __construct() {
         DCLMN_Populator::theme_init();
+
+        add_filter('option_tribe_events_import_column_mapping_events', function ($val) {
+            $val[18] = 'featured_image';
+            return $val;
+        });
 
         add_filter('tribe_widget_events-list_args_to_context', [$this, 'widget_events_list_args_to_contex'], 10, 3);
         add_filter('embed_oembed_html', [$this, 'custom_embed_wrapper'], 10, 4);
@@ -97,6 +103,13 @@ class DCLMN {
         add_action('wp_ajax_nopriv_export_cps_full', [$this, 'wp_ajax_export_cps_full']);
         add_action('wp_ajax_hide_user_email_address', [$this, 'wp_hide_user_email_address']);
         add_action('wp_ajax_nopriv_hide_user_email_address', [$this, 'wp_hide_user_email_address']);
+
+        add_action('wp_ajax_update_event_status', [$this, 'ajax_update_event_status']);
+        add_action('wp_ajax_nopriv_update_event_status', [$this, 'ajax_update_event_status']);
+
+        add_action('wp_ajax_get_room_reservations_ics', [$this, 'ajax_get_room_reservations_ics']);
+        add_action('wp_ajax_nopriv_get_room_reservations_ics', [$this, 'ajax_get_room_reservations_ics']);
+
         add_action('newsmatic_main_banner_hook', [$this, 'newsmatic_main_banner_hook'], 1);
 
         add_filter('tec_events_views_v2_view_header_title', function ($title, $obj) {
@@ -108,7 +121,8 @@ class DCLMN {
         add_filter('newsmatic_query_args_filter', function ($args) {
         });
 
-        add_filter('tribe_events_views_v2_view_repository_args', [$this, 'exclude_private_events'], 10, 3);
+        // add_filter('tribe_events_views_v2_view_repository_args', [$this, 'exclude_private_events'], 10, 3);
+        // add_filter('tribe_get_events', [$this, 'tribe_get_events'], 10, 2);
 
         add_action('frm_after_create_entry', [$this, 'create_tec_event'], 20, 2);
         //add_action('frm_pre_create_entry', [$this, 'create_tec_event'], 20, 1);
@@ -1101,22 +1115,26 @@ class DCLMN {
     }
 
 
-    function exclude_private_events($repository_args, $context, $view) {
-        if (dclmn_auth('exec')) {
-            return $repository_args;
-        }
+    // function tribe_get_events($posts, $args) {
+    //     pobj($posts,1);
+    // }
 
-        // Allow the private category archive to work normally.
-        if ($context->is('tribe_events_cat')) {
-            return $repository_args;
-        }
+    // function exclude_private_events($repository_args, $context, $view) {
+    //     if (dclmn_auth('exec')) {
+    //         return $repository_args;
+    //     }
 
-        $repository_args['category_not_in'] = [
-            'private',
-        ];
+    //     // Allow the private category archive to work normally.
+    //     if ($context->is('tribe_events_cat')) {
+    //         return $repository_args;
+    //     }
 
-        return $repository_args;
-    }
+    //     $repository_args['category_not_in'] = [
+    //         'private',
+    //     ];
+
+    //     return $repository_args;
+    // }
 
     function create_tec_event($entry_id, $form_id) {
         $form = FrmForm::getOne($form_id);
@@ -1174,7 +1192,7 @@ class DCLMN {
 
 <strong>Tables and Chairs:</strong> {$tables_and_chairs}
 <strong>Hybrid:</strong> {$hybrid}
-<strong>Hybrid Plane:</strong> {$hybrid_plan}
+<strong>Hybrid Plan:</strong> {$hybrid_plan}
 
 <strong>Date:</strong> {$date}
 <strong>Time:</strong> {$time}
@@ -1202,11 +1220,37 @@ class DCLMN {
             update_post_meta($event_id, '_EventTimezone', wp_timezone_string());
             update_post_meta($event_id, '_EventAllDay', 'no');
 
-            wp_set_object_terms(
-                $event_id,
-                'room-reservations',
-                'tribe_events_cat'
-            );
+            update_post_meta($event_id, 'form_entry_id', $entry_id);
+            update_post_meta($event_id, 'form_entry_values', json_encode($values));
+
+            wp_set_object_terms($event_id, 'room-reservations', 'tribe_events_cat');
+            wp_set_object_terms($event_id, 'in-office', 'tribe_events_cat');
         }
+    }
+
+    function ajax_update_event_status() {
+        $checked = filter_var($_REQUEST['checked'], FILTER_VALIDATE_BOOLEAN);
+        $status = ($checked) ? 'publish' : 'draft';
+        $updated_post = [
+            'ID' => $_REQUEST['post_id'],
+            'post_status' => $status
+        ];
+
+        $result = wp_update_post($updated_post);
+        if (!$result) {
+            $out = 'FAILED.';
+        } else {
+            $out = ($checked) ? 'Approved' : 'Not Approved';
+        }
+
+        die($out);
+    }
+
+    function ajax_get_room_reservations_ics() {
+        $out = '';
+        if (dclmn_auth('exec')) {
+            $out .= file_get_contents($this->room_reservations_calendar_url);
+        }
+        die($out);
     }
 }

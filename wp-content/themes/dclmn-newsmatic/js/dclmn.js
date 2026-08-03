@@ -217,7 +217,7 @@ jQuery(document).ready(function ($) {
   });
 
   $('.canvassing-slider .dclmn-events .dclmn-events-loop').slick({
-    slidesToShow: 12,
+    slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
     dots: false,
@@ -236,5 +236,19 @@ jQuery(document).ready(function ($) {
         }
       }
     ]
+  });
+
+  $('.event-status input').on('click', function() {
+    data = {
+      action: 'update_event_status',
+      checked: $(this).is(':checked'),
+      post_id: $(this).data('post_id'),
+    };
+
+    $result_el = $('#event-result' + '-' + $(this).data('post_id'));
+    $result_el.html('<img src="/wp-includes/images/spinner.gif">');
+    $.post(ajaxurl, data, function (data) {
+      $result_el.html(data);
+    });
   });
 })

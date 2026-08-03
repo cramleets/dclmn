@@ -41,9 +41,9 @@
         gap: 0;
     }
 
-	.homepage-events > div {
-		width: 100%;
-	}
+    .homepage-events>div {
+        width: 100%;
+    }
 }
 
 
@@ -320,9 +320,13 @@
         display: flex;
     }
 
-.homepage-events > div {
-	width: 49%;
-}
+    .homepage-events>div {
+        width: 49%;
+    }
+
+    .room-request-flex > div {
+        width: 100%;
+    }
 
     /* #header-menu {
         position: fixed;
@@ -339,7 +343,7 @@
         display: none;
     } */
 
-}
+} /* 769px */
 
 @media (max-width: 680px) {
     #masthead img {

@@ -783,11 +783,11 @@ function frm_item_meta_to_assoc($form_id, array $item_meta) {
     return $assoc;
 }
 
-function format_event_schedule($event) {
-    $start = new DateTime($event->start_date);
-    $end   = new DateTime($event->end_date);
+function format_event_schedule($start_date, $end_date, $all_day = false) {
+    $start = new DateTime($start_date);
+    $end   = new DateTime($end_date);
 
-    if ($event->all_day) {
+    if ($all_day) {
         return sprintf(
             '%s %s',
             strtoupper($start->format('l')),
@@ -847,7 +847,7 @@ function format_event_schedule($event) {
     );
 }
 
-function newsletter_events($args=[]) {
+function newsletter_events($args = []) {
     $defaults = [
         'show_date_box' => true,
         'show_title' => true,
@@ -886,7 +886,7 @@ function newsletter_events($args=[]) {
 
         $event_time_short = $event->dates->start->format_i18n($display_time_format);
 
-        $formatted_date = format_event_schedule($event);
+        $formatted_date = format_event_schedule($event->start_date, $event->end_date, $event->all_day);
 
         $bgcolors = ['#E0F1F8', '#ffffff'];
         $bgcolor = $bgcolors[$i % count($bgcolors)];
@@ -965,4 +965,212 @@ HTML;
     // $out = '<textarea>'. $out .'</textarea>';
 
     return $out;
+}
+
+function get_room_reservation_events_tec() {
+    $args = [
+        'posts_per_page' => -1,
+        'header' => 'Meetings',
+        'category' => 'room-reservations',
+        'post_status' => ['publish', 'draft'],
+    ];
+
+    $events = dclmn_get_events($args);
+
+    $can_edit_events = current_user_can('edit_others_posts');
+
+    $out = '';
+    $out .= '<div class="room-request-events">';
+    foreach ($events as $event) {
+        $status_label = ('publish' == $event->post_status) ? 'Approved' : 'Not Approved';
+
+        $out .= '<div class="room-request-event ' . $event->post_status . '">';
+        $out .= '<div class="header">';
+        $out .= '<h3>' . $event->post_title . '</h3>';
+        $out .= '</div>';
+        $out .= '<div class="padding">';
+        $out .= '<div class="event-status">';
+        if ($can_edit_events) {
+            $out .= '<label>';
+            $out .= '<input type="checkbox" data-post_id="' . $event->ID . '"';
+            if ('publish' == $event->post_status) $out .= ' checked';
+            $out .= '> ';
+            $out .= '<span id="event-result-' . $event->ID . '">' . $status_label . '</span>';
+            if ($can_edit_events) $out .= '</label>';
+        } else {
+            $out .= '<span id="event-result-' . $event->ID . '">' . $status_label . '</span>';
+        }
+        $out .= '</div>';
+        $out .= '<div>' . preg_replace('#<br ?/?>#', ': ', wpautop($event->post_content)) . '</div>';
+        $out .= '</div>';
+        $out .= '</div>';
+    }
+    $out .= '</div>';
+    return $out;
+}
+
+function get_room_reservation_events_google($calendar_url) {
+    $calendar = file_get_contents($calendar_url);
+
+    $events = parse_ics($calendar);
+
+    $out = '';
+    $out .= '<div class="room-request-events">';
+    $out .= '<h2>Office Schedule Google Calendar</h2>';
+
+    foreach ($events as $event) {
+        $formatted_date = format_event_schedule($event['start_date'] . ' ' . $event['start_time'], $event['end_date'] . ' ' . $event['end_time']);
+        $description = (empty($event['DESCRIPTION']) ? '' : $event['DESCRIPTION']);
+        $out .= '<div class="room-request-event">';
+        $out .= '<div class="header">';
+        $out .= '<h3>' . $formatted_date . '</h3>';
+        $out .= '</div>';
+        $out .= '<div class="padding">';
+        $out .= '<h3>' . $event['SUMMARY'] . '</h3>';
+        $out .= '<div class="event-status">';
+        $out .= '</div>';
+        $out .= '<div>' . preg_replace('#<br ?/?>#', ': ', wpautop($description)) . '</div>';
+        $out .= '</div>';
+        $out .= '</div>';
+    }
+    $out .= '</div>';
+    return $out;
+}
+
+function parse_ics($ics) {
+    $events = [];
+
+    $now = new DateTime('now', new DateTimeZone('America/New_York'));
+
+    $lines = preg_split("/\r\n|\n|\r/", $ics);
+
+    $unfolded = [];
+
+    foreach ($lines as $line) {
+        if (isset($line[0]) && $line[0] === ' ') {
+            $unfolded[count($unfolded) - 1] .= substr($line, 1);
+        } else {
+            $unfolded[] = $line;
+        }
+    }
+
+    $current = null;
+
+    foreach ($unfolded as $line) {
+        $line = trim($line);
+
+        if ($line === 'BEGIN:VEVENT') {
+            $current = [];
+            continue;
+        }
+
+        if ($line === 'END:VEVENT') {
+
+            if ($current && !empty($current['DTSTART'])) {
+
+                $start = parse_ics_datetime($current['DTSTART']);
+
+                $start_datetime = new DateTime(
+                    $start['date'] . ' ' . ($start['time'] ?: '00:00:00'),
+                    new DateTimeZone('America/New_York')
+                );
+
+                if (!empty($current['DTEND'])) {
+                    $end = parse_ics_datetime($current['DTEND']);
+
+                    $end_datetime = new DateTime(
+                        $end['date'] . ' ' . ($end['time'] ?: '23:59:59'),
+                        new DateTimeZone('America/New_York')
+                    );
+                } else {
+                    $end_datetime = $start_datetime;
+                }
+
+                // Keep events that have not ended yet
+                if ($end_datetime >= $now) {
+
+                    $current['start_date'] = $start['date'];
+                    $current['start_time'] = $start['time'];
+
+                    if (!empty($current['DTEND'])) {
+                        $current['end_date'] = $end['date'];
+                        $current['end_time'] = $end['time'];
+                    }
+
+                    $events[] = $current;
+                }
+            }
+
+            $current = null;
+            continue;
+        }
+
+        if ($current !== null && strpos($line, ':') !== false) {
+            list($key, $value) = explode(':', $line, 2);
+
+            $key = explode(';', $key)[0];
+
+            $current[$key] = $value;
+        }
+    }
+
+    usort($events, function ($a, $b) {
+        $a_date = parse_ics_datetime($a['DTSTART']);
+        $b_date = parse_ics_datetime($b['DTSTART']);
+
+        return strtotime($a_date['date'] . ' ' . $a_date['time'])
+            <=> strtotime($b_date['date'] . ' ' . $b_date['time']);
+    });
+
+    return $events;
+}
+
+function parse_ics_datetime($value) {
+
+    $timezone = new DateTimeZone('America/New_York');
+
+    // All-day event: 20261006
+    if (preg_match('/^\d{8}$/', $value)) {
+        $date = DateTime::createFromFormat('Ymd', $value, $timezone);
+
+        return [
+            'date' => $date->format('Y-m-d'),
+            'time' => '',
+        ];
+    }
+
+    // UTC date/time: 20261006T210000Z
+    if (preg_match('/^\d{8}T\d{6}Z$/', $value)) {
+        $date = DateTime::createFromFormat(
+            'Ymd\THis\Z',
+            $value,
+            new DateTimeZone('UTC')
+        );
+
+        $date->setTimezone($timezone);
+
+        return [
+            'date' => $date->format('Y-m-d'),
+            'time' => $date->format('g:i A'),
+        ];
+    }
+
+    // Local date/time: 20261006T210000
+    if (preg_match('/^\d{8}T\d{6}$/', $value)) {
+        $date = DateTime::createFromFormat(
+            'Ymd\THis',
+            $value,
+            $timezone
+        );
+
+        return [
+            'date' => $date->format('Y-m-d'),
+            'time' => $date->format('g:i A'),
+        ];
+    }
+
+    return [
+        'date' => '',
+        'time' => '',
+    ];
 }
