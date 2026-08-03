@@ -217,7 +217,7 @@ jQuery(document).ready(function ($) {
   });
 
   $('.canvassing-slider .dclmn-events .dclmn-events-loop').slick({
-    slidesToShow: 1,
+    slidesToShow: 12,
     slidesToScroll: 1,
     arrows: true,
     dots: false,
