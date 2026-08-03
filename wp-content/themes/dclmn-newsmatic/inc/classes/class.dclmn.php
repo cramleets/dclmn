@@ -124,7 +124,7 @@ class DCLMN {
         // add_filter('tribe_events_views_v2_view_repository_args', [$this, 'exclude_private_events'], 10, 3);
         // add_filter('tribe_get_events', [$this, 'tribe_get_events'], 10, 2);
 
-        add_action('frm_after_create_entry', [$this, 'create_tec_event'], 20, 2);
+        //add_action('frm_after_create_entry', [$this, 'create_tec_event'], 20, 2);
         //add_action('frm_pre_create_entry', [$this, 'create_tec_event'], 20, 1);
 
         add_filter('tribe_widget_events-list_args_to_context', function ($args) {
