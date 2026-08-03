@@ -577,9 +577,9 @@ class FrmProLookupFieldsController {
 	 *
 	 * @since 2.04
 	 *
-	 * @param mixed $value
+	 * @param array|string|null $value
 	 *
-	 * @return array|string
+	 * @return array|string|null
 	 */
 	private static function decode_html_entities( $value ) {
 		// TODO: add single, centralized function to decode entities
@@ -588,7 +588,7 @@ class FrmProLookupFieldsController {
 			foreach ( $value as $key => $single_value ) {
 				$value[ $key ] = self::decode_html_entities( $single_value );
 			}
-		} else {
+		} elseif ( is_string( $value ) ) {
 			$value = html_entity_decode( $value );
 		}
 
@@ -761,7 +761,12 @@ class FrmProLookupFieldsController {
 
 			FrmAppHelper::sanitize_value( 'wp_specialchars_decode', $parent_args['parent_vals'] );
 
-			$child_field             = FrmField::getOne( $field_id );
+			$child_field = FrmField::getOne( $field_id );
+
+			if ( ! self::validate_lookup_field( $child_field ) ) {
+				continue;
+			}
+
 			$response[ $unique_key ] = self::get_filtered_values_for_dependent_lookup_field( $parent_args, $child_field );
 			$lookup_saved_value      = FrmField::get_option( $child_field, 'lookup_saved_value' );
 			$lookup_displayed_value  = FrmField::get_option( $child_field, 'lookup_displayed_value' );
@@ -788,6 +793,49 @@ class FrmProLookupFieldsController {
 	}
 
 	/**
+	 * Validate if a lookup field is accessible to the current user.
+	 *
+	 * @since 6.33.x
+	 *
+	 * @param stdClass $field The field object.
+	 *
+	 * @return bool True if the field is accessible, false otherwise.
+	 */
+	private static function validate_lookup_field( $field ) {
+		if ( ! $field ) {
+			return false;
+		}
+
+		$is_a_lookup = 'lookup' === $field->type || ! empty( $field->field_options['get_values_field'] ) || ! empty( $field->field_options['watch_lookup'] );
+
+		if ( ! $is_a_lookup ) {
+			return false;
+		}
+
+		$form = FrmForm::getOne( $field->form_id );
+
+		if ( ! $form ) {
+			return false;
+		}
+
+		if ( $form->parent_form_id ) {
+			$form = FrmForm::getOne( $form->parent_form_id );
+		}
+
+		if ( $form->logged_in ) {
+			if ( ! is_user_logged_in() ) {
+				return false;
+			}
+
+			if ( ! empty( $form->options['logged_in_role'] ) && ! FrmAppHelper::user_has_permission( $form->options['logged_in_role'] ) ) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * Echo the HTML to replace a dependent Radio Lookup field's options
 	 *
 	 * @since 2.01.0
@@ -802,14 +850,18 @@ class FrmProLookupFieldsController {
 		);
 		FrmAppHelper::sanitize_value( 'wp_specialchars_decode', $parent_args['parent_vals'] );
 
-		$args = array(
+		$args        = array(
 			'row_index'          => FrmAppHelper::get_param( 'row_index', '', 'post', 'sanitize_text_field' ),
 			'container_field_id' => FrmAppHelper::get_param( 'container_field_id', '', 'post', 'sanitize_text_field' ),
 			'current_value'      => FrmAppHelper::get_param( 'current_value', '', 'post', 'sanitize_text_field' ),
 			'default_value'      => FrmAppHelper::get_param( 'default_value', '', 'post', 'sanitize_text_field' ),
 		);
+		$child_field = FrmField::getOne( $field_id );
 
-		$child_field  = FrmField::getOne( $field_id );
+		if ( ! self::validate_lookup_field( $child_field ) ) {
+			wp_die();
+		}
+
 		$final_values = self::get_filtered_values_for_dependent_lookup_field( $parent_args, $child_field );
 
 		self::show_dependent_cb_radio_lookup_options( $child_field, $args, $final_values );
@@ -924,6 +976,11 @@ class FrmProLookupFieldsController {
 
 		$field_id    = FrmAppHelper::get_param( 'field_id', '', 'post', 'absint' );
 		$child_field = FrmField::getOne( $field_id );
+
+		if ( ! self::validate_lookup_field( $child_field ) ) {
+			wp_die();
+		}
+
 		$entry_ids   = self::get_entry_ids_from_parent_vals( $parent_field_ids, $parent_vals, $child_field );
 		$meta_values = self::get_meta_values_filtered_by_entry_ids( $entry_ids, $child_field );
 		$meta_value  = implode( ', ', $meta_values );
@@ -1342,28 +1399,5 @@ class FrmProLookupFieldsController {
 			// If autocomplete is selected, add a blank data-placeholder so chosen's default isn't used
 			$add_html .= ' data-placeholder=" "';
 		}
-	}
-
-	/**
-	 * Get the options for a dependent Lookup Field based on the parent Lookup field values
-	 *
-	 * @since 2.01.0
-	 * @deprecated 6.15 This has been replaced with ajax_get_dependent_lookup_field_options_arr. As of v6.15 lookup requests are batched.
-	 */
-	public static function ajax_get_dependent_lookup_field_options() {
-		_deprecated_function( __METHOD__, '6.15', 'FrmProLookupFieldsController::ajax_get_dependent_lookup_field_options_arr' );
-
-		$field_id    = FrmAppHelper::get_param( 'field_id', '', 'post', 'absint' );
-		$parent_args = array(
-			'parent_field_ids' => FrmAppHelper::get_param( 'parent_fields', '', 'post', 'absint' ),
-			'parent_vals'      => FrmAppHelper::get_param( 'parent_vals', '', 'post', 'wp_kses_post' ),
-		);
-		FrmAppHelper::sanitize_value( 'wp_specialchars_decode', $parent_args['parent_vals'] );
-
-		$child_field  = FrmField::getOne( $field_id );
-		$final_values = self::get_filtered_values_for_dependent_lookup_field( $parent_args, $child_field );
-
-		echo json_encode( $final_values );
-		wp_die();
 	}
 }

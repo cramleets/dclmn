@@ -183,6 +183,8 @@ class FrmProHooksController {
 		add_filter( 'frm_is_field_hidden', 'FrmProFieldsHelper::route_to_is_field_hidden', 10, 3 );
 		add_filter( 'frm_get_current_page', 'FrmProFieldsHelper::get_current_page', 10, 3 );
 
+		self::load_gated_content_hooks();
+
 		// Form Actions Controller
 		add_action( 'frm_registered_form_actions', 'FrmProFormActionsController::register_actions' );
 		add_filter( 'frm_email_control_settings', 'FrmProFormActionsController::email_action_control' );
@@ -308,6 +310,41 @@ class FrmProHooksController {
 		add_filter( 'frm_should_skip_rendering_choices_for_field', 'FrmProFieldsController::should_skip_rendering_choices_for_field', 10, 2 );
 
 		FrmProVirtualFieldController::load_hooks();
+	}
+
+	/**
+	 * Register hooks for the Pro Gated Content feature.
+	 *
+	 * Requires Formidable Lite to ship FrmGatedContentAction.
+	 *
+	 * @return void
+	 */
+	private static function load_gated_content_hooks() {
+		if ( ! class_exists( 'FrmGatedContentAction' ) ) {
+			return;
+		}
+
+		if ( is_admin() ) {
+			add_filter( 'frm_gated_content_sanitize_item', 'FrmProGatedContentAction::sanitize_item', 10, 2 );
+			add_action( 'frm_gated_content_item_type_settings', 'FrmProGatedContentAction::render_item_type_settings' );
+			add_filter( 'frm_gated_content_shortcodes', 'FrmProGatedContentShortcodeController::add_expiry_shortcode_rows', 10, 2 );
+		}
+
+		add_filter( 'frm_registered_form_actions', 'FrmProGatedContentAction::register_pro_action', 20 );
+		add_filter( 'frm_gated_content_control_settings', 'FrmProGatedContentAction::add_update_event' );
+
+		// Revoke old token on entry update (priority 5 = before Lite's token generation at 10).
+		add_action( 'frm_trigger_gated_content_action', 'FrmProGatedContentController::revoke_on_update', 5, 4 );
+		add_filter( 'frm_gated_content_shortcode_custom_output', 'FrmProGatedContentShortcodeController::shortcode_show_expiry', 10, 2 );
+
+		// File download protection.
+		add_filter( 'frm_gated_content_item_types', 'FrmProGatedContentController::enable_file_item_type' );
+		add_filter( 'frm_gated_item_make', 'FrmProGatedContentController::make_gated_item', 10, 2 );
+		add_filter( 'frm_check_file_referer', 'FrmProGatedContentController::maybe_skip_file_referer_check' );
+		add_filter( 'frm_can_access_protected_file', 'FrmProGatedContentController::can_access_protected_file', 10, 2 );
+
+		// Access page redirects.
+		add_filter( 'frm_obtain_gated_token', 'FrmProGatedContentController::maybe_redirect_to_access_page', 10, 2 );
 	}
 
 	public static function load_admin_hooks() {

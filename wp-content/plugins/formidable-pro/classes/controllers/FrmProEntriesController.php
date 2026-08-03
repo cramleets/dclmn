@@ -1606,6 +1606,7 @@ class FrmProEntriesController {
 	 */
 	public static function create_post_entry( $id = false, $post_id = false ) {
 		if ( FrmAppHelper::doing_ajax() ) {
+			FrmAppHelper::permission_check( 'frm_create_entries' );
 			check_ajax_referer( 'frm_ajax', 'nonce' );
 		}
 

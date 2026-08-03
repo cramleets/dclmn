@@ -207,13 +207,15 @@ function tec_events_get_today_button_label( $view = null ) {
  *
  * @uses Tribe__Templates::getTemplateHierarchy
  *
- * @param null|string $name
+ * @since 6.17.0 Made $data explicitly nullable.
  *
- * @param array       $data optional array of vars to inject into the template part
+ * @param string      $slug The base slug of the template part to include.
  *
- * @param string      $slug
+ * @param null|string $name Optional name of the template part variant to include.
+ *
+ * @param array|null  $data Optional array of vars to inject into the template part.
  */
-function tribe_get_template_part( $slug, $name = null, array $data = null ) {
+function tribe_get_template_part( $slug, $name = null, ?array $data = null ) {
 
 	// Execute code for this part
 	do_action( 'tribe_pre_get_template_part_' . $slug, $slug, $name, $data );
@@ -628,6 +630,8 @@ function tribe_get_event_categories( $post_id = null, $args = [] ) {
  *
  * Display the event tags.
  *
+ * @since 6.15.11 Changed HTML output from definition list to list item structure for improved accessibility.
+ *
  * @param null|string $label     The label for the tags.
  * @param string      $separator The delimiter for the tags.
  * @param bool        $echo      Whether to echo the tags or return them.
@@ -643,7 +647,7 @@ function tribe_meta_event_tags( $label = null, $separator = ', ', $echo = true )
 	}
 
 	$tribe_ecp = Tribe__Events__Main::instance();
-	$list      = get_the_term_list( get_the_ID(), 'post_tag', '<dt class="tribe-event-tags-label">' . $label . '</dt><dd class="tribe-event-tags">', $separator, '</dd>' );
+	$list      = get_the_term_list( get_the_ID(), 'post_tag', '<li class="tribe-events-meta-item"><span class="tribe-event-tags-label tribe-events-meta-label">' . $label . '</span><span class="tribe-event-tags tribe-events-meta-value">', $separator, '</span></li>' );
 	/**
 	 * Filters the HTML output of the event tags.
 	 *
@@ -708,6 +712,7 @@ if ( ! function_exists( 'tribe_meta_event_archive_tags' ) ) {
 	 * Display the event tags in a list with links to the event tag archive.
 	 *
 	 * @since 5.16.0
+	 * @since 6.15.11 Changed HTML output from definition list to list item structure for improved accessibility.
 	 *
 	 * @param null|string $label     The label for the term list.
 	 * @param string      $separator The separator of each term.
@@ -755,8 +760,8 @@ if ( ! function_exists( 'tribe_meta_event_archive_tags' ) ) {
 			$term_links[] = '<a href="' . esc_url( $link ) . '" rel="tag">' . $term->name . '</a>';
 		}
 
-		$before = '<dt class="tribe-event-tags-label">' . $label . '</dt><dd class="tribe-event-tags">';
-		$after  = '</dd>';
+		$before = '<li class="tribe-events-meta-item"><span class="tribe-event-tags-label tribe-events-meta-label">' . $label . '</span><span class="tribe-event-tags tribe-events-meta-value">';
+		$after  = '</span></li>';
 		$list   = $before . implode( $separator, $term_links ) . $after;
 
 		if ( $echo ) {
@@ -1314,11 +1319,18 @@ function tribe_events_event_schedule_details( $event = null, $before = '', $afte
 				$inner .= ( $html ? '</span>' : '' ) . $time_range_separator;
 				$inner .= $html ? '<span class="tribe-event-date-end">' : '';
 
-				$end_date_full           = tribe_get_end_date( $event, true, Tribe__Date_Utils::DBDATETIMEFORMAT );
-				$end_date_full_timestamp = strtotime( $end_date_full );
+				$end_date_full = tribe_get_end_date( $event, true, Tribe__Date_Utils::DBDATETIMEFORMAT );
+
+				// Use UTC so the wall-clock timestamps remain independent of PHP's default timezone.
+				$end_date_obj            = Tribe__Date_Utils::build_date_object( $end_date_full, 'UTC', false );
+				$end_date_full_timestamp = false !== $end_date_obj ? $end_date_obj->getTimestamp() : strtotime( $end_date_full );
+
+				$beginning_of_day_str       = tribe_beginning_of_day( $end_date_full );
+				$beginning_of_day_obj       = Tribe__Date_Utils::build_date_object( $beginning_of_day_str, 'UTC', false );
+				$beginning_of_day_timestamp = false !== $beginning_of_day_obj ? $beginning_of_day_obj->getTimestamp() : strtotime( $beginning_of_day_str );
 
 				// if the end date is <= the beginning of the day, consider it the previous day
-				if ( $end_date_full_timestamp <= strtotime( tribe_beginning_of_day( $end_date_full ) ) ) {
+				if ( $end_date_full_timestamp <= $beginning_of_day_timestamp ) {
 					$end_date = tribe_format_date( $end_date_full_timestamp - DAY_IN_SECONDS, false, $format2ndday );
 				} else {
 					$end_date = tribe_get_end_date( $event, false, $format2ndday );

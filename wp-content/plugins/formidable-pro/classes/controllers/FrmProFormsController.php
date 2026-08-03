@@ -1577,16 +1577,16 @@ class FrmProFormsController {
 	 */
 	public static function add_pro_field_helpers( $entry_shortcodes, $settings_tab ) {
 		if ( $settings_tab ) {
-        	return $entry_shortcodes;
-        }
+			return $entry_shortcodes;
+		}
 
-        $entry_shortcodes['detaillink']                      = __( 'Detail Link', 'formidable-pro' );
-        $entry_shortcodes['editlink label="Edit" page_id=x'] = __( 'Edit Entry Link', 'formidable-pro' );
-        $entry_shortcodes['entry_count']                     = __( 'Entry Count', 'formidable-pro' );
-        $entry_shortcodes['entry_position']                  = __( 'Entry Position', 'formidable-pro' );
-        $entry_shortcodes['evenodd']                         = __( 'Even/Odd', 'formidable-pro' );
-        $entry_shortcodes['is_draft']                        = __( 'Draft status', 'formidable-pro' );
-        $entry_shortcodes['event_date format="Y-m-d"']       = __( 'Calendar Date', 'formidable-pro' );
+		$entry_shortcodes['detaillink']                      = __( 'Detail Link', 'formidable-pro' );
+		$entry_shortcodes['editlink label="Edit" page_id=x'] = __( 'Edit Entry Link', 'formidable-pro' );
+		$entry_shortcodes['entry_count']                     = __( 'Entry Count', 'formidable-pro' );
+		$entry_shortcodes['entry_position']                  = __( 'Entry Position', 'formidable-pro' );
+		$entry_shortcodes['evenodd']                         = __( 'Even/Odd', 'formidable-pro' );
+		$entry_shortcodes['is_draft']                        = __( 'Draft status', 'formidable-pro' );
+		$entry_shortcodes['event_date format="Y-m-d"']       = __( 'Calendar Date', 'formidable-pro' );
 
 		return $entry_shortcodes;
 	}
@@ -1824,12 +1824,12 @@ class FrmProFormsController {
 		$has_dropzone = strpos( $output, '__frmDropzone=' );
 
 		if ( ! $has_dropzone ) {
-        	return $output;
-        }
+			return $output;
+		}
 
-        $output  = str_replace( '__frmDropzone=', '__frmAjaxDropzone=', $output );
-        $js_file = '<script src="' . esc_url( FrmProAppHelper::plugin_url() ) . '/js/dropzone.min.js?ver=5.9.3" id="dropzone-js"></script>'; // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
-        $output  = $js_file . $output;
+		$output  = str_replace( '__frmDropzone=', '__frmAjaxDropzone=', $output );
+		$js_file = '<script src="' . esc_url( FrmProAppHelper::plugin_url() ) . '/js/dropzone.min.js?ver=5.9.3" id="dropzone-js"></script>'; // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
+		$output  = $js_file . $output;
 
 		return $output;
 	}
@@ -1916,10 +1916,10 @@ class FrmProFormsController {
 	 */
 	private static function get_email_id_from_options( $options ) {
 		if ( FrmProFormsHelper::check_single_entry_type( $options, 'email' ) && ! empty( $options['unique_email_id'] ) ) {
-            return $options['unique_email_id'];
+			return $options['unique_email_id'];
 		}
 
-        return '';
+		return '';
 	}
 
 	/**

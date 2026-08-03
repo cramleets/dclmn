@@ -1026,11 +1026,11 @@ class FrmProFieldsController {
 	 */
 	private static function get_align_setting_options() {
 		return array(
-			'block'         => __( 'One Column', 'formidable-pro' ),
+			'block'         => __( 'One Column', 'formidable' ),
 			'frm_two_col'   => __( 'Two Columns', 'formidable-pro' ),
 			'frm_three_col' => __( 'Three Columns', 'formidable-pro' ),
 			'frm_four_col'  => __( 'Four Columns', 'formidable-pro' ),
-			'inline'        => __( 'Inline Options', 'formidable-pro' ),
+			'inline'        => __( 'Inline Options', 'formidable' ),
 		);
 	}
 
@@ -1558,9 +1558,46 @@ class FrmProFieldsController {
 	}
 
 	/**
+	 * Validate if a dynamic field is accessible to the current user.
+	 *
+	 * @since 6.33
+	 *
+	 * @param stdClass $field The field object.
+	 *
+	 * @return bool True if the field is accessible, false otherwise.
+	 */
+	private static function validate_dynamic_field( $field ) {
+		if ( ! $field || 'data' !== $field->type || empty( $field->field_options['form_select'] ) ) {
+			return false;
+		}
+
+		$form = FrmForm::getOne( $field->form_id );
+
+		if ( ! $form ) {
+			return false;
+		}
+
+		if ( $form->parent_form_id ) {
+			$form = FrmForm::getOne( $form->parent_form_id );
+		}
+
+		if ( $form->logged_in ) {
+			if ( ! is_user_logged_in() ) {
+				return false;
+			}
+
+			if ( ! empty( $form->options['logged_in_role'] ) && ! FrmAppHelper::user_has_permission( $form->options['logged_in_role'] ) ) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * @since 5.2.04
 	 */
-	public static function ajax_get_data_arr() {
+	public static function ajax_get_data_arr() { // phpcs:ignore SlevomatCodingStandard.Complexity.Cognitive.ComplexityTooHigh
 		$post_data = FrmAppHelper::get_param( 'postData' );
 		$response  = array();
 
@@ -1569,15 +1606,22 @@ class FrmProFieldsController {
 				continue;
 			}
 
-			$result_str = '';
+			$result_str    = '';
+			$entry_id      = is_array( $data['entry_id'] ) ? array_map( 'intval', $data['entry_id'] ) : intval( $data['entry_id'] );
+			$current_field = intval( $data['current_field'] );
 
-			$entry_id        = is_array( $data['entry_id'] ) ? array_map( 'intval', $data['entry_id'] ) : intval( $data['entry_id'] );
-			$current_field   = intval( $data['current_field'] );
+			if ( ! $current_field ) {
+				continue;
+			}
+
 			$hidden_field_id = sanitize_text_field( wp_unslash( $data['hide_id'] ) );
+			$current         = FrmField::getOne( $current_field );
 
-			$current    = FrmField::getOne( $current_field );
+			if ( ! self::validate_dynamic_field( $current ) ) {
+				continue;
+			}
+
 			$data_field = FrmField::getOne( $current->field_options['form_select'] );
-
 			$meta_value = self::get_meta_value_for_ajax_handler( $entry_id, $data_field );
 
 			if ( $meta_value === null ) {

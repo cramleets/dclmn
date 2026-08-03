@@ -41,6 +41,9 @@ class FrmProFormActionsController {
 	 * @param $atts
 	 */
 	public static function before_form_action_settings( $form_action, $atts ) {
+		if ( ! self::has_repeater_actions_support( $form_action->post_excerpt ) ) {
+			return;
+		}
 		?>
 		<div class="frm_grid_container">
 			<?php self::show_repeater_entries_dropdown( $form_action, $atts ); ?>

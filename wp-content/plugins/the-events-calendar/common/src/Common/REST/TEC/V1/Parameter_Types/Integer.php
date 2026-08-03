@@ -33,15 +33,15 @@ class Integer extends Number {
 	 */
 	public function get_validator(): Closure {
 		return $this->validator ?? function ( $value ): bool {
-			if ( ! is_int( $value ) ) {
-				// translators: 1) is the name of the parameter.
-				$exception = new InvalidRestArgumentException( sprintf( __( 'Parameter `{%1$s}` must be an integer.', 'tribe-common' ), $this->get_name() ) );
-				$exception->set_argument( $this->get_name() );
-				$exception->set_internal_error_code( 'tec_rest_invalid_integer_parameter' );
-
-				// translators: 1) is the name of the parameter.
-				$exception->set_details( sprintf( __( 'The parameter `{%1$s}` is not an integer.', 'tribe-common' ), $this->get_name() ) );
-				throw $exception;
+			if ( ! is_numeric( $value ) || (int) $value != $value ) {
+				throw InvalidRestArgumentException::create(
+					// translators: 1) is the name of the parameter.
+					sprintf( __( 'Argument `{%1$s}` must be an integer.', 'tribe-common' ), $this->get_name() ),
+					$this->get_name(),
+					'tec_rest_invalid_integer_argument',
+					// translators: 1) is the name of the parameter.
+					sprintf( __( 'The argument `{%1$s}` is not an integer.', 'tribe-common' ), $this->get_name() )
+				);
 			}
 
 			return true;
@@ -53,6 +53,16 @@ class Integer extends Number {
 	 */
 	public function get_sanitizer(): Closure {
 		return $this->sanitizer ?? fn( $value ): int => intval( $value );
+	}
+
+	/**
+	 * @inheritDoc
+	 *
+	 * Returns the default as an integer so it satisfies the strict integer validators. The parent
+	 * Number::get_default() would otherwise coerce it to a float, failing `is_int()` validation.
+	 */
+	public function get_default(): ?int {
+		return null === $this->default ? null : (int) $this->default;
 	}
 
 	/**

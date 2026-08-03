@@ -80,13 +80,15 @@ class Url {
 	/**
 	 * Url constructor.
 	 *
+	 * @since 6.15.19 Strengthen accepted URL parameters.
+	 *
 	 * @param null|string $url The url to build the object with or `null` to use the current URL.
 	 * @param bool $query_overrides_path A flag to define how conflicts between parameters set in the query
 	 *                                   arguments and parameters set by the path should be resolved.
 	 */
 	public function __construct( $url = null, $query_overrides_path = false ) {
 		if ( empty( $url ) ) {
-			$url = home_url( add_query_arg( [] ) );
+			$url = static::get_current_url();
 		}
 
 		$this->url = $url;
@@ -204,15 +206,16 @@ class Url {
 	 * Returns the alias of the variable set in the Url query args, if any.
 	 *
 	 * @since 4.9.4
+	 * @since 6.17.0 Made $context explicitly nullable.
 	 *
-	 * @param              string $var The name of the variable to search an alias for.
-	 * @param Context|null $context The Context object to use to fetch locations, if `null` the global Context will be
+	 * @param string       $variable The name of the variable to search an alias for.
+	 * @param Context|null $context  The Context object to use to fetch locations, if `null` the global Context will be
 	 *                              used.
 	 *
 	 * @return false|string The variable alias set in the URL query args, or `false` if no alias was found.
 	 */
-	public function get_query_arg_alias_of( $var, Context $context = null ) {
-		$aliases = $this->get_query_args_aliases_of( $var, $context, false );
+	public function get_query_arg_alias_of( $variable, ?Context $context = null ) {
+		$aliases = $this->get_query_args_aliases_of( $variable, $context, false );
 
 
 		return count( $aliases ) ? reset( $aliases ) : false;
@@ -236,14 +239,15 @@ class Url {
 	 * Returns all the aliases of the variable set in the Url query args, if any.
 	 *
 	 * @since 4.9.9
+	 * @since 6.17.0 Made $context explicitly nullable.
 	 *
-	 * @param string       $var     The name of the variable to search the aliases for.
-	 * @param Context|null $context The Context object to use to fetch locations, if `null` the global Context will be
+	 * @param string       $variable The name of the variable to search the aliases for.
+	 * @param Context|null $context  The Context object to use to fetch locations, if `null` the global Context will be
 	 *                              used.
 	 *
 	 * @return array An array of the variable aliases set in the URL query args.
 	 */
-	public function get_query_args_aliases_of( $var, Context $context = null ) {
+	public function get_query_args_aliases_of( $variable, ?Context $context = null ) {
 		$context    = $context ?: tribe_context();
 		$query_args = $this->get_query_args();
 		$aliases    = $context->translate_sub_locations(
@@ -256,12 +260,12 @@ class Url {
 			return [];
 		}
 
-		$query_aliases   = (array) Arr::get( $context->get_locations(), [ $var, 'read', Context::QUERY_VAR ], [] );
-		$request_aliases = (array) Arr::get( $context->get_locations(), [ $var, 'read', Context::REQUEST_VAR ], [] );
+		$query_aliases   = (array) Arr::get( $context->get_locations(), [ $variable, 'read', Context::QUERY_VAR ], [] );
+		$request_aliases = (array) Arr::get( $context->get_locations(), [ $variable, 'read', Context::REQUEST_VAR ], [] );
 		$context_aliases = array_unique( array_merge( $query_aliases, $request_aliases ) );
 
 		$matches = array_intersect(
-			array_unique( array_merge( $context_aliases, [ $var ] ) ),
+			array_unique( array_merge( $context_aliases, [ $variable ] ) ),
 			array_keys( array_merge( $query_args, tribe_get_request_vars() ) )
 		);
 
@@ -272,6 +276,7 @@ class Url {
 	 * Builds and returns an instance of the object taking care to parse additional parameters to use the correct URL.
 	 *
 	 * @since 4.9.10
+	 * @since 6.15.19 Strengthen accepted URL parameters.
 	 *
 	 * @param string $url The URL address to build the object on.
 	 * @param array  $params An array of additional parameters to parse; these parameters might be more up to date in
@@ -283,7 +288,7 @@ class Url {
 	 */
 	public static function from_url_and_params( $url = null, array $params = [] ) {
 		if ( empty( $url ) ) {
-			$url = home_url( add_query_arg( [] ) );
+			$url = static::get_current_url();
 		}
 
 		/*
@@ -329,6 +334,86 @@ class Url {
 		}
 
 		return new static( $url );
+	}
+
+	/**
+	 * Returns the current request URL with only allowed query parameters preserved.
+	 *
+	 * This prevents HTTP Parameter Pollution (HPP) by stripping arbitrary query
+	 * parameters that are not recognized by the Views system before they can be
+	 * reflected into the page HTML.
+	 *
+	 * @since 6.15.19
+	 *
+	 * @return string The current URL with only allowed query parameters.
+	 */
+	public static function get_current_url() {
+		$raw_url = home_url( add_query_arg( [] ) );
+
+		$parsed = parse_url( $raw_url );
+
+		if ( empty( $parsed['query'] ) ) {
+			return $raw_url;
+		}
+
+		parse_str( $parsed['query'], $query_args );
+
+		/**
+		 * Filters the list of allowed query parameter names for View URLs.
+		 *
+		 * Any query parameter whose name is not in this list (compared case-insensitively)
+		 * and does not begin with `tribe-bar-` or `tribe_` will be stripped from the URL.
+		 * Original parameter name casing from the request is preserved when rebuilding the URL.
+		 *
+		 * @since 6.15.19
+		 *
+		 * @param array $allowed The default allowed parameter names.
+		 */
+		$allowed = apply_filters( 'tec_events_views_v2_url_allowed_query_args', [
+			'eventDisplay',
+			'eventDate',
+			'event_date',
+			'event-date',
+			'tribe_events_cat',
+			'post_type',
+			'tag',
+			'post_tag',
+			'paged',
+			'page',
+			'featured',
+			'hide_subsequent_recurrences',
+			's',
+			'tribe_redirected',
+			'tribe_event_display',
+			'tec_render',
+		] );
+
+		$allowed_exact = array_flip( $allowed );
+		$allowed_lower = [];
+		foreach ( $allowed as $name ) {
+			$allowed_lower[ strtolower( $name ) ] = true;
+		}
+
+		$filtered = [];
+		foreach ( $query_args as $key => $value ) {
+			if (
+				isset( $allowed_exact[ $key ] )
+				|| isset( $allowed_lower[ strtolower( $key ) ] )
+				|| 0 === strpos( $key, 'tribe-bar-' )
+				|| 0 === strpos( $key, 'tribe_' )
+			) {
+				$filtered[ $key ] = $value;
+			}
+		}
+
+		// Rebuild the URL with only the allowed parameters.
+		$base_url = strtok( $raw_url, '?' );
+
+		if ( empty( $filtered ) ) {
+			return $base_url;
+		}
+
+		return add_query_arg( $filtered, $base_url );
 	}
 
 	/**

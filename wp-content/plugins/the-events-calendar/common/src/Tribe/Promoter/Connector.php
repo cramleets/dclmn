@@ -46,6 +46,7 @@ class Tribe__Promoter__Connector {
 	 * @return bool Whether connector was authorized.
 	 *
 	 * @since 4.9
+	 * @since 6.10.1 Pass the domain as well.
 	 */
 	public function authorize_with_connector( $user_id, $secret_key, $promoter_key, $license_key ) {
 		$url = $this->base_url() . 'connect';
@@ -54,6 +55,19 @@ class Tribe__Promoter__Connector {
 			'clientSecret' => $secret_key,
 			'licenseKey'   => $license_key,
 			'userId'       => $user_id,
+			'domain'       => explode(
+				'/',
+				untrailingslashit(
+					str_replace(
+						[
+							'http://',
+							'https://',
+						],
+						'',
+						home_url( '/' )
+					)
+				)
+			)['0'],
 		];
 
 		$token = TEC_JWT::encode( $payload, $promoter_key, 'HS256' );
@@ -74,6 +88,7 @@ class Tribe__Promoter__Connector {
 	 * @return bool|string User ID or if promoter is authorized then it return true like a valid user.
 	 *
 	 * @since 4.9
+	 * @since 6.10.1 Ensured that the authentication is only attempted in a REST request.
 	 */
 	public function authenticate_user_with_connector( $user_id ) {
 		$this->authorized = false;
@@ -81,6 +96,11 @@ class Tribe__Promoter__Connector {
 		// If user is already authenticated no need to move forward (wp-admin) and others.
 		if ( ! empty( $user_id ) ) {
 			$this->authorized = true;
+			return $user_id;
+		}
+
+		if ( ! Tribe__REST__System::is_rest_api() ) {
+			// Only attempt to authenticate if we are in a REST request.
 			return $user_id;
 		}
 
@@ -93,7 +113,10 @@ class Tribe__Promoter__Connector {
 		$url = $this->base_url() . 'connect/auth';
 
 		$response = $this->make_call( $url, [
-			'body'      => [ 'token' => $token ],
+			'body'      => [
+				'token'  => $token,
+				'domain' => strtolower( untrailingslashit( preg_replace( '#^https?://#i', '', home_url( '/' ) ) ) ),
+			],
 			'sslverify' => false,
 		] );
 
@@ -195,7 +218,8 @@ class Tribe__Promoter__Connector {
 
 		$payload = [
 			'licenseKey' => $license_key,
-			'sourceId' => $post_id instanceof WP_Post ? $post_id->ID : $post_id,
+			'sourceId'   => $post_id instanceof WP_Post ? $post_id->ID : $post_id,
+			'domain'     => strtolower( untrailingslashit( preg_replace( '#^https?://#i', '', home_url( '/' ) ) ) ),
 		];
 
 		$token = TEC_JWT::encode( $payload, $secret_key, 'HS256' );

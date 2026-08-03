@@ -2,7 +2,7 @@
 /**
  * Handles the manipulation of the template title to correctly render it in the context of a Views v2 request.
  *
- * @since   4.9.10
+ * @since 4.9.10
  *
  * @package Tribe\Events\Views\V2\Template
  */
@@ -20,7 +20,7 @@ use Tribe__Events__Main as TEC;
 /**
  * Class Title
  *
- * @since   4.9.10
+ * @since 4.9.10
  *
  * @package Tribe\Events\Views\V2\Template
  */
@@ -252,8 +252,9 @@ class Title {
 	 */
 	public static function build_post_range_title( Context $context, $event_date, array $posts ) {
 		$event_date = Dates::build_date_object( $event_date )->format( Dates::DBDATEFORMAT );
+		$is_past    = 'past' === $context->get( 'event_display_mode' );
 
-		if ( $context->get( 'event_display_mode' ) === 'past' ) {
+		if ( $is_past ) {
 			$first = end( $posts );
 			$last  = reset( $posts );
 		} else {
@@ -262,6 +263,7 @@ class Title {
 		}
 
 		$first_returned_date = tribe_get_start_date( $first, false, Dates::DBDATEFORMAT );
+		$last_returned_date  = tribe_get_start_date( $last, false, Dates::DBDATEFORMAT );
 		$first_event_date    = tribe_get_start_date( $first, false );
 		$last_event_date     = tribe_get_start_date( $last, false );
 
@@ -271,7 +273,26 @@ class Title {
 		 */
 		$page = $context->get( 'paged', 1 );
 		if ( 1 == $page && $event_date < $first_returned_date ) {
-			$first_event_date = tribe_format_date( $event_date, false );
+			$first_event_date    = tribe_format_date( $event_date, false );
+			$first_returned_date = $event_date;
+		}
+
+		/*
+		 * For upcoming views, never let the range start in the past — recurring events whose
+		 * series started earlier can otherwise leak an outdated date into the page title.
+		 * Only clamp when the last date is still in the future, so we don't invert ranges that
+		 * are entirely in the past.
+		 */
+		if ( ! $is_past ) {
+			$today = Dates::build_date_object( 'now' )->format( Dates::DBDATEFORMAT );
+			if ( $first_returned_date < $today && $last_returned_date >= $today ) {
+				$first_event_date    = tribe_format_date( $today, false );
+				$first_returned_date = $today;
+			}
+		}
+
+		if ( $first_returned_date === $last_returned_date ) {
+			return $first_event_date;
 		}
 
 		return "$first_event_date - $last_event_date";
@@ -312,13 +333,14 @@ class Title {
 	 * Sets the context this title object should use to build the title.
 	 *
 	 * @since 4.9.10
+	 * @since 6.17.0 Made $context explicitly nullable.
 	 *
 	 * @param Context|null $context The context to use, `null` values will unset it causing the object to use the
 	 *                              global context.
 	 *
 	 * @return $this For chaining.
 	 */
-	public function set_context( Context $context = null ) {
+	public function set_context( ?Context $context = null ) {
 		$this->context = $context;
 
 		return $this;
@@ -330,13 +352,14 @@ class Title {
 	 * We build some title components with notion of what events we found for a View. Here we set them.
 	 *
 	 * @since 4.9.10
+	 * @since 6.17.0 Made $posts explicitly nullable.
 	 *
 	 * @param array|null $posts  An array of posts matching the context query, `null` will unset it causing the object
 	 *                           to use the posts found by the global `$wp_query` object.
 	 *
 	 * @return $this For chaining.
 	 */
-	public function set_posts( array $posts = null ) {
+	public function set_posts( ?array $posts = null ) {
 		$this->posts = $posts;
 
 		return $this;
@@ -446,7 +469,7 @@ class Title {
 	 * @since 5.12.3 Added params, refined logic around category archive titles.
 	 *
 	 * @param string      $title     The input title.
-	 * @param  \WP_Term    $cat       The category term to use to build the title.
+	 * @param \WP_Term    $cat       The category term to use to build the title.
 	 * @param boolean     $depth     Whether to display the taxonomy hierarchy as part of the title.
 	 * @param null|string $separator The separator sequence to separate the title components.
 	 *
@@ -462,7 +485,7 @@ class Title {
 		 *
 		 * @param boolean     $depth Whether to display the taxonomy hierarchy as part of the title.
 		 * @param string      $title The input title.
-		 * @param  \WP_Term   $cat   The category term to use to build the title.
+		 * @param \WP_Term   $cat   The category term to use to build the title.
 		 */
 		$depth = apply_filters( 'tec_events_views_v2_display_tax_hierarchy_in_title', $depth, $title, $cat );
 

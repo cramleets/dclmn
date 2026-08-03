@@ -298,6 +298,9 @@ class PostmanConfigurationController {
 		print '<div id="maileroo_settings" class="authentication_setting non-basic non-oauth2">';
 		do_settings_sections( PostmanMailerooTransport::MAILEROO_AUTH_OPTIONS );
 		print '</div>';
+		print '<div id="sweego_settings" class="authentication_setting non-basic non-oauth2">';
+		do_settings_sections( PostmanSweegoTransport::SWEEGO_AUTH_OPTIONS );
+		print '</div>';
 		print '<div id="mailersend_settings" class="authentication_setting non-basic non-oauth2">';
 		do_settings_sections( PostmanMailerSendTransport::MAILERSEND_AUTH_OPTIONS );
 		print '</div>';
@@ -782,7 +785,7 @@ class PostmanConfigurationController {
 					<img src="<?php echo esc_url( POST_SMTP_ASSETS . 'images/logos/chrome-24x24.png' ) ?>" />
 					<?php esc_html_e( 'Download Chrome extension', 'post-smtp' ); ?>
 				</a>
-				<a href="https://postmansmtp.com/post-smtp-1-9-6-new-chrome-extension/" target="_blank"><?php _e( 'Detailed Documentation.', 'post-smtp' ) ?></a>
+				<a href="https://postmansmtp.com/docs/alerts/chrome-extension/" target="_blank"><?php _e( 'Detailed Documentation.', 'post-smtp' ) ?></a>
 				<div>
 					<table>
 						<tr>

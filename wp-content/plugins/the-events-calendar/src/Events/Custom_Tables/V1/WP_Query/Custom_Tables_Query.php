@@ -47,6 +47,7 @@ class Custom_Tables_Query extends WP_Query {
 	 * Returns an instance of this class, built using the input `WP_Query` as a model.
 	 *
 	 * @since 6.0.0
+	 * @since 6.17.0 Made $override_args explicitly nullable.
 	 *
 	 * @param  WP_Query                  $wp_query       A reference to the `WP_Query` instance that
 	 *                                                   should be used as a model to build an instance
@@ -57,7 +58,7 @@ class Custom_Tables_Query extends WP_Query {
 	 * @return Custom_Tables_Query An instance of the class, built using the input `WP_Query`
 	 *                             instance as a model.
 	 */
-	public static function from_wp_query( WP_Query $wp_query, array $override_args = null ) {
+	public static function from_wp_query( WP_Query $wp_query, ?array $override_args = null ) {
 		// Initialize a new instance of the query.
 		$ct_query = new self();
 		$ct_query->init();
@@ -707,8 +708,11 @@ class Custom_Tables_Query extends WP_Query {
 		$orderbys = explode( ',', $posts_orderby );
 		foreach ( $orderbys as $orderby_frag ) {
 			// Fast-track the `rand` order, no need to redirect anything.
-			if ( stripos( $orderby_frag, 'rand' ) === 0 ) {
-				$redirected_orderbys .= $orderby_frag;
+			// Only allow the exact RAND() function to prevent SQL injection.
+			$trimmed_frag = trim( $orderby_frag );
+			if ( preg_match( '/^rand\s*\(\s*\)$/i', $trimmed_frag ) ) {
+				// Use hardcoded RAND() to prevent SQL injection
+				$redirected_orderbys .= ( $redirected_orderbys === '' ? '' : ', ' ) . 'RAND()';
 				continue;
 			}
 

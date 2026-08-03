@@ -16,15 +16,13 @@
                 {
 
                     $this->functions    =   new CptoFunctions();
+                    $this->compatibility();
                    
                     $is_configured = get_option('CPT_configured');
                     if ($is_configured == '')
                         add_action( 'admin_notices', array ( $this, 'admin_configure_notices'));
-                        
                     
-                    add_filter('init',          array ( $this, 'on_init'));
-                    add_filter('init',          array ( $this, 'compatibility'));
-                    
+                    add_filter('init',                      array ( $this, 'on_init'));
                     
                     add_filter('pre_get_posts', array ( $this, 'pre_get_posts'));
                     add_filter('posts_orderby', array ( $this, 'posts_orderby'), 99, 2);                        
@@ -48,6 +46,9 @@
                     
                     add_action( 'wp_ajax_update-custom-type-order',         array ( $this, 'saveAjaxOrder') );
                     add_action( 'wp_ajax_update-custom-type-order-archive', array ( $this, 'saveArchiveAjaxOrder') );
+                    
+                    add_filter( 'plugin_action_links_post-types-order/post-types-order.php',                  array ( $this,  'add_plugin_action_links') );
+                    add_filter( 'network_admin_plugin_action_links_post-types-order/post-types-order.php' ,   array ( $this,  'add_plugin_action_links')  );
                 
                 }
 
@@ -157,10 +158,12 @@
                         return $orderBy;
                         
                     //check for orderby GET paramether in which case return default data
+                    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                     if (isset($_GET['orderby']) && $_GET['orderby'] !==  'menu_order')
                         return $orderBy;
                         
                     //Avada orderby
+                    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                     if (isset($_GET['product_orderby']) && $_GET['product_orderby'] !==  'default')
                         return $orderBy;
                     
@@ -172,17 +175,23 @@
                     if (  apply_filters('pto/posts_orderby', $orderBy, $query )  === FALSE )
                         return $orderBy;
                         
-                    $ignore =   apply_filters('pto/posts_orderby/ignore', FALSE, $orderBy, $query);
+                    $ignore =   apply_filters('pto/posts_orderby/ignore', FALSE, $orderBy, $query );
                     if( boolval( $ignore )  === TRUE )
                         return $orderBy;
                     
                     //ignore search
                     if( $query->is_search()  &&  isset( $query->query['s'] )   &&  ! empty ( $query->query['s'] ) )
                         return( $orderBy );
-                    
+                        
+                    //If already sorted by FIELD return as is
+                    if ( preg_match('/FIELD\s*\(/i', $orderBy ))
+                        return( $orderBy );
+                                        
+                    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                     if ( ( is_admin() &&  !wp_doing_ajax() )    ||  ( wp_doing_ajax() && isset($_REQUEST['action']) && $_REQUEST['action'] === 'query-attachments') )
                             {
                                 
+                                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                                 if ( strval ( $options['adminsort'] ) === "1" || ( wp_doing_ajax() && isset($_REQUEST['action']) && $_REQUEST['action'] === 'query-attachments') )
                                     {
                                         
@@ -192,9 +201,11 @@
                                         
                                         //temporary ignore ACF group and admin ajax calls, should be fixed within ACF plugin sometime later
                                         if (is_object($post) && $post->post_type    ===  "acf-field-group"
+                                                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                                                 ||  (defined('DOING_AJAX') && isset($_REQUEST['action']) && strpos($_REQUEST['action'], 'acf/') === 0))
                                             return $orderBy;
-                                            
+                                        
+                                        // phpcs:ignore WordPress.Security.NonceVerification.Recommended    ordPress.Security.NonceVerification.Missing     
                                         if(isset($_POST['query'])   &&  isset($_POST['query']['post__in'])  &&  is_array($_POST['query']['post__in'])   &&  count($_POST['query']['post__in'])  >   0)
                                             return $orderBy;   
                                         
@@ -291,14 +302,14 @@
                     if( isset( $screen->taxonomy ) && !empty($screen->taxonomy) )
                         return;
                     
-                    if ( empty ( $options['allow_reorder_default_interfaces'][$screen->post_type] )     ||  ( isset ( $options['allow_reorder_default_interfaces'][$screen->post_type] )  &&  $options['allow_reorder_default_interfaces'][$screen->post_type]   !==      'yes' ) )
+                    if ( isset( $options['allow_reorder_default_interfaces'][$screen->post_type] )  && $options['allow_reorder_default_interfaces'][$screen->post_type] !== 'yes' )
                         return;
                         
                     if ( wp_is_mobile() || ( function_exists( 'jetpack_is_mobile' ) && jetpack_is_mobile() ) )
                         return;
                                                                 
                     //if is taxonomy term filter return
-                    if(is_category()    ||  is_tax())
+                    if( is_category()    ||  is_tax() )
                         return;
                     
                     //return if use orderby columns
@@ -314,18 +325,18 @@
                         return false;
                     
                     //load required dependencies
-                    wp_enqueue_style('cpt-archive-dd', CPTURL . '/css/cpt-archive-dd.css');
+                    wp_enqueue_style('cpt-archive-dd', CPTURL . '/css/cpt-archive-dd.css', array(), PTO_VERSION );
                     
                     wp_enqueue_script('jquery');
                     wp_enqueue_script('jquery-ui-sortable');
-                    wp_register_script('cpto', CPTURL . '/js/cpt.js', array('jquery')); 
+                    wp_register_script('cpto', CPTURL . '/js/cpt.js', array('jquery'), PTO_VERSION, array( 'in_footer' => true ) ); 
                     
                     global $userdata;
                     
                     // Localize the script with new data
                     $CPTO_variables = array(
                                                 'post_type'             =>  $screen->post_type,
-                                                'archive_sort_nonce'    =>  wp_create_nonce( 'CPTO_archive_sort_nonce_' . $userdata->ID) 
+                                                'archive_sort_nonce'    =>  wp_create_nonce( 'CPTO_archive_sort_nonce' ) 
                                             );
                     wp_localize_script( 'cpto', 'CPTO', $CPTO_variables );
 
@@ -368,6 +379,9 @@
                     //verify the nonce
                     if (! wp_verify_nonce( $nonce, 'interface_sort_nonce') )
                         die();
+                        
+                    if ( ! current_user_can( $this->functions->get_required_capability( ) ) )
+                        die();
                     
                     parse_str( sanitize_text_field( wp_unslash( $_POST['order'] ) ) , $data );
                     
@@ -380,7 +394,7 @@
                                             foreach( $values as $position => $id ) 
                                                 {
                                                     //sanitize
-                                                    $id =   (int)$id;
+                                                    $id =   intval ( $id ); 
                                                     
                                                     $data = array('menu_order' => $position);
                                                     
@@ -398,7 +412,7 @@
                                                 {
                                                     
                                                     //sanitize
-                                                    $id =   (int)$id;
+                                                    $id =   intval ( $id );
                                                     
                                                     $data = array('menu_order' => $position, 'post_parent' => str_replace('item_', '', $key));
                                                     
@@ -428,8 +442,6 @@
             function saveArchiveAjaxOrder()
                 {
                     
-                    set_time_limit(600);
-                    
                     global $wpdb, $userdata;
                     
                     $post_type  =   preg_replace( '/[^a-zA-Z0-9_\-]/', '', sanitize_text_field( wp_unslash( $_POST['post_type'] ) ) );
@@ -437,7 +449,10 @@
                     $nonce      =   ( isset( $_POST['archive_sort_nonce'] ) ) ? sanitize_text_field( wp_unslash( $_POST['archive_sort_nonce'] ) ) : '';
                     
                     //verify the nonce
-                    if ( ! wp_verify_nonce( $nonce, 'CPTO_archive_sort_nonce_' . $userdata->ID ) )
+                    if ( ! wp_verify_nonce( $nonce, 'CPTO_archive_sort_nonce' ) )
+                        die();
+                        
+                    if ( ! current_user_can( $this->functions->get_required_capability( $post_type ) ) )
                         die();
                     
                     parse_str( sanitize_text_field( wp_unslash( $_POST['order'] ) ) , $data );
@@ -446,10 +461,9 @@
                         die();
                     
                     //retrieve a list of all objects
-                    $mysql_query    =   $wpdb->prepare("SELECT ID FROM ". $wpdb->posts ." 
+                    $results        =   $wpdb->get_results( $wpdb->prepare("SELECT ID FROM ". $wpdb->posts ." 
                                                             WHERE post_type = %s AND post_status IN ('publish', 'pending', 'draft', 'private', 'future', 'inherit')
-                                                            ORDER BY menu_order, post_date DESC", $post_type);
-                    $results        =   $wpdb->get_results($mysql_query);
+                                                            ORDER BY menu_order, post_date DESC", $post_type) );
                     
                     if (!is_array($results)    ||  count($results)    <   1)
                         die();
@@ -484,6 +498,9 @@
                     //update the menu_order within database
                     foreach( $objects_ids as $menu_order   =>  $id ) 
                         {
+                            //sanitize
+                            $id =   intval ( $id );
+                            
                             $data = array(
                                             'menu_order' => $menu_order
                                             );
@@ -520,20 +537,6 @@
                     $post_types = get_post_types();
                     
                     $options          =     $this->functions->get_options();
-                    //get the required user capability
-                    $capability = '';
-                    if(isset($options['capability']) && !empty($options['capability']))
-                        {
-                            $capability = $options['capability'];
-                        }
-                    else if (is_numeric($options['level']))
-                        {
-                            $capability = $this->functions->userdata_get_user_level();
-                        }
-                        else
-                            {
-                                $capability = 'manage_options';  
-                            }
                     
                     $PTO_Interface =    new PTO_Interface();
                     
@@ -556,7 +559,7 @@
                             if(isset($options['show_reorder_interfaces'][$post_type_name]) && $options['show_reorder_interfaces'][$post_type_name] !== 'show')
                                 continue;
                                 
-                            $required_capability = apply_filters('pto/edit_capability', $capability, $post_type_name);
+                            $required_capability = $this->functions->get_required_capability ( $post_type_name );
                             
                             if ( $post_type_name == 'post' )
                                 $hookID   = add_submenu_page('edit.php', __('Re-Order', 'post-types-order'), __('Re-Order', 'post-types-order'), $required_capability, 'order-post-types-'.$post_type_name, array( $PTO_Interface, 'sort_page') );
@@ -587,6 +590,17 @@
                         
                     wp_register_style('CPTStyleSheets', CPTURL . '/css/cpt.css', array(), PTO_VERSION );
                     wp_enqueue_style( 'CPTStyleSheets');
+                }
+                
+                
+                
+            function add_plugin_action_links( $plugin_actions )
+                {
+                    $new_actions = array();
+
+                    $new_actions['cpto_settings'] = sprintf( __( '<a href="%s">Settings</a>', 'post-types-order' ), esc_url( admin_url( 'options-general.php?page=cpto-options' ) ) );
+
+                    return array_merge( $new_actions, $plugin_actions );    
                 }
             
             

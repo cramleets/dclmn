@@ -405,9 +405,12 @@ class FrmProFieldsHelper {
 			return self::get_get_shortcode_result_from_state( $atts['param'] );
 		}
 
-		// During AJAX form submissions, $_GET data is not available.
+		// During form submissions, $_GET data is not available.
 		// Fall back to the form state value that was captured during the initial page load.
-		if ( ! isset( $_GET[ $atts['param'] ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// Only do this when a form state was actually submitted with the request. Otherwise
+		// listing contexts (e.g. a View filtering by [get param=x]) would incorrectly reuse a
+		// stale in-memory state value on a regular page load where the param is simply not set.
+		if ( self::form_state_was_submitted() && ! isset( $_GET[ $atts['param'] ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$state_value = self::get_get_shortcode_result_from_state( $atts['param'] );
 
 			if ( '' !== $state_value ) {
@@ -427,6 +430,21 @@ class FrmProFieldsHelper {
 	 */
 	private static function adding_a_form_row() {
 		return 'frm_add_form_row' === FrmAppHelper::get_post_param( 'action', '', 'sanitize_key' );
+	}
+
+	/**
+	 * Check if a form state was submitted with the current request.
+	 *
+	 * The frm_state hidden field is only present when a Formidable form is submitted, so this
+	 * distinguishes a form submission (where the page-load $_GET values are carried in the state)
+	 * from a regular page load such as a View listing page where the param may simply be unset.
+	 *
+	 * @since 6.33
+	 *
+	 * @return bool
+	 */
+	private static function form_state_was_submitted() {
+		return '' !== FrmAppHelper::get_post_param( 'frm_state', '', 'sanitize_text_field' );
 	}
 
 	/**

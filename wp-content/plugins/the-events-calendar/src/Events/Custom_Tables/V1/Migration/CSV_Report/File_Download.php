@@ -59,7 +59,15 @@ class File_Download {
 			return false;
 		}
 
-		return (bool) wp_verify_nonce( $_GET['wpnonce'] );
+		if ( ! wp_verify_nonce( $_GET['wpnonce'] ) ) {
+			return false;
+		}
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -97,7 +105,7 @@ class File_Download {
 		header( "Cache-Control: no-cache, must-revalidate" );
 		header( "Expires: Sat, 26 Jul 1997 05:00:00 GMT" );
 
-		fputcsv( $output, self::CSV_COLUMNS, $delimiter );
+		fputcsv( $output, self::CSV_COLUMNS, $delimiter, '"', '\\' ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_fputcsv
 		foreach ( $reports as $report ) {
 			$has_error = (bool) $report->error;
 			if ( $has_error ) {
@@ -113,7 +121,7 @@ class File_Download {
 				$has_error ? "Yes" : "No"
 			];
 
-			fputcsv( $output, $item, $delimiter );
+			fputcsv( $output, $item, $delimiter, '"', '\\' ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_fputcsv
 		}
 		fclose( $output );
 		if ( $should_exit ) {

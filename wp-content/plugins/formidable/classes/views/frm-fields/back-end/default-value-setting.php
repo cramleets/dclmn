@@ -1,4 +1,14 @@
 <?php
+/**
+ * Default value setting in the field settings.
+ *
+ * @package Formidable
+ *
+ * @var array        $field     Field data including 'id', 'default_value', 'dyn_default_value'.
+ * @var FrmFieldType $field_obj Field type handler.
+ * @var array        $display   Display options; may include 'default_value'.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	die( 'You are not allowed to call this page directly.' );
 }
@@ -15,18 +25,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<span class="frm-flex-col frm-with-right-icon">
 		<?php
-		$field_obj->display_smart_values_modal_trigger_icon( $field );
-
-		if ( isset( $display['default_value'] ) && $display['default_value'] ) {
+		if ( ! empty( $display['default_value'] ) ) {
 			$default_name  = 'field_options[dyn_default_value_' . $field['id'] . ']';
-			$default_value = isset( $field['dyn_default_value'] ) ? $field['dyn_default_value'] : '';
+			$default_value = $field['dyn_default_value'] ?? '';
 		} else {
 			$default_name  = 'default_value_' . $field['id'];
 			$default_value = $field['default_value'];
 		}
-		$field_obj->default_value_to_string( $default_value );
 
+		$field_obj->default_value_to_string( $default_value );
 		$field_obj->show_default_value_field( $field, $default_name, $default_value );
+		$field_obj->display_smart_values_modal_trigger_icon( $field );
 		?>
 	</span>
 </p>

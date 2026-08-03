@@ -1264,6 +1264,9 @@ class FrmProFileField {
 			$response['media_ids'][] = $media_id;
 			$form_id                 = FrmAppHelper::get_param( 'form_id', '', 'post', 'absint' );
 
+			// Remove unsafe HTML from an SVG when one is uploaded.
+			self::sanitize_uploaded_svg( $media_id );
+
 			if ( $resize ) {
 				$file   = get_attached_file( $media_id );
 				$editor = wp_get_image_editor( $file );
@@ -1287,6 +1290,427 @@ class FrmProFileField {
 		} else {
 			$response['errors'][] = $media_id;
 		}
+	}
+
+	/**
+	 * Sanitize uploaded files that contain XML-based content to remove scripts and unsafe attributes.
+	 *
+	 * @since 6.33
+	 *
+	 * @param int $media_id The attachment ID.
+	 *
+	 * @return void
+	 */
+	private static function sanitize_uploaded_svg( $media_id ) {
+		$file_path = get_attached_file( $media_id );
+
+		if ( ! $file_path || ! file_exists( $file_path ) ) {
+			return;
+		}
+
+		$file_type = wp_check_filetype( $file_path );
+
+		if ( empty( $file_type['type'] ) || 'image/svg+xml' !== $file_type['type'] ) {
+			return;
+		}
+
+		/**
+		 * @since 6.33
+		 *
+		 * @param bool  $should_sanitize Whether to sanitize the uploaded SVG.
+		 * @param int   $media_id        The attachment ID.
+		 * @param array $file_type       The file type information.
+		 */
+		$should_sanitize = apply_filters( 'frm_sanitize_uploaded_svg', true, $media_id, $file_type );
+
+		if ( ! $should_sanitize ) {
+			return;
+		}
+
+		$content = file_get_contents( $file_path );
+
+		if ( false === $content ) {
+			return;
+		}
+
+		$is_svgz = self::is_svgz_content( $content );
+
+		if ( $is_svgz ) {
+			if ( ! function_exists( 'gzdecode' ) || ! function_exists( 'gzencode' ) ) {
+				return;
+			}
+
+			$svg_content = gzdecode( $content );
+
+			if ( false === $svg_content ) {
+				return;
+			}
+		} else {
+			$svg_content = $content;
+		}
+
+		$sanitized_svg = self::sanitize_svg_content( $svg_content );
+
+		if ( $sanitized_svg === $svg_content ) {
+			return;
+		}
+
+		$sanitized = $is_svgz ? gzencode( $sanitized_svg ) : $sanitized_svg;
+
+		if ( false === $sanitized ) {
+			return;
+		}
+
+		file_put_contents( $file_path, $sanitized );
+	}
+
+	/**
+	 * Check whether content is a gzip-compressed SVGZ file.
+	 *
+	 * @since 6.33
+	 *
+	 * @param string $content The file content.
+	 *
+	 * @return bool
+	 */
+	private static function is_svgz_content( $content ) {
+		return '' !== $content && str_starts_with( $content, "\x1f\x8b" );
+	}
+
+	/**
+	 * Sanitize SVG content using wp_kses.
+	 *
+	 * @since 6.33
+	 *
+	 * @param string $content The file content.
+	 *
+	 * @return string The sanitized content.
+	 */
+	private static function sanitize_svg_content( $content ) {
+		$content = wp_kses( $content, self::get_allowed_svg_tags() );
+
+		// wp_kses lowercases all attribute names, but SVG relies on case-sensitive
+		// attributes like viewBox. Restore the expected camelCase forms.
+		$camel_case = array(
+			'viewbox'             => 'viewBox',
+			'preserveaspectratio' => 'preserveAspectRatio',
+			'gradientunits'       => 'gradientUnits',
+			'gradienttransform'   => 'gradientTransform',
+			'patternunits'        => 'patternUnits',
+			'patterntransform'    => 'patternTransform',
+			'maskunits'           => 'maskUnits',
+			'pathlength'          => 'pathLength',
+		);
+
+		foreach ( $camel_case as $lower => $proper ) {
+			$content = preg_replace(
+				'/(<[^>]*\s)' . preg_quote( $lower, '/' ) . '="([^"]*)"/i',
+				'$1' . $proper . '="$2"',
+				$content
+			);
+		}
+
+		return $content;
+	}
+
+	/**
+	 * Get allowed SVG tags and attributes for uploaded SVG content.
+	 *
+	 * @since 6.33
+	 *
+	 * @return array
+	 */
+	private static function get_allowed_svg_tags() {
+		$allowed = array(
+			'svg'            => array(
+				'class'               => true,
+				'id'                  => true,
+				'xmlns'               => true,
+				'xmlns:xlink'         => true,
+				'viewbox'             => true,
+				'viewBox'             => true,
+				'width'               => true,
+				'height'              => true,
+				'x'                   => true,
+				'y'                   => true,
+				'fill'                => true,
+				'stroke'              => true,
+				'stroke-width'        => true,
+				'stroke-linecap'      => true,
+				'stroke-linejoin'     => true,
+				'stroke-dasharray'    => true,
+				'stroke-dashoffset'   => true,
+				'stroke-opacity'      => true,
+				'opacity'             => true,
+				'style'               => true,
+				'role'                => true,
+				'aria-label'          => true,
+				'aria-hidden'         => true,
+				'preserveaspectratio' => true,
+				'preserveAspectRatio' => true,
+				'version'             => true,
+			),
+			'g'              => array(
+				'class'             => true,
+				'id'                => true,
+				'style'             => true,
+				'transform'         => true,
+				'fill'              => true,
+				'fill-rule'         => true,
+				'fill-opacity'      => true,
+				'stroke'            => true,
+				'stroke-width'      => true,
+				'stroke-linecap'    => true,
+				'stroke-linejoin'   => true,
+				'stroke-dasharray'  => true,
+				'stroke-dashoffset' => true,
+				'stroke-opacity'    => true,
+				'opacity'           => true,
+				'clip-path'         => true,
+				'clip-rule'         => true,
+			),
+			'path'           => array(
+				'd'                 => true,
+				'class'             => true,
+				'id'                => true,
+				'style'             => true,
+				'fill'              => true,
+				'fill-rule'         => true,
+				'fill-opacity'      => true,
+				'stroke'            => true,
+				'stroke-width'      => true,
+				'stroke-linecap'    => true,
+				'stroke-linejoin'   => true,
+				'stroke-dasharray'  => true,
+				'stroke-dashoffset' => true,
+				'stroke-opacity'    => true,
+				'opacity'           => true,
+				'clip-path'         => true,
+				'clip-rule'         => true,
+				'transform'         => true,
+				'pathlength'        => true,
+				'pathLength'        => true,
+			),
+			'rect'           => array(
+				'x'                 => true,
+				'y'                 => true,
+				'width'             => true,
+				'height'            => true,
+				'rx'                => true,
+				'ry'                => true,
+				'class'             => true,
+				'id'                => true,
+				'style'             => true,
+				'fill'              => true,
+				'fill-rule'         => true,
+				'fill-opacity'      => true,
+				'stroke'            => true,
+				'stroke-width'      => true,
+				'stroke-linecap'    => true,
+				'stroke-linejoin'   => true,
+				'stroke-dasharray'  => true,
+				'stroke-dashoffset' => true,
+				'stroke-opacity'    => true,
+				'opacity'           => true,
+				'clip-path'         => true,
+				'clip-rule'         => true,
+				'transform'         => true,
+			),
+			'circle'         => array(
+				'cx'           => true,
+				'cy'           => true,
+				'r'            => true,
+				'class'        => true,
+				'id'           => true,
+				'style'        => true,
+				'fill'         => true,
+				'stroke'       => true,
+				'stroke-width' => true,
+				'transform'    => true,
+			),
+			'ellipse'        => array(
+				'cx'           => true,
+				'cy'           => true,
+				'rx'           => true,
+				'ry'           => true,
+				'class'        => true,
+				'id'           => true,
+				'style'        => true,
+				'fill'         => true,
+				'stroke'       => true,
+				'stroke-width' => true,
+				'transform'    => true,
+			),
+			'line'           => array(
+				'x1'           => true,
+				'y1'           => true,
+				'x2'           => true,
+				'y2'           => true,
+				'class'        => true,
+				'id'           => true,
+				'style'        => true,
+				'stroke'       => true,
+				'stroke-width' => true,
+				'transform'    => true,
+			),
+			'polyline'       => array(
+				'points'       => true,
+				'class'        => true,
+				'id'           => true,
+				'style'        => true,
+				'fill'         => true,
+				'stroke'       => true,
+				'stroke-width' => true,
+				'transform'    => true,
+			),
+			'polygon'        => array(
+				'points'       => true,
+				'class'        => true,
+				'id'           => true,
+				'style'        => true,
+				'fill'         => true,
+				'stroke'       => true,
+				'stroke-width' => true,
+				'transform'    => true,
+			),
+			'text'           => array(
+				'x'           => true,
+				'y'           => true,
+				'dx'          => true,
+				'dy'          => true,
+				'class'       => true,
+				'id'          => true,
+				'style'       => true,
+				'fill'        => true,
+				'font-family' => true,
+				'font-size'   => true,
+				'text-anchor' => true,
+				'transform'   => true,
+			),
+			'tspan'          => array(
+				'x'     => true,
+				'y'     => true,
+				'dx'    => true,
+				'dy'    => true,
+				'class' => true,
+				'style' => true,
+			),
+			'defs'           => array(
+				'class' => true,
+				'id'    => true,
+			),
+			'symbol'         => array(
+				'class'               => true,
+				'id'                  => true,
+				'viewbox'             => true,
+				'viewBox'             => true,
+				'preserveaspectratio' => true,
+				'preserveAspectRatio' => true,
+				'fill'                => true,
+				'stroke'              => true,
+			),
+			'use'            => array(
+				'href'       => true,
+				'xlink:href' => true,
+				'x'          => true,
+				'y'          => true,
+				'width'      => true,
+				'height'     => true,
+				'class'      => true,
+				'id'         => true,
+			),
+			'title'          => array(),
+			'desc'           => array(),
+			'metadata'       => array(),
+			'lineargradient' => array(
+				'id'                => true,
+				'x1'                => true,
+				'y1'                => true,
+				'x2'                => true,
+				'y2'                => true,
+				'gradientunits'     => true,
+				'gradientUnits'     => true,
+				'gradienttransform' => true,
+				'gradientTransform' => true,
+			),
+			'linearGradient' => array(
+				'id'                => true,
+				'x1'                => true,
+				'y1'                => true,
+				'x2'                => true,
+				'y2'                => true,
+				'gradientunits'     => true,
+				'gradientUnits'     => true,
+				'gradienttransform' => true,
+				'gradientTransform' => true,
+			),
+			'radialgradient' => array(
+				'id'                => true,
+				'cx'                => true,
+				'cy'                => true,
+				'r'                 => true,
+				'fx'                => true,
+				'fy'                => true,
+				'gradientunits'     => true,
+				'gradientUnits'     => true,
+				'gradienttransform' => true,
+				'gradientTransform' => true,
+			),
+			'radialGradient' => array(
+				'id'                => true,
+				'cx'                => true,
+				'cy'                => true,
+				'r'                 => true,
+				'fx'                => true,
+				'fy'                => true,
+				'gradientunits'     => true,
+				'gradientUnits'     => true,
+				'gradienttransform' => true,
+				'gradientTransform' => true,
+			),
+			'stop'           => array(
+				'offset'       => true,
+				'style'        => true,
+				'stop-color'   => true,
+				'stop-opacity' => true,
+			),
+			'clippath'       => array(
+				'id'    => true,
+				'class' => true,
+			),
+			'clipPath'       => array(
+				'id'    => true,
+				'class' => true,
+			),
+			'mask'           => array(
+				'id'        => true,
+				'class'     => true,
+				'maskunits' => true,
+				'maskUnits' => true,
+			),
+			'pattern'        => array(
+				'id'               => true,
+				'class'            => true,
+				'width'            => true,
+				'height'           => true,
+				'patternunits'     => true,
+				'patternUnits'     => true,
+				'patterntransform' => true,
+				'patternTransform' => true,
+			),
+			'image'          => array(
+				'href'                => true,
+				'xlink:href'          => true,
+				'x'                   => true,
+				'y'                   => true,
+				'width'               => true,
+				'height'              => true,
+				'preserveaspectratio' => true,
+				'preserveAspectRatio' => true,
+			),
+		);
+
+		return apply_filters( 'frm_allowed_uploaded_svg_tags', $allowed );
 	}
 
 	/**
@@ -2454,14 +2878,14 @@ class FrmProFileField {
 	 * @return string
 	 */
 	private static function get_disposition( $mime_type ) {
-		$is_pdf   = 'application/pdf' === $mime_type;
-		$is_image = str_starts_with( $mime_type, 'image/' );
-
-		if ( $is_pdf || $is_image ) {
+		if ( 'application/pdf' === $mime_type ) {
 			return 'inline';
 		}
 
-		return 'attachment';
+		$is_svg          = 'image/svg+xml' === $mime_type;
+		$is_inline_image = str_starts_with( $mime_type, 'image/' ) && ! $is_svg;
+
+		return $is_inline_image ? 'inline' : 'attachment';
 	}
 
 	/**
@@ -2830,10 +3254,26 @@ class FrmProFileField {
 		}
 
 		if ( $folder_is_protected && ! self::user_has_permission( $file_id ) ) {
-			return array(
-				'code'    => 403,
-				'message' => __( 'user does not fit any of the set roles, do not serve a file', 'formidable-pro' ),
-			);
+			/**
+			 * Allow bypassing the role-based permission check for a protected file download.
+			 *
+			 * Return true to grant access even when the current user does not have the
+			 * required role. Used by the Gated Content feature to allow token holders to
+			 * download protected files without being logged in.
+			 *
+			 * @since 6.33
+			 *
+			 * @param bool $can_access Whether access is granted. Default false.
+			 * @param int  $file_id    WP attachment post ID.
+			 */
+			$can_access = (bool) apply_filters( 'frm_can_access_protected_file', false, $file_id );
+
+			if ( ! $can_access ) {
+				return array(
+					'code'    => 403,
+					'message' => __( 'user does not fit any of the set roles, do not serve a file', 'formidable-pro' ),
+				);
+			}
 		}
 
 		$directory  = dirname( get_attached_file( $file_id ) );
@@ -2897,6 +3337,7 @@ class FrmProFileField {
 			'path'         => $final_path,
 			'is_temporary' => $is_temporary,
 			'form_id'      => $form_id,
+			'file_id'      => $file_id,
 		);
 	}
 
@@ -2962,7 +3403,11 @@ class FrmProFileField {
 			return false;
 		}
 
-		return substr( $uri, $position + strlen( $pattern ) );
+		$payload = substr( $uri, $position + strlen( $pattern ) );
+
+		// Strip query string (e.g. ?access_code=...) — only the base64 segment is the payload.
+		$qmark = strpos( $payload, '?' );
+		return false !== $qmark ? substr( $payload, 0, $qmark ) : $payload;
 	}
 
 	/**

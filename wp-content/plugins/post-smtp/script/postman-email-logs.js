@@ -448,8 +448,21 @@ jQuery(document).ready(function($) {
 							</tr>
 							<tr>
 								<td><strong>To:</strong></td>
-								<td>${response.data.to_header}</td>
+								<td>${response.data.original_to}</td>
 							</tr>`;
+
+							if (
+								response.data.reply_to_header !== undefined &&
+								response.data.reply_to_header !== null &&
+								response.data.reply_to_header !== ''
+							) {
+								popupContent += `
+									<tr>
+										<td><strong>Reply-To:</strong></td>
+										<td>${response.data.reply_to_header}</td>
+									</tr>
+								`;
+							}
 
 							if( 
 								response.data.cc_header != null 

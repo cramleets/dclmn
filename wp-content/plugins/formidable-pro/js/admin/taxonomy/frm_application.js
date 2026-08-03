@@ -968,7 +968,7 @@
 		if ( '' !== label && ! disableTooltip ) {
 			output.setAttribute( 'title', label );
 			output.classList.add( 'frm_bstooltip' );
-			jQuery( output ).tooltip();
+			new bootstrap.Tooltip( output );
 		}
 
 		return output;

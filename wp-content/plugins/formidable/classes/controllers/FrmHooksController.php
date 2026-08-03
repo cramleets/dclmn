@@ -13,14 +13,14 @@ class FrmHooksController {
 	 * @return void
 	 */
 	public static function trigger_load_hook( $hooks = 'load_hooks' ) {
-		$controllers = apply_filters( 'frm_load_controllers', array( 'FrmHooksController' ) );
-
+		$controllers   = apply_filters( 'frm_load_controllers', array( 'FrmHooksController' ) );
 		$trigger_hooks = $hooks;
 		$hooks         = (array) $hooks;
 
-		if ( 'load_hooks' == $trigger_hooks ) {
+		if ( 'load_hooks' === $trigger_hooks ) {
 			if ( is_admin() ) {
 				$hooks[] = 'load_admin_hooks';
+
 				if ( defined( 'DOING_AJAX' ) ) {
 					$hooks[] = 'load_ajax_hooks';
 					$hooks[] = 'load_form_hooks';
@@ -85,6 +85,9 @@ class FrmHooksController {
 
 		add_action( 'wp_scheduled_delete', 'FrmForm::scheduled_delete' );
 
+		// Clear embed posts transient when posts are updated.
+		add_action( 'wp_insert_post', 'FrmFormsListHelper::maybe_clear_embed_posts_transient', 10, 2 );
+
 		// Form Shortcodes.
 		add_shortcode( 'formidable', 'FrmFormsController::get_form_shortcode' );
 
@@ -112,9 +115,24 @@ class FrmHooksController {
 		// Summary emails.
 		add_action( 'frm_daily_event', 'FrmEmailSummaryController::maybe_send_emails' );
 
+		// Gated Content — daily cleanup of expired tokens.
+		add_action( 'frm_daily_event', 'FrmGatedTokenHelper::cleanup_expired' );
+
+		// Gated Content Controller.
+		add_action( 'frm_trigger_gated_content_action', 'FrmGatedContentController::trigger', 10, 4 );
+		// pre_get_posts: allows private posts into the query when a valid token is present.
+		add_action( 'pre_get_posts', 'FrmGatedContentController::maybe_include_private_posts' );
+		// 'wp' fires after WP::query_posts() so get_queried_object_id() is available.
+		add_action( 'wp', 'FrmGatedContentController::maybe_unlock_post' );
+		add_action( 'save_post_frm_form_actions', 'FrmGatedContentController::on_action_updated', 10, 3 );
+		add_action( 'before_delete_post', 'FrmGatedContentController::on_action_deleted', 10, 2 );
+		add_shortcode( 'frm_gated_content', 'FrmGatedContentShortcodeController::shortcode' );
+		add_filter( 'frm_helper_shortcodes', 'FrmGatedContentController::add_shortcode_helper', 10, 3 );
+
 		FrmTransLiteHooksController::load_hooks();
 		FrmStrpLiteHooksController::load_hooks();
 		FrmSquareLiteHooksController::load_hooks();
+		FrmPayPalLiteHooksController::load_hooks();
 
 		// GDPR
 		add_filter( 'frm_is_field_required', 'FrmFieldGdpr::force_required_field', 10, 2 );
@@ -147,14 +165,18 @@ class FrmHooksController {
 
 		add_action( 'frm_after_duplicate_form', 'FrmFormActionsController::duplicate_form_actions', 20, 3 );
 
+		// Fields Model.
+		add_filter( 'frm_pro_available_fields', 'FrmField::show_update_for_pro_fields' );
+
 		// Forms Controller.
 		add_action( 'admin_menu', 'FrmFormsController::menu', 10 );
 		add_action( 'admin_head-toplevel_page_formidable', 'FrmFormsController::head' );
 		add_action( 'frm_after_field_options', 'FrmFormsController::logic_tip' );
-		add_filter( 'frm_fields_in_form_builder', 'FrmFormsController::update_form_builder_fields', 10, 2 );
+		add_filter( 'frm_fields_in_form_builder', 'FrmFormsController::update_form_builder_fields' );
 
 		add_filter( 'set-screen-option', 'FrmFormsController::save_per_page', 10, 3 );
 		add_action( 'admin_footer', 'FrmFormsController::insert_form_popup' );
+		add_action( 'admin_footer', 'FrmFormsController::print_forms_list_templates' );
 
 		// Elementor.
 		add_action( 'elementor/editor/footer', 'FrmElementorController::admin_init' );
@@ -182,6 +204,7 @@ class FrmHooksController {
 
 		// Simple Blocks Controller.
 		add_action( 'enqueue_block_editor_assets', 'FrmSimpleBlocksController::block_editor_assets' );
+		add_action( 'enqueue_block_assets', 'FrmSimpleBlocksController::block_assets' );
 
 		add_action( 'admin_init', 'FrmUsageController::schedule_send' );
 
@@ -204,10 +227,15 @@ class FrmHooksController {
 		add_action( 'admin_footer', 'FrmDeactivationFeedbackController::footer_html' );
 		add_action( 'deactivated_plugin', 'FrmDeactivationFeedbackController::set_feedback_expired_date' );
 
+		add_action( 'frm_email_styles_extra_settings', 'FrmEmailStylesController::show_upsell_settings' );
+
+		add_action( 'admin_init', 'FrmWelcomeTourController::admin_init' );
+
 		FrmDashboardController::load_admin_hooks();
 		FrmTransLiteHooksController::load_admin_hooks();
 		FrmStrpLiteHooksController::load_admin_hooks();
 		FrmSquareLiteHooksController::load_admin_hooks();
+		FrmPayPalLiteHooksController::load_admin_hooks();
 		FrmSMTPController::load_hooks();
 		FrmOnboardingWizardController::load_admin_hooks();
 		FrmAddonsController::load_admin_hooks();
@@ -265,6 +293,7 @@ class FrmHooksController {
 		// Form Templates Controller.
 		add_action( 'wp_ajax_frm_add_or_remove_favorite_template', 'FrmFormTemplatesController::ajax_add_or_remove_favorite' );
 		add_action( 'wp_ajax_frm_create_template', 'FrmFormTemplatesController::ajax_create_template' );
+		add_action( 'wp_ajax_frm_get_free_templates', 'FrmFormTemplatesController::ajax_get_free_templates' );
 
 		// Inbox.
 		add_action( 'wp_ajax_frm_inbox_dismiss', 'FrmInboxController::dismiss_message' );
@@ -304,10 +333,15 @@ class FrmHooksController {
 
 		// Reviews.
 		add_action( 'wp_ajax_frm_dismiss_review', 'FrmAppController::dismiss_review' );
-
 		add_action( 'wp_ajax_frm_small_screen_proceed', 'FrmAppController::small_screen_proceed' );
-
 		add_action( 'wp_ajax_frm_sale_banner_dismiss', 'FrmSalesApi::dismiss_banner' );
+
+		add_action( 'wp_ajax_frm_email_style_preview', 'FrmEmailStylesController::ajax_preview' );
+		add_action( 'wp_ajax_frm_send_test_email', 'FrmEmailStylesController::ajax_send_test_email' );
+
+		// Welcome Tour.
+		add_action( 'wp_ajax_frm_mark_checklist_step_as_completed', 'FrmWelcomeTourController::ajax_mark_checklist_step_as_completed' );
+		add_action( 'wp_ajax_frm_dismiss_welcome_tour', 'FrmWelcomeTourController::ajax_dismiss_welcome_tour' );
 	}
 
 	/**

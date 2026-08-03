@@ -337,7 +337,7 @@
 		const ariaLabel = __( 'Delete Application %s', 'formidable-pro' ).replace( '%s', data.name );
 		deleteOption.setAttribute( 'aria-label', ariaLabel );
 		deleteOption.setAttribute( 'title', __( 'Delete Application', 'formidable-pro' ) );
-		jQuery( deleteOption ).tooltip();
+		new bootstrap.Tooltip( deleteOption );
 		onClickPreventDefault( deleteOption, () => deleteApplication( data.termId ) );
 		return deleteOption;
 	}

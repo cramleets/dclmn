@@ -198,16 +198,16 @@ class Tribe__Events__REST__V1__Endpoints__Single_Organizer
 						],
 					],
 					'400' => [
-						'description' => __( 'The organizer post ID is missing or does not exist.', 'the-venues-calendar' ),
+						'description' => __( 'The organizer post ID is missing or does not exist.', 'the-events-calendar' ),
 					],
 					'403' => [
-						'description' => __( 'The current user cannot delete the organizer with the specified ID.', 'the-venues-calendar' ),
+						'description' => __( 'The current user cannot delete the organizer with the specified ID.', 'the-events-calendar' ),
 					],
 					'410' => [
-						'description' => __( 'The organizer with the specified ID has been deleted already.', 'the-venues-calendar' ),
+						'description' => __( 'The organizer with the specified ID has been deleted already.', 'the-events-calendar' ),
 					],
 					'500' => [
-						'description' => __( 'The organizer with the specified ID could not be deleted.', 'the-venues-calendar' ),
+						'description' => __( 'The organizer with the specified ID could not be deleted.', 'the-events-calendar' ),
 					],
 				],
 			],
@@ -458,13 +458,20 @@ class Tribe__Events__REST__V1__Endpoints__Single_Organizer
 	 * Whether the current user can delete posts of the type managed by the endpoint or not.
 	 *
 	 * @since 4.6
+	 * @since 6.15.16.1 Added more logic to check if the user can delete the organizer.
+	 *
+	 * @param WP_REST_Request $request The request object.
 	 *
 	 * @return bool
 	 */
-	public function can_delete() {
-		$cap = get_post_type_object( Tribe__Events__Main::ORGANIZER_POST_TYPE )->cap->delete_posts;
+	public function can_delete( ?WP_REST_Request $request = null ) {
+		$id = $request['id'] ?? null;
 
-		return current_user_can( $cap );
+		if ( ! $id ) {
+			return current_user_can( get_post_type_object( Tribe__Events__Main::ORGANIZER_POST_TYPE )->cap->delete_posts );
+		}
+
+		return current_user_can( get_post_type_object( Tribe__Events__Main::ORGANIZER_POST_TYPE )->cap->delete_post, $id );
 	}
 
 	/**
@@ -512,10 +519,19 @@ class Tribe__Events__REST__V1__Endpoints__Single_Organizer
 	 * Whether the current user can update content of this type or not.
 	 *
 	 * @since 4.6
+	 * @since 6.15.16.1 Added more logic to check if the user can edit the organizer.
+	 *
+	 * @param WP_REST_Request $request The request object.
 	 *
 	 * @return bool Whether the current user can update or not.
 	 */
-	public function can_edit() {
-		return $this->can_create();
+	public function can_edit( ?WP_REST_Request $request = null ) {
+		$id = $request['id'] ?? null;
+
+		if ( ! $id ) {
+			return current_user_can( get_post_type_object( Tribe__Events__Main::ORGANIZER_POST_TYPE )->cap->edit_posts );
+		}
+
+		return current_user_can( get_post_type_object( Tribe__Events__Main::ORGANIZER_POST_TYPE )->cap->edit_post, $id );
 	}
 }

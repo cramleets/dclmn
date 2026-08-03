@@ -293,13 +293,14 @@ class Builder {
 	 * @since 6.0.0
 	 * @since 6.1.3 Integration with memoization.
 	 * @since 6.15.1 Create working copies to preserve original parameter values for debug_backtrace().
+	 * @since 6.17.0 Made $data explicitly nullable.
 	 *
 	 * @param array<string>            $unique_by A list of columns that are marked as UNIQUE on the database.
 	 * @param array<string,mixed>|null $data      The data to be inserted or updated into the table.
 	 *
 	 * @return false|int The rows affected flag or false on failure.
 	 */
-	public function upsert( array $unique_by, array $data = null ) {
+	public function upsert( array $unique_by, ?array $data = null ) {
 		$working_unique_by = $unique_by;
 		$working_data      = $data;
 
@@ -482,16 +483,17 @@ class Builder {
 	/**
 	 * Perform updates against a model that already exists on the database.
 	 *
-	 * @since 6.1.3 Integration with memoization.
 	 * @since 6.0.0
+	 * @since 6.1.3 Integration with memoization.
+	 * @since 6.15.12 Mark $data as nullable.
 	 *
-	 * @param array|null $data    If the data is null the data of the model would be used to set an update, otherwise
+	 * @param array|null $data If the data is null the data of the model would be used to set an update, otherwise
 	 *                            an array of `column => value` are used to construct the series of updates to perform
 	 *                            against this model.
 	 *
 	 * @return bool|int False if the operation was unsuccessfully
 	 */
-	public function update( array $data = null ) {
+	public function update( ?array $data = null ) {
 		// Invalid on a where clause or previous value.
 		if ( $this->invalid ) {
 			return false;
@@ -1564,12 +1566,13 @@ class Builder {
 	 * Create an array of model instances to get the benefits of a model.
 	 *
 	 * @since 6.0.0
+	 * @since 6.15.12 Mark $raw as nullable.
 	 *
 	 * @param array|null $raw The result from a `$wpdb->get_results` call.
 	 *
 	 * @return array<Model> An array with the models with the raw results.
 	 */
-	private function create_collection( array $raw = null ) {
+	private function create_collection( ?array $raw = null ) {
 		if ( $raw === null ) {
 			return [];
 		}
