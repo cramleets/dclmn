@@ -2,7 +2,7 @@
 global $dclmn;
 $dclmn_user = dclmn_get_user();
 ?>
-<?php if (is_object($dclmn_user) && $dclmn_user->is_exec()): ?>
+<?php if (is_object($dclmn_user) && ($dclmn_user->is_exec() || $dclmn_user->is_cp())): ?>
   <?php
   $precincts = $dclmn->get_committee_people_table('raw');
   function get_address($post) {

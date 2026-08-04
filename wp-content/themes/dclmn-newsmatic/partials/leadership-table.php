@@ -3,7 +3,7 @@ global $dclmn;
 $dclmn_user = dclmn_get_user();
 $leadership = $dclmn->get_leadership();
 ?>
-<?php if (is_object($dclmn_user) && $dclmn_user->is_exec()): ?>
+<?php if (is_object($dclmn_user) && ($dclmn_user->is_exec() || $dclmn_user->is_cp())): ?>
   <?php get_template_part('partials/cp-nav'); ?>
   <div class="contact-table-toggles">
     <input id="cps-search-terms" placeholder="Search">
