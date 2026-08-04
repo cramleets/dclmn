@@ -1603,3 +1603,30 @@ body.hidden-sidebar.right-sidebar #theme-content .row .primary-content {
 .tribe-filter-bar {
     display: block;
 }
+
+.todays-meeting {
+    border: 1px solid var(--color-gray);
+    background-color: var(--color-root);
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+.todays-meeting-padding {
+    padding: 1em;
+    background-color: var(--color-light-gray);
+    border-top: 1px solid var(--color-gray)
+}
+
+.todays-meeting h3 {
+    padding: .25em;
+    text-transform: uppercase;
+    color: var(--color-white);
+}
+
+.todays-meeting span {
+    display: block;
+}
+
+.todays-meeting span:not(:last-of-type) {
+    margin-bottom: .75em;
+}
