@@ -1599,3 +1599,7 @@ body.hidden-sidebar.right-sidebar #theme-content .row .primary-content {
     width: 14px;
     height: 14px;
 }
+
+.tribe-filter-bar {
+    display: block;
+}
