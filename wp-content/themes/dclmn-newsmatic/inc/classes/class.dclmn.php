@@ -1270,7 +1270,9 @@ class DCLMN {
     }
 
     function ajax_events_search() {
-        die(newsletter_events_search());
+        $params = array();
+        parse_str($_REQUEST['data'], $params);
+        die(newsletter_events_search($params));
     }
 
     function ajax_events_preview() {

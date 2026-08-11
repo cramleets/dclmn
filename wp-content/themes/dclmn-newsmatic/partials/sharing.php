@@ -6,10 +6,29 @@ wp_enqueue_script('jquery-ui-datepicker');
 wp_register_style('jquery-ui-2', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css');
 
 $refresh_svg = '<svg fill="#000000" height="14px" width="14px" version="1.1" id="events-refresh" class="newsletter-events-preview" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-48.96 -48.96 587.56 587.56" xml:space="preserve" stroke="#000000" stroke-width="9.7929"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.97929"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M460.656,132.911c-58.7-122.1-212.2-166.5-331.8-104.1c-9.4,5.2-13.5,16.6-8.3,27c5.2,9.4,16.6,13.5,27,8.3 c99.9-52,227.4-14.9,276.7,86.3c65.4,134.3-19,236.7-87.4,274.6c-93.1,51.7-211.2,17.4-267.6-70.7l69.3,14.5 c10.4,2.1,21.8-4.2,23.9-15.6c2.1-10.4-4.2-21.8-15.6-23.9l-122.8-25c-20.6-2-25,16.6-23.9,22.9l15.6,123.8 c1,10.4,9.4,17.7,19.8,17.7c12.8,0,20.8-12.5,19.8-23.9l-6-50.5c57.4,70.8,170.3,131.2,307.4,68.2 C414.856,432.511,548.256,314.811,460.656,132.911z"></path> </g> </g></svg>';
+$event_categories = get_terms(array(
+  'taxonomy'   => 'tribe_events_cat',
+  'hide_empty' => false,
+));
 ?>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
 <?php get_template_part('partials/cp-nav'); ?>
 <h2>Events for the Newsletter</h2>
-<span class="newsletter-events-result"></span>
+<form id="events-search" method="post">
+  <div><input type="text" name="terms" placeholder="Search Terms"></div>
+  <div>
+    <select name="cats" multiple size="1" placeholder="Categories">
+      <option></option>
+      <?php foreach ($event_categories as $event_category): ?>
+        <option value="<?php echo $event_category->term_id ?>"><?php echo $event_category->name ?></option>
+      <?php endforeach; ?>
+    </select>
+  </div>
+  <div>
+    <input type="submit" value="search" class="button">
+  </div>
+</form>
 <div class="flex">
   <div>
     <h3>Search Results</h3>
@@ -86,6 +105,7 @@ $refresh_svg = '<svg fill="#000000" height="14px" width="14px" version="1.1" id=
     padding: .25em .5em;
     position: relative;
     cursor: move;
+    list-style-type: none;
   }
 
   .flex>div ul li.ui-draggable-disabled {
@@ -142,6 +162,25 @@ $refresh_svg = '<svg fill="#000000" height="14px" width="14px" version="1.1" id=
     line-height: 1;
     padding: .25em .5em;
     float: right;
+    width: 130px;
+    text-align: center;
+  }
+
+  .select2-selection--multiple .select2-selection__rendered:empty {
+    display: none;
+  }
+
+  form#events-search input[type=text],
+  form#events-search select {
+    width: 100%;
+  }
+
+  form#events-search > div {
+    margin-bottom: .5em;
+  }
+
+  form#events-search .button {
+    font-size: .85em;
   }
 </style>
 <script>
@@ -149,14 +188,18 @@ $refresh_svg = '<svg fill="#000000" height="14px" width="14px" version="1.1" id=
     $('.newsletter-events-copy').on('click', function(e) {
       e.preventDefault();
 
-      const html = $('#preview').html();
+      const $trigger = $(this);
+      const trigger_text = $trigger.text();
 
-      $('.newsletter-events-result').removeClass('session-login-message').hide();
+      const html = $('#preview').html();
 
       navigator.clipboard.writeText(html)
         .then(function() {
           console.log('HTML copied to clipboard');
-          $('.newsletter-events-result').html('Copied.').addClass('session-login-message').fadeIn();
+          $trigger.text('Copied.').addClass('copied-result');
+          setTimeout(function() {
+            $trigger.text(trigger_text).removeClass('copied-result')
+          }, 1500);
         })
         .catch(function(err) {
           console.error('Failed to copy:', err);
@@ -210,6 +253,7 @@ $refresh_svg = '<svg fill="#000000" height="14px" width="14px" version="1.1" id=
     function events_search() {
       data = {
         action: 'events_search',
+        data: $('form#events-search').serialize()
       }
 
       $('#available').addClass('loading').html('<img src="/wp-includes/images/spinner.gif">');
@@ -239,7 +283,17 @@ $refresh_svg = '<svg fill="#000000" height="14px" width="14px" version="1.1" id=
       update_preview();
     });
 
+    $('form#events-search').on('submit', function(e) {
+      e.preventDefault();
+      events_search();
+    });
+
+    $('form#events-search select').select2({
+      placeholder: "Categories",
+      allowClear: true,
+    });
+
     //init the events search
-    events_search();
+    // events_search();
   });
 </script>

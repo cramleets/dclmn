@@ -56,25 +56,6 @@ $old_html = <<<HTML
 HTML;
 
 
-$html = <<<HTML
-<table border="0" cellpadding="24" cellspacing="0" width="100%" style="border-collapse:separate" role="presentation">
-  <tbody>
-    <tr>
-      <td valign="top" bgcolor="#bgcolor#" fgcolor="#fgcolor#" style="background-color: #bgcolor#; color: #fgcolor#; font-size: 16px; font-family: 'DM Sans', sans-serif; padding-left:24px; padding-right:24px; padding-top:12px; padding-bottom:12px">
-        <p><img src="#img_src#"></p>
-        <p>
-          <a href="#event_url#" target="_blank"style="color:#fgcolor#; text-decoration: none; font-size: 16px;"><strong>#event_post_title#</strong></a>
-          <br>
-          <span style="font-size: 14px;">#formatted_date#</span>
-        </p>
-        <div style="font-size: 15px; color: #000;">#event_content#</div>
-        <p><a href="#event_url#" target="_blank"style="color:#fgcolor#; text-decoration: underline;"><strong>CLICK HERE</strong></a></p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-HTML;
-
 foreach ($_REQUEST['ids'] as $id) {
   $i++;
 
@@ -110,18 +91,27 @@ foreach ($_REQUEST['ids'] as $id) {
   $event_content = strip_tags($event->post_content, ['b', 'i', 'u', 'strong', 'em', 'span', 'a']);
   $event_content = trim($event_content);
 
-  $replacements = [
-    '#bgcolor#' => $bgcolor,
-    '#fgcolor#' => $fgcolor,
-    '#event_url#' => $event_url,
-    '#formatted_date#' => $formatted_date,
-    '#event_post_title#' => $event->post_title,
-    '#event_content#' => $event->post_content,
-    '#img_src#' => dclmn_thumb(get_the_post_thumbnail_url($event->ID, 'full'), ['width'=>280]),
-  ];
+  $img_src = dclmn_thumb(get_the_post_thumbnail_url($event->ID, 'full'), ['width' => 280]);
 
-  $out .= str_replace(array_keys($replacements), array_values($replacements), $html);
-  $out .= PHP_EOL;
+  $html = '';
+  $html .= '<table border="0" cellpadding="24" cellspacing="0" width="100%" style="border-collapse:separate" role="presentation">';
+  $html .= '<tbody>';
+  $html .= '<tr>';
+  $html .= '<td valign="top" bgcolor="'. $bgcolor .'" fgcolor="'. $fgcolor .'" style="background-color: '. $bgcolor .'; color: '. $fgcolor .'; font-size: 16px; font-family: \'DM Sans\', sans-serif; padding-left:24px; padding-right:24px; padding-top:12px; padding-bottom:12px">';
+  if (!empty($img_src)) $html .= '<p><img src="'. $img_src .'"></p>';
+  $html .= '<p>';
+  $html .= '<a href="'. $event_url .'" target="_blank"style="color:'. $fgcolor .'; text-decoration: none; font-size: 16px;"><strong>'. $event->post_title .'</strong></a>';
+  $html .= '<br>';
+  $html .= '<span style="font-size: 14px;">'. $formatted_date .'</span>';
+  $html .= '</p>';
+  $html .= '<div style="font-size: 15px; color: #000;">'. $event->post_content .'</div>';
+  $html .= '<p><a href="'. $event_url .'" target="_blank"style="color:'. $fgcolor .'; text-decoration: underline;"><strong>CLICK HERE</strong></a></p>';
+  $html .= '</td>';
+  $html .= '</tr>';
+  $html .= '</tbody>';
+  $html .= '</table>';
+  
+  $out .= $html . PHP_EOL;
 }
 
 die($out);

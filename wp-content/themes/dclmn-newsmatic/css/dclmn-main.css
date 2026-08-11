@@ -1099,6 +1099,7 @@ input.error {
     display: none;
 }
 
+.newsletter-events-copy.button.copied-result,
 .session-login-message,
 .session-login-error,
 #cp-login-result .result {

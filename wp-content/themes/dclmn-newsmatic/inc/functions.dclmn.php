@@ -870,6 +870,21 @@ function newsletter_events_search($args = []) {
 
     $args = wp_parse_args($args, $defaults);
 
+    // pobj($args, 1);
+    if ($args['terms']) {
+        $args['s'] = $args['terms'];
+    }
+
+    if ($args['cats']) {
+        $args['tax_query'] = [
+            [
+                'taxonomy' => 'tribe_events_cat',
+                'field'    => 'id',
+                'terms'    => (array) $args['cats'],
+                'operator' => 'IN',
+            ],
+        ];
+    }
 
     $events = dclmn_get_events($args);
 
@@ -926,15 +941,17 @@ function newsletter_events_search($args = []) {
             $out .= '><a href="' . admin_url('post.php?post=' . $post->ID . '&action=edit') . '" target="_blank">' . $post->post_title . '</a>';
             $out .= '<div class="clear"></div>';
             //$out .= '<div style="float: left;">';
-            $out .= '<small>' . date('m/d/Y', strtotime($post->post_date)) . '</small>';
-            $out .= ' <small>|</small>';
-            $out .= ' <small>ID: ' . $post->ID . '</small>';
-            $out .= ' <small>|</small>';
-            //$out .= ' <small>Site: ' . $site_abv . '</small>';
-            //$out .= ' <small>|</small>';
-            //$out .= '</div>';
+            $out .= '<span>' . $formatted_date . '</span>';
+            if (current_user_can('edit_others_posts')) {
+                $out .= ' <small>|</small>';
+                $out .= ' <small>ID: ' . $post->ID . '</small>';
+            }
+            $out .= '<div class="clear"></div>';
+            foreach (get_the_terms($post->ID, 'tribe_events_cat') as $term) {
+                $out .= $term->name . ', ';
+            }
+            $out = rtrim($out, ', ');
 
-            $out .= ' <small>' . ucfirst($post->post_type) . '</small>';
             $out .= '<div class="sort_terms_posts_post_controls">';
             $out .= ' <span class="delete" title="delete">X</span>';
             // $out .= ' <span class="send_to_top" title="send to top">&uarr;</span>';
