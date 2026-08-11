@@ -38,16 +38,20 @@ function dclmn_get_posts($args) {
 }
 
 function dclmn_auth($permission) {
-    $return = false;
     if (current_user_can('edit_others_posts')) {
-        $return = true;
-    } elseif ('exec' == $permission && dclmn_user_is_exec()) {
-        $return = true;
-    } elseif ('cp' == $permission && dclmn_user_is_cp()) {
-        $return = true;
+        return true;
     }
 
-    return $return;
+    switch ($permission) {
+        case 'exec':
+            return dclmn_user_is_exec();
+
+        case 'cp':
+            return dclmn_user_is_exec() || dclmn_user_is_cp();
+
+        default:
+            return false;
+    }
 }
 
 function dclmn_get_post($post_id) {
@@ -847,13 +851,21 @@ function format_event_schedule($start_date, $end_date, $all_day = false) {
     );
 }
 
-function newsletter_events($args = []) {
+function newsletter_events_search($args = []) {
     $defaults = [
         'show_date_box' => true,
         'show_title' => true,
         'show_date' => true,
         'show_more' => true,
         'posts_per_page' => 200,
+        // 'tax_query' => [
+        //     [
+        //         'taxonomy' => 'tribe_events_cat',
+        //         'field'    => 'slug',
+        //         'terms'    => ['canvassing', 'private', 'campaign-dates', 'election-dates', 'election-date-featured'],
+        //         'operator' => 'NOT IN',
+        //     ],
+        // ],
     ];
 
     $args = wp_parse_args($args, $defaults);
@@ -862,105 +874,77 @@ function newsletter_events($args = []) {
     $events = dclmn_get_events($args);
 
     $out = '';
+    $out .= '<div class="sort_terms_posts">';
+    $out .= '<ul id="taxonomy-posts-search-results">';
+
     $i = 0;
-    foreach ($events as $event) {
-        $i++;
 
-        $display_date = $event->dates->start_display;
+    if (!count($events)) {
+        $out .= '<li class="error">No events found.</li>';
+    } else {
+        foreach ($events as $event) {
+            // if ('Postcarding' == $event->post_title) continue;
+            $i++;
+
+            $display_date = $event->dates->start_display;
 
 
-        $event_week_day  = $display_date->format_i18n('l');
-        $event_week_day_short  = $display_date->format_i18n('D');
-        $event_week_day_shorter = substr($event_week_day_short, 0, 2);
+            $event_week_day  = $display_date->format_i18n('l');
+            $event_week_day_short  = $display_date->format_i18n('D');
+            $event_week_day_shorter = substr($event_week_day_short, 0, 2);
 
-        $event_day_num   = $display_date->format_i18n('j');
-        $event_month   = $display_date->format_i18n('F');
-        $event_month_short   = $display_date->format_i18n('n');
+            $event_day_num   = $display_date->format_i18n('j');
+            $event_month   = $display_date->format_i18n('F');
+            $event_month_short   = $display_date->format_i18n('n');
 
-        $event_time = tribe_format_date($event->start_date, false, 'g:i A');
-        $event_time .= ' – ';
-        $event_time .= tribe_format_date($event->end_date, false, 'g:i A');
-        $display_time_format = $event->dates->start->format('i') === '00'
-            ? 'g a'
-            : 'g:i a';
+            $event_time = tribe_format_date($event->start_date, false, 'g:i A');
+            $event_time .= ' – ';
+            $event_time .= tribe_format_date($event->end_date, false, 'g:i A');
+            $display_time_format = $event->dates->start->format('i') === '00'
+                ? 'g a'
+                : 'g:i a';
 
-        $event_time_short = $event->dates->start->format_i18n($display_time_format);
+            $event_time_short = $event->dates->start->format_i18n($display_time_format);
 
-        $formatted_date = format_event_schedule($event->start_date, $event->end_date, $event->all_day);
+            $formatted_date = format_event_schedule($event->start_date, $event->end_date, $event->all_day);
 
-        $bgcolors = ['#E0F1F8', '#ffffff'];
-        $bgcolor = $bgcolors[$i % count($bgcolors)];
+            $bgcolors = ['#E0F1F8', '#ffffff'];
+            $bgcolor = $bgcolors[$i % count($bgcolors)];
 
-        $fgcolors = ['#1930a6', '#1930a6'];
-        $fgcolor = $fgcolors[$i % count($fgcolors)];
+            $fgcolors = ['#1930a6', '#1930a6'];
+            $fgcolor = $fgcolors[$i % count($fgcolors)];
 
-        $event_url = get_permalink($event);
+            $event_url = get_permalink($event);
 
-        $event_content = strip_tags($event->post_content, ['b', 'i', 'u', 'strong', 'em', 'span', 'a']);
-        $event_content = trim($event_content);
+            $event_content = strip_tags($event->post_content, ['b', 'i', 'u', 'strong', 'em', 'span', 'a']);
+            $event_content = trim($event_content);
+            $post = $event;
+            $out .= '<li id="' . $post->site_id . '_' . $post->ID . '"';
+            //$out .= ' data-taxonomy="'. $taxonomy .'"';
+            //$out .= ' data-term-id="'. $term_id .'"';
+            $out .= ' data-post_id="' . $post->ID . '"';
+            $out .= '><a href="' . admin_url('post.php?post=' . $post->ID . '&action=edit') . '" target="_blank">' . $post->post_title . '</a>';
+            $out .= '<div class="clear"></div>';
+            //$out .= '<div style="float: left;">';
+            $out .= '<small>' . date('m/d/Y', strtotime($post->post_date)) . '</small>';
+            $out .= ' <small>|</small>';
+            $out .= ' <small>ID: ' . $post->ID . '</small>';
+            $out .= ' <small>|</small>';
+            //$out .= ' <small>Site: ' . $site_abv . '</small>';
+            //$out .= ' <small>|</small>';
+            //$out .= '</div>';
 
-        $html = <<<HTML
-<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:separate" role="presentation">
-  <tbody>
-    <tr>
-      <td style="padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;border:0;border-radius:0" valign="top">
-        <table width="100%" style="border:0;background-color:{$bgcolor};border-radius:0;border-collapse:separate">
-          <tbody>
-            <tr>
-              <td style="padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:12px">
-                <p style="text-align: left;">
-                  <strong>
-                    <span style="color:{$fgcolor};">
-                      <span style="font-family: 'DM Sans', sans-serif">
-                         <a href="{$event_url}" target="_blank"style="color:{$fgcolor}; text-decoration: none;">{$event->post_title}</a>
-                      </span>
-                    </span>
-                  </strong>
-                  <br>
-                  <span style="color:{$fgcolor};">
-                    <span style="font-size: 14px">
-                      <span style="font-family: 'DM Sans', sans-serif">{$formatted_date}</span>
-                    </span>
-                  </span>
-                </p>
-                <p style="text-align: left;">
-                  <span style="color:#000;">
-                    <span style="font-size: 15px">
-                      <span style="font-family: &quot;DM Sans&quot;, sans-serif">{$event_content}</span>
-                    </span>
-                  </span>
-                </p>
-                <p style="text-align: left;">
-                  <a href="{$event_url}" target="_blank"style="color:{$fgcolor}; text-decoration: underline;">
-                    <strong>
-                      <span style="font-size: 15px">
-                        <span style="font-family: 'DM Sans', sans-serif" style="color:{$fgcolor};">CLICK HERE</span>
-                      </span>
-                    </strong>
-                  </a>
-                </p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-  </tbody>
-</table>
-HTML;
-
-        if (0) {
-            $out .= '<div>';
-            $out .= '<strong>' . $event->post_title . '</strong>';
-            //$out .= ", {$event_week_day} {$event_month_short}/{$event_day_num} {$event_time_short}";
-            $out .= ', ' . $formatted_date;
-            $out .= '<div>' . $event->post_content . '</div>';
+            $out .= ' <small>' . ucfirst($post->post_type) . '</small>';
+            $out .= '<div class="sort_terms_posts_post_controls">';
+            $out .= ' <span class="delete" title="delete">X</span>';
+            // $out .= ' <span class="send_to_top" title="send to top">&uarr;</span>';
             $out .= '</div>';
-            $out .= '<br>';
-        } else {
-            $out .= $html;
+            $out . '</li>';
         }
     }
+
+    $out .= '</ul>';
+    $out .= '</div>';
 
     // $out = '<textarea>'. $out .'</textarea>';
 
@@ -1173,4 +1157,10 @@ function parse_ics_datetime($value) {
         'date' => '',
         'time' => '',
     ];
+}
+
+
+function newsletter_events_preview() {
+    get_template_part('partials/newsetter-events');
+    exit;
 }
