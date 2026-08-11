@@ -110,6 +110,14 @@ class DCLMN {
         add_action('wp_ajax_get_room_reservations_ics', [$this, 'ajax_get_room_reservations_ics']);
         add_action('wp_ajax_nopriv_get_room_reservations_ics', [$this, 'ajax_get_room_reservations_ics']);
 
+        add_action('wp_ajax_get_events_for_newsletter', [$this, 'ajax_get_events_for_newsletter']);
+        add_action('wp_ajax_nopriv_get_events_for_newsletter', [$this, 'ajax_get_events_for_newsletter']);
+
+        add_action('wp_ajax_events_search', [$this, 'ajax_events_search']);
+        add_action('wp_ajax_nopriv_events_search', [$this, 'ajax_events_search']);
+        add_action('wp_ajax_events_preview', [$this, 'ajax_events_preview']);
+        add_action('wp_ajax_nopriv_events_preview', [$this, 'ajax_events_preview']);
+
         add_action('newsmatic_main_banner_hook', [$this, 'newsmatic_main_banner_hook'], 1);
 
         add_filter('tec_events_views_v2_view_header_title', function ($title, $obj) {
@@ -162,6 +170,9 @@ class DCLMN {
             elseif (is_object($post) && $post->post_name) {
                 $post_name = $post->post_name;
                 if ('cp' == get_post_field('post_name', $post->post_parent) && 'cp' != $post->post_name) {
+                    $classes[] = 'hidden-sidebar';
+                }
+                if ('sharing' == $post->post_name) {
                     $classes[] = 'hidden-sidebar';
                 }
             }
@@ -1111,7 +1122,7 @@ class DCLMN {
     }
 
     function newsmatic_main_banner_hook() {
-        get_template_part('partials/canvassing-slider');
+        //get_template_part('partials/canvassing-slider');
     }
 
 
@@ -1252,5 +1263,17 @@ class DCLMN {
             $out .= file_get_contents($this->room_reservations_calendar_url);
         }
         die($out);
+    }
+
+    function ajax_get_events_for_newsletter() {
+        die('');
+    }
+
+    function ajax_events_search() {
+        die(newsletter_events_search());
+    }
+
+    function ajax_events_preview() {
+        die(newsletter_events_preview());
     }
 }
