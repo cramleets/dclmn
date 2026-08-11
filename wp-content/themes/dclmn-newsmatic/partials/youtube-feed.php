@@ -45,9 +45,9 @@ function output_youtube_feed($feed_url) {
 }
 
 $out = '';
-$out .= '<h2>Live Streams</h2>';
-$out .= output_youtube_feed($live);
-$out .= '<hr>';
 $out .= '<h2>Videos</h2>';
 $out .= output_youtube_feed($videos);
+$out .= '<hr>';
+$out .= '<h2>Live Streams</h2>';
+$out .= output_youtube_feed($live);
 echo $out;
