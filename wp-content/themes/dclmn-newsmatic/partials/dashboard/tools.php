@@ -3,6 +3,7 @@ $dclmn_user = $args['dclmn_user'];
 
 $zoom = new DCLMN_Zoom_API();
 $meetings = $zoom->get_meetings();
+$todays_meeting = '';
 foreach($meetings as $meeting) {
   $dt = new DateTime($meeting['start_time']);
   $dt->setTimezone(new DateTimeZone($meeting['timezone']));
@@ -10,7 +11,6 @@ foreach($meetings as $meeting) {
   $meeting_time = $dt->format('g:i a');
 
   if (stristr($meeting['topic'], 'general meeting') && $dt->format('Y-m-d') === date('Y-m-d')) {
-    $todays_meeting = '';
     $todays_meeting .= '<div class="todays-meeting">';
     $todays_meeting .= '<h3>Tonight\'s Meeting - '. $meeting_time .'</h3>';
     $todays_meeting .= '<div class="todays-meeting-padding">';
