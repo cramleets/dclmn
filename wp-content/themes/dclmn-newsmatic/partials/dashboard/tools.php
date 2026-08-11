@@ -47,14 +47,14 @@ foreach($meetings as $meeting) {
       </ul>
       <h3>DCLMN Resources</h3>
       <ul>
-        <li><a href="<?php echo get_stylesheet_directory_uri() ?>/assets/dclmn-roberts-rules-cheat-sheet.pdf" target="_blank">Robert's Rules Cheat Sheet</a></li>
-        <li><a href="<?php echo get_stylesheet_directory_uri() ?>/assets/dclmn-guide-to-welcoming-new-residents.pdf" target="_blank">Guide to Welcoming New Residents</a></li>
+        <li><a href="<?php echo home_url('document/roberts-rules-cheat-sheet/') ?>" target="_blank">Robert's Rules Cheat Sheet</a></li>
+        <li><a href="<?php echo home_url('document/dclmn-guide-to-welcoming-new-residents/') ?>" target="_blank">Guide to Welcoming New Residents</a></li>
         <li><a href="https://drive.google.com/drive/folders/1aKBNH8LehMBqKRV_xzOli_XcCN9eWjkB" target="_blank">Petitions</a></li>
         <li><a href="<?php echo home_url('subcommittees/') ?>" target="_blank">Subcommittees</a></li>
         <li>
           Generic Proxy Form:
-          <a href="<?php echo get_stylesheet_directory_uri() ?>/assets/dclmn-proxy-form-generic.pdf" target="_blank">PDF</a> |
-          <a href="<?php echo get_stylesheet_directory_uri() ?>/assets/dclmn-proxy-form-generic.docx" target="_blank">Word Doc</a>
+          <a href="<?php echo home_url('document/dclmn-proxy-form-pdf/') ?>" target="_blank">PDF</a> |
+          <a href="<?php echo home_url('document/dclmn-proxy-form-word/') ?>" target="_blank">Word Doc</a>
         </li>
       </ul>
       <?php if (dclmn_user_is_exec()): ?>
