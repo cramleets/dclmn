@@ -4,18 +4,21 @@ $dclmn_user = $args['dclmn_user'];
 $zoom = new DCLMN_Zoom_API();
 $meetings = $zoom->get_meetings();
 $todays_meeting = '';
-foreach($meetings as $meeting) {
+foreach ($meetings as $meeting) {
   $dt = new DateTime($meeting['start_time']);
   $dt->setTimezone(new DateTimeZone($meeting['timezone']));
   $meeting_date = $dt->format('l, F j, Y');
   $meeting_time = $dt->format('g:i a');
 
-  if (stristr($meeting['topic'], 'general meeting') && $dt->format('Y-m-d') === date('Y-m-d')) {
+  $is_today = $dt->format('Y-m-d') === date('Y-m-d');
+  $is_meeting = stristr($meeting['topic'], 'general meeting') || stristr($meeting['topic'], 'exec meeting');
+
+  if ($is_today && $is_meeting) {
     $todays_meeting .= '<div class="todays-meeting">';
-    $todays_meeting .= '<h3>Tonight\'s Meeting - '. $meeting_time .'</h3>';
+    $todays_meeting .= '<h3>Tonight\'s Meeting - ' . $meeting_time . '</h3>';
     $todays_meeting .= '<div class="todays-meeting-padding">';
-    $todays_meeting .= '<a href="'. $meeting['join_url'] .'" target="_blank">';
-    $todays_meeting .= '<span>'. $meeting['topic'] .'</span>';
+    $todays_meeting .= '<a href="' . $meeting['join_url'] . '" target="_blank">';
+    $todays_meeting .= '<span>' . $meeting['topic'] . '</span>';
     $todays_meeting .= '<span><strong>Click Here to Join the Meeting</strong></span>';
     $todays_meeting .= '</a>';
     // $todays_meeting .= '<br><span>'. $meeting['join_url'] .'</span>';
