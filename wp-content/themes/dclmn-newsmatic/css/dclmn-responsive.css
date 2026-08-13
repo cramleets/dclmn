@@ -327,6 +327,14 @@
     .room-request-flex > div {
         width: 100%;
     }
+    
+    .tribe-filter-bar.tribe-filter-bar--horizontal {
+        position: relative !important;
+    }
+
+    .tribe-events .tribe-events-calendar-month__day-date-daynum {
+        color: var(--color-white);
+    }
 
     /* #header-menu {
         position: fixed;
@@ -674,6 +682,14 @@
 
     .tribe-events .tribe-events-header__events-bar {
         margin-bottom: 1em;
+    }
+
+    .tribe-events-c-top-bar.tribe-events-header__top-bar {
+        display: block;
+    }
+
+    .tribe-events-c-subscribe-dropdown__container {
+        margin-top: .5em !important;
     }
 }
 
