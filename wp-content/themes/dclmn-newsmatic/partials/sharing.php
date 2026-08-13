@@ -172,12 +172,18 @@
       display: none;
     }
 
+    form#events-search {
+      background-color: var(--color-light-gray);
+      padding: 1em;
+      border: 1px solid var(--color-gray);
+    }
+
     form#events-search input[type=text],
     form#events-search select {
       width: 100%;
     }
 
-    form#events-search>div {
+    form#events-search>div:not(:last-of-type) {
       margin-bottom: .5em;
     }
 
