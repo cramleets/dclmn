@@ -4,6 +4,7 @@ $out = '';
 $i = 0;
 $bgcolors = ['#E0F1F8', '#ffffff'];
 $fgcolors = ['#1930a6', '#1930a6'];
+$images = filter_var($_REQUEST['images'], FILTER_VALIDATE_BOOLEAN);
 
 $old_html = <<<HTML
 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:separate" role="presentation">
@@ -97,20 +98,20 @@ foreach ($_REQUEST['ids'] as $id) {
   $html .= '<table border="0" cellpadding="24" cellspacing="0" width="100%" style="border-collapse:separate" role="presentation">';
   $html .= '<tbody>';
   $html .= '<tr>';
-  $html .= '<td valign="top" bgcolor="'. $bgcolor .'" fgcolor="'. $fgcolor .'" style="background-color: '. $bgcolor .'; color: '. $fgcolor .'; font-size: 16px; font-family: \'DM Sans\', sans-serif; padding-left:24px; padding-right:24px; padding-top:12px; padding-bottom:12px">';
-  if (!empty($img_src)) $html .= '<p><img src="'. $img_src .'"></p>';
+  $html .= '<td valign="top" bgcolor="' . $bgcolor . '" fgcolor="' . $fgcolor . '" style="background-color: ' . $bgcolor . '; color: ' . $fgcolor . '; font-size: 16px; font-family: \'DM Sans\', sans-serif; padding-left:24px; padding-right:24px; padding-top:12px; padding-bottom:12px">';
+  if ($images && !empty($img_src)) $html .= '<p><img src="' . $img_src . '"></p>';
   $html .= '<p>';
-  $html .= '<a href="'. $event_url .'" target="_blank"style="color:'. $fgcolor .'; text-decoration: none; font-size: 16px;"><strong>'. $event->post_title .'</strong></a>';
+  $html .= '<a href="' . $event_url . '" target="_blank"style="color:' . $fgcolor . '; text-decoration: none; font-size: 16px;"><strong>' . $event->post_title . '</strong></a>';
   $html .= '<br>';
-  $html .= '<span style="font-size: 14px;">'. $formatted_date .'</span>';
+  $html .= '<span style="font-size: 14px;">' . $formatted_date . '</span>';
   $html .= '</p>';
-  $html .= '<div style="font-size: 15px; color: #000;">'. $event->post_content .'</div>';
-  $html .= '<p><a href="'. $event_url .'" target="_blank"style="color:'. $fgcolor .'; text-decoration: underline;"><strong>CLICK HERE</strong></a></p>';
+  $html .= '<div style="font-size: 15px; color: #000;">' . $event->post_content . '</div>';
+  $html .= '<p><a href="' . $event_url . '" target="_blank"style="color:' . $fgcolor . '; text-decoration: underline;"><strong>CLICK HERE</strong></a></p>';
   $html .= '</td>';
   $html .= '</tr>';
   $html .= '</tbody>';
   $html .= '</table>';
-  
+
   $out .= $html . PHP_EOL;
 }
 

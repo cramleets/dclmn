@@ -47,6 +47,7 @@
       <h3>
         Preview
         <?php echo $refresh_svg ?>
+        <label><input type="checkbox" id="event-preview-images"> Images</label>
         <span class="newsletter-events-copy button">Copy Events HTML</span>
       </h3>
       <div>
@@ -242,6 +243,7 @@
         data = {
           action: 'events_preview',
           ids: sortedIDs,
+          images: $('#event-preview-images').is(':checked'),
         }
 
         $('#preview').addClass('loading').html('<img src="/wp-includes/images/spinner.gif">');
@@ -280,7 +282,7 @@
         update_preview();
       });
 
-      $('.newsletter-events-preview').on('click', function() {
+      $('.newsletter-events-preview, #event-preview-images').on('click', function() {
         update_preview();
       });
 
