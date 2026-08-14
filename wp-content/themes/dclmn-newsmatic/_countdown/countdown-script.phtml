@@ -1,0 +1,52 @@
+<script>
+  function runCountdown(countDownDate, refreshURL) {
+    var resourceTimer = setInterval(function () {
+      var now = new Date().getTime();
+      var timeleft = countDownDate - now;
+
+      //countdown is done
+      if (timeleft <= 0) {
+        //clear the timer
+        clearInterval(resourceTimer);
+
+        //redirect the user
+        window.location.href = refreshURL;
+        
+        //a pretty little message in case refresh fails
+        jQuery('#countdown').fadeOut(function () {
+          setTimeout(function () {
+            jQuery('#countdown').html('<a href="' + refresh_url + '">Click Here If Your Browser Does Not Refresh</a>').fadeIn();
+          }, 500);
+        });
+      }
+
+      //ticking away the moments that make up a dull day
+      else {
+        //init countdown parts
+        var countdown = {
+          day: Math.floor(timeleft / (1000 * 60 * 60 * 24)),
+          hour: Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minute: Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60)),
+          second: Math.floor((timeleft % (1000 * 60)) / 1000),
+        };
+
+        //init string
+        var time_string = '';
+
+        //loop through countdown parts
+        for (var k in countdown) {
+          //get the value
+          v = countdown[k];
+          
+          //build the string
+          time_string += '<span class="countdown-piece countdown-' + k + '">';
+          time_string += '<span class="countdown-value">' + v + '</span>';
+          time_string += '<span class="countdown-label">' + ((v == 1) ? k : k + 's') + '</span>';
+          time_string += '</span>';
+        }
+        jQuery('#countdown').fadeIn(250);
+        jQuery('#countdown-timer').html(time_string);
+      }
+    }, 1000);
+  }
+</script>

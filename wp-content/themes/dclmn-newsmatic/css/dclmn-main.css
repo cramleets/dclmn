@@ -1631,3 +1631,8 @@ body.hidden-sidebar.right-sidebar #theme-content .row .primary-content {
 .todays-meeting span:not(:last-of-type) {
     margin-bottom: .75em;
 }
+
+.main-banner-wrap .slick-arrow {
+    visibility: visible;
+    background-color: #e6e6e6;
+}

@@ -29,7 +29,8 @@ class DCLMN {
             wp_enqueue_style($parent_style, get_template_directory_uri() . '/style.css', [], filemtime(get_template_directory() . '/style.css'));
             wp_enqueue_style('dclmn-child', get_stylesheet_directory_uri() . '/css/dclmn-main.css', [$parent_style], filemtime(get_stylesheet_directory() . '/css/dclmn-main.css'));
             wp_enqueue_style('dclmn-modals', get_stylesheet_directory_uri() . '/css/dclmn-modals.css', ['dclmn-child'], filemtime(get_stylesheet_directory() . '/css/dclmn-modals.css'));
-            wp_enqueue_style('dclmn-responsive', get_stylesheet_directory_uri() . '/css/dclmn-responsive.css', ['dclmn-child'], filemtime(get_stylesheet_directory() . '/css/dclmn-responsive.css'));
+            wp_enqueue_style('dclmn-countdown', get_stylesheet_directory_uri() . '/css/dclmn-countdown.css', ['dclmn-child'], filemtime(get_stylesheet_directory() . '/css/dclmn-countdown.css'));
+            wp_enqueue_style('dclmn-responsive', get_stylesheet_directory_uri() . '/css/dclmn-responsive.css', ['dclmn-countdown'], filemtime(get_stylesheet_directory() . '/css/dclmn-responsive.css'));
             wp_enqueue_style('jquery-ui', 'https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css', [], '1.13.2');
 
             wp_enqueue_script('dclmn', get_stylesheet_directory_uri() . '/js/dclmn.js', ['jquery'], filemtime(get_stylesheet_directory() . '/js/dclmn.js'));
@@ -61,6 +62,8 @@ class DCLMN {
 
         add_action('newsmatic_after_header_hook', 'newsmatic_header_ads_banner_part', 10);
         add_action('newsmatic_main_banner_hook', 'newsmatic_header_ads_banner_part_footer', 999);
+        add_action('newsmatic_main_banner_hook', [$this, 'newsmatic_main_banner_hook'], 1);
+        add_action('newsmatic_before_footer_section', [$this, 'newsmatic_before_footer_section'], 1);
 
         $path = trailingslashit(get_stylesheet_directory()) . 'partials';
         foreach (new DirectoryIterator($path) as $fileInfo) {
@@ -117,8 +120,6 @@ class DCLMN {
         add_action('wp_ajax_nopriv_events_search', [$this, 'ajax_events_search']);
         add_action('wp_ajax_events_preview', [$this, 'ajax_events_preview']);
         add_action('wp_ajax_nopriv_events_preview', [$this, 'ajax_events_preview']);
-
-        add_action('newsmatic_main_banner_hook', [$this, 'newsmatic_main_banner_hook'], 1);
 
         add_filter('tec_events_views_v2_view_header_title', function ($title, $obj) {
             if (empty($title)) $title = 'Events';
@@ -1123,6 +1124,11 @@ class DCLMN {
 
     function newsmatic_main_banner_hook() {
         //get_template_part('partials/canvassing-slider');
+        //get_template_part('partials/countdown', NULL, ['footer'=>'Until The Polls Open']);
+    }
+
+    function newsmatic_before_footer_section() {
+        get_template_part('partials/countdown', NULL, ['footer'=>'Until The Polls Open']);
     }
 
 
