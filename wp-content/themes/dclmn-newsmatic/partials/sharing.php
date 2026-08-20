@@ -121,6 +121,7 @@
 
     .flex {
       margin-top: 1em;
+      justify-content: space-around;
     }
 
     .flex>div {

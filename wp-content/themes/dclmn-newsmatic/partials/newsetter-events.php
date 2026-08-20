@@ -108,9 +108,11 @@ if (!count($ids)) {
 
     $content = trim($event->post_content);
     $content = preg_replace('/<\/?div[^>]*>/i', '', $content);
-    $content = nl2br($content);
-    $content = preg_replace('/[\n\r]/', ' ', $content);
+    $content = preg_replace('/\R/', '<br>', $content);
+    
     $content = preg_replace('/^(?:\s*<br\s*\/?>\s*)+|(?:\s*<br\s*\/?>\s*)+$/i', '', $content);
+
+     
     // $content = htmlentities($content);
 
     $html = '';
@@ -118,13 +120,15 @@ if (!count($ids)) {
     $html .= '<tbody>';
     $html .= '<tr>';
     $html .= '<td valign="top" bgcolor="' . $bgcolor . '" fgcolor="' . $fgcolor . '" align="left" style="text-align: left; background-color: ' . $bgcolor . '; color: ' . $fgcolor . '; font-size: 16px; font-family: \'DM Sans\', sans-serif; padding-left:24px; padding-right:24px; padding-top:12px; padding-bottom:12px">';
-    if ($images && !empty($img_src)) $html .= '<p><img src="' . $img_src . '"></p>';
+    if ($images && !empty($img_src)) $html .= '<p style="text-align: left;"><img src="' . $img_src . '"></p>';
     $html .= '<p style="text-align: left;">';
-    $html .= '<a href="' . $event_url . '" target="_blank"style="color:' . $fgcolor . '; text-decoration: none; font-size: 16px;"><strong>' . $event->post_title . '</strong></a>';
+    $html .= '<a href="' . $event_url . '" target="_blank" style="text-decoration: none; text-decoration-line: none; color:' . $fgcolor . '; font-size: 16px;"><strong>' . $event->post_title . '</strong></a>';
     $html .= '<br>';
     $html .= '<span style="font-size: 14px;">' . $formatted_date . '</span>';
     $html .= '</p>';
-    $html .= '<p style="text-align: left; font-size: 15px; color: #000;">' . $content . '</p>';
+    // $html .= '<br />';
+    $html .= '<p style="text-align: left; font-size: 15px; color: #000; margin-top: 10px; margin-bottom: 15px;">' . $content . '</p>';
+    // $html .= '<br>';
     $html .= '<p style="text-align: left;"><a href="' . $event_url . '" target="_blank"style="color:' . $fgcolor . '; text-decoration: underline;"><strong>CLICK HERE</strong></a></p>';
     $html .= '</td>';
     $html .= '</tr>';

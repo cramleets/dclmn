@@ -963,7 +963,7 @@ function newsletter_events_search($args = []) {
             //$out .= ' data-taxonomy="'. $taxonomy .'"';
             //$out .= ' data-term-id="'. $term_id .'"';
             $out .= ' data-post_id="' . $post->ID . '"';
-            $out .= '><a href="' . admin_url('post.php?post=' . $post->ID . '&action=edit') . '" target="_blank" style="font-weight: bold; font-size: 1.25em;">' . $post->post_title . '</a>';
+            $out .= '><a href="' . $event_url . '" target="_blank" style="font-weight: bold; font-size: 1.25em;">' . $post->post_title . '</a>';
             $out .= '<div class="clear"></div>';
             //$out .= '<div style="float: left;">';
             $out .= '<span style="font-weight: bold;">' . $formatted_date . '</span>';
