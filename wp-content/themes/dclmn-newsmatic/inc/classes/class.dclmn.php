@@ -1128,7 +1128,7 @@ class DCLMN {
     }
 
     function newsmatic_before_footer_section() {
-        get_template_part('partials/countdown', NULL, ['footer'=>'Until The Polls Open']);
+        get_template_part('partials/countdown', NULL, ['footer'=>'Until Midterm Election Polls Open']);
     }
 
 

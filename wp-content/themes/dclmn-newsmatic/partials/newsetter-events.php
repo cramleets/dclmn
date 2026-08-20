@@ -4,7 +4,11 @@ $out = '';
 $i = 0;
 $bgcolors = ['#E0F1F8', '#ffffff'];
 $fgcolors = ['#1930a6', '#1930a6'];
+
 $images = filter_var($_REQUEST['images'], FILTER_VALIDATE_BOOLEAN);
+$first_color = (!empty($_REQUEST['first_color'])) ? $_REQUEST['first_color'] : 'white';
+
+if ('blue' == $first_color) $i++;
 
 $old_html = <<<HTML
 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:separate" role="presentation">
@@ -84,7 +88,6 @@ foreach ($_REQUEST['ids'] as $id) {
   $formatted_date = format_event_schedule($event->start_date, $event->end_date, $event->all_day);
 
   $bgcolor = $bgcolors[$i % count($bgcolors)];
-
   $fgcolor = $fgcolors[$i % count($fgcolors)];
 
   $event_url = get_permalink($event);
@@ -94,19 +97,22 @@ foreach ($_REQUEST['ids'] as $id) {
 
   $img_src = dclmn_thumb(get_the_post_thumbnail_url($event->ID, 'full'), ['width' => 280]);
 
+  $content = trim($event->post_content);
+  $content = preg_replace('/<\/?div[^>]*>/i', '', $content);
+
   $html = '';
   $html .= '<table border="0" cellpadding="24" cellspacing="0" width="100%" style="border-collapse:separate" role="presentation">';
   $html .= '<tbody>';
   $html .= '<tr>';
-  $html .= '<td valign="top" bgcolor="' . $bgcolor . '" fgcolor="' . $fgcolor . '" style="background-color: ' . $bgcolor . '; color: ' . $fgcolor . '; font-size: 16px; font-family: \'DM Sans\', sans-serif; padding-left:24px; padding-right:24px; padding-top:12px; padding-bottom:12px">';
+  $html .= '<td valign="top" bgcolor="' . $bgcolor . '" fgcolor="' . $fgcolor . '" align="left" style="text-align: left; background-color: ' . $bgcolor . '; color: ' . $fgcolor . '; font-size: 16px; font-family: \'DM Sans\', sans-serif; padding-left:24px; padding-right:24px; padding-top:12px; padding-bottom:12px">';
   if ($images && !empty($img_src)) $html .= '<p><img src="' . $img_src . '"></p>';
-  $html .= '<p>';
+  $html .= '<p style="text-align: left;">';
   $html .= '<a href="' . $event_url . '" target="_blank"style="color:' . $fgcolor . '; text-decoration: none; font-size: 16px;"><strong>' . $event->post_title . '</strong></a>';
   $html .= '<br>';
   $html .= '<span style="font-size: 14px;">' . $formatted_date . '</span>';
   $html .= '</p>';
-  $html .= '<div style="font-size: 15px; color: #000;">' . $event->post_content . '</div>';
-  $html .= '<p><a href="' . $event_url . '" target="_blank"style="color:' . $fgcolor . '; text-decoration: underline;"><strong>CLICK HERE</strong></a></p>';
+  $html .= '<p style="text-align: left; font-size: 15px; color: #000;">' . $content . '</p>';
+  $html .= '<p style="text-align: left;"><a href="' . $event_url . '" target="_blank"style="color:' . $fgcolor . '; text-decoration: underline;"><strong>CLICK HERE</strong></a></p>';
   $html .= '</td>';
   $html .= '</tr>';
   $html .= '</tbody>';

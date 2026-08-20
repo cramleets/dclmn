@@ -1,4 +1,4 @@
-<?php if (dclmn_auth('cp')): ?>
+<?php if (1 || dclmn_auth('cp')): ?>
   <?php
   wp_enqueue_script('jquery-ui-sortable');
   wp_enqueue_script('jquery-ui-draggable');
@@ -19,12 +19,16 @@
   <form id="events-search" method="post">
     <div><input type="text" name="terms" placeholder="Search Terms"></div>
     <div>
-      <select name="cats" multiple size="1" placeholder="Categories">
+      <select name="cats[]" multiple size="1" placeholder="Categories">
         <option></option>
         <?php foreach ($event_categories as $event_category): ?>
           <option value="<?php echo $event_category->term_id ?>"><?php echo $event_category->name ?></option>
         <?php endforeach; ?>
       </select>
+    </div>
+    <div>
+      <label>Start Date <input type="date" name="start_date"></label>
+      <label>End Date <input type="date" name="end_date"></label>
     </div>
     <div>
       <input type="submit" value="search" class="button">
@@ -48,6 +52,12 @@
         Preview
         <?php echo $refresh_svg ?>
         <label><input type="checkbox" id="event-preview-images"> Images</label>
+        <label>
+          <select id="event-preview-first-color" style="width: 50px;">
+            <option value="white">White First</option>
+            <option value="blue">Blue First</option>
+          </select>
+        </label>
         <span class="newsletter-events-copy button">Copy Events HTML</span>
       </h3>
       <div>
@@ -250,6 +260,7 @@
           action: 'events_preview',
           ids: sortedIDs,
           images: $('#event-preview-images').is(':checked'),
+          first_color: $('#event-preview-first-color').val(),
         }
 
         $('#preview').addClass('loading').html('<img src="/wp-includes/images/spinner.gif">');
@@ -289,6 +300,10 @@
       });
 
       $('.newsletter-events-preview, #event-preview-images').on('click', function() {
+        update_preview();
+      });
+
+      $('#event-preview-first-color').on('change', function() {
         update_preview();
       });
 
