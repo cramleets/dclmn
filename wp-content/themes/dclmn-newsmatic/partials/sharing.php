@@ -11,13 +11,25 @@
     'taxonomy'   => 'tribe_events_cat',
     'hide_empty' => false,
   ));
+
+  $pipe = '<span style="font-weight: normal; font-size: .75em; vertical-align: text-bottom; display: inline-block;">|</span>';
+
+  $show_refresh = 0 || current_user_can('update_core');
+  $first_color_width = ($show_refresh) ? 46 : 64;
   ?>
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
   <?php get_template_part('partials/cp-nav'); ?>
   <h2>Events for the Newsletter</h2>
   <form id="events-search" method="post">
-    <div><input type="text" name="terms" placeholder="Search Terms"></div>
+    <div>
+      <input type="text" name="terms" placeholder="Search Terms">
+      <cite>Search post titles and content for specific events.</cite>
+    </div>
+    <div>
+      <input type="text" name="exclude_search" placeholder="Exclude Search Terms">
+      <cite>A comma separated list of terms to exclude. Searches titles only. ex: "Postcarding, Canvassing, February"</cite>
+    </div>
     <div>
       <select name="cats[]" multiple size="1" placeholder="Categories">
         <option></option>
@@ -25,10 +37,14 @@
           <option value="<?php echo $event_category->term_id ?>"><?php echo $event_category->name ?></option>
         <?php endforeach; ?>
       </select>
+      <cite>Choose specific categories to search.</cite>
     </div>
-    <div>
-      <label>Start Date <input type="date" name="start_date"></label>
-      <label>End Date <input type="date" name="end_date"></label>
+    <div class="search-dates">
+      <div>
+        <label>Start Date <input type="date" name="start_date"></label>
+        <label>End Date <input type="date" name="end_date"></label>
+      </div>
+      <cite>Limit the event search by start and end dates.</cite>
     </div>
     <div>
       <input type="submit" value="search" class="button">
@@ -38,30 +54,46 @@
     <div>
       <h3>Search Results</h3>
       <div>
-        <ul id="available"></ul>
+        <ul id="available">
+          <li class="default-li">1. Use the form above to search for events, then drag them to the <strong>"Selected Events"</strong> column.</li>
+          <li class="default-li">2. Use the <strong>"Preview"</strong> column to control the output and copy the HTML.</li>
+          <li style="padding: 1em; text-align: center;"><br><input type="button" class="button" value="Search All Events"></li>
+        </ul>
       </div>
     </div>
     <div>
       <h3>Selected Events</h3>
-      <div>
+      <div id="selected-events-wrapper">
         <ul id="selected"></ul>
       </div>
     </div>
     <div>
       <h3>
-        Preview
-        <?php echo $refresh_svg ?>
-        <label><input type="checkbox" id="event-preview-images"> Images</label>
-        <label>
-          <select id="event-preview-first-color" style="width: 50px;">
-            <option value="white">White First</option>
-            <option value="blue">Blue First</option>
-          </select>
-        </label>
-        <span class="newsletter-events-copy button">Copy Events HTML</span>
+        Preview <?php echo $pipe ?>
+        <?php if ($show_refresh): ?><?php echo $refresh_svg ?> <?php echo $pipe ?> <?php endif; ?>
+      <label for="event-preview-images"><input type="checkbox" id="event-preview-images"> Images</label> <?php echo $pipe ?>
+      <label>
+        <select id="event-preview-first-color" style="width: <?php echo $first_color_width ?>px;">
+          <option value="white">White First</option>
+          <option value="blue">Blue First</option>
+        </select>
+      </label>
+      <span class="newsletter-events-copy button">
+        Copy Events HTML
+        <?php /*
+        <svg class="svg-copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="16">
+          <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" fill="currentColor"˝ />
+        </svg>
+        <?php */ ?>
+      </span>
       </h3>
       <div>
-        <ul id="preview"></ul>
+        <ul id="preview">
+          <li class="default-li">1. Select at least one event to see a preview.</li>
+          <li class="default-li">2. Use the tools to alter the output.</li>
+          <li class="default-li">3. Copy the HTML.</li>
+          <li class="default-li">Tip: You can paste the HTML into a text file and save it to your desktop for safe keeping.</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -124,6 +156,7 @@
       background-color: #fafafa;
     }
 
+    .flex>div ul li.ui-draggable-disabled,
     .flex>div ul li.ui-draggable-disabled small,
     .flex>div ul li.ui-draggable-disabled a,
     .flex>div ul li.ui-draggable-disabled a:hover {
@@ -142,7 +175,7 @@
 
     .sort_terms_posts_post_controls {
       position: absolute;
-      bottom: 0;
+      top: .25em;
       right: .5em;
       display: none;
     }
@@ -193,12 +226,53 @@
       width: 100%;
     }
 
+    form#events-search>div {
+      background-color: var(--color-white);
+      padding: .5em;
+      border: 1px solid var(--color-gray);
+    }
+
     form#events-search>div:not(:last-of-type) {
       margin-bottom: .5em;
     }
 
     form#events-search .button {
       font-size: .85em;
+      box-shadow: none;
+    }
+
+    form#events-search cite {
+      font-size: .85em;
+      font-style: normal;
+      font-weight: bold;
+    }
+
+    .search-dates label {
+      font-weight: bold;
+      margin-right: 1.5em;
+    }
+
+    .flex>div ul li.default-li {
+      padding: 1em;
+      font-size: 1em;
+    }
+
+    #event-preview-images {
+      vertical-align: middle;
+    }
+
+    #event-preview-first-color {
+      font-size: .75em;
+    }
+
+    label[for="event-preview-images"] {
+      font-weight: normal;
+      font-size: 0.75em;
+      vertical-align: text-bottom;
+    }
+
+    .list-highlight {
+      border-color: red !important;
     }
   </style>
   <script>
@@ -249,6 +323,14 @@
             item.attr('id', item.attr('data-post_id'));
 
             update_preview();
+          },
+          over: function(event, ui) {
+            // Add highlight class when dragged item enters
+            $('#selected-events-wrapper').addClass("list-highlight");
+          },
+          out: function(event, ui) {
+            // Remove highlight class when dragged item leaves
+            $('#selected-events-wrapper').removeClass("list-highlight");
           }
         });
       }
@@ -308,6 +390,11 @@
       });
 
       $('form#events-search').on('submit', function(e) {
+        e.preventDefault();
+        events_search();
+      });
+
+      $('#available .button').on('click', function(e) {
         e.preventDefault();
         events_search();
       });

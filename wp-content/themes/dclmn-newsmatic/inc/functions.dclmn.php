@@ -852,12 +852,34 @@ function format_event_schedule($start_date, $end_date, $all_day = false) {
 }
 
 function newsletter_events_search($args = []) {
+    add_filter('posts_where', function ($where, $query) {
+        global $wpdb;
+
+        $csv = $query->get('exclude_search');
+
+        if (! $csv) {
+            return $where;
+        }
+
+        $terms = array_filter(array_map('trim', explode(',', $csv)));
+
+        foreach ($terms as $term) {
+            $where .= $wpdb->prepare(
+                " AND {$wpdb->posts}.post_title NOT LIKE %s",
+                '%' . $wpdb->esc_like($term) . '%'
+            );
+        }
+
+        return $where;
+    }, 10, 2);
+
     $defaults = [
         'show_date_box' => true,
         'show_title' => true,
         'show_date' => true,
         'show_more' => true,
         'posts_per_page' => 200,
+        '' => 'postcarding',
         // 'tax_query' => [
         //     [
         //         'taxonomy' => 'tribe_events_cat',
@@ -871,11 +893,14 @@ function newsletter_events_search($args = []) {
     $args = wp_parse_args($args, $defaults);
 
     // pobj($args, 1);
-    if ($args['terms']) {
+    if (!empty($args['terms'])) {
         $args['s'] = $args['terms'];
     }
+    if (!empty($args['exclude_search'])) {
+        $args['exclude_search'] = $args['exclude_search'];
+    }
 
-    if ($args['cats']) {
+    if (!empty($args['cats'])) {
         $args['tax_query'] = [
             [
                 'taxonomy' => 'tribe_events_cat',
