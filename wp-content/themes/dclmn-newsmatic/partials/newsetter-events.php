@@ -109,10 +109,13 @@ if (!count($ids)) {
     $content = trim($event->post_content);
     $content = preg_replace('/<\/?div[^>]*>/i', '', $content);
     $content = preg_replace('/\R/', '<br>', $content);
-    
+   
+    //replace h tags
+    $content = preg_replace('#<h[1-6][^>]*>(.*?)</h[1-6]>#is', '<strong>$1</strong><br>', $content);
+
+    //replace wonky br tags
     $content = preg_replace('/^(?:\s*<br\s*\/?>\s*)+|(?:\s*<br\s*\/?>\s*)+$/i', '', $content);
 
-     
     // $content = htmlentities($content);
 
     $html = '';
