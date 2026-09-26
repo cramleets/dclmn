@@ -60,6 +60,7 @@ class DCLMN {
             return $item;
         }, 20);
 
+        add_action('newsmatic_after_header_hook', 'newsmatic_header_dclmn_header', 1);
         add_action('newsmatic_after_header_hook', 'newsmatic_header_ads_banner_part', 10);
         add_action('newsmatic_main_banner_hook', 'newsmatic_header_ads_banner_part_footer', 999);
         add_action('newsmatic_main_banner_hook', [$this, 'newsmatic_main_banner_hook'], 1);

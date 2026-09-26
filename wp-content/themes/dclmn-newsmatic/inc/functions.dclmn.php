@@ -1206,3 +1206,61 @@ function newsletter_events_preview() {
     get_template_part('partials/newsetter-events');
     exit;
 }
+
+function get_newsletter_election_dates() {
+    // Get upcoming events
+    $events = dclmn_get_events([
+        'posts_per_page' => -1,
+        // 'ends_after' => 'now',
+        'tax_query' => array(
+            array(
+                'taxonomy' => 'tribe_events_cat',
+                'field'    => 'slug',
+                'terms'    => array('election-dates'),
+                'operator' => 'IN',
+            ),
+        )
+    ]);
+
+    $out = '';
+    $out .= '<table cellpadding="10" cellspacing="0" border="1"><tr><td bgcolor="#efefef" style="background-color: #efefef;">';
+    $out .= '<p style="text-align: left; margin-bottom: 16px;"><strong style="font-size: 24px;">Election Dates and Deadlines</strong></p>';
+    foreach ($events as $post) {
+        $display_date = empty($is_past) && ! empty($request_date)
+            ? max($post->dates->start_display, $request_date)
+            : $post->dates->start_display;
+
+        $event_week_day  = $display_date->format_i18n('l');
+        $event_week_day_short  = $display_date->format_i18n('D');
+        $event_week_day_shorter = substr($event_week_day_short, 0, 2);
+
+        $event_day_num   = $display_date->format_i18n('j');
+        $event_month   = $display_date->format_i18n('F');
+        $event_month_short   = $display_date->format_i18n('M');
+        $event_date_attr = $display_date->format(Dates::DBDATEFORMAT);
+
+        if (has_term('election-date-featured', 'tribe_events_cat', $post)) $out .= '<p style="text-align: left;">';
+        else $out .= '<p style="text-align: left;">';
+
+        $out .= '<a href="' . $post->permalink->__toString() . '" style="color: #000000; text-decoration: none; text-decoration-line: none;"><strong>' . strtoupper($event_month . ' ' . $event_day_num) . '</strong></a>';
+        $out .= '<br>';
+        $out .= '<a href="' . $post->permalink->__toString() . '"" style="color: #000000; text-decoration: none; text-decoration-line: none;"><strong>' . $post->post_title . '.</strong></a>';
+        $out .= (!empty($post->post_content)) ? '<br>' . $post->post_content . '' : '';
+
+        if (has_term('election-date-featured', 'tribe_events_cat', $post)) $out .= '</p>';
+        else $out .= '</p>';
+
+        $out .= '<br>';
+    }
+
+    $out = rtrim($out, '<br>');
+
+    $out .= '</td></tr></table>';
+
+    return $out;
+}
+
+
+function newsmatic_header_dclmn_header() {
+    get_template_part('partials/dclmn-header-announcement');
+}
