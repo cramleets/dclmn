@@ -111,7 +111,8 @@ if (!count($ids)) {
     $content = preg_replace('/\R/', '<br>', $content);
    
     //replace h tags
-    $content = preg_replace('#<h[1-6][^>]*>(.*?)</h[1-6]>#is', '<strong>$1</strong><br>', $content);
+    $content = preg_replace('#<h[1-6][^>]*>(.*?)</h[1-6]>#is', '<span>$1</span><br>', $content);
+    $content = preg_replace('#<[strong^>]*>(.*?)</strong>#is', '<span>$1</span><br>', $content);
 
     //replace wonky br tags
     $content = preg_replace('/^(?:\s*<br\s*\/?>\s*)+|(?:\s*<br\s*\/?>\s*)+$/i', '', $content);
