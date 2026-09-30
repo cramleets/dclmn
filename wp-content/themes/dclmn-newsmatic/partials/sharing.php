@@ -1,5 +1,10 @@
+<?php
+
+use Tribe__Date_Utils as Dates;
+?>
 <?php if (1 || dclmn_auth('cp')): ?>
   <?php
+  
   wp_enqueue_script('jquery-ui-sortable');
   wp_enqueue_script('jquery-ui-draggable');
   wp_enqueue_script('jquery-ui-droppable');
@@ -299,6 +304,27 @@
           });
       });
 
+      $('.newsletter-election-dates-copy').on('click', function(e) {
+        e.preventDefault();
+
+        const $trigger = $(this);
+        const trigger_text = $trigger.text();
+
+        const html = $('#newsletter-election-dates').html();
+
+        navigator.clipboard.writeText(html)
+          .then(function() {
+            console.log('HTML copied to clipboard');
+            $trigger.text('Copied.').addClass('copied-result');
+            setTimeout(function() {
+              $trigger.text(trigger_text).removeClass('copied-result')
+            }, 1500);
+          })
+          .catch(function(err) {
+            console.error('Failed to copy:', err);
+          });
+      });      
+
       function init_drag() {
         $("#available li").draggable({
           helper: "clone",
@@ -410,3 +436,7 @@
     });
   </script>
 <?php endif; ?>
+<hr>
+
+<span class="newsletter-election-dates-copy button">Copy Election Dates HTML</span>
+<?php  echo '<div id="newsletter-election-dates">'. get_newsletter_election_dates() .'</div>'; ?>
