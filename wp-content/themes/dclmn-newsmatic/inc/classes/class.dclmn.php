@@ -40,6 +40,9 @@ class DCLMN {
             add_action('newsmatic_botttom_footer_hook', 'newsmatic_bottom_footer_copyright_part', 20);
             add_action('newsmatic_before_inner_content', 'newsmatic_before_inner_content', 20);
             add_post_type_support('page', 'excerpt');
+            if (!empty($_GET['action']) && 'delete-transients' == $_GET['action']) {
+                $this->delete_transients();
+            }
         });
 
         add_action('wp_head', function () {
@@ -1129,7 +1132,7 @@ class DCLMN {
     }
 
     function newsmatic_before_footer_section() {
-        get_template_part('partials/countdown', NULL, ['footer'=>'Until Midterm Election Polls Open']);
+        get_template_part('partials/countdown', NULL, ['footer' => 'Until Midterm Election Polls Open']);
     }
 
 
@@ -1284,5 +1287,42 @@ class DCLMN {
 
     function ajax_events_preview() {
         die(newsletter_events_preview());
+    }
+
+    function delete_transients() {
+        global $wpdb;
+
+        $transients = [
+            'dropboxes',
+            'pa_districts',
+            'precincts',
+            'polling_locations',
+            'zoom_meetings',
+            'zoom_webinars',
+            'newsletter_feed',
+        ];
+
+        $deleted_transients = [];
+
+        foreach ($transients as $transient) {
+            delete_transient($transient);
+            $deleted_transients[] = $transient;
+        }
+
+        $sql = "SELECT option_id, option_name, option_value
+            FROM wp_options
+            WHERE option_name LIKE '_site_transient_feed_%'
+            OR option_name LIKE '_site_transient_timeout_feed_%'
+            ORDER BY option_name;";
+
+        $results = $wpdb->get_results($sql);
+        foreach ($results as $result) {
+            delete_option($result->option_name);
+            $deleted_transients[] = $result->option_name;
+        }
+
+        $out = '<h3>The Following Transients Were Deleted.</h3>';
+        $out .= '<ol><li>' . implode('</li><li>', $deleted_transients) . '</li></ol>';
+        die($out);
     }
 }

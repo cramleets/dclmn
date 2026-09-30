@@ -99,14 +99,15 @@
     </form>
   </fieldset>
   <br>
-  <?php dclmn_committee_people_import_page() ?>
+  <?php //dclmn_committee_people_import_page() ?>
   <br>
-  <?php dclmn_contacts_import_page() ?>
+  <?php //dclmn_contacts_import_page() ?>
   <br>
   <fieldset>
     <h2>Cron Triggers</h2>
     <a href="<?php echo home_url('dclmn-data-populator/') ?>" target="_blank" class="button-primary" style="font-size: 1.5em; font-weight: bold;">Run The ARCGIS Data Populator</a>
     <a href="<?php echo home_url('dclmn-cpanel-forwards-populator/') ?>" target="_blank" class="button-primary" style="font-size: 1.5em; font-weight: bold;" onclick="return confirm('This will take about ten minutes to complete.');">Run The Cpanel Email Forwards Populator</a>
+    <a href="<?php echo home_url('?action=delete-transients') ?>" target="_blank" class="button-primary" style="font-size: 1.5em; font-weight: bold;">Delete Transients</a>
   </fieldset>
   <br>
 
