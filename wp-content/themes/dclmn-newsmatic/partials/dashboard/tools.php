@@ -10,7 +10,7 @@ foreach ($meetings as $meeting) {
   $meeting_date = $dt->format('l, F j, Y');
   $meeting_time = $dt->format('g:i a');
 
-  $is_today = $dt->format('Y-m-d') === date('Y-m-d');
+  $is_today = $dt->format('Y-m-d') === current_time('Y-m-d');
   $is_meeting = stristr($meeting['topic'], 'general meeting') || stristr($meeting['topic'], 'exec meeting');
 
   if ($is_today && $is_meeting) {
@@ -33,14 +33,6 @@ foreach ($meetings as $meeting) {
   <?php echo $todays_meeting; ?>
   <div class="flex">
     <div>
-      <?php if ($documents = dclmn_get_posts(['post_type' => 'document', 'posts_per_page' => -1])): ?>
-        <h3>DCLMN Documents</h3>
-        <ul>
-          <?php foreach ($documents as $post): ?>
-            <li><a href="<?php echo $post->href ?>" target="_blank"><?php echo $post->post_title ?></a></li>
-          <?php endforeach; ?>
-        </ul>
-      <?php endif; ?>
       <h3>DCLMN Tools</h3>
       <ul>
         <li><a href="<?php echo home_url('cp/cps/') ?>">View and Contact Committee People</a></li>
@@ -50,6 +42,8 @@ foreach ($meetings as $meeting) {
       </ul>
       <h3>DCLMN Resources</h3>
       <ul>
+        <li><a href="https://dclmn.us/document/montgomery-county-democratic-committee-committee-person-handbook/" target="_blank">MCDC Committee Person Handbook</a></li>
+        <li><a href="https://dclmn.us/document/mcdc-committee-person-training/" target="_blank">MCDC Committee Person Training</a></li>
         <li><a href="<?php echo home_url('document/roberts-rules-cheat-sheet/') ?>" target="_blank">Robert's Rules Cheat Sheet</a></li>
         <li><a href="<?php echo home_url('document/dclmn-guide-to-welcoming-new-residents/') ?>" target="_blank">Guide to Welcoming New Residents</a></li>
         <li><a href="https://drive.google.com/drive/folders/1aKBNH8LehMBqKRV_xzOli_XcCN9eWjkB" target="_blank">Petitions</a></li>
@@ -60,6 +54,14 @@ foreach ($meetings as $meeting) {
           <a href="<?php echo home_url('document/dclmn-proxy-form-word/') ?>" target="_blank">Word Doc</a>
         </li>
       </ul>
+      <?php if (0 && $documents = dclmn_get_posts(['post_type' => 'document', 'posts_per_page' => -1, 'orderby'=>'title', 'order'=>'asc'])): ?>
+        <h3>All DCLMN Documents</h3>
+        <ul>
+          <?php foreach ($documents as $post): ?>
+            <li><a href="<?php echo $post->href ?>" target="_blank"><?php echo $post->post_title ?></a></li>
+          <?php endforeach; ?>
+        </ul>
+      <?php endif; ?>
       <?php if (dclmn_user_is_exec()): ?>
         <h3>Exec Tools</h3>
         <ul>
@@ -114,10 +116,9 @@ foreach ($meetings as $meeting) {
 
       echo dclmn_homepage_events($meeting_events_args);
       ?>
-      <h3>Canvassing</h3>
       <?php
       $meeting_events_args = [
-        // 'header' => 'Meetings',
+        'header' => 'Canvassing',
         'category' => 'canvassing',
         'posts_per_page' => 4,
       ];
