@@ -3,4 +3,5 @@
   <a class="button" href="/committee-people/">Committee People</a>
   <a class="button" href="/charter-by-laws/">Charter &amp; By-laws</a>
   <a class="button" href="/committee-person-description/">Committee Person Description</a>
+  <a class="button" href="/run-for-office/">Run for Office</a>
 </div>
