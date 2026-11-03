@@ -68,6 +68,7 @@ class DCLMN {
         add_action('newsmatic_main_banner_hook', 'newsmatic_header_ads_banner_part_footer', 999);
         add_action('newsmatic_main_banner_hook', [$this, 'newsmatic_main_banner_hook'], 1);
         add_action('newsmatic_before_footer_section', [$this, 'newsmatic_before_footer_section'], 1);
+        add_action('newsmatic_after_header_hook', [$this, 'leaderboard'], 1);
 
         $path = trailingslashit(get_stylesheet_directory()) . 'partials';
         foreach (new DirectoryIterator($path) as $fileInfo) {
@@ -1126,6 +1127,10 @@ class DCLMN {
         return $html;
     }
 
+    function leaderboard() {
+        get_template_part('partials/leaderboard');
+    }
+
     function newsmatic_main_banner_hook() {
         //get_template_part('partials/canvassing-slider');
         //get_template_part('partials/countdown', NULL, ['footer'=>'Until The Polls Open']);
@@ -1300,6 +1305,7 @@ class DCLMN {
             'zoom_meetings',
             'zoom_webinars',
             'newsletter_feed',
+            'youtube_feed',
         ];
 
         $deleted_transients = [];
