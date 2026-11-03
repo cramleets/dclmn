@@ -44,6 +44,14 @@
     .homepage-events>div {
         width: 100%;
     }
+
+    #run-for-office h1 {
+        font-size: 1.5em;
+    }
+
+    #run-for-office h2 {
+        font-size: 1.25em;
+    }
 }
 
 
@@ -357,6 +365,11 @@
     #masthead img {
         min-width: 240px !important;
         height: auto;
+    }
+
+    #run-for-office h1 b {
+        display: inline-block;
+        max-width: 84%;
     }
 }
 

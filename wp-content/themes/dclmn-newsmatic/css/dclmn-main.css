@@ -1449,6 +1449,7 @@ body.hidden-sidebar.right-sidebar #theme-content .row .primary-content {
     padding: 0;
     margin: 0 1em 0 0;
 }
+
 .slick-list.draggable,
 .dclmn-slick .dclmn-events {
     border: none;
@@ -1517,8 +1518,8 @@ body.hidden-sidebar.right-sidebar #theme-content .row .primary-content {
     gap: 2em;
 }
 
-.homepage-events > div {
-	width: 47%;
+.homepage-events>div {
+    width: 47%;
 }
 
 .homepage-events .dclmn-events {
@@ -1526,7 +1527,7 @@ body.hidden-sidebar.right-sidebar #theme-content .row .primary-content {
     padding: 0;
 }
 
-.room-request-flex > div {
+.room-request-flex>div {
     width: 47%;
 }
 
@@ -1635,4 +1636,90 @@ body.hidden-sidebar.right-sidebar #theme-content .row .primary-content {
 .main-banner-wrap .slick-arrow {
     visibility: visible;
     background-color: #e6e6e6;
+}
+
+
+#run-for-office .rfo-section {
+    display: block;
+    padding: 0 1em;
+}
+
+#run-for-office .rfo-subsection {
+    display: none;
+    padding: 0 1em;
+}
+
+#run-for-office h1 {
+    line-height: 1;
+    margin: 0 0 .5em 0;
+    padding: .5em;
+    color: var(--color-black);
+    background-color: var(--color-white);
+    border-bottom: 2px solid var(--color-root);
+    position: relative;
+    font-size: 1.75em;
+}
+
+#run-for-office h1:hover {
+    background-color: var(--color-root);
+    color: var(--color-white);
+    cursor: pointer;
+}
+
+#run-for-office h1:after,
+#run-for-office h2:after {
+    content: '';
+    position: absolute;
+    right: 1em;
+    transform: rotate(90deg);
+    width: .75em;
+    height: .75em;
+    border-right: 4px solid currentColor;
+    /* Matches the text color */
+    border-bottom: 4px solid currentColor;
+    transform: rotate(45deg);
+}
+
+#run-for-office h1:after {
+    right: 1.5em;
+}
+
+#run-for-office h1.open:after,
+#run-for-office h2.open:after {
+    transform: rotate(-135deg);
+    bottom: .5em;
+}
+
+#run-for-office h2 {
+    padding: .25em;
+    position: relative;
+    color: var(--color-black);
+}
+
+#run-for-office h2:hover {
+    font-weight: bold;
+    cursor: pointer;
+    background-color: var(--color-gray);
+}
+
+#run-for-office h2:after {
+    width: .5em;
+    height: .5em;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    font-size: 1.25em;
+}
+
+#run-for-office h2 b {
+	font-weight: normal;
+}
+
+.leaderboard {
+    text-align: center;
+    padding: 0 2em;
+}
+
+.leaderboard img {
+    width: 100%;
+    max-width: 1000px;
 }
