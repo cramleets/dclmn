@@ -238,7 +238,7 @@ jQuery(document).ready(function ($) {
     ]
   });
 
-  $('.event-status input').on('click', function() {
+  $('.event-status input').on('click', function () {
     data = {
       action: 'update_event_status',
       checked: $(this).is(':checked'),
@@ -250,5 +250,17 @@ jQuery(document).ready(function ($) {
     $.post(ajaxurl, data, function (data) {
       $result_el.html(data);
     });
+  });
+
+  $('#run-for-office h1.toggle').on('click', function (e) {
+    e.preventDefault();
+    $(this).toggleClass('open');
+    $('.rfo-section#' + $(this).data('target')).slideToggle();
+  });
+
+  $('#run-for-office h2.toggle').on('click', function (e) {
+    e.preventDefault();
+    $(this).toggleClass('open');
+    $('.rfo-subsection#' + $(this).data('target')).slideToggle();
   });
 })
