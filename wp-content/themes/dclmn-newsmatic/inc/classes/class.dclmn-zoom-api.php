@@ -7,11 +7,12 @@ class DCLMN_Zoom_API {
   var $clientId = 'OMLGDnbfRuCXmDV1BGjKUw';
   var $clientSecret = 'rRBNi9OraVSUTy5oCvtbrLmUt7nbS6Hr';
   var $secretToken = 'OuNczpvISIqdFnYbG6ZAmg';
+  var $memberAccountId = '_KH_qjNoSW2PE80UjDEVmg';
 
   function __construct() {
   }
 
-  function call($path) {
+  function call($path, $use_member_id = false) {
     $url = "https://zoom.us/oauth/token";
 
     // Prepare POST fields
@@ -53,7 +54,7 @@ class DCLMN_Zoom_API {
     $accessToken =  $data['access_token'];
 
     // Replace with your Zoom user ID or email (can use "me" for the authenticated user)
-    $userId = 'me';
+    $userId = ($use_member_id) ? $this->memberAccountId : 'me';
 
     // Initialize cURL
     $ch = curl_init();
@@ -103,8 +104,19 @@ class DCLMN_Zoom_API {
     $transient_name = 'zoom_meetings';
     if ($force || !$return = get_transient($transient_name)) {
       $return = [];
-      $result = $this->call('meetings');
-      if (isset($result['meetings'])) $return = $result['meetings'];
+      $main_account_result = $this->call('meetings');
+
+      $member_account_result = $this->call('meetings', true);
+
+      $return = array_merge(
+        (array) $main_account_result['meetings'],
+        (array) $member_account_result['meetings']
+      );
+      
+      //foreach($return as $r) {
+        //pobj($r,1);
+        //pobj($this->call('meetings/'. $r['id']),1);
+      //}
 
       $return = base64_encode(serialize($return));
       set_transient($transient_name, $return, 60 * 60);

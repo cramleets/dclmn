@@ -69,7 +69,6 @@ class DCLMN_Zoom {
     // Execute request
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    pobj($response, 1);
 
     if ($response === false) {
       die('Curl error: ' . curl_error($ch));
