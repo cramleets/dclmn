@@ -23,7 +23,7 @@
     margin-bottom: -15px;
   }
 </style>
-
+<h3 style="font-size: 1.5em;">To find your polling place or committee people, search in the map below.</h3>
 <p><a href="https://www.pavoterservices.pa.gov/Pages/PollingPlaceInfo.aspx" target="_blank" style="text-decoration: none; font-weight: bold;">You can also visit the official Commonwealth of PA page.</a></p>
 <div class="embed-container">
   <small>
